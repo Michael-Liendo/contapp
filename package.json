@@ -1,7 +1,11 @@
 {
 	"name": "@contapp/root",
-	"version": "0.0.1",
-	"workspaces": ["shared/", "server/", "client/"],
+	"version": "0.0.2",
+	"workspaces": [
+		"shared/",
+		"server/",
+		"client/"
+	],
 	"scripts": {
 		"client:start": "npm run start -w @contapp/client",
 		"server:start": "npm run start -w @contapp/server",
