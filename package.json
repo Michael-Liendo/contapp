@@ -3,8 +3,8 @@
 	"version": "0.0.1",
 	"workspaces": ["shared/", "server/", "client/"],
 	"scripts": {
-		"client:start": "cd client && vite preview",
-		"server:start": "cd server && node dist/src/index.js",
+		"client:start": "npm run start -w @contapp/client",
+		"server:start": "npm run start -w @contapp/server",
 		"build": "npm run build --ws",
 		"client:build": "npm run build -w @contapp/client",
 		"shared:build": "npm run build -w @contapp/shared",
