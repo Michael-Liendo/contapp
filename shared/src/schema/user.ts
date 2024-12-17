@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const UserCreateSchema = z.object({
+export const UserForRegisterSchema = z.object({
 	first_name: z.string(),
 	last_name: z.string(),
 	email: z.string().email().describe('unique'),

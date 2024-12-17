@@ -12,7 +12,7 @@ export interface IReply {
 	500: {
 		success: boolean;
 		message: string;
-		errors?: IError[];
+		errors?: IError;
 	};
 }
 

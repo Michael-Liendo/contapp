@@ -1,4 +1,11 @@
-export interface IUserForLogin {
+import type {
+	UserForRegisterSchema,
+	UserLoginSchema,
+	UserSchema,
+} from 'schema';
+import type { z } from 'zod';
+
+export interface IUserForLogin extends z.infer<typeof UserLoginSchema> {
 	email: string;
 	password: string;
 }
@@ -8,19 +15,7 @@ export interface ILoggedInUser {
 	user: IUser;
 }
 
-export interface IUserForRegister {
-	first_name: string;
-	last_name: string;
-	email: string;
-	password: string;
-}
+export interface IUserForRegister
+	extends z.infer<typeof UserForRegisterSchema> {}
 
-export interface IUser {
-	id: string;
-	first_name: string;
-	last_name: string;
-	email: string;
-	password?: string;
-	created_at: Date;
-	updated_at: Date;
-}
+export interface IUser extends z.infer<typeof UserSchema> {}
