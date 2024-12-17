@@ -1,0 +1,30 @@
+{
+	"name": "contapp",
+	"workspaces": ["shared/", "server/", "client/"],
+	"scripts": {
+		"client:start": "cd client && vite preview",
+		"server:start": "cd server && node dist/src/index.js",
+		"build": "npm run build --ws",
+		"client:build": "npm run build -w @contapp/client",
+		"shared:build": "npm run build -w @contapp/shared",
+		"server:build": "npm run build -w @contapp/server",
+		"client:dev": "npm run dev -w @contapp/client",
+		"server:dev": "npm run dev -w @contapp/server",
+		"lint": "npm run lint --ws",
+		"format": "npm run format --ws",
+		"format:unsafe": "npm run format:unsafe --ws",
+		"client:lint": "npm run lint -w @contapp/client",
+		"client:format": "npm run format -w @contapp/client",
+		"client:format:unsafe": "npm run format:unsafe -w @contapp/client",
+		"server:lint": "npm run lint -w @contapp/server",
+		"server:format": "npm run format -w @contapp/server",
+		"server:format:unsafe": "npm run format:unsafe -w @contapp/server",
+		"server:migrations:up": "npm run migrations:up -w @contapp/server"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.3"
+	},
+	"dependencies": {
+		"zod": "^3.23.8"
+	}
+}
