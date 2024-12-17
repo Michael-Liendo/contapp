@@ -1,5 +1,4 @@
 import auth from './auth';
-import link from './link';
 import user from './user';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
@@ -31,7 +30,6 @@ export default function routes(
 
 	fastify.register(auth, { prefix: '/auth' });
 	fastify.register(user, { prefix: '/user' });
-	fastify.register(link, { prefix: '/links' });
 
 	done();
 }
