@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/sidebar';
 import useAuth from '@/hooks/useAuth';
 import { useNavigate } from 'react-router';
+import { AuthRoutesEnum } from '@/Routes';
 
 export function NavUser() {
 	const { isMobile } = useSidebar();
@@ -29,7 +30,7 @@ export function NavUser() {
 	function handleLogout() {
 		logout();
 
-		navigate('/login');
+		navigate(AuthRoutesEnum.login);
 	}
 
 	return (

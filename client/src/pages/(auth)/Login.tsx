@@ -8,6 +8,7 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
+import { PrivateRoutesEnum } from '@/Routes';
 
 export default function Login() {
 	const { setToken } = useAuth();
@@ -23,7 +24,7 @@ export default function Login() {
 				const results = await Services.auth.login(values);
 
 				setToken(results.data.token);
-				navigate('/home');
+				navigate(PrivateRoutesEnum.Home);
 			} catch (e) {
 				console.error(e);
 			}
