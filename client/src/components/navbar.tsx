@@ -4,11 +4,7 @@ export default function Navbar() {
 			<nav className='p-4 border-b-2 border-blue-500'>
 				<div className='container mx-auto flex justify-between items-center'>
 					<div className='text-slate-950 text-2xl font-bold'>
-						<img
-							className='w-20'
-							src='/public/logotypeContapp.png'
-							alt='Logotype Contapp'
-						/>
+						<img className='w-20' alt='Logotype Contapp' />
 					</div>
 					<ul className='flex space-x-4'>
 						<li>

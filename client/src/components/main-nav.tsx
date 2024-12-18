@@ -1,36 +1,73 @@
-import { PrivateRoutesEnum } from '@/Routes';
-import { cn } from '@/lib/utils';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+'use client';
 
-function Link({ href, children }: { href: string; children: React.ReactNode }) {
-	const pathname = useLocation().pathname;
-	const active = pathname === href;
+import { ChevronRight, type LucideIcon } from 'lucide-react';
 
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from '@/components/ui/collapsible';
+import {
+	SidebarGroup,
+	SidebarGroupLabel,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
+	SidebarMenuSub,
+	SidebarMenuSubButton,
+	SidebarMenuSubItem,
+} from '@/components/ui/sidebar';
+
+export function NavMain({
+	items,
+}: {
+	items: {
+		title: string;
+		url: string;
+		icon?: LucideIcon;
+		isActive?: boolean;
+		items?: {
+			title: string;
+			url: string;
+		}[];
+	}[];
+}) {
 	return (
-		<RouterLink
-			className={cn(
-				'text-sm font-medium transition-colors hover:text-primary',
-				{
-					'font-bold': active,
-				},
-			)}
-			to={href}
-		>
-			{children}
-		</RouterLink>
-	);
-}
-
-export function MainNav({
-	className,
-	...props
-}: React.HTMLAttributes<HTMLElement>) {
-	return (
-		<nav
-			className={cn('flex items-center space-x-4 lg:space-x-6', className)}
-			{...props}
-		>
-			<Link href={PrivateRoutesEnum.Home}>Home</Link>
-		</nav>
+		<SidebarGroup>
+			<SidebarGroupLabel>Platform</SidebarGroupLabel>
+			<SidebarMenu>
+				{items.map((item) => (
+					<Collapsible
+						key={item.title}
+						asChild
+						defaultOpen={item.isActive}
+						className='group/collapsible'
+					>
+						<SidebarMenuItem>
+							<CollapsibleTrigger asChild>
+								<SidebarMenuButton tooltip={item.title}>
+									{item.icon && <item.icon />}
+									<span>{item.title}</span>
+									<ChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
+								</SidebarMenuButton>
+							</CollapsibleTrigger>
+							<CollapsibleContent>
+								<SidebarMenuSub>
+									{item.items?.map((subItem) => (
+										<SidebarMenuSubItem key={subItem.title}>
+											<SidebarMenuSubButton asChild>
+												<a href={subItem.url}>
+													<span>{subItem.title}</span>
+												</a>
+											</SidebarMenuSubButton>
+										</SidebarMenuSubItem>
+									))}
+								</SidebarMenuSub>
+							</CollapsibleContent>
+						</SidebarMenuItem>
+					</Collapsible>
+				))}
+			</SidebarMenu>
+		</SidebarGroup>
 	);
 }
