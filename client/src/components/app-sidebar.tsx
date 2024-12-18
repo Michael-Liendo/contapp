@@ -26,23 +26,6 @@ import { NavMain } from './nav-main';
 
 // This is sample data.
 const data = {
-	teams: [
-		{
-			name: 'Acme Inc',
-			logo: GalleryVerticalEnd,
-			plan: 'Enterprise',
-		},
-		{
-			name: 'Acme Corp.',
-			logo: AudioWaveform,
-			plan: 'Startup',
-		},
-		{
-			name: 'Evil Corp.',
-			logo: Command,
-			plan: 'Free',
-		},
-	],
 	navMain: [
 		{
 			title: 'Playground',
@@ -148,7 +131,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar collapsible='icon' {...props}>
 			<SidebarHeader>
-				<CompanySwitcher teams={data.teams} />
+				<CompanySwitcher />
 			</SidebarHeader>
 			<SidebarContent>
 				<NavMain items={data.navMain} />

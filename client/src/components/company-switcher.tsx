@@ -18,18 +18,13 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from '@/components/ui/sidebar';
+import { useCompanyContext } from '@/context/CompanyContext';
+import { Avatar, AvatarFallback } from '@radix-ui/react-avatar';
 
-export function CompanySwitcher({
-	teams,
-}: {
-	teams: {
-		name: string;
-		logo: React.ElementType;
-		plan: string;
-	}[];
-}) {
+export function CompanySwitcher() {
 	const { isMobile } = useSidebar();
-	const [activeTeam, setActiveTeam] = React.useState(teams[0]);
+	const { companies } = useCompanyContext();
+	const [activeTeam, setActiveTeam] = React.useState(companies[0]);
 
 	return (
 		<SidebarMenu>
@@ -41,13 +36,16 @@ export function CompanySwitcher({
 							className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
 						>
 							<div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
-								<activeTeam.logo className='size-4' />
+								<Avatar className='h-4 w-4 rounded-lg'>
+									<AvatarFallback className='flex items-center justify-center rounded-lg'>
+										{activeTeam.name.at(0)?.toUpperCase()}
+									</AvatarFallback>
+								</Avatar>
 							</div>
 							<div className='grid flex-1 text-left text-sm leading-tight'>
 								<span className='truncate font-semibold'>
 									{activeTeam.name}
 								</span>
-								<span className='truncate text-xs'>{activeTeam.plan}</span>
 							</div>
 							<ChevronsUpDown className='ml-auto' />
 						</SidebarMenuButton>
@@ -59,19 +57,22 @@ export function CompanySwitcher({
 						sideOffset={4}
 					>
 						<DropdownMenuLabel className='text-xs text-muted-foreground'>
-							Teams
+							Compañías
 						</DropdownMenuLabel>
-						{teams.map((team, index) => (
+						{companies.map((team, index) => (
 							<DropdownMenuItem
 								key={team.name}
 								onClick={() => setActiveTeam(team)}
 								className='gap-2 p-2'
 							>
 								<div className='flex size-6 items-center justify-center rounded-sm border'>
-									<team.logo className='size-4 shrink-0' />
+									<Avatar className='h-4 w-4 rounded-lg shrink-0'>
+										<AvatarFallback className='flex items-center justify-center rounded-lg'>
+											{team.name.at(0)?.toUpperCase()}
+										</AvatarFallback>
+									</Avatar>
 								</div>
 								{team.name}
-								<DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
 							</DropdownMenuItem>
 						))}
 						<DropdownMenuSeparator />
@@ -79,7 +80,9 @@ export function CompanySwitcher({
 							<div className='flex size-6 items-center justify-center rounded-md border bg-background'>
 								<Plus className='size-4' />
 							</div>
-							<div className='font-medium text-muted-foreground'>Add team</div>
+							<div className='font-medium text-muted-foreground'>
+								Agregar compañía
+							</div>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
