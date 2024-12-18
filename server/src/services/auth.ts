@@ -13,7 +13,7 @@ export default class Auth {
 			throw new UnauthorizedError('UnauthorizedError');
 		}
 
-		const { password } = user as Required<IUser>;
+		const { password, ...userWithoutPassword } = user as Required<IUser>;
 
 		const isCorrectPassword = await comparePassword(data.password, password);
 
@@ -21,7 +21,7 @@ export default class Auth {
 			throw new UnauthorizedError('UnauthorizedError');
 		}
 
-		const jwt = await Jwt.createToken(user);
+		const jwt = await Jwt.createToken({ id: userWithoutPassword.id });
 		return jwt;
 	}
 
@@ -31,7 +31,11 @@ export default class Auth {
 		const user = await Repository.user.getUserByEmail(email);
 
 		if (user) {
-			throw new BadRequestError('Select another email');
+			throw new BadRequestError('Email already exists', {
+				code: 'EMAIL_ALREADY_EXISTS',
+				path: 'email',
+				message: 'Email already exists',
+			});
 		}
 
 		const hashedPassword = await hashPassword(password);

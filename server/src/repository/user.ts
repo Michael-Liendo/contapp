@@ -10,7 +10,7 @@ export class User {
 	 * @returns string IUser
 	 */
 	static async getUserByEmail(email: string): Promise<IUser | undefined> {
-		const user = await users.where({ email }).first();
+		const [user] = await users.where({ email });
 		return user;
 	}
 
@@ -20,7 +20,7 @@ export class User {
 	 * @returns string IUser
 	 */
 	static async getUserByID(id: string): Promise<IUser | undefined> {
-		const user = await users.where({ id }).first();
+		const [user] = await users.where({ id });
 
 		return user;
 	}
