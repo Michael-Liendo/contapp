@@ -59,7 +59,7 @@ export function CompanySwitcher() {
 						<DropdownMenuLabel className='text-xs text-muted-foreground'>
 							Compañías
 						</DropdownMenuLabel>
-						{companies.map((team, index) => (
+						{companies.map((team) => (
 							<DropdownMenuItem
 								key={team.name}
 								onClick={() => setActiveTeam(team)}
