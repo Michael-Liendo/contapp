@@ -1,20 +1,17 @@
 'use client';
 
 import {
-	AudioWaveform,
 	BookOpen,
 	Bot,
-	Command,
 	Frame,
-	GalleryVerticalEnd,
 	PieChart,
 	Settings2,
 	SquareTerminal,
 } from 'lucide-react';
 
+import { CompanySwitcher } from '@/components/company-switcher';
 import { NavProjects } from '@/components/nav-projects';
 import { NavUser } from '@/components/nav-user';
-import { CompanySwitcher } from '@/components/company-switcher';
 import {
 	Sidebar,
 	SidebarContent,

@@ -1,11 +1,11 @@
 import Services from '@/services';
 import type { ICompany } from '@contapp/shared';
 import {
+	type ReactNode,
 	createContext,
 	useContext,
 	useEffect,
 	useState,
-	type ReactNode,
 } from 'react';
 
 interface CompanyContextType {

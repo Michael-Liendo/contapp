@@ -1,7 +1,6 @@
 'use client';
 
 import { ChevronsUpDown, Plus } from 'lucide-react';
-import * as React from 'react';
 
 import {
 	DropdownMenu,
@@ -9,7 +8,6 @@ import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
-	DropdownMenuShortcut,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {

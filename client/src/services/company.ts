@@ -31,7 +31,7 @@ export default class Company {
 		}
 	}
 
-	static async remove(id: string) {
+	static async remove(_id: string) {
 		try {
 			throw new Error('Not implemented');
 		} catch (error) {
