@@ -3,7 +3,7 @@ const Fetch = () => {
 		const defaultOptions: { Authorization?: string } = {};
 		const token = localStorage.getItem('token');
 		if (token) {
-			defaultOptions.Authorization = token;
+			defaultOptions.Authorization = `Bearer ${token}`;
 		}
 		const apiUrl = `${import.meta.env.VITE_API_URL}/api${url}`;
 		const requestOptions = {

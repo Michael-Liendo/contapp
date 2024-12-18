@@ -1,4 +1,4 @@
-import me from '../../controllers/User/me';
+import me from '../../controllers/user/me';
 import checkJwt from '../../middlewares/checkJwt';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';

@@ -21,3 +21,8 @@ export interface IError {
 	path: string;
 	message: string;
 }
+
+export interface IPagination {
+	page: number;
+	limit: number;
+}

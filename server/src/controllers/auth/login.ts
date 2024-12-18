@@ -1,21 +1,10 @@
-import validator from 'validator';
-
 import Services from '../../services';
-import { BadRequestError } from '../../utils/errorHandler';
 
 import type { IUserForLogin } from '@contapp/shared';
 import type { Reply, Request } from '../../types';
 
 export default async function login(request: Request, reply: Reply) {
 	const { email, password } = request.body as IUserForLogin;
-
-	if (!email || !password) {
-		throw new BadRequestError('Please provide all required fields');
-	}
-
-	if (!validator.isEmail(email)) {
-		throw new BadRequestError('Please provide a valid email address');
-	}
 
 	const user = await Services.auth.login({
 		email,

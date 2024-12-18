@@ -1,17 +1,31 @@
 import { StatusCodes } from 'http-status-codes';
 
-export abstract class ErrorWithDetails extends Error {
+export class ErrorWithDetails extends Error {
 	constructor(
 		message?: string,
-		public details?: unknown,
+		details?: { code: string; path: string; message: string },
+		stack?: string,
 	) {
 		super(message);
+		this.name = this.constructor.name;
+		this.statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
+		this.details = details;
+		this.stack = stack;
 	}
-	abstract statusCode: number;
+
+	statusCode: number;
+	details?: { code: string; path: string; message: string };
+	stack?: string;
+}
+
+export class InternalServerError extends ErrorWithDetails {
+	name = 'INTERNAL_SERVER_ERROR';
+	statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
 }
 
 export class BadRequestError extends ErrorWithDetails {
 	name = 'BAD_REQUEST';
+
 	statusCode = StatusCodes.BAD_REQUEST;
 }
 export class ConflictError extends ErrorWithDetails {

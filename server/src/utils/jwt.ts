@@ -7,7 +7,7 @@ export class Jwt {
 			jwt.sign(
 				payload,
 				process.env.JWT_PRIVATE_KEY as string,
-				{ expiresIn: '1h' },
+				{ expiresIn: '20d' },
 				(err, token) => {
 					if (err) {
 						reject(err);

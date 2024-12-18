@@ -1,9 +1,9 @@
-import login from '../../controllers/Auth/login';
-import register from '../../controllers/Auth/register';
-
 import { UserForRegisterSchema, UserLoginSchema } from '@contapp/shared';
-import type { FastifyInstance, RegisterOptions } from 'fastify';
+
+import { login, register } from '../../controllers/auth';
 import requestValidation from '../../utils/requestValidation';
+
+import type { FastifyInstance, RegisterOptions } from 'fastify';
 
 export default function auth(
 	fastify: FastifyInstance,

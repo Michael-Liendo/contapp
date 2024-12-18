@@ -14,7 +14,9 @@ function getUser(fastify: FastifyInstance, _: unknown, done: () => void) {
 }
 
 async function checkJwt(request: Request) {
-	const token = request.headers.authorization;
+	const authorization = request.headers.authorization;
+
+	const token = authorization?.split(' ')[1];
 
 	if (!token) {
 		throw new UnauthorizedError('Access denied Jwt is required');
