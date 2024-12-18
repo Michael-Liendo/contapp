@@ -82,7 +82,7 @@ export function NavUser() {
 						<DropdownMenuSeparator />
 						<DropdownMenuItem onClick={() => localStorage.removeItem('token')}>
 							<LogOut />
-							Log out
+							Cerrar sesión
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
