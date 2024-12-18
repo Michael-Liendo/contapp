@@ -11,7 +11,7 @@ export class Company {
 	 * @returns string ICompany
 	 */
 	static async getCompanyByID(id: string): Promise<ICompany | undefined> {
-		const company = await companies.where({ id }).first();
+		const [company] = await companies.where({ id });
 
 		return company;
 	}
@@ -38,7 +38,7 @@ export class Company {
 	 * @returns string id
 	 */
 	static async createCompany(company: ICompanyForCreate): Promise<string> {
-		const id = await companies.insert(company).returning('id').first();
+		const [id] = await companies.insert(company).returning('id');
 		if (!id) throw new InternalServerError('Error creating company');
 		return id.id;
 	}

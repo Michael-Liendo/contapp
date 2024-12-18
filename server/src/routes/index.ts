@@ -20,7 +20,8 @@ export default function routes(
 		return reply.code(error.statusCode || 500).send({
 			error: error.name || 'INTERNAL_SERVER_ERROR',
 			message: error.message,
-			details: error.details,
+			// todo: check if this is the right send the stack
+			details: error.stack,
 		});
 	});
 

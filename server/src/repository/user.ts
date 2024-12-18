@@ -27,12 +27,12 @@ export class User {
 
 	/**
 	 *  createUser - creates a user and returns the id
-	 * @param user IUserForRegister
+	 * @param userDTO IUserForRegister
 	 * @returns string id
 	 */
-	static async createUser(user: IUserForRegister): Promise<string> {
-		const id = await users.insert(user).returning('id').first();
-		if (!id) throw new InternalServerError('Error creating user');
-		return id.id;
+	static async createUser(userDTO: IUserForRegister): Promise<string> {
+		const [user] = await users.insert(userDTO).returning('id');
+		if (!user) throw new InternalServerError('Error creating user');
+		return user.id;
 	}
 }
