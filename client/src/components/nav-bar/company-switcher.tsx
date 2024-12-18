@@ -40,13 +40,13 @@ export function CompanySwitcher() {
 								<div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
 									<Avatar className='h-4 w-4 rounded-lg'>
 										<AvatarFallback className='flex items-center justify-center rounded-lg'>
-											{activeCompany.name.at(0)?.toUpperCase()}
+											{activeCompany?.name?.at(0)?.toUpperCase()}
 										</AvatarFallback>
 									</Avatar>
 								</div>
 								<div className='grid flex-1 text-left text-sm leading-tight'>
 									<span className='truncate font-semibold'>
-										{activeCompany.name}
+										{activeCompany?.name}
 									</span>
 								</div>
 								<ChevronsUpDown className='ml-auto' />
@@ -61,7 +61,7 @@ export function CompanySwitcher() {
 							<DropdownMenuLabel className='text-xs text-muted-foreground'>
 								Compañías
 							</DropdownMenuLabel>
-							{companies.map((company) => (
+							{companies?.map((company) => (
 								<DropdownMenuItem
 									key={company.id}
 									onClick={() => setActiveCompany(company)}

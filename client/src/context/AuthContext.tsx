@@ -7,6 +7,7 @@ export interface AuthContextProps {
 	setUser: (user: IUser) => void;
 	setToken: (token: string) => void;
 	user: IUser | undefined;
+	token: string | undefined;
 }
 
 export const AuthContext = createContext<AuthContextProps | undefined>(
@@ -16,11 +17,11 @@ export const AuthContext = createContext<AuthContextProps | undefined>(
 export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 	const [user, setUser] = useState<IUser>();
 	const [loading, setLoading] = useState(true);
+	const token = localStorage.getItem('token');
 
 	const checkUser = async () => {
 		setLoading(true);
 		try {
-			const token = await localStorage.getItem('token');
 			if (token) {
 				const user = await Services.user.me();
 				setUser(user);
@@ -47,7 +48,13 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ isLoading: loading, user, setUser: updateUser, setToken }}
+			value={{
+				isLoading: loading,
+				user,
+				setUser: updateUser,
+				setToken,
+				token: token ?? undefined,
+			}}
 		>
 			{children}
 		</AuthContext.Provider>

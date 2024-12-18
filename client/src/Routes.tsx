@@ -1,30 +1,57 @@
-import { Routes as ReactRoutes, Route } from 'react-router';
+import {
+	BrowserRouter as Router,
+	Routes as ReactRoutes,
+	Route,
+} from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
+
 import useAuth from './hooks/useAuth';
 import HomeApp from './pages/(app)/Home';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
+import { CompanyProvider } from './context/CompanyContext';
 
 export enum PublicRoutesEnum {}
 
 export enum AuthRoutesEnum {
-	login = '/',
+	login = '/login',
 	Signup = '/signup',
-	Welcome = '/welcome',
+	Welcome = '/',
 }
 
 export enum PrivateRoutesEnum {
 	Home = '/home',
 }
 
+const PrivateRoutesWrapper = () => {
+	const { token } = useAuth();
+	return token ? (
+		<CompanyProvider>
+			<Outlet />
+		</CompanyProvider>
+	) : (
+		<Navigate to='/login' />
+	);
+};
+
+const AuthRoutesWrapper = () => {
+	const { token } = useAuth();
+	return !token ? <Outlet /> : <Navigate to={'/home'} />;
+};
+
 export function Routes() {
-	const { user } = useAuth();
 	return (
-		<ReactRoutes>
-			{user
-				? PrivateRoutes.map((route) => route)
-				: AuthRoutes.map((route) => route)}
-			{PublicRoutes.map((route) => route)}
-		</ReactRoutes>
+		<Router>
+			<ReactRoutes>
+				<Route element={<PrivateRoutesWrapper />}>
+					{PrivateRoutes.map((route) => route)}
+				</Route>
+				<Route element={<AuthRoutesWrapper />}>
+					{AuthRoutes.map((route) => route)}
+				</Route>
+				{PublicRoutes.map((route) => route)}
+			</ReactRoutes>
+		</Router>
 	);
 }
 
@@ -34,7 +61,6 @@ const PrivateRoutes: JSX.Element[] = [
 		path={PrivateRoutesEnum.Home}
 		Component={HomeApp}
 	/>,
-	<Route key={'no-found'} path={'*'} Component={() => <>No Found</>} />,
 ];
 
 const AuthRoutes: JSX.Element[] = [
@@ -50,4 +76,6 @@ const AuthRoutes: JSX.Element[] = [
 	/>,
 ];
 
-const PublicRoutes: JSX.Element[] = [];
+const PublicRoutes: JSX.Element[] = [
+	<Route key={'no-found'} path={'*'} Component={() => <>No Found</>} />,
+];
