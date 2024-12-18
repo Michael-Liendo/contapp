@@ -30,13 +30,13 @@ const PrivateRoutesWrapper = () => {
 			<Outlet />
 		</CompanyProvider>
 	) : (
-		<Navigate to='/login' />
+		<Navigate to={AuthRoutesEnum.login} />
 	);
 };
 
 const AuthRoutesWrapper = () => {
 	const { token } = useAuth();
-	return !token ? <Outlet /> : <Navigate to={'/home'} />;
+	return !token ? <Outlet /> : <Navigate to={PrivateRoutesEnum.Home} />;
 };
 
 export function Routes() {

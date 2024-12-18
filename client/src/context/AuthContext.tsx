@@ -18,7 +18,9 @@ export const AuthContext = createContext<AuthContextProps | undefined>(
 export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 	const [user, setUser] = useState<IUser>();
 	const [loading, setLoading] = useState(true);
-	const token = localStorage.getItem('token');
+	const [token, setToken] = useState<string | undefined>(
+		localStorage.getItem('token') ?? undefined,
+	);
 
 	const checkUser = async () => {
 		setLoading(true);
@@ -36,20 +38,22 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 
 	useEffect(() => {
 		checkUser();
-	}, []);
+	}, [token]);
 
 	const updateUser = async (user: IUser) => {
 		await localStorage.set('user', JSON.stringify(user));
 		setUser(user);
 	};
 
-	const setToken = async (token: string) => {
+	const updateToken = async (token: string) => {
 		localStorage.setItem('token', token);
+		setToken(token);
 	};
 
 	const logout = async () => {
 		localStorage.removeItem('token');
 		setUser(undefined);
+		setToken(undefined);
 	};
 
 	return (
@@ -58,7 +62,7 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 				isLoading: loading,
 				user,
 				token: token ?? undefined,
-				setToken,
+				setToken: updateToken,
 				setUser: updateUser,
 				logout,
 			}}
