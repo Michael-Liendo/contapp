@@ -18,7 +18,6 @@ import {
 } from '@/components/ui/sidebar';
 import { useCompanyContext } from '@/context/CompanyContext';
 import { Avatar, AvatarFallback } from '@radix-ui/react-avatar';
-import { cn } from '@/lib/utils';
 
 export function CompanySwitcher() {
 	const { isMobile } = useSidebar();
