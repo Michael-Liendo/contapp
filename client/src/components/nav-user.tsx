@@ -49,7 +49,7 @@ export function NavUser() {
 							</Avatar>
 							<div className='grid flex-1 text-left text-sm leading-tight'>
 								<span className='truncate font-semibold'>
-									{user?.first_name}
+									{user?.first_name} {user?.last_name}
 								</span>
 								<span className='truncate text-xs'>{user?.email}</span>
 							</div>
@@ -66,11 +66,14 @@ export function NavUser() {
 							<div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
 								<Avatar className='h-8 w-8 rounded-lg'>
 									<AvatarImage alt={user?.first_name} />
-									<AvatarFallback className='rounded-lg'>CN</AvatarFallback>
+									<AvatarFallback className='rounded-lg'>
+										{user?.first_name.at(0)}
+										{user?.last_name.at(0)}
+									</AvatarFallback>
 								</Avatar>
 								<div className='grid flex-1 text-left text-sm leading-tight'>
 									<span className='truncate font-semibold'>
-										{user?.first_name}
+										{user?.first_name} {user?.last_name}
 									</span>
 									<span className='truncate text-xs'>{user?.email}</span>
 								</div>
@@ -79,27 +82,12 @@ export function NavUser() {
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
 							<DropdownMenuItem>
-								<Sparkles />
-								Upgrade to Pro
-							</DropdownMenuItem>
-						</DropdownMenuGroup>
-						<DropdownMenuSeparator />
-						<DropdownMenuGroup>
-							<DropdownMenuItem>
 								<BadgeCheck />
 								Account
 							</DropdownMenuItem>
-							<DropdownMenuItem>
-								<CreditCard />
-								Billing
-							</DropdownMenuItem>
-							<DropdownMenuItem>
-								<Bell />
-								Notifications
-							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>
+						<DropdownMenuItem onClick={() => localStorage.removeItem('token')}>
 							<LogOut />
 							Log out
 						</DropdownMenuItem>
