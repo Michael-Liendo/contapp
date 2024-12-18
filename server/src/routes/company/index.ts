@@ -3,7 +3,7 @@ import checkJwt from '../../middlewares/checkJwt';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
 
-export default function user(
+export default function company(
 	fastify: FastifyInstance,
 	_: RegisterOptions,
 	done: () => void,
