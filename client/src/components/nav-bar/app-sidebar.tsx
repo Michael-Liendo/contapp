@@ -15,22 +15,65 @@ import {
 	SidebarMenuItem,
 	SidebarRail,
 } from '@/components/ui/sidebar';
-import { SquareTerminal } from 'lucide-react';
+import { PrivateRoutesEnum } from '@/Routes';
+import {
+	BookUser,
+	ClipboardMinus,
+	History,
+	Home,
+	Notebook,
+} from 'lucide-react';
 
-// This is sample data.
 const data = {
 	navMain: [
 		{
-			title: 'Contabilidad',
+			title: 'General',
 			items: [
 				{
-					title: 'Asiento contables',
+					title: 'Inicio',
+					url: PrivateRoutesEnum.Home,
+					icon: Home,
+				},
+			],
+		},
+
+		{
+			title: 'Operaciones Contables',
+			items: [
+				{
+					title: 'Registrar Asiento Contable',
 					url: '#',
-					icon: SquareTerminal,
+					icon: Notebook,
 				},
 				{
-					title: 'Project Structure',
+					title: 'Historial de Asientos',
 					url: '#',
+					icon: History,
+				},
+			],
+		},
+		{
+			title: 'Reportes',
+			items: [
+				{
+					title: 'Balance de Comprobación',
+					url: '#',
+					icon: ClipboardMinus,
+				},
+				{
+					title: 'Exportar a Excel',
+					url: '#',
+					icon: Notebook,
+				},
+			],
+		},
+		{
+			title: 'Configuración Contable',
+			items: [
+				{
+					title: 'Plan de Cuentas',
+					url: '#',
+					icon: BookUser,
 				},
 			],
 		},
