@@ -1,11 +1,9 @@
-'use client';
-
 import {
 	Folder,
 	Forward,
-	type LucideIcon,
 	MoreHorizontal,
 	Trash2,
+	type LucideIcon,
 } from 'lucide-react';
 
 import {
