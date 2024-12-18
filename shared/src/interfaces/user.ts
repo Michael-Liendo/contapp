@@ -1,9 +1,9 @@
+import type { z } from 'zod';
 import type {
 	UserForRegisterSchema,
 	UserLoginSchema,
 	UserSchema,
 } from '../schema';
-import type { z } from 'zod';
 
 export interface IUserForLogin extends z.infer<typeof UserLoginSchema> {
 	email: string;
