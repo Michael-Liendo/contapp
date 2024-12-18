@@ -1,8 +1,9 @@
 import Auth from './auth';
-import User from './user';
 import Company from './company';
+import User from './user';
 
 export default class Services {
 	static auth = Auth;
 	static user = User;
+	static company = Company;
 }

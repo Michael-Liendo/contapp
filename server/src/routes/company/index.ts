@@ -1,4 +1,4 @@
-import me from '../../controllers/user/me';
+import { findAll } from '../../controllers/company';
 import checkJwt from '../../middlewares/checkJwt';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
@@ -12,8 +12,8 @@ export default function company(
 
 	fastify.route({
 		method: 'GET',
-		url: '/me',
-		handler: me,
+		url: '/findAll',
+		handler: findAll,
 	});
 
 	done();
