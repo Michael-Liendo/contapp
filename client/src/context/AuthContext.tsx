@@ -6,6 +6,7 @@ export interface AuthContextProps {
 	isLoading: boolean;
 	setUser: (user: IUser) => void;
 	setToken: (token: string) => void;
+	logout: () => void;
 	user: IUser | undefined;
 	token: string | undefined;
 }
@@ -46,14 +47,20 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 		localStorage.setItem('token', token);
 	};
 
+	const logout = async () => {
+		localStorage.removeItem('token');
+		setUser(undefined);
+	};
+
 	return (
 		<AuthContext.Provider
 			value={{
 				isLoading: loading,
 				user,
-				setUser: updateUser,
-				setToken,
 				token: token ?? undefined,
+				setToken,
+				setUser: updateUser,
+				logout,
 			}}
 		>
 			{children}

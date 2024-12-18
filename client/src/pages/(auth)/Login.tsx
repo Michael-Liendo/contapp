@@ -10,6 +10,9 @@ import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
 
 export default function Login() {
+	const { setToken } = useAuth();
+	const navigate = useNavigate();
+
 	const { values, errors, handleChange, handleSubmit } = useFormik({
 		initialValues: { email: 'test@michaelliendo.com', password: '1234' },
 		validationSchema: toFormikValidationSchema(UserLoginSchema),
@@ -26,9 +29,6 @@ export default function Login() {
 			}
 		},
 	});
-
-	const { setToken } = useAuth();
-	const navigate = useNavigate();
 
 	return (
 		<div className="min-h-screen relative flex justify-center items-center bg-no-repeat bg-cover bg-slate-800 bg-[url('https://images.unsplash.com/photo-1720712738661-9c0dcb92f06d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
@@ -49,6 +49,7 @@ export default function Login() {
 									type='email'
 									placeholder='example@email.com'
 									className='w-full'
+									autoComplete='email'
 									name='email'
 									label='Email Address'
 									value={values.email}
@@ -61,6 +62,7 @@ export default function Login() {
 									className='w-full'
 									name='password'
 									type='password'
+									autoComplete='current-password'
 									label='Password'
 									placeholder='* * * * * * *'
 									value={values.password}

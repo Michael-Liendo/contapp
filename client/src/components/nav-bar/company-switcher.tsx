@@ -40,7 +40,7 @@ export function CompanySwitcher() {
 								<div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
 									<Avatar className='h-4 w-4 rounded-lg'>
 										<AvatarFallback className='flex items-center justify-center rounded-lg'>
-											{activeCompany?.name?.at(0)?.toUpperCase()}
+											{activeCompany?.name.at(0)?.toUpperCase()}
 										</AvatarFallback>
 									</Avatar>
 								</div>
