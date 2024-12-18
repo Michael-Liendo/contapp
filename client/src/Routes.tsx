@@ -1,15 +1,15 @@
 import {
-	BrowserRouter as Router,
 	Routes as ReactRoutes,
 	Route,
+	BrowserRouter as Router,
 } from 'react-router-dom';
 import { Navigate, Outlet } from 'react-router-dom';
 
+import { CompanyProvider } from './context/CompanyContext';
 import useAuth from './hooks/useAuth';
 import HomeApp from './pages/(app)/Home';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
-import { CompanyProvider } from './context/CompanyContext';
 
 export enum PublicRoutesEnum {}
 

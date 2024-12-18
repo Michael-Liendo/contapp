@@ -2,6 +2,7 @@
 
 import { BadgeCheck, ChevronsUpDown, LogOut } from 'lucide-react';
 
+import { AuthRoutesEnum } from '@/Routes';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
 	DropdownMenu,
@@ -20,7 +21,6 @@ import {
 } from '@/components/ui/sidebar';
 import useAuth from '@/hooks/useAuth';
 import { useNavigate } from 'react-router';
-import { AuthRoutesEnum } from '@/Routes';
 
 export function NavUser() {
 	const { isMobile } = useSidebar();

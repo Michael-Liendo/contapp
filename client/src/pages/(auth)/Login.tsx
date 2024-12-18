@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
+import { PrivateRoutesEnum } from '@/Routes';
 import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,7 +9,6 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
-import { PrivateRoutesEnum } from '@/Routes';
 
 export default function Login() {
 	const { setToken } = useAuth();

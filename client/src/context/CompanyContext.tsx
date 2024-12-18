@@ -1,4 +1,3 @@
-import useAuth from '@/hooks/useAuth';
 import Services from '@/services';
 import type { ICompany, ICompanyForCreate } from '@contapp/shared';
 import {
