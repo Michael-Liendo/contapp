@@ -1,12 +1,7 @@
-import { DataTable } from '@/components/data-table';
-import { linksColumns } from '@/components/datagrids/links/links-columns';
 import { MainNav } from '@/components/main-nav';
 import { UserNav } from '@/components/user-nav';
-import useLinks from '@/hooks/useLinks';
 
 export default function HomeApp() {
-	const { links } = useLinks();
-
 	return (
 		<>
 			{/* todo: move into a layout */}
@@ -26,7 +21,6 @@ export default function HomeApp() {
 						<h2 className='text-2xl font-bold tracking-tight'>Welcome back!</h2>
 					</div>
 				</div>
-				<DataTable data={links} columns={linksColumns} />
 			</div>
 		</>
 	);

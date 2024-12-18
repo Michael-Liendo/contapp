@@ -23,9 +23,6 @@ import {
 	TableRow,
 } from './ui/table';
 
-import { DataTablePagination } from './datagrids/links/links-table-pagination';
-import { DataTableToolbar } from './datagrids/links/links-table-toolbar';
-
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
@@ -67,7 +64,7 @@ export function DataTable<TData, TValue>({
 
 	return (
 		<div className='space-y-4'>
-			<DataTableToolbar table={table} />
+			{/* <DataTableToolbar table={table} /> */}
 			<div className='rounded-md border'>
 				<Table>
 					<TableHeader>
@@ -118,7 +115,7 @@ export function DataTable<TData, TValue>({
 					</TableBody>
 				</Table>
 			</div>
-			<DataTablePagination table={table} />
+			{/* <DataTablePagination table={table} /> */}
 		</div>
 	);
 }
