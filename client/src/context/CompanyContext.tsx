@@ -1,5 +1,6 @@
+import useAuth from '@/hooks/useAuth';
 import Services from '@/services';
-import type { ICompany } from '@contapp/shared';
+import type { ICompany, ICompanyForCreate } from '@contapp/shared';
 import {
 	type ReactNode,
 	createContext,
@@ -12,7 +13,7 @@ interface CompanyContextType {
 	companies: ICompany[];
 	activeCompany: ICompany;
 	setActiveCompany: (company: ICompany) => void;
-	create: (company: ICompany) => void;
+	create: (company: ICompanyForCreate) => void;
 	removeCompany: (id: string) => void;
 }
 
@@ -27,7 +28,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 	const [companies, setCompanies] = useState<ICompany[]>([]);
 	const [activeCompany, setActiveCompany] = useState<ICompany>(companies[0]);
 
-	async function create(company: ICompany) {
+	async function create(company: ICompanyForCreate) {
 		try {
 			setLoading({ ...loading, create: true });
 			const newCompany = await Services.company.create(company);
