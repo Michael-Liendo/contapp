@@ -37,7 +37,7 @@ export default function Login() {
 			<div className='flex justify-center items-center z-20'>
 				<div className='w-full'>
 					<h1 className='text-6xl text-center font-bold text-white mb-16'>
-						Contapp
+						ContApp
 					</h1>
 
 					<Card className='w-96'>
