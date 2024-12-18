@@ -10,7 +10,7 @@ import {
 
 interface CompanyContextType {
 	companies: ICompany[];
-	activeCompany: ICompany;
+	activeCompany: ICompany | undefined;
 	setActiveCompany: (company: ICompany) => void;
 	create: (company: ICompanyForCreate) => void;
 	removeCompany: (id: string) => void;
