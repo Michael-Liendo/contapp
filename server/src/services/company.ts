@@ -1,4 +1,4 @@
-import type { ICompany } from '@contapp/shared';
+import type { ICompany, ICompanyForCreate } from '@contapp/shared';
 import Repository from '../repository';
 
 export default class Company {
@@ -14,7 +14,7 @@ export default class Company {
 		return companies;
 	}
 
-	static async create(company: ICompany): Promise<string> {
+	static async create(company: ICompanyForCreate): Promise<string> {
 		const id = await Repository.company.createCompany(company);
 
 		return id;

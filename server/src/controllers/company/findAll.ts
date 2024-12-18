@@ -1,10 +1,11 @@
 import Services from '../../services';
 
-import type { ICompany } from '@contapp/shared';
 import type { Reply, Request } from '../../types';
 
-export default async function findAll(request: Request): Promise<ICompany[]> {
+export default async function findAll(request: Request, reply: Reply) {
 	const companies = await Services.company.getAll(request?.user?.id as string);
 
-	return companies;
+	return reply
+		.code(200)
+		.send({ success: true, message: 'Ok', data: { companies } });
 }

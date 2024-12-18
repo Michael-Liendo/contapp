@@ -1,4 +1,5 @@
-import type { ICompany } from '@contapp/shared';
+import type { ICompany, ICompanyForCreate } from '@contapp/shared';
+import { InternalServerError } from '../utils/errorHandler';
 import database from './database';
 
 const companies = database<ICompany>('companies');
@@ -30,8 +31,9 @@ export class Company {
 	 * @param company ICompany
 	 * @returns string id
 	 */
-	static async createCompany(company: ICompany): Promise<string> {
+	static async createCompany(company: ICompanyForCreate): Promise<string> {
 		const id = await companies.insert(company).returning('id').first();
+		if (!id) throw new InternalServerError('Error creating company');
 		return id.id;
 	}
 

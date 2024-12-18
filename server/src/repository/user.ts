@@ -1,6 +1,6 @@
 import type { IUser, IUserForRegister } from '@contapp/shared';
-import database from './database';
 import { InternalServerError } from '../utils/errorHandler';
+import database from './database';
 
 const users = database<IUser>('users');
 export class User {
