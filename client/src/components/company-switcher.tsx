@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/sidebar';
 import { useCompanyContext } from '@/context/CompanyContext';
 import { Avatar, AvatarFallback } from '@radix-ui/react-avatar';
+import { cn } from '@/lib/utils';
 
 export function CompanySwitcher() {
 	const { isMobile } = useSidebar();
@@ -58,17 +59,15 @@ export function CompanySwitcher() {
 						</DropdownMenuLabel>
 						{companies.map((company) => (
 							<DropdownMenuItem
-								key={company.name}
+								key={company.id}
 								onClick={() => setActiveCompany(company)}
 								className='gap-2 p-2'
 							>
-								<div className='flex size-6 items-center justify-center rounded-sm border'>
-									<Avatar className='h-4 w-4 rounded-lg shrink-0'>
-										<AvatarFallback className='flex items-center justify-center rounded-lg'>
-											{company.name.at(0)?.toUpperCase()}
-										</AvatarFallback>
-									</Avatar>
-								</div>
+								<Avatar className='size-6 border flex items-center justify-center rounded-sm'>
+									<AvatarFallback>
+										{company.name.at(0)?.toUpperCase()}
+									</AvatarFallback>
+								</Avatar>
 								{company.name}
 							</DropdownMenuItem>
 						))}
