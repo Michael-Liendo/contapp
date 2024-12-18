@@ -11,7 +11,7 @@ import Services from '../../services';
 
 export default function Login() {
 	const { values, errors, handleChange, handleSubmit } = useFormik({
-		initialValues: { email: '', password: '' },
+		initialValues: { email: 'test@michaelliendo.com', password: '1234' },
 		validationSchema: toFormikValidationSchema(UserLoginSchema),
 		validateOnChange: false,
 		validateOnBlur: false,
