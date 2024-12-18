@@ -4,10 +4,16 @@ export abstract class ErrorWithDetails extends Error {
 	constructor(
 		message?: string,
 		public details?: unknown,
+		public stack?: string,
 	) {
 		super(message);
 	}
 	abstract statusCode: number;
+}
+
+export class InternalServerError extends ErrorWithDetails {
+	name = 'INTERNAL_SERVER_ERROR';
+	statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
 }
 
 export class BadRequestError extends ErrorWithDetails {

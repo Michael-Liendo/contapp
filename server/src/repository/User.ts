@@ -1,6 +1,8 @@
 import type { IUser, IUserForRegister } from '@contapp/shared';
 import database from './database';
+import { InternalServerError } from '../utils/errorHandler';
 
+const users = database<IUser>('users');
 export class User {
 	/**
 	 *  getUserByEmail - get a user with the email
@@ -8,7 +10,7 @@ export class User {
 	 * @returns string IUser
 	 */
 	static async getUserByEmail(email: string): Promise<IUser | undefined> {
-		const user = await database<IUser>('users').where({ email }).first();
+		const user = await users.where({ email }).first();
 		return user;
 	}
 
@@ -18,7 +20,7 @@ export class User {
 	 * @returns string IUser
 	 */
 	static async getUserByID(id: string): Promise<IUser | undefined> {
-		const user = await database<IUser>('users').where({ id }).first();
+		const user = await users.where({ id }).first();
 
 		return user;
 	}
@@ -29,7 +31,8 @@ export class User {
 	 * @returns string id
 	 */
 	static async createUser(user: IUserForRegister): Promise<string> {
-		const [id] = await database<IUser>('users').insert(user).returning('id');
+		const id = await users.insert(user).returning('id').first();
+		if (!id) throw new InternalServerError('Error creating user');
 		return id.id;
 	}
 }
