@@ -23,8 +23,7 @@ import { Avatar, AvatarFallback } from '@radix-ui/react-avatar';
 
 export function CompanySwitcher() {
 	const { isMobile } = useSidebar();
-	const { companies } = useCompanyContext();
-	const [activeTeam, setActiveTeam] = React.useState(companies[0]);
+	const { companies, activeCompany, setActiveCompany } = useCompanyContext();
 
 	return (
 		<SidebarMenu>
@@ -38,13 +37,13 @@ export function CompanySwitcher() {
 							<div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
 								<Avatar className='h-4 w-4 rounded-lg'>
 									<AvatarFallback className='flex items-center justify-center rounded-lg'>
-										{activeTeam.name.at(0)?.toUpperCase()}
+										{activeCompany.name.at(0)?.toUpperCase()}
 									</AvatarFallback>
 								</Avatar>
 							</div>
 							<div className='grid flex-1 text-left text-sm leading-tight'>
 								<span className='truncate font-semibold'>
-									{activeTeam.name}
+									{activeCompany.name}
 								</span>
 							</div>
 							<ChevronsUpDown className='ml-auto' />
@@ -59,20 +58,20 @@ export function CompanySwitcher() {
 						<DropdownMenuLabel className='text-xs text-muted-foreground'>
 							Compañías
 						</DropdownMenuLabel>
-						{companies.map((team) => (
+						{companies.map((company) => (
 							<DropdownMenuItem
-								key={team.name}
-								onClick={() => setActiveTeam(team)}
+								key={company.name}
+								onClick={() => setActiveCompany(company)}
 								className='gap-2 p-2'
 							>
 								<div className='flex size-6 items-center justify-center rounded-sm border'>
 									<Avatar className='h-4 w-4 rounded-lg shrink-0'>
 										<AvatarFallback className='flex items-center justify-center rounded-lg'>
-											{team.name.at(0)?.toUpperCase()}
+											{company.name.at(0)?.toUpperCase()}
 										</AvatarFallback>
 									</Avatar>
 								</div>
-								{team.name}
+								{company.name}
 							</DropdownMenuItem>
 						))}
 						<DropdownMenuSeparator />

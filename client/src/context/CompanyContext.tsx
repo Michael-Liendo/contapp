@@ -10,6 +10,8 @@ import {
 
 interface CompanyContextType {
 	companies: ICompany[];
+	activeCompany: ICompany;
+	setActiveCompany: (company: ICompany) => void;
 	create: (company: ICompany) => void;
 	removeCompany: (id: string) => void;
 }
@@ -23,6 +25,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 		get: false,
 	});
 	const [companies, setCompanies] = useState<ICompany[]>([]);
+	const [activeCompany, setActiveCompany] = useState<ICompany>(companies[0]);
 
 	async function create(company: ICompany) {
 		try {
@@ -55,6 +58,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 			setLoading({ ...loading, get: true });
 			const companies = await Services.company.getAll();
 			setCompanies(companies);
+			setActiveCompany(companies[0]);
 		} catch (e) {
 			console.log(e);
 		} finally {
@@ -67,7 +71,15 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 	}, []);
 
 	return (
-		<CompanyContext.Provider value={{ companies, create, removeCompany }}>
+		<CompanyContext.Provider
+			value={{
+				companies,
+				activeCompany,
+				setActiveCompany,
+				create,
+				removeCompany,
+			}}
+		>
 			{children}
 		</CompanyContext.Provider>
 	);
