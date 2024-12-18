@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronsUpDown, Plus } from 'lucide-react';
+import { ChevronsUpDown, Cog, Plus } from 'lucide-react';
 
 import {
 	DropdownMenu,
@@ -77,6 +77,14 @@ export function CompanySwitcher() {
 							</div>
 							<div className='font-medium text-muted-foreground'>
 								Agregar compañía
+							</div>
+						</DropdownMenuItem>
+						<DropdownMenuItem className='gap-2 p-2'>
+							<div className='flex size-6 items-center justify-center rounded-md border bg-background'>
+								<Cog className='size-4' />
+							</div>
+							<div className='font-medium text-muted-foreground'>
+								Manejar compañías
 							</div>
 						</DropdownMenuItem>
 					</DropdownMenuContent>

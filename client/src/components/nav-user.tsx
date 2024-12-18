@@ -75,13 +75,13 @@ export function NavUser() {
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
 							<DropdownMenuItem>
-								<BadgeCheck />
+								<BadgeCheck className='size-4 mr-1' />
 								Account
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem onClick={() => localStorage.removeItem('token')}>
-							<LogOut />
+							<LogOut className='size-4 mr-1' />
 							Cerrar sesión
 						</DropdownMenuItem>
 					</DropdownMenuContent>
