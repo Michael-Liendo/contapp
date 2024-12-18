@@ -1,125 +1,38 @@
 'use client';
 
-import {
-	BookOpen,
-	Bot,
-	Frame,
-	PieChart,
-	Settings2,
-	SquareTerminal,
-} from 'lucide-react';
-
 import { CompanySwitcher } from '@/components/nav-bar/company-switcher';
-import { NavProjects } from '@/components/nav-bar/nav-projects';
 import { NavUser } from '@/components/nav-bar/nav-user';
 import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
+	SidebarGroup,
+	SidebarGroupContent,
+	SidebarGroupLabel,
 	SidebarHeader,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
 	SidebarRail,
 } from '@/components/ui/sidebar';
-import { NavMain } from './nav-main';
+import { SquareTerminal } from 'lucide-react';
 
 // This is sample data.
 const data = {
 	navMain: [
 		{
-			title: 'Playground',
-			url: '#',
-			icon: SquareTerminal,
-			isActive: true,
+			title: 'Contabilidad',
 			items: [
 				{
-					title: 'History',
+					title: 'Asiento contables',
 					url: '#',
+					icon: SquareTerminal,
 				},
 				{
-					title: 'Starred',
-					url: '#',
-				},
-				{
-					title: 'Settings',
+					title: 'Project Structure',
 					url: '#',
 				},
 			],
-		},
-		{
-			title: 'Models',
-			url: '#',
-			icon: Bot,
-			items: [
-				{
-					title: 'Genesis',
-					url: '#',
-				},
-				{
-					title: 'Explorer',
-					url: '#',
-				},
-				{
-					title: 'Quantum',
-					url: '#',
-				},
-			],
-		},
-		{
-			title: 'Documentation',
-			url: '#',
-			icon: BookOpen,
-			items: [
-				{
-					title: 'Introduction',
-					url: '#',
-				},
-				{
-					title: 'Get Started',
-					url: '#',
-				},
-				{
-					title: 'Tutorials',
-					url: '#',
-				},
-				{
-					title: 'Changelog',
-					url: '#',
-				},
-			],
-		},
-		{
-			title: 'Settings',
-			url: '#',
-			icon: Settings2,
-			items: [
-				{
-					title: 'General',
-					url: '#',
-				},
-				{
-					title: 'Team',
-					url: '#',
-				},
-				{
-					title: 'Billing',
-					url: '#',
-				},
-				{
-					title: 'Limits',
-					url: '#',
-				},
-			],
-		},
-	],
-	projects: [
-		{
-			name: 'Design Engineering',
-			url: '#',
-			icon: Frame,
-		},
-		{
-			name: 'Sales & Marketing',
-			url: '#',
-			icon: PieChart,
 		},
 	],
 };
@@ -131,8 +44,25 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				<CompanySwitcher />
 			</SidebarHeader>
 			<SidebarContent>
-				<NavMain items={data.navMain} />
-				<NavProjects projects={data.projects} />
+				{data.navMain.map((item) => (
+					<SidebarGroup key={item.title}>
+						<SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+						<SidebarGroupContent>
+							<SidebarMenu>
+								{item.items.map((item) => (
+									<SidebarMenuItem key={item.title}>
+										<SidebarMenuButton asChild>
+											<a href={item.url}>
+												{item.icon && <item.icon />}
+												<span>{item.title}</span>
+											</a>
+										</SidebarMenuButton>
+									</SidebarMenuItem>
+								))}
+							</SidebarMenu>
+						</SidebarGroupContent>
+					</SidebarGroup>
+				))}
 			</SidebarContent>
 			<SidebarFooter>
 				<NavUser />
