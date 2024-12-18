@@ -1,4 +1,4 @@
-import type { ICompany, ICompanyForCreate } from '@contapp/shared';
+import type { ICompany, ICompanyForCreate, IPagination } from '@contapp/shared';
 import Repository from '../repository';
 
 export default class Company {
@@ -8,8 +8,14 @@ export default class Company {
 		return company;
 	}
 
-	static async getAll(user_id: string): Promise<ICompany[]> {
-		const companies = await Repository.company.getUserCompanies(user_id);
+	static async getAll(
+		user_id: string,
+		pagination: IPagination,
+	): Promise<ICompany[]> {
+		const companies = await Repository.company.getUserCompanies(
+			user_id,
+			pagination,
+		);
 
 		return companies;
 	}

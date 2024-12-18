@@ -1,4 +1,4 @@
-import type { ICompany, ICompanyForCreate } from '@contapp/shared';
+import type { ICompany, ICompanyForCreate, IPagination } from '@contapp/shared';
 import { InternalServerError } from '../utils/errorHandler';
 import database from './database';
 
@@ -21,8 +21,14 @@ export class Company {
 	 * @param id string
 	 * @returns string ICompany[]
 	 */
-	static async getUserCompanies(user_id: string): Promise<ICompany[]> {
-		const allCompanies = await companies.where({ user_id });
+	static async getUserCompanies(
+		user_id: string,
+		pagination: IPagination,
+	): Promise<ICompany[]> {
+		const allCompanies = await companies
+			.where({ user_id })
+			.limit(pagination.limit)
+			.offset(pagination.page * pagination.limit);
 		return allCompanies;
 	}
 
