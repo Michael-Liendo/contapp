@@ -2,8 +2,6 @@ import type { ICompany, ICompanyForCreate, IPagination } from '@contapp/shared';
 import { InternalServerError } from '../utils/errorHandler';
 import database from './database';
 
-const companies = database<ICompany>('companies');
-
 export class Company {
 	/**
 	 *  getCompanyByID - get a company with the ID
@@ -11,7 +9,7 @@ export class Company {
 	 * @returns string ICompany
 	 */
 	static async getCompanyByID(id: string): Promise<ICompany | undefined> {
-		const [company] = await companies.where({ id });
+		const [company] = await database<ICompany>('companies').where({ id });
 
 		return company;
 	}
@@ -25,22 +23,25 @@ export class Company {
 		user_id: string,
 		pagination: IPagination,
 	): Promise<ICompany[]> {
-		const allCompanies = await companies
+		const allCompanies = await database<ICompany>('companies')
 			.where({ user_id })
 			.limit(pagination.limit)
-			.offset(pagination.page * pagination.limit);
+			.offset((pagination.page - 1) * pagination.limit);
 		return allCompanies;
 	}
 
 	/**
 	 *  createCompany - creates a company and returns the id
-	 * @param company ICompany
+	 * @param companyDTO ICompany
 	 * @returns string id
 	 */
-	static async createCompany(company: ICompanyForCreate): Promise<string> {
-		const [id] = await companies.insert(company).returning('id');
-		if (!id) throw new InternalServerError('Error creating company');
-		return id.id;
+	static async createCompany(companyDTO: ICompanyForCreate): Promise<ICompany> {
+		const [company] = await database<ICompany>('companies')
+			.insert(companyDTO)
+			.returning('*');
+
+		if (!company) throw new InternalServerError('Error creating company');
+		return company;
 	}
 
 	/**
@@ -50,7 +51,9 @@ export class Company {
 	 * @returns string id
 	 */
 	static async updateCompany(id: string, company: ICompany): Promise<string> {
-		const updatedCompany = await companies.where({ id }).update(company);
+		const updatedCompany = await database<ICompany>('companies')
+			.where({ id })
+			.update(company);
 		if (!updatedCompany) throw new Error('Error updating company');
 		return id;
 	}

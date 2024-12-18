@@ -20,10 +20,10 @@ export default class Company {
 		return companies;
 	}
 
-	static async create(company: ICompanyForCreate): Promise<string> {
-		const id = await Repository.company.createCompany(company);
+	static async create(companyDTO: ICompanyForCreate): Promise<ICompany> {
+		const company = await Repository.company.createCompany(companyDTO);
 
-		return id;
+		return company;
 	}
 
 	static async update(company_id: string, company: ICompany): Promise<string> {
