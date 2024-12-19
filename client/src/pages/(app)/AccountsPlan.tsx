@@ -1,5 +1,5 @@
-import { DataTable } from '@/components/data-table';
 import { AccountPlanDatagrid } from '@/components/table/accounts-plan/datagrid';
+import { DataTable } from '@/components/table/data-table';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
 import type { IAccountPlan } from '@contapp/shared';

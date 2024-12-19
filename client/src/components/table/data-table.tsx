@@ -21,7 +21,8 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from './ui/table';
+} from '../ui/table';
+import { DataTablePagination } from './pagination';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -125,7 +126,7 @@ export function DataTable<TData, TValue>({
 					</TableBody>
 				</Table>
 			</div>
-			{/* <DataTablePagination table={table} /> */}
+			<DataTablePagination table={table} />
 		</div>
 	);
 }
