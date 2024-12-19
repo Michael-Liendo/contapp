@@ -18,9 +18,9 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from '@/components/ui/sidebar';
+import { AuthRoutesEnum } from '@/data/routesEnums';
 import useAuth from '@/hooks/useAuth';
 import { useNavigate } from 'react-router';
-import { AuthRoutesEnum } from '@/data/routesEnums';
 
 export function NavUser() {
 	const { isMobile } = useSidebar();

@@ -1,5 +1,5 @@
-import database from './database';
 import { InternalServerError } from '../utils/errorHandler';
+import database from './database';
 
 import type {
 	IAccountPlan,

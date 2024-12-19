@@ -1,7 +1,7 @@
-import auth from './auth';
-import user from './user';
-import company from './company';
 import accounts_plan from './accounts-plans';
+import auth from './auth';
+import company from './company';
+import user from './user';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
 import type { ErrorWithDetails } from '../utils/errorHandler';

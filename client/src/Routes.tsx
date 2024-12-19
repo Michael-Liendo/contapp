@@ -5,14 +5,14 @@ import {
 } from 'react-router-dom';
 import { Navigate, Outlet } from 'react-router-dom';
 
+import AppLayout from './components/app-layout';
 import { CompanyProvider } from './context/CompanyContext';
+import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 import useAuth from './hooks/useAuth';
+import AccountsPlan from './pages/(app)/AccountsPlan';
 import Home from './pages/(app)/Home';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
-import AppLayout from './components/app-layout';
-import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
-import AccountsPlan from './pages/(app)/AccountsPlan';
 
 const PrivateRoutesWrapper = () => {
 	const { token } = useAuth();
