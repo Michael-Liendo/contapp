@@ -14,22 +14,7 @@ export default class AccountPlanService {
 		}
 	}
 
-	static async findById(accountId: string, planId: string) {
-		try {
-			const request = await fetch(
-				`/accounts-plan/findById/${accountId}/${planId}`,
-			);
-
-			const response = await request.json();
-
-			return AccountPlanSchema.parse(response?.data?.accounts_plan);
-		} catch (error) {
-			console.error('AccountPlanService.findById', error);
-			throw error;
-		}
-	}
-
-	static async create(companyId: string, plan: IAccountPlanForCreate) {
+	static async create(plan: IAccountPlanForCreate) {
 		try {
 			const request = await fetch('/accounts-plan/create', {
 				method: 'POST',
