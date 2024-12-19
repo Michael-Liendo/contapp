@@ -7,5 +7,5 @@ export default class Services {
 	static auth = Auth;
 	static user = User;
 	static company = Company;
-	static accountPlan = AccountsPlan;
+	static accountsPlan = AccountsPlan;
 }
