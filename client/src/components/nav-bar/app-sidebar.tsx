@@ -23,6 +23,7 @@ import {
 	SidebarMenuItem,
 	SidebarRail,
 } from '@/components/ui/sidebar';
+import { PrivateRoutesEnum } from '@/data/routesEnums';
 
 const data = {
 	navMain: [
@@ -31,7 +32,7 @@ const data = {
 			items: [
 				{
 					title: 'Inicio',
-					url: '/home',
+					url: PrivateRoutesEnum.Home,
 					icon: Home,
 				},
 			],

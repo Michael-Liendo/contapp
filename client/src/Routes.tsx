@@ -7,22 +7,11 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import { CompanyProvider } from './context/CompanyContext';
 import useAuth from './hooks/useAuth';
-import HomeApp from './pages/(app)/Home';
+import Home from './pages/(app)/Home';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
 import AppLayout from './components/app-layout';
-
-export enum PublicRoutesEnum {}
-
-export enum AuthRoutesEnum {
-	login = '/login',
-	Signup = '/signup',
-	Welcome = '/',
-}
-
-export enum PrivateRoutesEnum {
-	Home = '/home',
-}
+import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 
 const PrivateRoutesWrapper = () => {
 	const { token } = useAuth();
@@ -62,7 +51,7 @@ const PrivateRoutes: JSX.Element[] = [
 	<Route
 		key={PrivateRoutesEnum.Home}
 		path={PrivateRoutesEnum.Home}
-		Component={HomeApp}
+		Component={Home}
 	/>,
 ];
 
