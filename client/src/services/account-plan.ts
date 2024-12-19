@@ -38,7 +38,7 @@ export default class AccountPlanService {
 
 			const response = await request.json();
 
-			return AccountPlanSchema.parse(response?.data?.accounts_plan);
+			return AccountPlanSchema.parse(response?.data);
 		} catch (error) {
 			console.error('AccountPlanService.create', error);
 			throw error;
