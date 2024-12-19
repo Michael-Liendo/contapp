@@ -1,5 +1,13 @@
 'use client';
 
+import {
+	BookUser,
+	ClipboardMinus,
+	History,
+	Home,
+	Notebook,
+} from 'lucide-react';
+
 import { CompanySwitcher } from '@/components/nav-bar/company-switcher';
 import { NavUser } from '@/components/nav-bar/nav-user';
 import {
@@ -15,14 +23,6 @@ import {
 	SidebarMenuItem,
 	SidebarRail,
 } from '@/components/ui/sidebar';
-import { PrivateRoutesEnum } from '@/Routes';
-import {
-	BookUser,
-	ClipboardMinus,
-	History,
-	Home,
-	Notebook,
-} from 'lucide-react';
 
 const data = {
 	navMain: [
@@ -31,7 +31,7 @@ const data = {
 			items: [
 				{
 					title: 'Inicio',
-					url: PrivateRoutesEnum.Home,
+					url: '/home',
 					icon: Home,
 				},
 			],

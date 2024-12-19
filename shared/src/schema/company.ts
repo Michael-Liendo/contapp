@@ -11,7 +11,8 @@ export const CompanySchema = z.object({
 
 export const CompanyForCreateSchema = z.object({
 	name: z.string(),
-	color: z.string().optional().nullable(),
+	color: z.string().optional(),
+	fiscal_identification: z.string().optional(),
 	user_id: z.string().optional(),
 });
 
