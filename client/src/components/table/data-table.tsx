@@ -2,6 +2,7 @@ import {
 	type ColumnDef,
 	type ColumnFiltersState,
 	type SortingState,
+	Updater,
 	type VisibilityState,
 	flexRender,
 	getCoreRowModel,
@@ -27,13 +28,18 @@ import { DataTablePagination } from './pagination';
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
+	loading: boolean;
+	onPageChange: (pageIndex: number) => void;
+	pageIndex: number;
 }
 
 export function DataTable<TData, TValue>({
 	columns,
 	data,
 	loading,
-}: DataTableProps<TData, TValue> & { loading: boolean }) {
+	onPageChange,
+	pageIndex,
+}: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = React.useState({});
 	const [columnVisibility, setColumnVisibility] =
 		React.useState<VisibilityState>({});
@@ -50,12 +56,19 @@ export function DataTable<TData, TValue>({
 			columnVisibility,
 			rowSelection,
 			columnFilters,
+			pagination: {
+				pageIndex,
+				pageSize: 10,
+			},
 		},
-		enableRowSelection: true,
 		onRowSelectionChange: setRowSelection,
 		onSortingChange: setSorting,
 		onColumnFiltersChange: setColumnFilters,
 		onColumnVisibilityChange: setColumnVisibility,
+		onPaginationChange: () => {
+			onPageChange(pageIndex);
+		},
+		enableRowSelection: true,
 		getCoreRowModel: getCoreRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),

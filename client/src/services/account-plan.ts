@@ -22,7 +22,7 @@ export default class AccountPlanService {
 
 			const response = await request.json();
 
-			return AccountPlanSchema.array().parse(response?.data?.accounts_plan);
+			return AccountPlanSchema.array().parse(response?.data);
 		} catch (error) {
 			console.error('AccountPlanService.findAll', error);
 			throw error;

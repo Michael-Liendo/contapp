@@ -8,25 +8,23 @@ import { useEffect, useState } from 'react';
 export default function AccountsPlan() {
 	const { activeCompany } = useCompanyContext();
 
-	const [AccountsPlan, setAccountsPlan] = useState<IAccountPlan[]>([]);
+	const [accountsPlan, setAccountsPlan] = useState<IAccountPlan[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [pageIndex, setPageIndex] = useState(0);
 
 	useEffect(() => {
 		const getAccountsPlan = async () => {
 			if (!activeCompany?.id) return;
 
 			setLoading(true);
-			const accountsPlan = await Services.accountPlan.findAll(
-				activeCompany.id,
-				{
-					page: 1,
-				},
-			);
-			setAccountsPlan(accountsPlan);
+			const plans = await Services.accountPlan.findAll(activeCompany.id, {
+				page: pageIndex + 1,
+			});
+			setAccountsPlan(plans);
 			setLoading(false);
 		};
 		getAccountsPlan();
-	}, [activeCompany]);
+	}, [activeCompany, pageIndex]);
 
 	return (
 		<div className='flex flex-1 flex-col gap-4 p-4 pt-0'>
@@ -34,8 +32,10 @@ export default function AccountsPlan() {
 
 			<DataTable
 				columns={AccountPlanDatagrid}
-				data={AccountsPlan}
+				data={accountsPlan}
 				loading={loading}
+				onPageChange={setPageIndex}
+				pageIndex={pageIndex}
 			/>
 		</div>
 	);

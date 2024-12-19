@@ -25,4 +25,9 @@ export interface IError {
 export interface IPagination {
 	page?: number;
 	limit?: number;
+	total?: number;
+	totalPages?: number;
+	currentPage?: number;
+	hasPreviousPage?: boolean;
+	hasNextPage?: boolean;
 }
