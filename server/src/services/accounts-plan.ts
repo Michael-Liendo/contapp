@@ -6,7 +6,7 @@ import type {
 	IPagination,
 } from '@contapp/shared';
 
-export default class AccountPlan {
+export default class AccountsPlan {
 	static async getByID(
 		account_plan_id: string,
 	): Promise<IAccountPlan | undefined> {
