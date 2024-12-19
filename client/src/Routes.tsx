@@ -10,6 +10,7 @@ import useAuth from './hooks/useAuth';
 import HomeApp from './pages/(app)/Home';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
+import AppLayout from './components/app-layout';
 
 export enum PublicRoutesEnum {}
 
@@ -27,7 +28,9 @@ const PrivateRoutesWrapper = () => {
 	const { token } = useAuth();
 	return token ? (
 		<CompanyProvider>
-			<Outlet />
+			<AppLayout>
+				<Outlet />
+			</AppLayout>
 		</CompanyProvider>
 	) : (
 		<Navigate to={AuthRoutesEnum.login} />
