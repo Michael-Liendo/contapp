@@ -31,7 +31,8 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
 	columns,
 	data,
-}: DataTableProps<TData, TValue>) {
+	loading,
+}: DataTableProps<TData, TValue> & { loading: boolean }) {
 	const [rowSelection, setRowSelection] = React.useState({});
 	const [columnVisibility, setColumnVisibility] =
 		React.useState<VisibilityState>({});
@@ -86,7 +87,16 @@ export function DataTable<TData, TValue>({
 						))}
 					</TableHeader>
 					<TableBody>
-						{table.getRowModel().rows?.length ? (
+						{loading ? (
+							<TableRow>
+								<TableCell
+									colSpan={columns.length}
+									className='h-24 text-center'
+								>
+									Loading...
+								</TableCell>
+							</TableRow>
+						) : table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
 								<TableRow
 									key={row.id}
@@ -108,7 +118,7 @@ export function DataTable<TData, TValue>({
 									colSpan={columns.length}
 									className='h-24 text-center'
 								>
-									No results.
+									Sin resultados.
 								</TableCell>
 							</TableRow>
 						)}

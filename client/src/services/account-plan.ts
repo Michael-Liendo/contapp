@@ -1,3 +1,4 @@
+import fetch from '@/utils/fetch';
 import { AccountPlanSchema, type IAccountPlanForCreate } from '@contapp/shared';
 
 export default class AccountPlanService {
