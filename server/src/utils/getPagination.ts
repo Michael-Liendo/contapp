@@ -1,16 +1,20 @@
 import type { IPaginationResponse } from '@contapp/shared';
 
 export default function getPagination(
-	page: number,
+	page: number | string,
 	limit: number,
 	count: number,
 ): IPaginationResponse {
+	let pageNumber = Number(page);
+	if (Number.isNaN(pageNumber)) {
+		pageNumber = 1;
+	}
 	const total = count;
-	const hasPreviousPage = page > 1;
-	const hasNextPage = page < Math.ceil(total / limit);
+	const hasPreviousPage = pageNumber > 1;
+	const hasNextPage = pageNumber < Math.ceil(total / limit);
 
 	return {
-		page,
+		page: pageNumber,
 		limit,
 		total,
 		hasPreviousPage,
