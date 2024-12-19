@@ -7,9 +7,12 @@ export async function up(knex: Knex): Promise<void> {
 			.unique()
 			.defaultTo(knex.raw('uuid_generate_v4()'))
 			.primary();
-		table.string('name').notNullable();
-		table.string('color');
 		table.uuid('user_id').notNullable().references('id').inTable('users');
+		table.string('name').notNullable();
+		table.string('phone').nullable();
+		table.string('email').nullable();
+		table.string('fiscal_identification').nullable();
+		table.string('default_currency').nullable();
 		table.timestamps(true, true);
 	});
 }

@@ -36,7 +36,6 @@ const data = {
 				},
 			],
 		},
-
 		{
 			title: 'Operaciones Contables',
 			items: [
