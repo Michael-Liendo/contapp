@@ -12,6 +12,7 @@ import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
 import AppLayout from './components/app-layout';
 import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
+import AccountsPlan from './pages/(app)/AccountsPlan';
 
 const PrivateRoutesWrapper = () => {
 	const { token } = useAuth();
@@ -52,6 +53,11 @@ const PrivateRoutes: JSX.Element[] = [
 		key={PrivateRoutesEnum.Home}
 		path={PrivateRoutesEnum.Home}
 		Component={Home}
+	/>,
+	<Route
+		key={PrivateRoutesEnum.AccountsPlan}
+		path={PrivateRoutesEnum.AccountsPlan}
+		Component={AccountsPlan}
 	/>,
 ];
 

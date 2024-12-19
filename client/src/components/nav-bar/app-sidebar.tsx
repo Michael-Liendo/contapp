@@ -72,7 +72,7 @@ const data = {
 			items: [
 				{
 					title: 'Plan de Cuentas',
-					url: '#',
+					url: PrivateRoutesEnum.AccountsPlan,
 					icon: BookUser,
 				},
 			],
