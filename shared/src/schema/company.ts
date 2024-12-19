@@ -25,7 +25,7 @@ export const CompanyForCreateSchema = z.object({
 		.optional(),
 
 	email: z
-		.union([z.literal('').optional(), z.string().email().optional()])
+		.union([z.literal(''), z.string().email()])
 		.transform((value) => (value === '' ? undefined : value))
 		.optional(),
 	default_currency: z
