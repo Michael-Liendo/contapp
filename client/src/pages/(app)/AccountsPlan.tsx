@@ -16,7 +16,12 @@ export default function AccountsPlan() {
 			if (!activeCompany?.id) return;
 
 			setLoading(true);
-			const accountsPlan = await Services.accountPlan.findAll(activeCompany.id);
+			const accountsPlan = await Services.accountPlan.findAll(
+				activeCompany.id,
+				{
+					page: 1,
+				},
+			);
 			setAccountsPlan(accountsPlan);
 			setLoading(false);
 		};

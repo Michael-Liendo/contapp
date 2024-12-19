@@ -1,10 +1,24 @@
 import fetch from '@/utils/fetch';
-import { AccountPlanSchema, type IAccountPlanForCreate } from '@contapp/shared';
+import {
+	AccountPlanSchema,
+	type IPagination,
+	type IAccountPlanForCreate,
+} from '@contapp/shared';
 
 export default class AccountPlanService {
-	static async findAll(companyId: string) {
+	static async findAll(companyId: string, pagination?: IPagination) {
 		try {
-			const request = await fetch(`/accounts-plan/findAll/${companyId}`);
+			const queryParams = new URLSearchParams();
+			if (pagination?.page) {
+				queryParams.append('page', pagination.page.toString());
+			}
+			if (pagination?.limit) {
+				queryParams.append('limit', pagination.limit.toString());
+			}
+
+			const request = await fetch(
+				`/accounts-plan/findAll/${companyId}?${queryParams.toString()}`,
+			);
 
 			const response = await request.json();
 
