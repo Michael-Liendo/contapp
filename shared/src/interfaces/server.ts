@@ -35,7 +35,7 @@ export interface IFindAllDatabase<T> {
 
 export interface IPaginationRequest {
 	page: number;
-	limit: number;
+	limit?: number;
 }
 
 export interface IPaginationResponse {

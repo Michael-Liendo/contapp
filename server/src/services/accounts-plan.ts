@@ -19,7 +19,7 @@ export default class AccountsPlan {
 
 	static async getAll(
 		company_id: string,
-		r_pagination: IPaginationRequest,
+		r_pagination: Required<IPaginationRequest>,
 	): Promise<IFindAllResponse<IAccountPlan>> {
 		const account_plans = await Repository.accountPlan.getAll(
 			company_id,

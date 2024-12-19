@@ -7,7 +7,7 @@ export default function getPagination(
 ): IPaginationResponse {
 	let pageNumber = Number(page);
 	if (Number.isNaN(pageNumber)) {
-		pageNumber = 1;
+		pageNumber = 0;
 	}
 	const total = count;
 	const hasPreviousPage = pageNumber > 1;

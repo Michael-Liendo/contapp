@@ -23,13 +23,14 @@ import {
 	TableRow,
 } from '../ui/table';
 import { DataTablePagination } from './pagination';
+import type { IPaginationResponse } from '@contapp/shared';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	loading: boolean;
 	onPageChange: (pageIndex: number) => void;
-	pageIndex: number;
+	pagination?: IPaginationResponse;
 }
 
 export function DataTable<TData, TValue>({
@@ -37,7 +38,13 @@ export function DataTable<TData, TValue>({
 	data,
 	loading,
 	onPageChange,
-	pageIndex,
+	pagination = {
+		page: 1,
+		limit: 10,
+		total: 0,
+		hasPreviousPage: false,
+		hasNextPage: false,
+	},
 }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = React.useState({});
 	const [columnVisibility, setColumnVisibility] =
@@ -50,13 +57,14 @@ export function DataTable<TData, TValue>({
 	const table = useReactTable({
 		data,
 		columns,
+		pageCount: Math.ceil(pagination.total / pagination.limit),
 		state: {
 			sorting,
 			columnVisibility,
 			rowSelection,
 			columnFilters,
 			pagination: {
-				pageIndex,
+				pageIndex: pagination.page,
 				pageSize: 10,
 			},
 		},
@@ -65,9 +73,8 @@ export function DataTable<TData, TValue>({
 		onColumnFiltersChange: setColumnFilters,
 		onColumnVisibilityChange: setColumnVisibility,
 		onPaginationChange: () => {
-			onPageChange(pageIndex);
+			onPageChange(pagination.page + 1);
 		},
-		enableRowSelection: true,
 		getCoreRowModel: getCoreRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),

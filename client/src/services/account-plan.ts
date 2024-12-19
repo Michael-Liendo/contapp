@@ -1,8 +1,10 @@
+import { AccountPlanSchema } from '@contapp/shared';
 import fetch from '@/utils/fetch';
-import {
-	AccountPlanSchema,
-	type IAccountPlanForCreate,
-	type IPaginationRequest,
+
+import type {
+	IPaginationResponse,
+	IAccountPlanForCreate,
+	IPaginationRequest,
 } from '@contapp/shared';
 
 export default class AccountPlanService {
@@ -22,7 +24,12 @@ export default class AccountPlanService {
 
 			const response = await request.json();
 
-			return AccountPlanSchema.array().parse(response?.data);
+			const data = AccountPlanSchema.array().parse(response?.data);
+
+			return {
+				data,
+				pagination: response?.pagination as IPaginationResponse,
+			};
 		} catch (error) {
 			console.error('AccountPlanService.findAll', error);
 			throw error;

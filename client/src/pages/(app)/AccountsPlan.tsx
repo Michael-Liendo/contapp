@@ -2,14 +2,16 @@ import { AccountPlanDatagrid } from '@/components/table/accounts-plan/datagrid';
 import { DataTable } from '@/components/table/data-table';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
-import type { IAccountPlan } from '@contapp/shared';
+import type { IAccountPlan, IPaginationResponse } from '@contapp/shared';
 import { useEffect, useState } from 'react';
 
 export default function AccountsPlan() {
 	const { activeCompany } = useCompanyContext();
 
 	const [accountsPlan, setAccountsPlan] = useState<IAccountPlan[]>([]);
+	const [pagination, setPagination] = useState<IPaginationResponse>();
 	const [loading, setLoading] = useState(true);
+
 	const [pageIndex, setPageIndex] = useState(0);
 
 	useEffect(() => {
@@ -18,9 +20,10 @@ export default function AccountsPlan() {
 
 			setLoading(true);
 			const plans = await Services.accountPlan.findAll(activeCompany.id, {
-				page: pageIndex + 1,
+				page: pageIndex,
 			});
-			setAccountsPlan(plans);
+			setAccountsPlan(plans.data);
+			setPagination(plans.pagination);
 			setLoading(false);
 		};
 		getAccountsPlan();
@@ -31,11 +34,11 @@ export default function AccountsPlan() {
 			<h1>Plan de cuentas</h1>
 
 			<DataTable
+				pagination={pagination}
 				columns={AccountPlanDatagrid}
 				data={accountsPlan}
 				loading={loading}
 				onPageChange={setPageIndex}
-				pageIndex={pageIndex}
 			/>
 		</div>
 	);

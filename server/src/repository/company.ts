@@ -29,7 +29,7 @@ export class Company {
 		pagination: IPaginationRequest,
 	): Promise<IFindAllDatabase<ICompany>> {
 		const limit = pagination.limit ?? 10;
-		const offset = (pagination.page ? pagination.page - 1 : 0) * limit;
+		const offset = (pagination.page ? pagination.page : 0) * limit;
 
 		const totalResult = await database<ICompany>('companies')
 			.where({ user_id })

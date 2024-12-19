@@ -16,7 +16,7 @@ export default class Company {
 
 	static async getAll(
 		user_id: string,
-		r_pagination: IPaginationRequest,
+		r_pagination: Required<IPaginationRequest>,
 	): Promise<IFindAllResponse<ICompany>> {
 		const companies = await Repository.company.getUserCompanies(
 			user_id,
