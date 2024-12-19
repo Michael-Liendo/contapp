@@ -2,7 +2,6 @@ import {
 	type ColumnDef,
 	type ColumnFiltersState,
 	type SortingState,
-	Updater,
 	type VisibilityState,
 	flexRender,
 	getCoreRowModel,

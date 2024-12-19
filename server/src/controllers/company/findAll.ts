@@ -11,12 +11,10 @@ export default async function findAll(request: Request, reply: Reply) {
 		limit,
 	});
 
-	return reply
-		.code(200)
-		.send({
-			success: true,
-			message: 'Ok',
-			data: companies.data,
-			pagination: companies.pagination,
-		});
+	return reply.code(200).send({
+		success: true,
+		message: 'Ok',
+		data: companies.data,
+		pagination: companies.pagination,
+	});
 }

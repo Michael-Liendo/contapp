@@ -15,14 +15,12 @@ export async function findAll(request: Request, reply: Reply) {
 		limit,
 	});
 
-	return reply
-		.code(200)
-		.send({
-			success: true,
-			message: 'Ok',
-			data: accounts_plan.data,
-			pagination: accounts_plan.pagination,
-		});
+	return reply.code(200).send({
+		success: true,
+		message: 'Ok',
+		data: accounts_plan.data,
+		pagination: accounts_plan.pagination,
+	});
 }
 
 export async function create(request: Request, reply: Reply) {

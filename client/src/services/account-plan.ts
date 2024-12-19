@@ -1,8 +1,8 @@
 import fetch from '@/utils/fetch';
 import {
 	AccountPlanSchema,
-	type IPaginationRequest,
 	type IAccountPlanForCreate,
+	type IPaginationRequest,
 } from '@contapp/shared';
 
 export default class AccountPlanService {
