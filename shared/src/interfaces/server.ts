@@ -3,6 +3,7 @@ export interface IReply {
 		success: boolean;
 		message: string;
 		data: unknown;
+		pagination?: IPaginationResponse;
 	};
 	400: {
 		success: boolean;
@@ -22,12 +23,26 @@ export interface IError {
 	message: string;
 }
 
-export interface IPagination {
-	page?: number;
-	limit?: number;
-	total?: number;
-	totalPages?: number;
-	currentPage?: number;
+export interface IFindAllResponse<T> {
+	data: T[];
+	pagination: IPaginationResponse;
+}
+
+export interface IFindAllDatabase<T> {
+	data: T[];
+	count: number;
+}
+
+export interface IPaginationRequest {
+	page: number;
+	limit: number;
+}
+
+export interface IPaginationResponse {
+	page: number;
+	limit: number;
+	total: number;
+	currentPage: number;
 	hasPreviousPage?: boolean;
 	hasNextPage?: boolean;
 }

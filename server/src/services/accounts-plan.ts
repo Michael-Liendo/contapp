@@ -3,8 +3,10 @@ import Repository from '../repository';
 import type {
 	IAccountPlan,
 	IAccountPlanForCreate,
-	IPagination,
+	IFindAllResponse,
+	IPaginationRequest,
 } from '@contapp/shared';
+import getPagination from '../utils/getPagination';
 
 export default class AccountsPlan {
 	static async getByID(
@@ -17,14 +19,23 @@ export default class AccountsPlan {
 
 	static async getAll(
 		company_id: string,
-		pagination: IPagination,
-	): Promise<IAccountPlan[]> {
+		r_pagination: IPaginationRequest,
+	): Promise<IFindAllResponse<IAccountPlan>> {
 		const account_plans = await Repository.accountPlan.getAll(
 			company_id,
-			pagination,
+			r_pagination,
 		);
 
-		return account_plans;
+		const pagination = getPagination(
+			r_pagination.page,
+			r_pagination.limit,
+			account_plans.count,
+		);
+
+		return {
+			data: account_plans.data,
+			pagination,
+		};
 	}
 
 	static async create(

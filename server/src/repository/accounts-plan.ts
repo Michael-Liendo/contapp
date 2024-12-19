@@ -4,7 +4,8 @@ import database from './database';
 import type {
 	IAccountPlan,
 	IAccountPlanForCreate,
-	IPagination,
+	IFindAllDatabase,
+	IPaginationRequest,
 } from '@contapp/shared';
 
 export class AccountPlan {
@@ -20,15 +21,28 @@ export class AccountPlan {
 
 	static async getAll(
 		company_id: string,
-		pagination: IPagination,
-	): Promise<IAccountPlan[]> {
+		pagination: IPaginationRequest,
+	): Promise<IFindAllDatabase<IAccountPlan>> {
+		const limit = pagination.limit ?? 10;
+		const offset = (pagination.page ? pagination.page - 1 : 0) * limit;
+
+		const totalResult = await database<IAccountPlan>('accounts_plan')
+			.where({ company_id })
+			.count('id')
+			.first();
+
+		const total = totalResult?.count ? Number(totalResult?.count) : 0;
+
 		const account_plans = await database<IAccountPlan>('accounts_plan')
 			.where({ company_id })
 			.orderBy('created_at', 'desc')
-			.limit(pagination.limit)
-			.offset((pagination.page - 1) * pagination.limit);
+			.limit(limit)
+			.offset(offset);
 
-		return account_plans;
+		return {
+			data: account_plans,
+			count: total,
+		};
 	}
 
 	static async create(

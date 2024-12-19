@@ -1,4 +1,9 @@
-import type { ICompany, ICompanyForCreate, IPagination } from '@contapp/shared';
+import type {
+	ICompany,
+	ICompanyForCreate,
+	IFindAllDatabase,
+	IPaginationRequest,
+} from '@contapp/shared';
 import { InternalServerError } from '../utils/errorHandler';
 import database from './database';
 
@@ -21,13 +26,28 @@ export class Company {
 	 */
 	static async getUserCompanies(
 		user_id: string,
-		pagination: IPagination,
-	): Promise<ICompany[]> {
+		pagination: IPaginationRequest,
+	): Promise<IFindAllDatabase<ICompany>> {
+		const limit = pagination.limit ?? 10;
+		const offset = (pagination.page ? pagination.page - 1 : 0) * limit;
+
+		const totalResult = await database<ICompany>('companies')
+			.where({ user_id })
+			.count('id')
+			.first();
+
+		const count = totalResult?.count ? Number(totalResult?.count) : 0;
+
 		const allCompanies = await database<ICompany>('companies')
 			.where({ user_id })
-			.limit(pagination.limit)
-			.offset((pagination.page - 1) * pagination.limit);
-		return allCompanies;
+			.orderBy('created_at', 'desc')
+			.limit(limit)
+			.offset(offset);
+
+		return {
+			data: allCompanies,
+			count: Number(count),
+		};
 	}
 
 	/**

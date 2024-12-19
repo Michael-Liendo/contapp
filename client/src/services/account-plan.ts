@@ -1,12 +1,12 @@
 import fetch from '@/utils/fetch';
 import {
 	AccountPlanSchema,
-	type IPagination,
+	type IPaginationRequest,
 	type IAccountPlanForCreate,
 } from '@contapp/shared';
 
 export default class AccountPlanService {
-	static async findAll(companyId: string, pagination?: IPagination) {
+	static async findAll(companyId: string, pagination?: IPaginationRequest) {
 		try {
 			const queryParams = new URLSearchParams();
 			if (pagination?.page) {

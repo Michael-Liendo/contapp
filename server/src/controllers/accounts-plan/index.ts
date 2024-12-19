@@ -1,10 +1,13 @@
 import Services from '../../services';
 
-import type { IAccountPlanForCreate, IPagination } from '@contapp/shared';
+import type {
+	IAccountPlanForCreate,
+	IPaginationRequest,
+} from '@contapp/shared';
 import type { Reply, Request } from '../../types';
 
 export async function findAll(request: Request, reply: Reply) {
-	const { page = 1, limit = 10 } = request.query as IPagination;
+	const { page = 1, limit = 10 } = request.query as IPaginationRequest;
 	const { company_id } = request.params as { company_id: string };
 
 	const accounts_plan = await Services.accountsPlan.getAll(company_id, {
@@ -14,7 +17,12 @@ export async function findAll(request: Request, reply: Reply) {
 
 	return reply
 		.code(200)
-		.send({ success: true, message: 'Ok', data: accounts_plan });
+		.send({
+			success: true,
+			message: 'Ok',
+			data: accounts_plan.data,
+			pagination: accounts_plan.pagination,
+		});
 }
 
 export async function create(request: Request, reply: Reply) {
