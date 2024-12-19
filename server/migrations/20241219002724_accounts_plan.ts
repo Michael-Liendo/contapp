@@ -1,7 +1,7 @@
 import type { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
-	await knex.schema.createTable('account_plans', (table) => {
+	await knex.schema.createTable('accounts_plan', (table) => {
 		table
 			.uuid('id')
 			.unique()
@@ -19,5 +19,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-	await knex.schema.dropTableIfExists('account_plans');
+	await knex.schema.dropTableIfExists('accounts_plan');
 }
