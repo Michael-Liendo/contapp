@@ -13,5 +13,5 @@ export default async function findAll(request: Request, reply: Reply) {
 
 	return reply
 		.code(200)
-		.send({ success: true, message: 'Ok', data: { companies } });
+		.send({ success: true, message: 'Ok', data: companies });
 }

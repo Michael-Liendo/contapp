@@ -28,5 +28,5 @@ export async function create(request: Request, reply: Reply) {
 
 	return reply
 		.code(201)
-		.send({ success: true, message: 'Ok', data: { accounts_plan } });
+		.send({ success: true, message: 'Ok', data: accounts_plan });
 }
