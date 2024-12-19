@@ -6,7 +6,6 @@ export default function getPagination(
 	count: number,
 ): IPaginationResponse {
 	const total = count;
-	const currentPage = page;
 	const hasPreviousPage = page > 1;
 	const hasNextPage = page < Math.ceil(total / limit);
 
@@ -14,7 +13,6 @@ export default function getPagination(
 		page,
 		limit,
 		total,
-		currentPage,
 		hasPreviousPage,
 		hasNextPage,
 	};

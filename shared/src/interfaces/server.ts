@@ -42,7 +42,6 @@ export interface IPaginationResponse {
 	page: number;
 	limit: number;
 	total: number;
-	currentPage: number;
 	hasPreviousPage?: boolean;
 	hasNextPage?: boolean;
 }
