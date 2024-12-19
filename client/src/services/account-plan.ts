@@ -1,10 +1,10 @@
-import { AccountPlanSchema } from '@contapp/shared';
 import fetch from '@/utils/fetch';
+import { AccountPlanSchema } from '@contapp/shared';
 
 import type {
-	IPaginationResponse,
 	IAccountPlanForCreate,
 	IPaginationRequest,
+	IPaginationResponse,
 } from '@contapp/shared';
 
 export default class AccountPlanService {

@@ -14,6 +14,7 @@ import {
 } from '@tanstack/react-table';
 import * as React from 'react';
 
+import type { IPaginationResponse } from '@contapp/shared';
 import {
 	Table,
 	TableBody,
@@ -23,7 +24,6 @@ import {
 	TableRow,
 } from '../ui/table';
 import { DataTablePagination } from './pagination';
-import type { IPaginationResponse } from '@contapp/shared';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
