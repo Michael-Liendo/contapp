@@ -1,8 +1,8 @@
 import AccountPlanService from './account-plan';
 import Auth from './auth';
 import Company from './company';
-import User from './user';
 import Default from './default';
+import User from './user';
 
 export default class Services {
 	static default = Default;

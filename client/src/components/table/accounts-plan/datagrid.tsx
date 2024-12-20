@@ -1,7 +1,7 @@
 import { DataTableRowActions } from '../actions';
 import { DataTableColumnHeader } from '../header';
 
-import { AccountPlanSchema, type IAccountPlan } from '@contapp/shared';
+import type { IAccountPlan } from '@contapp/shared';
 import type { ColumnDef } from '@tanstack/react-table';
 
 const masterName = 'accounts-plan';

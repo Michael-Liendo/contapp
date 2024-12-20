@@ -11,8 +11,8 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import type { Row } from '@tanstack/react-table';
 import Services from '@/services';
+import type { Row } from '@tanstack/react-table';
 import { useToast } from '../ui/use-toast';
 
 interface DataTableRowActionsProps<TData> {
