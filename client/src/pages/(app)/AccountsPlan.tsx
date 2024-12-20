@@ -1,5 +1,7 @@
+import { AccountPlanModalCreate } from '@/components/accounts-plan/modal-create';
 import { AccountPlanDatagrid } from '@/components/table/accounts-plan/datagrid';
 import { DataTable } from '@/components/table/data-table';
+import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
 import type { IPaginationResponse } from '@contapp/shared';
@@ -8,6 +10,8 @@ import { useQuery } from 'react-query';
 
 export default function AccountsPlan() {
 	const { activeCompany } = useCompanyContext();
+
+	const [creationOpen, setCreationOpen] = useState(false);
 
 	const [pagination, setPagination] = useState<IPaginationResponse>({
 		page: 0,
@@ -33,7 +37,13 @@ export default function AccountsPlan() {
 
 	return (
 		<div>
-			<h1 className='text-xl mb-5'>Plan de cuentas</h1>
+			<div className='flex justify-between items-center mb-5'>
+				<h1 className='text-xl mb-5'>Plan de cuentas</h1>
+
+				<Button variant='default' onClick={() => setCreationOpen(true)}>
+					Crear
+				</Button>
+			</div>
 
 			<DataTable
 				pagination={pagination}
@@ -49,6 +59,7 @@ export default function AccountsPlan() {
 					});
 				}}
 			/>
+			<AccountPlanModalCreate open={creationOpen} setOpen={setCreationOpen} />
 		</div>
 	);
 }

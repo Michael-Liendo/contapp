@@ -48,10 +48,9 @@ export class AccountPlan {
 	static async create(
 		account_plan: IAccountPlanForCreate,
 	): Promise<IAccountPlan> {
-		const account_plans = await database<IAccountPlan>('accounts_plan')
+		const [account_plans] = await database<IAccountPlan>('accounts_plan')
 			.insert(account_plan)
-			.returning('*')
-			.first();
+			.returning('*');
 
 		if (!account_plans)
 			throw new InternalServerError('Error creating account plan');
