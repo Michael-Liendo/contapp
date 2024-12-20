@@ -48,7 +48,7 @@ export function AccountPlanModalCreate({
 				setOpen(false);
 
 				toast({
-					title: 'Elemento eliminado',
+					title: 'Elemento Creado',
 				});
 			},
 		});
