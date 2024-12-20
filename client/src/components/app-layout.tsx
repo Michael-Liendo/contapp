@@ -16,7 +16,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 				<main className='flex flex-col flex-1 overflow-auto gap-4 p-4 pt-0'>
 					{children}
 				</main>
-				<footer className='h-16 flex items-center justify-center' />
 			</div>
 		</SidebarProvider>
 	);
