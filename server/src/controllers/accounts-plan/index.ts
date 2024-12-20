@@ -24,14 +24,10 @@ export async function findAll(request: Request, reply: Reply) {
 }
 
 export async function create(request: Request, reply: Reply) {
-	const { company_id } = request.params as { company_id: string };
 	const account_plan = request.body as IAccountPlanForCreate;
 
 	// todo: every person with the id can create an account plan
-	const accounts_plan = await Services.accountsPlan.create({
-		...account_plan,
-		company_id,
-	});
+	const accounts_plan = await Services.accountsPlan.create(account_plan);
 
 	return reply
 		.code(201)
