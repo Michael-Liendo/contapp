@@ -1,6 +1,7 @@
 import {
 	type ColumnDef,
 	type ColumnFiltersState,
+	type PaginationState,
 	type SortingState,
 	type VisibilityState,
 	flexRender,
@@ -12,7 +13,6 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from '@tanstack/react-table';
-import * as React from 'react';
 
 import type { IPaginationResponse } from '@contapp/shared';
 import {
@@ -24,6 +24,7 @@ import {
 	TableRow,
 } from '../ui/table';
 import { DataTablePagination } from './pagination';
+import { useEffect, useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -46,13 +47,10 @@ export function DataTable<TData, TValue>({
 		hasNextPage: false,
 	},
 }: DataTableProps<TData, TValue>) {
-	const [rowSelection, setRowSelection] = React.useState({});
-	const [columnVisibility, setColumnVisibility] =
-		React.useState<VisibilityState>({});
-	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-		[],
-	);
-	const [sorting, setSorting] = React.useState<SortingState>([]);
+	const [rowSelection, setRowSelection] = useState({});
+	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const [sorting, setSorting] = useState<SortingState>([]);
 
 	const table = useReactTable({
 		data,
@@ -64,17 +62,35 @@ export function DataTable<TData, TValue>({
 			rowSelection,
 			columnFilters,
 			pagination: {
-				pageIndex: pagination.page, // 0
-				pageSize: pagination.limit, // 10
+				pageIndex: pagination.page,
+				pageSize: pagination.limit,
 			},
 		},
+		manualPagination: true,
 		onRowSelectionChange: setRowSelection,
 		onSortingChange: setSorting,
 		onColumnFiltersChange: setColumnFilters,
 		onColumnVisibilityChange: setColumnVisibility,
-		/* onPaginationChange: (pagination) => {
-			onPageChange(pagination.pageIndex + 1);
-		}, */
+		onPaginationChange: (newPagination) => {
+			if (typeof newPagination === 'function') {
+				onPageChange(
+					newPagination({
+						pageIndex: pagination.page,
+						pageSize: pagination.limit,
+					}).pageIndex,
+				);
+
+				console.log(
+					newPagination({
+						pageIndex: pagination.page,
+						pageSize: pagination.limit,
+					}).pageIndex,
+				);
+			} else {
+				onPageChange(newPagination.pageIndex);
+			}
+		},
+
 		getCoreRowModel: getCoreRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),

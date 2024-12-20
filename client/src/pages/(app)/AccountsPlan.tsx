@@ -39,7 +39,9 @@ export default function AccountsPlan() {
 				columns={AccountPlanDatagrid}
 				data={accountsPlan}
 				loading={loading}
-				onPageChange={setPageIndex}
+				onPageChange={(page) => {
+					setPageIndex(page);
+				}}
 			/>
 		</div>
 	);
