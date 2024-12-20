@@ -82,7 +82,6 @@ export function DataTable<TData, TValue>({
 				onPageChange(newPagination.pageIndex);
 			}
 		},
-
 		getCoreRowModel: getCoreRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),

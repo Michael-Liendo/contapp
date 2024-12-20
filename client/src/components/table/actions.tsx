@@ -14,6 +14,7 @@ import {
 import Services from '@/services';
 import type { Row } from '@tanstack/react-table';
 import { useToast } from '../ui/use-toast';
+import { useQueryClient } from 'react-query';
 
 interface DataTableRowActionsProps<TData> {
 	masterName: string;
@@ -25,12 +26,14 @@ export function DataTableRowActions<TData>({
 	masterName,
 }: DataTableRowActionsProps<TData>) {
 	const { toast } = useToast();
+	const queryClient = useQueryClient();
 
 	async function handleDelete() {
 		await Services.default.delete(masterName, row.original?.id);
 		toast({
 			title: 'Elemento eliminado',
 		});
+		queryClient.invalidateQueries(masterName);
 	}
 
 	return (
