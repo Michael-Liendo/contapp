@@ -13,8 +13,8 @@ import {
 
 import Services from '@/services';
 import type { Row } from '@tanstack/react-table';
-import { useToast } from '../ui/use-toast';
 import { useQueryClient } from 'react-query';
+import { useToast } from '../ui/use-toast';
 
 interface DataTableRowActionsProps<TData> {
 	masterName: string;

@@ -58,4 +58,11 @@ export class AccountPlan {
 
 		return account_plans;
 	}
+
+	static async delete(account_plan_id: string): Promise<void> {
+		await database<IAccountPlan>('accounts_plan')
+			.delete()
+			.where({ id: account_plan_id });
+		return;
+	}
 }

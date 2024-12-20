@@ -45,4 +45,9 @@ export default class AccountsPlan {
 
 		return account_plan;
 	}
+
+	static async delete(account_plan_id: string): Promise<void> {
+		await Repository.accountPlan.delete(account_plan_id);
+		return;
+	}
 }
