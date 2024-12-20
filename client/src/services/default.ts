@@ -7,9 +7,9 @@ export default class Default {
 				method: 'DELETE',
 			});
 
-			const response = await request.json();
-
-			return response;
+			if (request.status === 204) {
+				return null;
+			}
 		} catch (error) {
 			console.error('DefaultServices', error);
 			throw error;
