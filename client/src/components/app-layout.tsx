@@ -13,7 +13,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 						<Separator orientation='vertical' className='mr-2 h-4' />
 					</div>
 				</header>
-				<main className='flex-1 overflow-auto'>{children}</main>
+				<main className='flex flex-col flex-1 overflow-auto gap-4 p-4 pt-0'>
+					{children}
+				</main>
 				<footer className='h-16 flex items-center justify-center' />
 			</div>
 		</SidebarProvider>

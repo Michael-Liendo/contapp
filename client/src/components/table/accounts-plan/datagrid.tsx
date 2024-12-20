@@ -22,6 +22,7 @@ export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 	},
 	{
 		accessorKey: 'description',
+
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title='Descripción' />
 		),
