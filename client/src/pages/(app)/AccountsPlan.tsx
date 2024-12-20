@@ -12,7 +12,7 @@ export default function AccountsPlan() {
 	const [pagination, setPagination] = useState<IPaginationResponse>();
 	const [loading, setLoading] = useState(true);
 
-	const [pageIndex, setPageIndex] = useState(0);
+	const [pageIndex, setPageIndex] = useState(1);
 
 	useEffect(() => {
 		const getAccountsPlan = async () => {
@@ -21,6 +21,7 @@ export default function AccountsPlan() {
 			setLoading(true);
 			const plans = await Services.accountPlan.findAll(activeCompany.id, {
 				page: pageIndex,
+				limit: 10,
 			});
 			setAccountsPlan(plans.data);
 			setPagination(plans.pagination);
