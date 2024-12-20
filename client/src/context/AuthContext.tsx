@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 				setUser(user);
 			}
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		} finally {
 			setLoading(false);
 		}

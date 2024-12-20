@@ -1,7 +1,6 @@
 import {
 	type ColumnDef,
 	type ColumnFiltersState,
-	type PaginationState,
 	type SortingState,
 	type VisibilityState,
 	flexRender,
@@ -15,6 +14,7 @@ import {
 } from '@tanstack/react-table';
 
 import type { IPaginationResponse } from '@contapp/shared';
+import { useState } from 'react';
 import {
 	Table,
 	TableBody,
@@ -24,7 +24,6 @@ import {
 	TableRow,
 } from '../ui/table';
 import { DataTablePagination } from './pagination';
-import { useEffect, useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -74,13 +73,6 @@ export function DataTable<TData, TValue>({
 		onPaginationChange: (newPagination) => {
 			if (typeof newPagination === 'function') {
 				onPageChange(
-					newPagination({
-						pageIndex: pagination.page,
-						pageSize: pagination.limit,
-					}).pageIndex,
-				);
-
-				console.log(
 					newPagination({
 						pageIndex: pagination.page,
 						pageSize: pagination.limit,
