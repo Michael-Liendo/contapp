@@ -40,7 +40,9 @@ export function AccountPlanModalCreate({
 			validateOnChange: false,
 			validateOnBlur: false,
 			onSubmit: async (values) => {
-				await Services.accountPlan.create(values);
+				const dto = await AccountPlanForCreateSchema.parse(values);
+
+				await Services.accountPlan.create(dto);
 				queryClient.invalidateQueries('accounts-plan');
 
 				setOpen(false);
