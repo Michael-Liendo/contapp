@@ -4,6 +4,8 @@ import { DataTableColumnHeader } from '../header';
 import { AccountPlanSchema, type IAccountPlan } from '@contapp/shared';
 import type { ColumnDef } from '@tanstack/react-table';
 
+const masterName = 'accounts-plan';
+
 export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 	{
 		accessorKey: 'name',
@@ -77,7 +79,7 @@ export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 	{
 		id: 'actions',
 		cell: ({ row }) => (
-			<DataTableRowActions schema={AccountPlanSchema} row={row} />
+			<DataTableRowActions masterName={masterName} row={row} />
 		),
 	},
 ];

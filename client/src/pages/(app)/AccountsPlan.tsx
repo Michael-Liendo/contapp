@@ -32,7 +32,7 @@ export default function AccountsPlan() {
 
 	return (
 		<div>
-			<h1>Plan de cuentas</h1>
+			<h1 className='text-xl mb-5'>Plan de cuentas</h1>
 
 			<DataTable
 				pagination={pagination}

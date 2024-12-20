@@ -12,17 +12,26 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 import type { Row } from '@tanstack/react-table';
-import type { z } from 'zod';
+import Services from '@/services';
+import { useToast } from '../ui/use-toast';
 
 interface DataTableRowActionsProps<TData> {
-	row: Row<TData>;
+	masterName: string;
+	row: Row<TData & { id: string }>;
 }
 
 export function DataTableRowActions<TData>({
 	row,
-	schema,
-}: DataTableRowActionsProps<TData> & { schema: z.ZodSchema<TData> }) {
-	const _item = schema.parse(row.original);
+	masterName,
+}: DataTableRowActionsProps<TData>) {
+	const { toast } = useToast();
+
+	async function handleDelete() {
+		await Services.default.delete(masterName, row.original?.id);
+		toast({
+			title: 'Elemento eliminado',
+		});
+	}
 
 	return (
 		<DropdownMenu>
@@ -36,9 +45,11 @@ export function DataTableRowActions<TData>({
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align='end' className='w-[160px]'>
-				<DropdownMenuItem>Edit</DropdownMenuItem>
+				{/* <DropdownMenuItem>Editar</DropdownMenuItem> */}
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>Delete</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => handleDelete()}>
+					Eliminar
+				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
