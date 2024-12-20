@@ -10,9 +10,9 @@ export default function AccountsPlan() {
 
 	const [accountsPlan, setAccountsPlan] = useState<IAccountPlan[]>([]);
 	const [pagination, setPagination] = useState<IPaginationResponse>();
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 
-	const [pageIndex, setPageIndex] = useState(1);
+	const [pageIndex, setPageIndex] = useState(0);
 
 	useEffect(() => {
 		const getAccountsPlan = async () => {

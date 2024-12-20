@@ -11,16 +11,12 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 
-import type { IPaginationResponse } from '@contapp/shared';
-
 interface DataTablePaginationProps<TData> {
 	table: Table<TData>;
-	pagination?: IPaginationResponse;
 }
 
 export function DataTablePagination<TData>({
 	table,
-	pagination,
 }: DataTablePaginationProps<TData>) {
 	return (
 		<div className='flex items-center justify-end px-2'>
@@ -47,7 +43,7 @@ export function DataTablePagination<TData>({
 					</Select>
 				</div>
 				<div className='flex w-[100px] items-center justify-center text-sm font-medium'>
-					Pagina {table.getState().pagination.pageIndex} de{' '}
+					Pagina {table.getState().pagination.pageIndex + 1} de{' '}
 					{table.getPageCount()}
 				</div>
 				<div className='flex items-center space-x-2'>

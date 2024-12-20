@@ -39,7 +39,7 @@ export function DataTable<TData, TValue>({
 	loading,
 	onPageChange,
 	pagination = {
-		page: 1,
+		page: 0,
 		limit: 10,
 		total: 0,
 		hasPreviousPage: false,
@@ -64,8 +64,8 @@ export function DataTable<TData, TValue>({
 			rowSelection,
 			columnFilters,
 			pagination: {
-				pageIndex: pagination.page,
-				pageSize: 10,
+				pageIndex: pagination.page, // 0
+				pageSize: pagination.limit, // 10
 			},
 		},
 		onRowSelectionChange: setRowSelection,
