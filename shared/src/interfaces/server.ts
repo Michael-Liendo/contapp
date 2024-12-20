@@ -42,6 +42,6 @@ export interface IPaginationResponse {
 	page: number;
 	limit: number;
 	total: number;
-	hasPreviousPage?: boolean;
-	hasNextPage?: boolean;
+	hasPreviousPage: boolean;
+	hasNextPage: boolean;
 }

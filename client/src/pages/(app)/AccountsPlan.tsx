@@ -2,33 +2,34 @@ import { AccountPlanDatagrid } from '@/components/table/accounts-plan/datagrid';
 import { DataTable } from '@/components/table/data-table';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
-import type { IAccountPlan, IPaginationResponse } from '@contapp/shared';
-import { useEffect, useState } from 'react';
+import type { IPaginationResponse } from '@contapp/shared';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
 
 export default function AccountsPlan() {
 	const { activeCompany } = useCompanyContext();
 
-	const [accountsPlan, setAccountsPlan] = useState<IAccountPlan[]>([]);
-	const [pagination, setPagination] = useState<IPaginationResponse>();
-	const [loading, setLoading] = useState(false);
+	const [pagination, setPagination] = useState<IPaginationResponse>({
+		page: 0,
+		limit: 10,
+		hasNextPage: false,
+		hasPreviousPage: false,
+		total: 0,
+	});
 
-	const [pageIndex, setPageIndex] = useState(0);
-
-	useEffect(() => {
-		const getAccountsPlan = async () => {
-			if (!activeCompany?.id) return;
-
-			setLoading(true);
-			const plans = await Services.accountPlan.findAll(activeCompany.id, {
-				page: pageIndex,
-				limit: 10,
+	const { data, isLoading } = useQuery(
+		['accounts-plan', activeCompany, pagination],
+		async () => {
+			const data = await Services.accountPlan.findAll(activeCompany?.id ?? '', {
+				page: pagination?.page ?? 0,
 			});
-			setAccountsPlan(plans.data);
-			setPagination(plans.pagination);
-			setLoading(false);
-		};
-		getAccountsPlan();
-	}, [activeCompany, pageIndex]);
+			setPagination(data.pagination);
+			return data.data;
+		},
+		{
+			enabled: !!activeCompany?.id,
+		},
+	);
 
 	return (
 		<div>
@@ -37,10 +38,15 @@ export default function AccountsPlan() {
 			<DataTable
 				pagination={pagination}
 				columns={AccountPlanDatagrid}
-				data={accountsPlan}
-				loading={loading}
+				data={data || []}
+				loading={isLoading}
 				onPageChange={(page) => {
-					setPageIndex(page);
+					setPagination((prevPagination) => {
+						return {
+							...prevPagination,
+							page: page,
+						};
+					});
 				}}
 			/>
 		</div>
