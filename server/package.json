@@ -1,6 +1,6 @@
 {
 	"name": "@contapp/server",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "the server for contapp",
 	"type": "commonjs",
 	"main": "src/index.ts",
@@ -19,7 +19,9 @@
 		"type": "git",
 		"url": "git+ssh://git@github.com/Michael-Liendo/contapp.git"
 	},
-	"keywords": ["server"],
+	"keywords": [
+		"server"
+	],
 	"author": "Michael Liendo <contact@michaelliendo.com> (https://michaelliendo.com/)",
 	"license": "MIT",
 	"bugs": {
