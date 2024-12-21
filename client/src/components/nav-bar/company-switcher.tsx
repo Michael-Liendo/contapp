@@ -17,9 +17,11 @@ import {
 	useSidebar,
 } from '@/components/ui/sidebar';
 import { useCompanyContext } from '@/context/CompanyContext';
+import { PrivateRoutesEnum } from '@/data/routesEnums';
 import { Avatar, AvatarFallback } from '@radix-ui/react-avatar';
 import { useState } from 'react';
-import { CompanyModalCreate } from '../company/create-modal';
+import { Link } from 'react-router-dom';
+import { CompanyModalMutate } from '../company/modal';
 
 export function CompanySwitcher() {
 	const { isMobile } = useSidebar();
@@ -46,7 +48,7 @@ export function CompanySwitcher() {
 								</div>
 								<div className='grid flex-1 text-left text-sm leading-tight'>
 									<span className='truncate font-semibold'>
-										{activeCompany?.name}
+										{activeCompany?.name ?? 'Crea una compañía'}
 									</span>
 								</div>
 								<ChevronsUpDown className='ml-auto' />
@@ -87,19 +89,21 @@ export function CompanySwitcher() {
 									Agregar compañía
 								</div>
 							</DropdownMenuItem>
-							<DropdownMenuItem className='gap-2 p-2'>
-								<div className='flex size-6 items-center justify-center rounded-md border bg-background'>
-									<Cog className='size-4' />
-								</div>
-								<div className='font-medium text-muted-foreground'>
-									Manejar compañías
-								</div>
-							</DropdownMenuItem>
+							<Link to={PrivateRoutesEnum.ManageCompanies}>
+								<DropdownMenuItem className='gap-2 p-2'>
+									<div className='flex size-6 items-center justify-center rounded-md border bg-background'>
+										<Cog className='size-4' />
+									</div>
+									<div className='font-medium text-muted-foreground'>
+										Manejar compañías
+									</div>
+								</DropdownMenuItem>
+							</Link>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</SidebarMenuItem>
 			</SidebarMenu>
-			<CompanyModalCreate open={isOpen} setOpen={setIsOpen} />
+			<CompanyModalMutate open={isOpen} setOpen={setIsOpen} />
 		</>
 	);
 }

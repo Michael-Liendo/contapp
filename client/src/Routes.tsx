@@ -11,6 +11,7 @@ import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 import useAuth from './hooks/useAuth';
 import AccountsPlan from './pages/(app)/AccountsPlan';
 import Home from './pages/(app)/Home';
+import ManageCompanies from './pages/(app)/ManageCompanies';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
 
@@ -58,6 +59,11 @@ const PrivateRoutes: JSX.Element[] = [
 		key={PrivateRoutesEnum.AccountsPlan}
 		path={PrivateRoutesEnum.AccountsPlan}
 		Component={AccountsPlan}
+	/>,
+	<Route
+		key={PrivateRoutesEnum.ManageCompanies}
+		path={PrivateRoutesEnum.ManageCompanies}
+		Component={ManageCompanies}
 	/>,
 ];
 

@@ -23,7 +23,6 @@ export const CompanyForCreateSchema = z.object({
 		.string()
 		.transform((value) => (value === '' ? undefined : value))
 		.optional(),
-
 	email: z
 		.union([z.literal(''), z.string().email()])
 		.transform((value) => (value === '' ? undefined : value))
@@ -34,4 +33,8 @@ export const CompanyForCreateSchema = z.object({
 		.optional(),
 });
 
-export const CompanyForUpdateSchema = CompanyForCreateSchema.partial();
+export const CompanyForUpdateSchema = z
+	.object({
+		id: z.string(),
+	})
+	.merge(CompanyForCreateSchema);

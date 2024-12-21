@@ -1,5 +1,5 @@
-import { DataTableRowActions } from '../actions';
-import { DataTableColumnHeader } from '../header';
+import { DataTableRowActions } from '../table/actions';
+import { DataTableColumnHeader } from '../table/header';
 
 import type { IAccountPlan } from '@contapp/shared';
 import type { ColumnDef } from '@tanstack/react-table';

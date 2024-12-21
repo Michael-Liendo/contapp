@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 import Services from '@/services';
+import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 import type { Row } from '@tanstack/react-table';
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
@@ -27,12 +28,25 @@ import { useToast } from '../ui/use-toast';
 interface DataTableRowActionsProps<TData> {
 	masterName: string;
 	row: Row<TData & { id: string }>;
+	EditModal?: ({
+		open,
+		setOpen,
+		isEdit,
+	}: {
+		open: boolean;
+		setOpen: (open: boolean) => void;
+		isEdit?: TData | undefined;
+	}) => JSX.Element;
+	canDelete?: boolean;
 }
 
 export function DataTableRowActions<TData>({
 	row,
 	masterName,
+	EditModal,
+	canDelete = true,
 }: DataTableRowActionsProps<TData>) {
+	const [openEdit, setOpenEdit] = useState(false);
 	const [confirmDelete, setConfirmDelete] = useState(false);
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
@@ -59,12 +73,17 @@ export function DataTableRowActions<TData>({
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align='end' className='w-[160px]'>
-					{/* <DropdownMenuItem>Editar</DropdownMenuItem> 
+					{EditModal && (
+						<DropdownMenuItem onClick={() => setOpenEdit(true)}>
+							Editar
+						</DropdownMenuItem>
+					)}
 					<DropdownMenuSeparator />
-					*/}
-					<DropdownMenuItem onClick={() => setConfirmDelete(true)}>
-						Eliminar
-					</DropdownMenuItem>
+					{canDelete && (
+						<DropdownMenuItem onClick={() => setConfirmDelete(true)}>
+							Eliminar
+						</DropdownMenuItem>
+					)}
 				</DropdownMenuContent>
 			</DropdownMenu>
 			<Dialog
@@ -75,7 +94,7 @@ export function DataTableRowActions<TData>({
 					<DialogHeader>
 						<DialogTitle>Estas seguro que deseas eliminar?</DialogTitle>
 						<DialogDescription>
-							Eliminar el registro de la cuenta.
+							Esta acción no se puede deshacer.
 						</DialogDescription>
 					</DialogHeader>
 
@@ -91,6 +110,14 @@ export function DataTableRowActions<TData>({
 					</DialogFooter>
 				</DialogContent>
 			</Dialog>
+			{EditModal && (
+				<EditModal
+					open={openEdit}
+					setOpen={setOpenEdit}
+					isEdit={row.original}
+					key={row.id}
+				/>
+			)}
 		</>
 	);
 }

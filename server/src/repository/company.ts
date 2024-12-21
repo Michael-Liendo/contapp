@@ -1,6 +1,7 @@
 import type {
 	ICompany,
 	ICompanyForCreate,
+	ICompanyForUpdate,
 	IFindAllDatabase,
 	IPaginationRequest,
 } from '@contapp/shared';
@@ -69,11 +70,33 @@ export class Company {
 	 * @param company ICompany
 	 * @returns string id
 	 */
-	static async updateCompany(id: string, company: ICompany): Promise<string> {
+	static async update(
+		id: string,
+		company: ICompanyForUpdate,
+	): Promise<ICompany> {
 		const updatedCompany = await database<ICompany>('companies')
 			.where({ id })
 			.update(company);
-		if (!updatedCompany) throw new Error('Error updating company');
-		return id;
+		if (!updatedCompany)
+			throw new InternalServerError('Error updating company');
+
+		const companyDB = await database<ICompany>('companies')
+			.where({ id })
+			.first();
+		if (!companyDB) throw new InternalServerError('Error updating company');
+		return companyDB;
+	}
+
+	/**
+	 *  remove - deletes a company and all its associated data
+	 *  todo: delete all associated data
+	 * @param id string
+	 * @returns
+	 */
+	static async remove(id: string): Promise<void> {
+		await database('accounts_plan').where({ company_id: id }).delete();
+		// todo: delete all associated data
+		await database<ICompany>('companies').where({ id }).delete();
+		return;
 	}
 }

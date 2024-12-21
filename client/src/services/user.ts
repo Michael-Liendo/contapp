@@ -5,6 +5,10 @@ export default class User {
 	static async me() {
 		try {
 			const request = await fetch('/user/me');
+			if (request.status === 401) {
+				localStorage.removeItem('token');
+				throw new Error('Unauthorized');
+			}
 
 			const response = await request.json();
 

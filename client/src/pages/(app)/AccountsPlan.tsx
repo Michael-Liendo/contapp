@@ -1,5 +1,5 @@
+import { AccountPlanDatagrid } from '@/components/accounts-plan/datagrid';
 import { AccountPlanModalCreate } from '@/components/accounts-plan/modal-create';
-import { AccountPlanDatagrid } from '@/components/table/accounts-plan/datagrid';
 import { DataTable } from '@/components/table/data-table';
 import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
@@ -38,7 +38,7 @@ export default function AccountsPlan() {
 	return (
 		<div>
 			<div className='flex justify-between items-center mb-5'>
-				<h1 className='text-xl mb-5'>Plan de cuentas</h1>
+				<h1 className='text-xl'>Plan de cuentas</h1>
 
 				<Button variant='default' onClick={() => setCreationOpen(true)}>
 					Crear

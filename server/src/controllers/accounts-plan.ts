@@ -1,10 +1,10 @@
-import Services from '../../services';
+import Services from '../services';
 
 import type {
 	IAccountPlanForCreate,
 	IPaginationRequest,
 } from '@contapp/shared';
-import type { Reply, Request } from '../../types';
+import type { Reply, Request } from '../types';
 
 export async function findAll(request: Request, reply: Reply) {
 	const { page = 0, limit = 10 } = request.query as IPaginationRequest;
