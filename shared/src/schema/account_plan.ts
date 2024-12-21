@@ -12,10 +12,7 @@ export const AccountPlanSchema = z.object({
 export const AccountPlanForCreateSchema = z.object({
 	company_id: z.string(),
 	name: z.string(),
-	description: z
-		.string()
-		.transform((value) => (value === '' ? undefined : value))
-		.optional(),
+	description: z.string().optional(),
 });
 
 export const AccountPlanForUpdateSchema = AccountPlanForCreateSchema.partial();
