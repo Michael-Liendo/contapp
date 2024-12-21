@@ -19,7 +19,11 @@ function TextField({
 }: InputProps) {
 	return (
 		<div>
-			{label && <Label htmlFor={id}>{label}</Label>}
+			{label && (
+				<Label htmlFor={id}>
+					{label} {props.required && <span className='text-red-600'>*</span>}
+				</Label>
+			)}
 			<Input
 				type={type}
 				className={className}

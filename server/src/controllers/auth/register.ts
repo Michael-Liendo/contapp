@@ -16,5 +16,5 @@ export default async function register(request: Request, reply: Reply) {
 
 	return reply
 		.code(201)
-		.send({ success: true, message: 'User created', data: { ...user } });
+		.send({ success: true, message: 'User created', data: user });
 }

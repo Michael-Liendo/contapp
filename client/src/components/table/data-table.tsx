@@ -12,8 +12,9 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from '@tanstack/react-table';
-import * as React from 'react';
 
+import type { IPaginationResponse } from '@contapp/shared';
+import { useState } from 'react';
 import {
 	Table,
 	TableBody,
@@ -21,39 +22,66 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from './ui/table';
+} from '../ui/table';
+import { DataTablePagination } from './pagination';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
+	loading: boolean;
+	onPageChange: (pageIndex: number) => void;
+	pagination?: IPaginationResponse;
 }
 
 export function DataTable<TData, TValue>({
 	columns,
 	data,
+	loading,
+	onPageChange,
+	pagination = {
+		page: 0,
+		limit: 10,
+		total: 0,
+		hasPreviousPage: false,
+		hasNextPage: false,
+	},
 }: DataTableProps<TData, TValue>) {
-	const [rowSelection, setRowSelection] = React.useState({});
-	const [columnVisibility, setColumnVisibility] =
-		React.useState<VisibilityState>({});
-	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-		[],
-	);
-	const [sorting, setSorting] = React.useState<SortingState>([]);
+	const [rowSelection, setRowSelection] = useState({});
+	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const [sorting, setSorting] = useState<SortingState>([]);
 
 	const table = useReactTable({
 		data,
 		columns,
+		pageCount: Math.ceil(pagination.total / pagination.limit),
 		state: {
 			sorting,
 			columnVisibility,
 			rowSelection,
 			columnFilters,
+			pagination: {
+				pageIndex: pagination.page,
+				pageSize: pagination.limit,
+			},
 		},
-		enableRowSelection: true,
+		manualPagination: true,
 		onRowSelectionChange: setRowSelection,
 		onSortingChange: setSorting,
 		onColumnFiltersChange: setColumnFilters,
 		onColumnVisibilityChange: setColumnVisibility,
+		onPaginationChange: (newPagination) => {
+			if (typeof newPagination === 'function') {
+				onPageChange(
+					newPagination({
+						pageIndex: pagination.page,
+						pageSize: pagination.limit,
+					}).pageIndex,
+				);
+			} else {
+				onPageChange(newPagination.pageIndex);
+			}
+		},
 		getCoreRowModel: getCoreRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
@@ -63,7 +91,7 @@ export function DataTable<TData, TValue>({
 	});
 
 	return (
-		<div className='space-y-4'>
+		<div className='space-y-4 w-full'>
 			{/* <DataTableToolbar table={table} /> */}
 			<div className='rounded-md border'>
 				<Table>
@@ -86,7 +114,16 @@ export function DataTable<TData, TValue>({
 						))}
 					</TableHeader>
 					<TableBody>
-						{table.getRowModel().rows?.length ? (
+						{loading ? (
+							<TableRow>
+								<TableCell
+									colSpan={columns.length}
+									className='h-24 text-center'
+								>
+									Loading...
+								</TableCell>
+							</TableRow>
+						) : table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
 								<TableRow
 									key={row.id}
@@ -108,14 +145,14 @@ export function DataTable<TData, TValue>({
 									colSpan={columns.length}
 									className='h-24 text-center'
 								>
-									No results.
+									Sin resultados.
 								</TableCell>
 							</TableRow>
 						)}
 					</TableBody>
 				</Table>
 			</div>
-			{/* <DataTablePagination table={table} /> */}
+			<DataTablePagination table={table} />
 		</div>
 	);
 }

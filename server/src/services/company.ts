@@ -1,5 +1,11 @@
-import type { ICompany, ICompanyForCreate, IPagination } from '@contapp/shared';
+import type {
+	ICompany,
+	ICompanyForCreate,
+	IFindAllResponse,
+	IPaginationRequest,
+} from '@contapp/shared';
 import Repository from '../repository';
+import getPagination from '../utils/getPagination';
 
 export default class Company {
 	static async getByID(company_id: string): Promise<ICompany | undefined> {
@@ -10,14 +16,23 @@ export default class Company {
 
 	static async getAll(
 		user_id: string,
-		pagination: IPagination,
-	): Promise<ICompany[]> {
+		r_pagination: Required<IPaginationRequest>,
+	): Promise<IFindAllResponse<ICompany>> {
 		const companies = await Repository.company.getUserCompanies(
 			user_id,
-			pagination,
+			r_pagination,
 		);
 
-		return companies;
+		const pagination = getPagination(
+			r_pagination.page,
+			r_pagination.limit,
+			companies.count,
+		);
+
+		return {
+			data: companies.data,
+			pagination: pagination,
+		};
 	}
 
 	static async create(companyDTO: ICompanyForCreate): Promise<ICompany> {

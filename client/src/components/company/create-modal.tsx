@@ -13,6 +13,7 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { CompanyForCreateSchema } from '@contapp/shared';
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
+import { useToast } from '../ui/use-toast';
 
 export function CompanyModalCreate({
 	open,
@@ -23,17 +24,29 @@ export function CompanyModalCreate({
 }) {
 	const [isOpen, setIsOpen] = useState(open);
 
+	const { toast } = useToast();
+
 	const { create } = useCompanyContext();
+
 	const { values, errors, handleChange, handleSubmit } = useFormik({
-		initialValues: { name: '' },
+		initialValues: {
+			name: '',
+			phone: '',
+			fiscal_identification: '',
+			email: '',
+		},
 		validationSchema: toFormikValidationSchema(CompanyForCreateSchema),
 		validateOnChange: false,
 		validateOnBlur: false,
-		onSubmit: async (values) => {
-			const dto = CompanyForCreateSchema.parse(values);
-
+		onSubmit: async (values, { resetForm }) => {
+			const dto = await CompanyForCreateSchema.parse(values);
 			create(dto);
+			resetForm();
 			setIsOpen(false);
+
+			toast({
+				title: 'Compañía creada',
+			});
 		},
 	});
 
@@ -61,6 +74,7 @@ export function CompanyModalCreate({
 						id='create-company'
 						className='space-y-4'
 						onSubmit={handleSubmit}
+						noValidate
 					>
 						<TextField
 							label='Nombre'
@@ -73,6 +87,39 @@ export function CompanyModalCreate({
 							error={errors.name}
 							onChange={handleChange}
 							required
+						/>
+						<TextField
+							label='Identificación fiscal'
+							type='text'
+							id='company_fiscal_identification'
+							name='fiscal_identification'
+							placeholder='J12345678'
+							autoComplete='off'
+							value={values.fiscal_identification}
+							error={errors.fiscal_identification}
+							onChange={handleChange}
+						/>
+						<TextField
+							label='Teléfono'
+							type='text'
+							id='company_phone'
+							name='phone'
+							placeholder='+58 xxxx xxxx'
+							autoComplete='off'
+							value={values.phone}
+							error={errors.phone}
+							onChange={handleChange}
+						/>
+						<TextField
+							label='Email'
+							type='text'
+							id='company_email'
+							name='email'
+							placeholder='example@email.com'
+							autoComplete='off'
+							value={values.email}
+							error={errors.email}
+							onChange={handleChange}
 						/>
 					</form>
 				</div>

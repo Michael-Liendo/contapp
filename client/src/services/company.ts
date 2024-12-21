@@ -8,7 +8,7 @@ export default class Company {
 
 			const response = await request.json();
 
-			return CompanySchema.array().parse(response?.data?.companies);
+			return CompanySchema.array().parse(response?.data);
 		} catch (error) {
 			console.error('CompanyServices', error);
 			throw error;
@@ -24,7 +24,7 @@ export default class Company {
 
 			const response = await request.json();
 
-			return CompanySchema.parse(response?.data?.company);
+			return CompanySchema.parse(response?.data);
 		} catch (error) {
 			console.error('CompanyServices', error);
 			throw error;

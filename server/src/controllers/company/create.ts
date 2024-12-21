@@ -14,5 +14,5 @@ export default async function create(request: Request, reply: Reply) {
 
 	return reply
 		.code(201)
-		.send({ success: true, message: 'Company created', data: { company } });
+		.send({ success: true, message: 'Company created', data: company });
 }

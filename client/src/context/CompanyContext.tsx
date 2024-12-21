@@ -33,7 +33,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 			const newCompany = await Services.company.create(company);
 			setCompanies((prevCompanies) => [...prevCompanies, newCompany]);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		} finally {
 			setLoading({ ...loading, create: false });
 		}
@@ -47,7 +47,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 				prevCompanies.filter((company) => company.id !== id),
 			);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		} finally {
 			setLoading({ ...loading, remove: false });
 		}
@@ -60,7 +60,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 			setCompanies(companies);
 			setActiveCompany(companies[0]);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		} finally {
 			setLoading({ ...loading, get: false });
 		}

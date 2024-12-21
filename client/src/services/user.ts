@@ -8,7 +8,7 @@ export default class User {
 
 			const response = await request.json();
 
-			return UserSchema.parse(response.data.user);
+			return UserSchema.parse(response.data);
 		} catch (error) {
 			console.error('UserServices', error);
 			throw error;

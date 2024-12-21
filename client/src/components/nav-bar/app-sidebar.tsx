@@ -1,125 +1,81 @@
 'use client';
 
 import {
-	BookOpen,
-	Bot,
-	Frame,
-	PieChart,
-	Settings2,
-	SquareTerminal,
+	BookUser,
+	ClipboardMinus,
+	History,
+	Home,
+	Notebook,
 } from 'lucide-react';
 
 import { CompanySwitcher } from '@/components/nav-bar/company-switcher';
-import { NavProjects } from '@/components/nav-bar/nav-projects';
 import { NavUser } from '@/components/nav-bar/nav-user';
 import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
+	SidebarGroup,
+	SidebarGroupContent,
+	SidebarGroupLabel,
 	SidebarHeader,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
 	SidebarRail,
 } from '@/components/ui/sidebar';
-import { NavMain } from './nav-main';
+import { PrivateRoutesEnum } from '@/data/routesEnums';
 
-// This is sample data.
 const data = {
 	navMain: [
 		{
-			title: 'Playground',
-			url: '#',
-			icon: SquareTerminal,
-			isActive: true,
+			title: 'General',
 			items: [
 				{
-					title: 'History',
-					url: '#',
-				},
-				{
-					title: 'Starred',
-					url: '#',
-				},
-				{
-					title: 'Settings',
-					url: '#',
+					title: 'Inicio',
+					url: PrivateRoutesEnum.Home,
+					icon: Home,
 				},
 			],
 		},
 		{
-			title: 'Models',
-			url: '#',
-			icon: Bot,
+			title: 'Operaciones Contables',
 			items: [
 				{
-					title: 'Genesis',
+					title: 'Registrar Asiento Contable',
 					url: '#',
+					icon: Notebook,
 				},
 				{
-					title: 'Explorer',
+					title: 'Historial de Asientos',
 					url: '#',
-				},
-				{
-					title: 'Quantum',
-					url: '#',
+					icon: History,
 				},
 			],
 		},
 		{
-			title: 'Documentation',
-			url: '#',
-			icon: BookOpen,
+			title: 'Reportes',
 			items: [
 				{
-					title: 'Introduction',
+					title: 'Balance de Comprobación',
 					url: '#',
+					icon: ClipboardMinus,
 				},
 				{
-					title: 'Get Started',
+					title: 'Exportar a Excel',
 					url: '#',
-				},
-				{
-					title: 'Tutorials',
-					url: '#',
-				},
-				{
-					title: 'Changelog',
-					url: '#',
+					icon: Notebook,
 				},
 			],
 		},
 		{
-			title: 'Settings',
-			url: '#',
-			icon: Settings2,
+			title: 'Configuración Contable',
 			items: [
 				{
-					title: 'General',
-					url: '#',
-				},
-				{
-					title: 'Team',
-					url: '#',
-				},
-				{
-					title: 'Billing',
-					url: '#',
-				},
-				{
-					title: 'Limits',
-					url: '#',
+					title: 'Plan de Cuentas',
+					url: PrivateRoutesEnum.AccountsPlan,
+					icon: BookUser,
 				},
 			],
-		},
-	],
-	projects: [
-		{
-			name: 'Design Engineering',
-			url: '#',
-			icon: Frame,
-		},
-		{
-			name: 'Sales & Marketing',
-			url: '#',
-			icon: PieChart,
 		},
 	],
 };
@@ -131,8 +87,25 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				<CompanySwitcher />
 			</SidebarHeader>
 			<SidebarContent>
-				<NavMain items={data.navMain} />
-				<NavProjects projects={data.projects} />
+				{data.navMain.map((item) => (
+					<SidebarGroup key={item.title}>
+						<SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+						<SidebarGroupContent>
+							<SidebarMenu>
+								{item.items.map((item) => (
+									<SidebarMenuItem key={item.title}>
+										<SidebarMenuButton asChild>
+											<a href={item.url}>
+												{item.icon && <item.icon />}
+												<span>{item.title}</span>
+											</a>
+										</SidebarMenuButton>
+									</SidebarMenuItem>
+								))}
+							</SidebarMenu>
+						</SidebarGroupContent>
+					</SidebarGroup>
+				))}
 			</SidebarContent>
 			<SidebarFooter>
 				<NavUser />

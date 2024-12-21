@@ -5,29 +5,22 @@ import {
 } from 'react-router-dom';
 import { Navigate, Outlet } from 'react-router-dom';
 
+import AppLayout from './components/app-layout';
 import { CompanyProvider } from './context/CompanyContext';
+import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 import useAuth from './hooks/useAuth';
-import HomeApp from './pages/(app)/Home';
+import AccountsPlan from './pages/(app)/AccountsPlan';
+import Home from './pages/(app)/Home';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
-
-export enum PublicRoutesEnum {}
-
-export enum AuthRoutesEnum {
-	login = '/login',
-	Signup = '/signup',
-	Welcome = '/',
-}
-
-export enum PrivateRoutesEnum {
-	Home = '/home',
-}
 
 const PrivateRoutesWrapper = () => {
 	const { token } = useAuth();
 	return token ? (
 		<CompanyProvider>
-			<Outlet />
+			<AppLayout>
+				<Outlet />
+			</AppLayout>
 		</CompanyProvider>
 	) : (
 		<Navigate to={AuthRoutesEnum.login} />
@@ -59,7 +52,12 @@ const PrivateRoutes: JSX.Element[] = [
 	<Route
 		key={PrivateRoutesEnum.Home}
 		path={PrivateRoutesEnum.Home}
-		Component={HomeApp}
+		Component={Home}
+	/>,
+	<Route
+		key={PrivateRoutesEnum.AccountsPlan}
+		path={PrivateRoutesEnum.AccountsPlan}
+		Component={AccountsPlan}
 	/>,
 ];
 
