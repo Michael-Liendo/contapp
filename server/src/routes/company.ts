@@ -1,10 +1,10 @@
 import { CompanyForCreateSchema } from '@contapp/shared';
 
-import { create, findAll } from '../../controllers/company';
-import checkJwt from '../../middlewares/checkJwt';
+import { create, findAll } from '../controllers/company';
+import checkJwt from '../middlewares/checkJwt';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
-import requestValidation from '../../utils/requestValidation';
+import requestValidation from '../utils/requestValidation';
 
 export default function company(
 	fastify: FastifyInstance,
