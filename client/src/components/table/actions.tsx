@@ -7,14 +7,13 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
 import Services from '@/services';
 import type { Row } from '@tanstack/react-table';
+import { useState } from 'react';
 import { useQueryClient } from 'react-query';
-import { useToast } from '../ui/use-toast';
 import {
 	Dialog,
 	DialogContent,
@@ -22,9 +21,8 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from '../ui/dialog';
-import { useState } from 'react';
+import { useToast } from '../ui/use-toast';
 
 interface DataTableRowActionsProps<TData> {
 	masterName: string;
@@ -45,6 +43,7 @@ export function DataTableRowActions<TData>({
 			title: 'Elemento eliminado',
 		});
 		queryClient.invalidateQueries(masterName);
+		setConfirmDelete(false);
 	}
 
 	return (
@@ -60,11 +59,12 @@ export function DataTableRowActions<TData>({
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align='end' className='w-[160px]'>
-					{/* <DropdownMenuItem>Editar</DropdownMenuItem> */}
+					{/* <DropdownMenuItem>Editar</DropdownMenuItem> 
 					<DropdownMenuSeparator />
+					*/}
 					<DropdownMenuItem onClick={() => setConfirmDelete(true)}>
 						Eliminar
-					</DropdownMenuItem>{' '}
+					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
 			<Dialog
@@ -80,7 +80,12 @@ export function DataTableRowActions<TData>({
 					</DialogHeader>
 
 					<DialogFooter>
-						<Button variant={'destructive'} onClick={handleDelete}>
+						<Button
+							variant={'destructive'}
+							onClick={() => {
+								handleDelete();
+							}}
+						>
 							Eliminar
 						</Button>
 					</DialogFooter>

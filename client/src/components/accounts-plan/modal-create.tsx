@@ -39,7 +39,7 @@ export function AccountPlanModalCreate({
 			validationSchema: toFormikValidationSchema(AccountPlanForCreateSchema),
 			validateOnChange: false,
 			validateOnBlur: false,
-			onSubmit: async (values, { resetForm }) => {
+			onSubmit: async (values, { resetForm, setFieldValue }) => {
 				const dto = await AccountPlanForCreateSchema.parse(values);
 
 				await Services.accountPlan.create(dto);
@@ -47,6 +47,8 @@ export function AccountPlanModalCreate({
 
 				setOpen(false);
 				resetForm();
+
+				setFieldValue('company_id', activeCompany?.id ?? '');
 
 				toast({
 					title: 'Ha sido creado el plan de cuentas',
