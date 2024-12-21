@@ -1,6 +1,7 @@
 import type {
 	ICompany,
 	ICompanyForCreate,
+	ICompanyForUpdate,
 	IFindAllDatabase,
 	IPaginationRequest,
 } from '@contapp/shared';
@@ -69,13 +70,21 @@ export class Company {
 	 * @param company ICompany
 	 * @returns string id
 	 */
-	static async updateCompany(id: string, company: ICompany): Promise<string> {
+	static async update(
+		id: string,
+		company: ICompanyForUpdate,
+	): Promise<ICompany> {
 		const updatedCompany = await database<ICompany>('companies')
 			.where({ id })
 			.update(company);
 		if (!updatedCompany)
 			throw new InternalServerError('Error updating company');
-		return id;
+
+		const companyDB = await database<ICompany>('companies')
+			.where({ id })
+			.first();
+		if (!companyDB) throw new InternalServerError('Error updating company');
+		return companyDB;
 	}
 
 	/**

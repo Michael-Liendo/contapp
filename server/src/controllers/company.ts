@@ -1,6 +1,10 @@
 import Services from '../services';
 
-import type { ICompanyForCreate, IPaginationRequest } from '@contapp/shared';
+import type {
+	ICompanyForCreate,
+	ICompanyForUpdate,
+	IPaginationRequest,
+} from '@contapp/shared';
 import type { Reply, Request } from '../types';
 
 export async function create(request: Request, reply: Reply) {
@@ -31,6 +35,20 @@ export async function findAll(request: Request, reply: Reply) {
 		data: companies.data,
 		pagination: companies.pagination,
 	});
+}
+
+export async function update(request: Request, reply: Reply) {
+	const companyDTO = request.body as ICompanyForUpdate;
+	const userId = request?.user?.id as string;
+
+	const company = await Services.company.update(companyDTO.id, {
+		...companyDTO,
+		user_id: userId,
+	});
+
+	return reply
+		.code(201)
+		.send({ success: true, message: 'Company updated', data: company });
 }
 
 export async function remove(request: Request, reply: Reply) {

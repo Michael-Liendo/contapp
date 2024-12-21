@@ -12,6 +12,7 @@ import { useCompanyContext } from '@/context/CompanyContext';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import {
 	CompanyForCreateSchema,
+	CompanyForUpdateSchema,
 	type ICompanyForUpdate,
 } from '@contapp/shared';
 import { useFormik } from 'formik';
@@ -42,13 +43,14 @@ export function CompanyModalMutate({
 		validateOnChange: false,
 		validateOnBlur: false,
 		onSubmit: async (values, { resetForm }) => {
-			const dto = await CompanyForCreateSchema.parse(values);
 			if (isEdit) {
-				update({
-					id: isEdit.id ?? '',
-					...dto,
+				const dto = await CompanyForUpdateSchema.parse({
+					id: isEdit.id,
+					...values,
 				});
+				update(dto);
 			} else {
+				const dto = await CompanyForCreateSchema.parse(values);
 				create(dto);
 			}
 			resetForm();

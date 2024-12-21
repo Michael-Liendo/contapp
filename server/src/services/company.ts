@@ -1,6 +1,7 @@
 import type {
 	ICompany,
 	ICompanyForCreate,
+	ICompanyForUpdate,
 	IFindAllResponse,
 	IPaginationRequest,
 } from '@contapp/shared';
@@ -46,12 +47,12 @@ export default class Company {
 		return;
 	}
 
-	static async update(company_id: string, company: ICompany): Promise<string> {
-		const updatedCompany = await Repository.company.updateCompany(
-			company_id,
-			company,
-		);
+	static async update(
+		company_id: string,
+		company: ICompanyForUpdate,
+	): Promise<ICompany> {
+		const updatedCompany = await Repository.company.update(company_id, company);
 		if (!updatedCompany) throw new Error('Error updating company');
-		return company_id;
+		return updatedCompany;
 	}
 }
