@@ -38,7 +38,7 @@ export default function AccountsPlan() {
 	return (
 		<div>
 			<div className='flex justify-between items-center mb-5'>
-				<h1 className='text-xl mb-5'>Plan de cuentas</h1>
+				<h1 className='text-xl'>Plan de cuentas</h1>
 
 				<Button variant='default' onClick={() => setCreationOpen(true)}>
 					Crear
