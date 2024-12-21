@@ -7,77 +7,65 @@ import {
 	useEffect,
 	useState,
 } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 interface CompanyContextType {
 	companies: ICompany[];
 	activeCompany: ICompany | undefined;
 	setActiveCompany: (company: ICompany) => void;
 	create: (company: ICompanyForCreate) => void;
-	removeCompany: (id: string) => void;
+	remove: (id: string) => void;
 }
 
 const CompanyContext = createContext<CompanyContextType | undefined>(undefined);
 
 const CompanyProvider = ({ children }: { children: ReactNode }) => {
-	const [loading, setLoading] = useState({
-		create: false,
-		remove: false,
-		get: false,
+	const queryClient = useQueryClient();
+	const { data } = useQuery(['company'], async () => {
+		const data = await Services.company.findAll();
+		return data;
 	});
-	const [companies, setCompanies] = useState<ICompany[]>([]);
-	const [activeCompany, setActiveCompany] = useState<ICompany>(companies[0]);
 
-	async function create(company: ICompanyForCreate) {
-		try {
-			setLoading({ ...loading, create: true });
-			const newCompany = await Services.company.create(company);
-			setCompanies((prevCompanies) => [...prevCompanies, newCompany]);
-		} catch (e) {
-			console.error(e);
-		} finally {
-			setLoading({ ...loading, create: false });
-		}
-	}
+	const create = useMutation({
+		mutationFn: (company: ICompanyForCreate) => {
+			return Services.company.create(company);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries('company');
+		},
+	});
 
-	async function removeCompany(id: string) {
-		try {
-			setLoading({ ...loading, remove: true });
-			await Services.company.remove(id);
-			setCompanies((prevCompanies) =>
-				prevCompanies.filter((company) => company.id !== id),
-			);
-		} catch (e) {
-			console.error(e);
-		} finally {
-			setLoading({ ...loading, remove: false });
-		}
-	}
+	const remove = useMutation({
+		mutationFn: (id: string) => {
+			return Services.company.remove(id);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries('company');
+		},
+	});
 
-	async function getCompanies() {
-		try {
-			setLoading({ ...loading, get: true });
-			const companies = await Services.company.getAll();
-			setCompanies(companies);
-			setActiveCompany(companies[0]);
-		} catch (e) {
-			console.error(e);
-		} finally {
-			setLoading({ ...loading, get: false });
-		}
-	}
+	const [activeCompany, setActiveCompany] = useState<ICompany | undefined>();
 
 	useEffect(() => {
-		getCompanies();
-	}, []);
+		setActiveCompany(data?.[0]);
+	}, [data]);
+
+	async function createHandle(company: ICompanyForCreate) {
+		create.mutate(company);
+	}
+
+	async function removeHandle(id: string) {
+		remove.mutate(id);
+	}
 
 	return (
 		<CompanyContext.Provider
 			value={{
-				companies,
+				companies: data || [],
 				activeCompany,
 				setActiveCompany,
-				create,
-				removeCompany,
+				create: createHandle,
+				remove: removeHandle,
 			}}
 		>
 			{children}

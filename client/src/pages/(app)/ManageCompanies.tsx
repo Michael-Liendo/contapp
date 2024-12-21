@@ -1,9 +1,9 @@
-import { AccountPlanModalCreate } from '@/components/accounts-plan/modal-create';
 import { DataTable } from '@/components/table/data-table';
 import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
 import { useState } from 'react';
 import { CompanyDatagrid } from '@/components/company/datagrid';
+import { CompanyModalCreate } from '@/components/company/create-modal';
 
 export default function ManageCompanies() {
 	const { companies } = useCompanyContext();
@@ -21,7 +21,7 @@ export default function ManageCompanies() {
 			</div>
 
 			<DataTable columns={CompanyDatagrid} data={companies} />
-			<AccountPlanModalCreate open={creationOpen} setOpen={setCreationOpen} />
+			<CompanyModalCreate open={creationOpen} setOpen={setCreationOpen} />
 		</div>
 	);
 }

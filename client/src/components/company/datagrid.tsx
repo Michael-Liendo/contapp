@@ -4,7 +4,7 @@ import { DataTableColumnHeader } from '../table/header';
 import type { ICompany } from '@contapp/shared';
 import type { ColumnDef } from '@tanstack/react-table';
 
-const masterName = 'accounts-plan';
+const masterName = 'company';
 
 export const CompanyDatagrid: ColumnDef<ICompany>[] = [
 	{

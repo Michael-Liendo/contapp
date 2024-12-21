@@ -18,7 +18,7 @@ export async function create(request: Request, reply: Reply) {
 }
 
 export async function findAll(request: Request, reply: Reply) {
-	const { page = 0, limit = 10 } = request.query as IPaginationRequest;
+	const { page = 0, limit = 100 } = request.query as IPaginationRequest;
 
 	const companies = await Services.company.getAll(request?.user?.id as string, {
 		page,

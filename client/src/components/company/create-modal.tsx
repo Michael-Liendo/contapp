@@ -14,6 +14,7 @@ import { CompanyForCreateSchema } from '@contapp/shared';
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useToast } from '../ui/use-toast';
+import { useQueryClient } from 'react-query';
 
 export function CompanyModalCreate({
 	open,
@@ -22,11 +23,11 @@ export function CompanyModalCreate({
 	open: boolean;
 	setOpen: (open: boolean) => void;
 }) {
+	const { create } = useCompanyContext();
+
 	const [isOpen, setIsOpen] = useState(open);
 
 	const { toast } = useToast();
-
-	const { create } = useCompanyContext();
 
 	const { values, errors, handleChange, handleSubmit } = useFormik({
 		initialValues: {

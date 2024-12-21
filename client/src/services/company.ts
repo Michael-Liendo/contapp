@@ -2,7 +2,7 @@ import { CompanySchema, type ICompanyForCreate } from '@contapp/shared';
 import fetch from '../utils/fetch';
 
 export default class Company {
-	static async getAll() {
+	static async findAll() {
 		try {
 			const request = await fetch('/company/findAll');
 

@@ -75,7 +75,7 @@ export function DataTableRowActions<TData>({
 					<DialogHeader>
 						<DialogTitle>Estas seguro que deseas eliminar?</DialogTitle>
 						<DialogDescription>
-							Eliminar el registro de la cuenta.
+							Esta acción no se puede deshacer.
 						</DialogDescription>
 					</DialogHeader>
 

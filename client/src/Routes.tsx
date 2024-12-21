@@ -13,6 +13,7 @@ import AccountsPlan from './pages/(app)/AccountsPlan';
 import Home from './pages/(app)/Home';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
+import ManageCompanies from './pages/(app)/ManageCompanies';
 
 const PrivateRoutesWrapper = () => {
 	const { token } = useAuth();
@@ -58,6 +59,11 @@ const PrivateRoutes: JSX.Element[] = [
 		key={PrivateRoutesEnum.AccountsPlan}
 		path={PrivateRoutesEnum.AccountsPlan}
 		Component={AccountsPlan}
+	/>,
+	<Route
+		key={PrivateRoutesEnum.ManageCompanies}
+		path={PrivateRoutesEnum.ManageCompanies}
+		Component={ManageCompanies}
 	/>,
 ];
 
