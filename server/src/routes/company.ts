@@ -1,6 +1,6 @@
 import { CompanyForCreateSchema } from '@contapp/shared';
 
-import { create, findAll } from '../controllers/company';
+import { create, findAll, remove } from '../controllers/company';
 import checkJwt from '../middlewares/checkJwt';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
@@ -24,6 +24,12 @@ export default function company(
 		url: '/create',
 		preHandler: requestValidation(CompanyForCreateSchema),
 		handler: create,
+	});
+
+	fastify.route({
+		method: 'DELETE',
+		url: '/delete/:company_id',
+		handler: remove,
 	});
 
 	done();

@@ -32,3 +32,15 @@ export async function findAll(request: Request, reply: Reply) {
 		pagination: companies.pagination,
 	});
 }
+
+export async function remove(request: Request, reply: Reply) {
+	const { company_id } = request.params as { company_id: string };
+
+	await Services.company.remove(company_id);
+
+	return reply.code(204).send({
+		success: true,
+		message: 'Ok',
+		data: null,
+	});
+}

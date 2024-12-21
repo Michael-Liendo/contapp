@@ -41,6 +41,11 @@ export default class Company {
 		return company;
 	}
 
+	static async remove(company_id: string): Promise<void> {
+		await Repository.company.remove(company_id);
+		return;
+	}
+
 	static async update(company_id: string, company: ICompany): Promise<string> {
 		const updatedCompany = await Repository.company.updateCompany(
 			company_id,
