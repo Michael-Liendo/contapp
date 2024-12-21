@@ -24,6 +24,7 @@ import {
 	SidebarRail,
 } from '@/components/ui/sidebar';
 import { PrivateRoutesEnum } from '@/data/routesEnums';
+import { Link } from 'react-router-dom';
 
 const data = {
 	navMain: [
@@ -95,10 +96,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 								{item.items.map((item) => (
 									<SidebarMenuItem key={item.title}>
 										<SidebarMenuButton asChild>
-											<a href={item.url}>
+											<Link to={item.url}>
 												{item.icon && <item.icon />}
 												<span>{item.title}</span>
-											</a>
+											</Link>
 										</SidebarMenuButton>
 									</SidebarMenuItem>
 								))}
