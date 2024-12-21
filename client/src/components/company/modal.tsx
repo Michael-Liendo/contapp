@@ -13,7 +13,7 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import {
 	CompanyForCreateSchema,
 	CompanyForUpdateSchema,
-	type ICompanyForUpdate,
+	type ICompany,
 } from '@contapp/shared';
 import { useFormik } from 'formik';
 import { useEffect } from 'react';
@@ -26,7 +26,7 @@ export function CompanyModalMutate({
 }: {
 	open: boolean;
 	setOpen: (open: boolean) => void;
-	isEdit?: ICompanyForUpdate;
+	isEdit?: ICompany;
 }) {
 	const { create, update } = useCompanyContext();
 
