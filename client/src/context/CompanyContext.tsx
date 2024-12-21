@@ -25,7 +25,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 		get: false,
 	});
 	const [companies, setCompanies] = useState<ICompany[]>([]);
-	const [activeCompany, setActiveCompany] = useState<ICompany>(companies[1]);
+	const [activeCompany, setActiveCompany] = useState<ICompany>(companies[0]);
 
 	async function create(company: ICompanyForCreate) {
 		try {
@@ -58,7 +58,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 			setLoading({ ...loading, get: true });
 			const companies = await Services.company.getAll();
 			setCompanies(companies);
-			setActiveCompany(companies[1]);
+			setActiveCompany(companies[0]);
 		} catch (e) {
 			console.error(e);
 		} finally {

@@ -31,7 +31,7 @@ export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 		cell: ({ row }) => {
 			return (
 				<div className='flex space-x-2'>
-					<span className='min-w-[500px] truncate font-medium'>
+					<span className='truncate font-medium'>
 						{row?.getValue('description') || 'Sin descripción'}
 					</span>
 				</div>

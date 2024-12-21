@@ -40,7 +40,6 @@ export class Company {
 
 		const allCompanies = await database<ICompany>('companies')
 			.where({ user_id })
-			.orderBy('created_at', 'desc')
 			.limit(limit)
 			.offset(offset);
 
