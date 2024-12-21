@@ -14,8 +14,8 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import {
 	AccountPlanForCreateSchema,
 	AccountPlanForUpdateSchema,
-	type IAccountPlanForCreate,
 	type IAccountPlan,
+	type IAccountPlanForCreate,
 	type IAccountPlanForUpdate,
 } from '@contapp/shared';
 import { useFormik } from 'formik';

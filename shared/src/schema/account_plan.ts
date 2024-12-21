@@ -15,4 +15,6 @@ export const AccountPlanForCreateSchema = z.object({
 	description: z.string().optional(),
 });
 
-export const AccountPlanForUpdateSchema = AccountPlanForCreateSchema.partial();
+export const AccountPlanForUpdateSchema = z
+	.object({ id: z.string() })
+	.merge(AccountPlanForCreateSchema.partial());

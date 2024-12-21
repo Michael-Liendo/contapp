@@ -6,6 +6,7 @@ import type {
 	IFindAllResponse,
 	IPaginationRequest,
 } from '@contapp/shared';
+import { InternalServerError } from '../utils/errorHandler';
 import getPagination from '../utils/getPagination';
 
 export default class AccountsPlan {
@@ -44,6 +45,21 @@ export default class AccountsPlan {
 		const account_plan = await Repository.accountPlan.create(account_plan_dto);
 
 		return account_plan;
+	}
+
+	static async update(
+		account_plan_id: string,
+		account_plan: IAccountPlanForCreate,
+	): Promise<IAccountPlan> {
+		const updatedAccountPlan = await Repository.accountPlan.update(
+			account_plan_id,
+			account_plan,
+		);
+
+		if (!updatedAccountPlan)
+			throw new InternalServerError('Error updating account plan');
+
+		return updatedAccountPlan;
 	}
 
 	static async delete(account_plan_id: string): Promise<void> {
