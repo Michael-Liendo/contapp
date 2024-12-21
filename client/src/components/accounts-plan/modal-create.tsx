@@ -49,7 +49,7 @@ export function AccountPlanModalCreate({
 				resetForm();
 
 				toast({
-					title: 'Elemento Creado',
+					title: 'Ha sido creado el plan de cuentas',
 				});
 			},
 		});

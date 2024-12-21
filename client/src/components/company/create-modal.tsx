@@ -13,6 +13,7 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { CompanyForCreateSchema } from '@contapp/shared';
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
+import { useToast } from '../ui/use-toast';
 
 export function CompanyModalCreate({
 	open,
@@ -22,6 +23,8 @@ export function CompanyModalCreate({
 	setOpen: (open: boolean) => void;
 }) {
 	const [isOpen, setIsOpen] = useState(open);
+
+	const { toast } = useToast();
 
 	const { create } = useCompanyContext();
 
@@ -40,6 +43,10 @@ export function CompanyModalCreate({
 			create(dto);
 			resetForm();
 			setIsOpen(false);
+
+			toast({
+				title: 'Compañía creada',
+			});
 		},
 	});
 
