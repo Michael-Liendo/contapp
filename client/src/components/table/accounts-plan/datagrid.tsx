@@ -49,7 +49,6 @@ export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 	},
 	{
 		id: 'actions',
-		maxSize: 100,
 		cell: ({ row }) => (
 			<DataTableRowActions masterName={masterName} row={row} />
 		),
