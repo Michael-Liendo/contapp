@@ -3,6 +3,7 @@ import { AccountPlanSchema } from '@contapp/shared';
 
 import type {
 	IAccountPlanForCreate,
+	IAccountPlanForUpdate,
 	IPaginationRequest,
 	IPaginationResponse,
 } from '@contapp/shared';
@@ -48,6 +49,22 @@ export default class AccountPlanService {
 			return AccountPlanSchema.parse(response?.data);
 		} catch (error) {
 			console.error('AccountPlanService.create', error);
+			throw error;
+		}
+	}
+
+	static async update(plan: IAccountPlanForUpdate) {
+		try {
+			const request = await fetch(`/accounts-plan/update/${plan.id}`, {
+				method: 'PUT',
+				body: JSON.stringify(plan),
+			});
+
+			const response = await request.json();
+
+			return AccountPlanSchema.parse(response?.data);
+		} catch (error) {
+			console.error('AccountPlanService.update', error);
 			throw error;
 		}
 	}

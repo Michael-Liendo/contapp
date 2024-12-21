@@ -15,22 +15,13 @@ export const CompanySchema = z.object({
 export const CompanyForCreateSchema = z.object({
 	user_id: z.string().optional(),
 	name: z.string(),
-	fiscal_identification: z
-		.string()
-		.transform((value) => (value === '' ? undefined : value))
-		.optional(),
-	phone: z
-		.string()
-		.transform((value) => (value === '' ? undefined : value))
-		.optional(),
+	fiscal_identification: z.string().optional(),
+	phone: z.string().optional(),
 	email: z
 		.union([z.literal(''), z.string().email()])
 		.transform((value) => (value === '' ? undefined : value))
 		.optional(),
-	default_currency: z
-		.string()
-		.transform((value) => (value === '' ? undefined : value))
-		.optional(),
+	default_currency: z.string().optional(),
 });
 
 export const CompanyForUpdateSchema = z

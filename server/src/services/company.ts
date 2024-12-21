@@ -6,6 +6,7 @@ import type {
 	IPaginationRequest,
 } from '@contapp/shared';
 import Repository from '../repository';
+import { InternalServerError } from '../utils/errorHandler';
 import getPagination from '../utils/getPagination';
 
 export default class Company {
@@ -52,7 +53,8 @@ export default class Company {
 		company: ICompanyForUpdate,
 	): Promise<ICompany> {
 		const updatedCompany = await Repository.company.update(company_id, company);
-		if (!updatedCompany) throw new Error('Error updating company');
+		if (!updatedCompany)
+			throw new InternalServerError('Error updating company');
 		return updatedCompany;
 	}
 }

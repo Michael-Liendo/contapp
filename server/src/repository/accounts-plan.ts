@@ -64,4 +64,25 @@ export class AccountPlan {
 			.where({ id: account_plan_id });
 		return;
 	}
+
+	static async update(
+		account_plan_id: string,
+		account_plan: IAccountPlanForCreate,
+	): Promise<IAccountPlan> {
+		const updatedAccountPlan = await database<IAccountPlan>('accounts_plan')
+			.where({ id: account_plan_id })
+			.update(account_plan);
+
+		if (!updatedAccountPlan)
+			throw new InternalServerError('Error updating account plan');
+
+		const accountPlanDB = await database<IAccountPlan>('accounts_plan')
+			.where({ id: account_plan_id })
+			.first();
+
+		if (!accountPlanDB)
+			throw new InternalServerError('Error updating account plan');
+
+		return accountPlanDB;
+	}
 }
