@@ -1,9 +1,9 @@
+import { CompanyDatagrid } from '@/components/company/datagrid';
+import { CompanyModalMutate } from '@/components/company/modal';
 import { DataTable } from '@/components/table/data-table';
 import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
 import { useState } from 'react';
-import { CompanyDatagrid } from '@/components/company/datagrid';
-import { CompanyModalMutate } from '@/components/company/modal';
 
 export default function ManageCompanies() {
 	const { companies } = useCompanyContext();

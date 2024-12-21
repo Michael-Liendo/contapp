@@ -1,7 +1,7 @@
 import {
 	CompanySchema,
-	type ICompanyForUpdate,
 	type ICompanyForCreate,
+	type ICompanyForUpdate,
 } from '@contapp/shared';
 import fetch from '../utils/fetch';
 

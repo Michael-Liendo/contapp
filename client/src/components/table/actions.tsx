@@ -11,8 +11,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 import Services from '@/services';
+import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 import type { Row } from '@tanstack/react-table';
-import { type ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import {
 	Dialog,
@@ -23,7 +24,6 @@ import {
 	DialogTitle,
 } from '../ui/dialog';
 import { useToast } from '../ui/use-toast';
-import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 
 interface DataTableRowActionsProps<TData> {
 	masterName: string;

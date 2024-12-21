@@ -17,11 +17,11 @@ import {
 	useSidebar,
 } from '@/components/ui/sidebar';
 import { useCompanyContext } from '@/context/CompanyContext';
+import { PrivateRoutesEnum } from '@/data/routesEnums';
 import { Avatar, AvatarFallback } from '@radix-ui/react-avatar';
 import { useState } from 'react';
-import { CompanyModalMutate } from '../company/modal';
 import { Link } from 'react-router-dom';
-import { PrivateRoutesEnum } from '@/data/routesEnums';
+import { CompanyModalMutate } from '../company/modal';
 
 export function CompanySwitcher() {
 	const { isMobile } = useSidebar();

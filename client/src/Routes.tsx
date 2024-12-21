@@ -11,9 +11,9 @@ import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 import useAuth from './hooks/useAuth';
 import AccountsPlan from './pages/(app)/AccountsPlan';
 import Home from './pages/(app)/Home';
+import ManageCompanies from './pages/(app)/ManageCompanies';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
-import ManageCompanies from './pages/(app)/ManageCompanies';
 
 const PrivateRoutesWrapper = () => {
 	const { token } = useAuth();
