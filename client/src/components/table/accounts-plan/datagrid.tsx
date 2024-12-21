@@ -12,19 +12,9 @@ export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title='Nombre' />
 		),
-		cell: ({ row }) => {
-			return (
-				<div className='flex space-x-2'>
-					<span className='max-w-[400px] truncate font-medium'>
-						{row.getValue('name')}
-					</span>
-				</div>
-			);
-		},
 	},
 	{
 		accessorKey: 'description',
-
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title='Descripción' />
 		),
@@ -46,7 +36,7 @@ export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 		cell: ({ row }) => {
 			return (
 				<div className='flex space-x-2'>
-					<span className='w-[100px] truncate font-medium'>
+					<span className='truncate font-medium'>
 						{(row.getValue('created_at') as Date).toLocaleDateString('es-ES', {
 							month: '2-digit',
 							day: '2-digit',
@@ -58,26 +48,8 @@ export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 		},
 	},
 	{
-		accessorKey: 'updated_at',
-		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title='Fecha de actualización' />
-		),
-		cell: ({ row }) => {
-			return (
-				<div className='flex space-x-2'>
-					<span className='w-[100px] truncate font-medium'>
-						{(row.getValue('updated_at') as Date).toLocaleDateString('es-ES', {
-							month: '2-digit',
-							day: '2-digit',
-							year: 'numeric',
-						})}
-					</span>
-				</div>
-			);
-		},
-	},
-	{
 		id: 'actions',
+		maxSize: 100,
 		cell: ({ row }) => (
 			<DataTableRowActions masterName={masterName} row={row} />
 		),
