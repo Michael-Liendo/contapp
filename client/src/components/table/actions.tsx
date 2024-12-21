@@ -23,16 +23,22 @@ import {
 	DialogTitle,
 } from '../ui/dialog';
 import { useToast } from '../ui/use-toast';
+import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 
 interface DataTableRowActionsProps<TData> {
 	masterName: string;
 	row: Row<TData & { id: string }>;
+	canEdit?: boolean;
+	canDelete?: boolean;
 }
 
 export function DataTableRowActions<TData>({
 	row,
 	masterName,
+	canEdit = false,
+	canDelete = true,
 }: DataTableRowActionsProps<TData>) {
+	const [openEdit, setOpenEdit] = useState(false);
 	const [confirmDelete, setConfirmDelete] = useState(false);
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
@@ -59,12 +65,17 @@ export function DataTableRowActions<TData>({
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align='end' className='w-[160px]'>
-					{/* <DropdownMenuItem>Editar</DropdownMenuItem> 
+					{canEdit && (
+						<DropdownMenuItem onClick={() => setOpenEdit(true)}>
+							Editar
+						</DropdownMenuItem>
+					)}
 					<DropdownMenuSeparator />
-					*/}
-					<DropdownMenuItem onClick={() => setConfirmDelete(true)}>
-						Eliminar
-					</DropdownMenuItem>
+					{canDelete && (
+						<DropdownMenuItem onClick={() => setConfirmDelete(true)}>
+							Eliminar
+						</DropdownMenuItem>
+					)}
 				</DropdownMenuContent>
 			</DropdownMenu>
 			<Dialog
