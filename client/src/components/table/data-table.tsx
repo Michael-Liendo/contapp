@@ -28,8 +28,8 @@ import { DataTablePagination } from './pagination';
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
-	loading: boolean;
-	onPageChange: (pageIndex: number) => void;
+	loading?: boolean;
+	onPageChange?: (pageIndex: number) => void;
 	pagination?: IPaginationResponse;
 }
 
@@ -72,14 +72,14 @@ export function DataTable<TData, TValue>({
 		onColumnVisibilityChange: setColumnVisibility,
 		onPaginationChange: (newPagination) => {
 			if (typeof newPagination === 'function') {
-				onPageChange(
+				onPageChange?.(
 					newPagination({
 						pageIndex: pagination.page,
 						pageSize: pagination.limit,
 					}).pageIndex,
 				);
 			} else {
-				onPageChange(newPagination.pageIndex);
+				onPageChange?.(newPagination.pageIndex);
 			}
 		},
 		getCoreRowModel: getCoreRowModel(),
