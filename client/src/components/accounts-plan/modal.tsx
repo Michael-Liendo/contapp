@@ -11,23 +11,49 @@ import {
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
-import { AccountPlanForCreateSchema } from '@contapp/shared';
+import {
+	AccountPlanForCreateSchema,
+	AccountPlanForUpdateSchema,
+	type IAccountPlanForCreate,
+	type IAccountPlan,
+	type IAccountPlanForUpdate,
+} from '@contapp/shared';
 import { useFormik } from 'formik';
 import { useEffect } from 'react';
-import { useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '../ui/use-toast';
 
 export function AccountPlanModalCreate({
 	open,
 	setOpen,
+	isEdit,
 }: {
 	open: boolean;
 	setOpen: (open: boolean) => void;
+	isEdit?: IAccountPlan;
 }) {
 	const { activeCompany } = useCompanyContext();
 
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
+
+	const update = useMutation({
+		mutationFn: (accountPlan: IAccountPlanForUpdate) => {
+			return Services.accountPlan.update(accountPlan);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries('accounts-plan');
+		},
+	});
+
+	const create = useMutation({
+		mutationFn: (accountPlan: IAccountPlanForCreate) => {
+			return Services.accountPlan.create(accountPlan);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries('accounts-plan');
+		},
+	});
 
 	const { values, errors, handleChange, handleSubmit, setFieldValue } =
 		useFormik({
@@ -40,10 +66,17 @@ export function AccountPlanModalCreate({
 			validateOnChange: false,
 			validateOnBlur: false,
 			onSubmit: async (values, { resetForm, setFieldValue }) => {
-				const dto = await AccountPlanForCreateSchema.parse(values);
+				if (isEdit) {
+					const dto = await AccountPlanForUpdateSchema.parse({
+						id: isEdit.id,
+						...values,
+					});
+					update.mutate(dto);
+				} else {
+					const dto = await AccountPlanForCreateSchema.parse(values);
 
-				await Services.accountPlan.create(dto);
-				queryClient.invalidateQueries('accounts-plan');
+					create.mutate(dto);
+				}
 
 				setOpen(false);
 				resetForm();
@@ -51,7 +84,7 @@ export function AccountPlanModalCreate({
 				setFieldValue('company_id', activeCompany?.id ?? '');
 
 				toast({
-					title: 'Ha sido creado el plan de cuentas',
+					title: isEdit ? 'Plan de cuentas editado' : 'Plan de cuentas creado',
 				});
 			},
 		});
@@ -69,15 +102,18 @@ export function AccountPlanModalCreate({
 		>
 			<DialogContent className='sm:max-w-[425px]'>
 				<form
-					id='create-accounts-plan'
+					id='mutate-accounts-plan'
 					className='space-y-4'
 					onSubmit={handleSubmit}
 					noValidate
 				>
 					<DialogHeader>
-						<DialogTitle>Crear plan de cuentas</DialogTitle>
+						<DialogTitle>
+							{isEdit ? 'Editar plan de cuentas' : 'Crear plan de cuentas'}
+						</DialogTitle>
 						<DialogDescription>
-							Escribe los datos del plan de cuentas que deseas crear.
+							Escribe los datos del plan de cuentas que deseas{' '}
+							{isEdit ? 'editar' : 'crear'}.
 						</DialogDescription>
 					</DialogHeader>
 					<div>
@@ -106,8 +142,8 @@ export function AccountPlanModalCreate({
 						/>
 					</div>
 					<DialogFooter>
-						<Button form='create-accounts-plan' type='submit'>
-							Crear plan de cuentas
+						<Button form='mutate-accounts-plan' type='submit'>
+							{isEdit ? 'Editar plan de cuentas' : 'Crear plan de cuentas'}
 						</Button>
 					</DialogFooter>
 				</form>
