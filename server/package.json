@@ -19,9 +19,7 @@
 		"type": "git",
 		"url": "git+ssh://git@github.com/Michael-Liendo/contapp.git"
 	},
-	"keywords": [
-		"server"
-	],
+	"keywords": ["server"],
 	"author": "Michael Liendo <contact@michaelliendo.com> (https://michaelliendo.com/)",
 	"license": "MIT",
 	"bugs": {
