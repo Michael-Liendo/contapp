@@ -35,9 +35,10 @@ export function CompanyModalCreate({
 		validationSchema: toFormikValidationSchema(CompanyForCreateSchema),
 		validateOnChange: false,
 		validateOnBlur: false,
-		onSubmit: async (values) => {
+		onSubmit: async (values, { resetForm }) => {
 			const dto = await CompanyForCreateSchema.parse(values);
 			create(dto);
+			resetForm();
 			setIsOpen(false);
 		},
 	});

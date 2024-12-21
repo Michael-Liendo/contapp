@@ -39,13 +39,14 @@ export function AccountPlanModalCreate({
 			validationSchema: toFormikValidationSchema(AccountPlanForCreateSchema),
 			validateOnChange: false,
 			validateOnBlur: false,
-			onSubmit: async (values) => {
+			onSubmit: async (values, { resetForm }) => {
 				const dto = await AccountPlanForCreateSchema.parse(values);
 
 				await Services.accountPlan.create(dto);
 				queryClient.invalidateQueries('accounts-plan');
 
 				setOpen(false);
+				resetForm();
 
 				toast({
 					title: 'Elemento Creado',
