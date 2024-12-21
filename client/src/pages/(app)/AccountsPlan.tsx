@@ -1,5 +1,5 @@
 import { AccountPlanDatagrid } from '@/components/accounts-plan/datagrid';
-import { AccountPlanModalCreate } from '@/components/accounts-plan/modal';
+import { AccountPlanModalMutate } from '@/components/accounts-plan/modal';
 import { DataTable } from '@/components/table/data-table';
 import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
@@ -59,7 +59,7 @@ export default function AccountsPlan() {
 					});
 				}}
 			/>
-			<AccountPlanModalCreate open={creationOpen} setOpen={setCreationOpen} />
+			<AccountPlanModalMutate open={creationOpen} setOpen={setCreationOpen} />
 		</div>
 	);
 }

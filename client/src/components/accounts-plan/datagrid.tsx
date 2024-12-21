@@ -3,6 +3,7 @@ import { DataTableColumnHeader } from '../table/header';
 
 import type { IAccountPlan } from '@contapp/shared';
 import type { ColumnDef } from '@tanstack/react-table';
+import { AccountPlanModalMutate } from './modal';
 
 const masterName = 'accounts-plan';
 
@@ -50,7 +51,11 @@ export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 	{
 		id: 'actions',
 		cell: ({ row }) => (
-			<DataTableRowActions masterName={masterName} row={row} />
+			<DataTableRowActions
+				masterName={masterName}
+				row={row}
+				EditModal={AccountPlanModalMutate}
+			/>
 		),
 	},
 ];

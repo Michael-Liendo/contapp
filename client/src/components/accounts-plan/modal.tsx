@@ -23,7 +23,7 @@ import { useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '../ui/use-toast';
 
-export function AccountPlanModalCreate({
+export function AccountPlanModalMutate({
 	open,
 	setOpen,
 	isEdit,
@@ -55,43 +55,59 @@ export function AccountPlanModalCreate({
 		},
 	});
 
-	const { values, errors, handleChange, handleSubmit, setFieldValue } =
-		useFormik({
-			initialValues: {
-				name: '',
-				company_id: activeCompany?.id ?? '',
-				description: '',
-			},
-			validationSchema: toFormikValidationSchema(AccountPlanForCreateSchema),
-			validateOnChange: false,
-			validateOnBlur: false,
-			onSubmit: async (values, { resetForm, setFieldValue }) => {
-				if (isEdit) {
-					const dto = await AccountPlanForUpdateSchema.parse({
-						id: isEdit.id,
-						...values,
-					});
-					update.mutate(dto);
-				} else {
-					const dto = await AccountPlanForCreateSchema.parse(values);
-
-					create.mutate(dto);
-				}
-
-				setOpen(false);
-				resetForm();
-
-				setFieldValue('company_id', activeCompany?.id ?? '');
-
-				toast({
-					title: isEdit ? 'Plan de cuentas editado' : 'Plan de cuentas creado',
+	const {
+		values,
+		errors,
+		handleChange,
+		handleSubmit,
+		setFieldValue,
+		setValues,
+	} = useFormik({
+		initialValues: {
+			name: '',
+			company_id: activeCompany?.id ?? '',
+			description: '',
+		},
+		validationSchema: toFormikValidationSchema(AccountPlanForCreateSchema),
+		validateOnChange: false,
+		validateOnBlur: false,
+		onSubmit: async (values, { resetForm, setFieldValue }) => {
+			if (isEdit) {
+				const dto = await AccountPlanForUpdateSchema.parse({
+					id: isEdit.id,
+					...values,
 				});
-			},
-		});
+				update.mutate(dto);
+			} else {
+				const dto = await AccountPlanForCreateSchema.parse(values);
+
+				create.mutate(dto);
+			}
+
+			setOpen(false);
+			resetForm();
+
+			setFieldValue('company_id', activeCompany?.id ?? '');
+
+			toast({
+				title: isEdit ? 'Plan de cuentas editado' : 'Plan de cuentas creado',
+			});
+		},
+	});
 
 	useEffect(() => {
 		setFieldValue('company_id', activeCompany?.id ?? '');
 	}, [activeCompany?.id]);
+
+	useEffect(() => {
+		if (isEdit) {
+			setValues({
+				name: isEdit.name ?? '',
+				company_id: isEdit.company_id ?? '',
+				description: isEdit.description ?? '',
+			});
+		}
+	}, [isEdit]);
 
 	return (
 		<Dialog
