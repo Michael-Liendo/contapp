@@ -24,7 +24,7 @@ import {
 	SidebarRail,
 } from '@/components/ui/sidebar';
 import { PrivateRoutesEnum } from '@/data/routesEnums';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const data = {
 	navMain: [
@@ -82,6 +82,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+	const { pathname } = useLocation();
 	return (
 		<Sidebar collapsible='icon' {...props}>
 			<SidebarHeader>
@@ -94,7 +95,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 						<SidebarGroupContent>
 							<SidebarMenu>
 								{item.items.map((item) => (
-									<SidebarMenuItem key={item.title}>
+									<SidebarMenuItem
+										key={item.title}
+										className={item.url === pathname ? 'bg-sidebar-accent' : ''}
+									>
 										<SidebarMenuButton asChild>
 											<Link to={item.url}>
 												{item.icon && <item.icon />}
