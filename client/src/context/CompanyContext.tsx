@@ -1,5 +1,9 @@
 import Services from '@/services';
-import type { ICompany, ICompanyForCreate } from '@contapp/shared';
+import type {
+	ICompany,
+	ICompanyForCreate,
+	ICompanyForUpdate,
+} from '@contapp/shared';
 import {
 	type ReactNode,
 	createContext,
@@ -15,6 +19,7 @@ interface CompanyContextType {
 	setActiveCompany: (company: ICompany) => void;
 	create: (company: ICompanyForCreate) => void;
 	remove: (id: string) => void;
+	update: (company: ICompanyForUpdate) => void;
 }
 
 const CompanyContext = createContext<CompanyContextType | undefined>(undefined);
@@ -29,6 +34,15 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 	const create = useMutation({
 		mutationFn: (company: ICompanyForCreate) => {
 			return Services.company.create(company);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries('company');
+		},
+	});
+
+	const update = useMutation({
+		mutationFn: (company: ICompanyForUpdate) => {
+			return Services.company.update(company);
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries('company');
@@ -58,6 +72,10 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 		remove.mutate(id);
 	}
 
+	async function updateHandle(company: ICompanyForUpdate) {
+		update.mutate(company);
+	}
+
 	return (
 		<CompanyContext.Provider
 			value={{
@@ -66,6 +84,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 				setActiveCompany,
 				create: createHandle,
 				remove: removeHandle,
+				update: updateHandle,
 			}}
 		>
 			{children}

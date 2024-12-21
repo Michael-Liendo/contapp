@@ -19,7 +19,7 @@ import {
 import { useCompanyContext } from '@/context/CompanyContext';
 import { Avatar, AvatarFallback } from '@radix-ui/react-avatar';
 import { useState } from 'react';
-import { CompanyModalCreate } from '../company/create-modal';
+import { CompanyModalMutate } from '../company/modal';
 import { Link } from 'react-router-dom';
 import { PrivateRoutesEnum } from '@/data/routesEnums';
 
@@ -103,7 +103,7 @@ export function CompanySwitcher() {
 					</DropdownMenu>
 				</SidebarMenuItem>
 			</SidebarMenu>
-			<CompanyModalCreate open={isOpen} setOpen={setIsOpen} />
+			<CompanyModalMutate open={isOpen} setOpen={setIsOpen} />
 		</>
 	);
 }

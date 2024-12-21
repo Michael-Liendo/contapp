@@ -10,26 +10,28 @@ import {
 } from '@/components/ui/dialog';
 import { useCompanyContext } from '@/context/CompanyContext';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
-import { CompanyForCreateSchema } from '@contapp/shared';
+import {
+	CompanyForCreateSchema,
+	type ICompanyForUpdate,
+} from '@contapp/shared';
 import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useToast } from '../ui/use-toast';
-import { useQueryClient } from 'react-query';
 
-export function CompanyModalCreate({
+export function CompanyModalMutate({
 	open,
 	setOpen,
+	isEdit,
 }: {
 	open: boolean;
 	setOpen: (open: boolean) => void;
+	isEdit?: ICompanyForUpdate;
 }) {
-	const { create } = useCompanyContext();
-
-	const [isOpen, setIsOpen] = useState(open);
+	const { create, update } = useCompanyContext();
 
 	const { toast } = useToast();
 
-	const { values, errors, handleChange, handleSubmit } = useFormik({
+	const { values, errors, handleChange, handleSubmit, setValues } = useFormik({
 		initialValues: {
 			name: '',
 			phone: '',
@@ -41,33 +43,49 @@ export function CompanyModalCreate({
 		validateOnBlur: false,
 		onSubmit: async (values, { resetForm }) => {
 			const dto = await CompanyForCreateSchema.parse(values);
-			create(dto);
+			if (isEdit) {
+				update({
+					id: isEdit.id ?? '',
+					...dto,
+				});
+			} else {
+				create(dto);
+			}
 			resetForm();
-			setIsOpen(false);
+			setOpen(false);
 
 			toast({
-				title: 'Compañía creada',
+				title: isEdit ? 'Compañía editada' : 'Compañía creada',
 			});
 		},
 	});
 
 	useEffect(() => {
-		setIsOpen(open);
-	}, [open]);
+		if (isEdit) {
+			setValues({
+				name: isEdit.name ?? '',
+				phone: isEdit.phone ?? '',
+				fiscal_identification: isEdit.fiscal_identification ?? '',
+				email: isEdit.email ?? '',
+			});
+		}
+	}, [isEdit]);
 
 	return (
 		<Dialog
-			open={isOpen}
+			open={open}
 			onOpenChange={(open) => {
 				setOpen(open);
-				setIsOpen(open);
 			}}
 		>
 			<DialogContent className='sm:max-w-[425px]'>
 				<DialogHeader>
-					<DialogTitle>Crear compañía</DialogTitle>
+					<DialogTitle>
+						{isEdit ? `Editar compañía ${isEdit.name} ` : 'Crear compañía'}
+					</DialogTitle>
 					<DialogDescription>
-						Escribe los datos de la compañía que deseas crear.
+						Escribe los datos de la compañía que deseas{' '}
+						{isEdit ? 'editar' : 'crear'}.
 					</DialogDescription>
 				</DialogHeader>
 				<div>

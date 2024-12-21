@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
 import { useState } from 'react';
 import { CompanyDatagrid } from '@/components/company/datagrid';
-import { CompanyModalCreate } from '@/components/company/create-modal';
+import { CompanyModalMutate } from '@/components/company/modal';
 
 export default function ManageCompanies() {
 	const { companies } = useCompanyContext();
@@ -21,7 +21,7 @@ export default function ManageCompanies() {
 			</div>
 
 			<DataTable columns={CompanyDatagrid} data={companies} />
-			<CompanyModalCreate open={creationOpen} setOpen={setCreationOpen} />
+			<CompanyModalMutate open={creationOpen} setOpen={setCreationOpen} />
 		</div>
 	);
 }

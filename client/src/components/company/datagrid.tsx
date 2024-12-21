@@ -3,6 +3,7 @@ import { DataTableColumnHeader } from '../table/header';
 
 import type { ICompany } from '@contapp/shared';
 import type { ColumnDef } from '@tanstack/react-table';
+import { CompanyModalMutate } from './modal';
 
 const masterName = 'company';
 
@@ -91,7 +92,11 @@ export const CompanyDatagrid: ColumnDef<ICompany>[] = [
 	{
 		id: 'actions',
 		cell: ({ row }) => (
-			<DataTableRowActions masterName={masterName} row={row} />
+			<DataTableRowActions
+				masterName={masterName}
+				row={row}
+				EditModal={CompanyModalMutate}
+			/>
 		),
 	},
 ];

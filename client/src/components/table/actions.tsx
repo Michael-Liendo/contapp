@@ -12,7 +12,7 @@ import {
 
 import Services from '@/services';
 import type { Row } from '@tanstack/react-table';
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import {
 	Dialog,
@@ -28,14 +28,22 @@ import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 interface DataTableRowActionsProps<TData> {
 	masterName: string;
 	row: Row<TData & { id: string }>;
-	canEdit?: boolean;
+	EditModal?: ({
+		open,
+		setOpen,
+		isEdit,
+	}: {
+		open: boolean;
+		setOpen: (open: boolean) => void;
+		isEdit?: TData | undefined;
+	}) => JSX.Element;
 	canDelete?: boolean;
 }
 
 export function DataTableRowActions<TData>({
 	row,
 	masterName,
-	canEdit = false,
+	EditModal,
 	canDelete = true,
 }: DataTableRowActionsProps<TData>) {
 	const [openEdit, setOpenEdit] = useState(false);
@@ -65,7 +73,7 @@ export function DataTableRowActions<TData>({
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align='end' className='w-[160px]'>
-					{canEdit && (
+					{EditModal && (
 						<DropdownMenuItem onClick={() => setOpenEdit(true)}>
 							Editar
 						</DropdownMenuItem>
@@ -102,6 +110,14 @@ export function DataTableRowActions<TData>({
 					</DialogFooter>
 				</DialogContent>
 			</Dialog>
+			{EditModal && (
+				<EditModal
+					open={openEdit}
+					setOpen={setOpenEdit}
+					isEdit={row.original}
+					key={row.id}
+				/>
+			)}
 		</>
 	);
 }
