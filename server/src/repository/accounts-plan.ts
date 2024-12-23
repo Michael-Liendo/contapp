@@ -35,7 +35,7 @@ export class AccountPlan {
 
 		const account_plans = await database<IAccountPlan>('accounts_plan')
 			.where({ company_id })
-			.orderBy('created_at', 'desc')
+			.orderBy('nomenclature', 'asc')
 			.limit(limit)
 			.offset(offset);
 
