@@ -38,13 +38,7 @@ export function DataTable<TData, TValue>({
 	data,
 	loading,
 	onPageChange,
-	pagination = {
-		page: 0,
-		limit: 10,
-		total: 0,
-		hasPreviousPage: false,
-		hasNextPage: false,
-	},
+	pagination,
 }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = useState({});
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -54,15 +48,17 @@ export function DataTable<TData, TValue>({
 	const table = useReactTable({
 		data,
 		columns,
-		pageCount: Math.ceil(pagination.total / pagination.limit),
+		pageCount: pagination
+			? Math.ceil(pagination?.total / pagination?.limit)
+			: undefined,
 		state: {
 			sorting,
 			columnVisibility,
 			rowSelection,
 			columnFilters,
 			pagination: {
-				pageIndex: pagination.page,
-				pageSize: pagination.limit,
+				pageIndex: pagination ? pagination.page : 0,
+				pageSize: pagination ? pagination.limit : 10,
 			},
 		},
 		manualPagination: true,
@@ -71,15 +67,17 @@ export function DataTable<TData, TValue>({
 		onColumnFiltersChange: setColumnFilters,
 		onColumnVisibilityChange: setColumnVisibility,
 		onPaginationChange: (newPagination) => {
-			if (typeof newPagination === 'function') {
-				onPageChange?.(
-					newPagination({
-						pageIndex: pagination.page,
-						pageSize: pagination.limit,
-					}).pageIndex,
-				);
-			} else {
-				onPageChange?.(newPagination.pageIndex);
+			if (pagination) {
+				if (typeof newPagination === 'function') {
+					onPageChange?.(
+						newPagination({
+							pageIndex: pagination.page,
+							pageSize: pagination.limit,
+						}).pageIndex,
+					);
+				} else {
+					onPageChange?.(newPagination.pageIndex);
+				}
 			}
 		},
 		getCoreRowModel: getCoreRowModel(),

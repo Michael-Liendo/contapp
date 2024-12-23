@@ -15,7 +15,7 @@ export default function AccountsPlan() {
 
 	const [pagination, setPagination] = useState<IPaginationResponse>({
 		page: 0,
-		limit: 10,
+		limit: 100,
 		hasNextPage: false,
 		hasPreviousPage: false,
 		total: 0,
