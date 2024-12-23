@@ -7,7 +7,7 @@ import type {
 import type { Reply, Request } from '../types';
 
 export async function findAll(request: Request, reply: Reply) {
-	const { page = 0, limit = 10 } = request.query as IPaginationRequest;
+	const { page = 0, limit = 100 } = request.query as IPaginationRequest;
 	const { company_id } = request.params as { company_id: string };
 
 	const accounts_plan = await Services.accountsPlan.getAll(company_id, {

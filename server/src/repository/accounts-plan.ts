@@ -23,7 +23,7 @@ export class AccountPlan {
 		company_id: string,
 		pagination: IPaginationRequest,
 	): Promise<IFindAllDatabase<IAccountPlan>> {
-		const limit = pagination.limit ?? 10;
+		const limit = pagination.limit ?? 100;
 		const offset = (pagination.page ? pagination.page : 0) * limit;
 
 		const totalResult = await database<IAccountPlan>('accounts_plan')
@@ -35,7 +35,7 @@ export class AccountPlan {
 
 		const account_plans = await database<IAccountPlan>('accounts_plan')
 			.where({ company_id })
-			.orderBy('created_at', 'desc')
+			.orderBy('nomenclature', 'asc')
 			.limit(limit)
 			.offset(offset);
 
