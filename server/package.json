@@ -1,6 +1,6 @@
 {
 	"name": "@contapp/server",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "the server for contapp",
 	"type": "commonjs",
 	"main": "src/index.ts",
