@@ -66,7 +66,7 @@ export function AccountPlanModalMutate({
 		initialValues: {
 			name: '',
 			company_id: activeCompany?.id ?? '',
-			description: '',
+			nomenclature: '',
 		},
 		validationSchema: toFormikValidationSchema(AccountPlanForCreateSchema),
 		validateOnChange: false,
@@ -104,7 +104,7 @@ export function AccountPlanModalMutate({
 			setValues({
 				name: isEdit.name ?? '',
 				company_id: isEdit.company_id ?? '',
-				description: isEdit.description ?? '',
+				nomenclature: isEdit.nomenclature ?? '',
 			});
 		}
 	}, [isEdit]);
@@ -146,15 +146,16 @@ export function AccountPlanModalMutate({
 							required
 						/>
 						<TextField
-							label='Descripción'
+							label='Nomenclatura'
 							type='text'
-							id='description'
-							name='description'
-							placeholder='Descripción del plan de cuentas'
+							id='nomenclature'
+							name='nomenclature'
+							placeholder='Nomenclatura del plan de cuentas'
 							autoComplete='off'
-							value={values.description}
-							error={errors.description}
+							value={values.nomenclature}
+							error={errors.nomenclature}
 							onChange={handleChange}
+							required
 						/>
 					</div>
 					<DialogFooter>

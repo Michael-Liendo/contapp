@@ -9,25 +9,22 @@ const masterName = 'accounts-plan';
 
 export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 	{
+		accessorKey: 'nomenclature',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title='Nomenclatura' />
+		),
+	},
+	{
 		accessorKey: 'name',
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title='Nombre' />
 		),
 	},
 	{
-		accessorKey: 'description',
+		accessorKey: 'parent_id',
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title='Descripción' />
+			<DataTableColumnHeader column={column} title='Plan Padre' />
 		),
-		cell: ({ row }) => {
-			return (
-				<div className='flex space-x-2'>
-					<span className='truncate font-medium'>
-						{row?.getValue('description') || 'Sin descripción'}
-					</span>
-				</div>
-			);
-		},
 	},
 	{
 		accessorKey: 'created_at',
