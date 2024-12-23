@@ -19,6 +19,9 @@ cd ./contapp
 
 # Install dependencies
 npm install
+
+# Build the shared package
+npm run shared:build
 ```
 
 #### Run Server
@@ -33,14 +36,11 @@ cp .env.example .env
 # Run a PostgreSQL with Docker Compose
 docker compose up
 
-# Go to Root folder
-cd ..
-
 # Run the database migrations
-npm run server:migrations:up
+npm run migrations:up
 
 # Run the server
-npm run server:dev
+npm run dev
 ```
 
 #### Run Client
@@ -51,9 +51,6 @@ cd ./client
 
 # Copy .env file
 cp .env.example .env
-
-# Go to Root folder
-cd ..
 
 # Run the server
 npm run client:dev
