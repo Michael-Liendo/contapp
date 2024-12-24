@@ -15,7 +15,7 @@ export default function Login() {
 	const navigate = useNavigate();
 
 	const { values, errors, handleChange, handleSubmit } = useFormik({
-		initialValues: { email: 'test@michaelliendo.com', password: '1234' },
+		initialValues: { email: 'test@michaelliendo.com', password: '' },
 		validationSchema: toFormikValidationSchema(UserLoginSchema),
 		validateOnChange: false,
 		validateOnBlur: false,
