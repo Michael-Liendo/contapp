@@ -8,6 +8,7 @@ export const CompanySchema = z.object({
 	fiscal_identification: z.string().nullable(),
 	email: z.string().email().nullable(),
 	default_currency: z.string().nullable(),
+	address: z.string().nullable(),
 	created_at: z.coerce.date(),
 	updated_at: z.coerce.date(),
 });
