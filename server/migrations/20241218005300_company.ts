@@ -13,6 +13,7 @@ export async function up(knex: Knex): Promise<void> {
 		table.string('email').nullable();
 		table.string('fiscal_identification').nullable();
 		table.string('default_currency').nullable();
+		table.string('address').nullable();
 		table.timestamps(true, true);
 	});
 }
