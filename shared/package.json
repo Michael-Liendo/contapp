@@ -16,7 +16,7 @@
 		}
 	},
 	"scripts": {
-		"build": "rm -fr dist/* && tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
+		"build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
 		"lint": "biome format ./ && biome check ./",
 		"format": "biome format --write ./ && biome check --write ./",
 		"format:unsafe": "biome format --write ./ && biome check --write --unsafe ./"

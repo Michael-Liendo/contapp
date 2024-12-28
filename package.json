@@ -1,11 +1,7 @@
 {
 	"name": "@contapp/root",
 	"version": "0.1.5",
-	"workspaces": [
-		"shared/",
-		"server/",
-		"client/"
-	],
+	"workspaces": ["shared/", "server/", "client/"],
 	"scripts": {
 		"client:start": "npm run start -w @contapp/client",
 		"server:start": "npm run start -w @contapp/server",
@@ -24,7 +20,8 @@
 		"server:lint": "npm run lint -w @contapp/server",
 		"server:format": "npm run format -w @contapp/server",
 		"server:format:unsafe": "npm run format:unsafe -w @contapp/server",
-		"server:migrations:up": "npm run migrations:up -w @contapp/server"
+		"server:migrations:up": "npm run migrations:up -w @contapp/server",
+		"server:migrations:down": "npm run migrations:down -w @contapp/server"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.8.3"
