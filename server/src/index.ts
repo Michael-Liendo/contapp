@@ -34,10 +34,16 @@ database
 	});
 
 // Run the server!
-fastify.listen({ port: Number(process.env.PORT) || 3000 }, (err, address) => {
-	if (err) {
-		console.error(err);
-		process.exit(1);
-	}
-	console.log(`[SERVER] Server is now listening on ${address}`);
-});
+fastify.listen(
+	{
+		port: Number(process.env.PORT) || 3000,
+		host: process.env.HOST || '127.0.0.1',
+	},
+	(err, address) => {
+		if (err) {
+			console.error(err);
+			process.exit(1);
+		}
+		console.log(`[SERVER] Server is now listening on ${address}`);
+	},
+);
