@@ -8,7 +8,11 @@ export async function up(knex: Knex): Promise<void> {
 			.defaultTo(knex.raw('uuid_generate_v4()'))
 			.primary();
 		table.uuid('journal_id').notNullable().references('id').inTable('journals');
-		table.uuid('account_id').notNullable().references('id').inTable('accounts');
+		table
+			.uuid('account_id')
+			.notNullable()
+			.references('id')
+			.inTable('accounts_plan');
 		table.string('description').nullable();
 		table.decimal('debit').notNullable().defaultTo(0);
 		table.decimal('credit').notNullable().defaultTo(0);

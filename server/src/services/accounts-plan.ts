@@ -13,7 +13,7 @@ export default class AccountsPlan {
 	static async getByID(
 		account_plan_id: string,
 	): Promise<IAccountPlan | undefined> {
-		const account_plan = await Repository.accountPlan.getByID(account_plan_id);
+		const account_plan = await Repository.accountsPlan.getByID(account_plan_id);
 
 		return account_plan;
 	}
@@ -22,7 +22,7 @@ export default class AccountsPlan {
 		company_id: string,
 		r_pagination: Required<IPaginationRequest>,
 	): Promise<IFindAllResponse<IAccountPlan>> {
-		const account_plans = await Repository.accountPlan.getAll(
+		const account_plans = await Repository.accountsPlan.getAll(
 			company_id,
 			r_pagination,
 		);
@@ -42,7 +42,7 @@ export default class AccountsPlan {
 	static async create(
 		account_plan_dto: IAccountPlanForCreate,
 	): Promise<IAccountPlan> {
-		const account_plan = await Repository.accountPlan.create(account_plan_dto);
+		const account_plan = await Repository.accountsPlan.create(account_plan_dto);
 
 		return account_plan;
 	}
@@ -51,7 +51,7 @@ export default class AccountsPlan {
 		account_plan_id: string,
 		account_plan: IAccountPlanForCreate,
 	): Promise<IAccountPlan> {
-		const updatedAccountPlan = await Repository.accountPlan.update(
+		const updatedAccountPlan = await Repository.accountsPlan.update(
 			account_plan_id,
 			account_plan,
 		);
@@ -63,7 +63,7 @@ export default class AccountsPlan {
 	}
 
 	static async delete(account_plan_id: string): Promise<void> {
-		await Repository.accountPlan.delete(account_plan_id);
+		await Repository.accountsPlan.delete(account_plan_id);
 		return;
 	}
 }

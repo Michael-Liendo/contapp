@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 		setLoading(true);
 		try {
 			if (token) {
-				const user = await Services.user.me();
+				const user = await Services.users.me();
 				setUser(user);
 			}
 		} catch (e) {

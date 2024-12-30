@@ -1,10 +1,10 @@
 import { UserSchema } from '@contapp/shared';
 import fetch from '../utils/fetch';
 
-export default class User {
+export default class Users {
 	static async me() {
 		try {
-			const request = await fetch('/user/me');
+			const request = await fetch('/users/me');
 			if (request.status === 401) {
 				localStorage.removeItem('token');
 				throw new Error('Unauthorized');

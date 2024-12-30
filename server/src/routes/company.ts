@@ -3,7 +3,7 @@ import {
 	CompanyForUpdateSchema,
 } from '@contapp/shared';
 
-import { create, findAll, remove, update } from '../controllers/company';
+import { create, findAll, remove, update } from '../controllers/companies';
 import checkJwt from '../middlewares/checkJwt';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';

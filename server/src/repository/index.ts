@@ -1,9 +1,9 @@
-import { AccountPlan } from './accounts-plan';
-import { Company } from './company';
-import { User } from './user';
+import { AccountsPlan } from './accounts-plan';
+import { Companies } from './companies';
+import { Users } from './user';
 
 export default class Repository {
-	static user = User;
-	static company = Company;
-	static accountPlan = AccountPlan;
+	static users = Users;
+	static companies = Companies;
+	static accountsPlan = AccountsPlan;
 }

@@ -2,7 +2,7 @@ import type { IUser, IUserForRegister } from '@contapp/shared';
 import { InternalServerError } from '../utils/errorHandler';
 import database from './database';
 
-export class User {
+export class Users {
 	/**
 	 *  getUserByEmail - get a user with the email
 	 * @param id string

@@ -5,10 +5,10 @@ import {
 } from '@contapp/shared';
 import fetch from '../utils/fetch';
 
-export default class Company {
+export default class Companies {
 	static async findAll() {
 		try {
-			const request = await fetch('/company/findAll');
+			const request = await fetch('/companies/findAll');
 
 			const response = await request.json();
 
@@ -21,7 +21,7 @@ export default class Company {
 
 	static async create(company: ICompanyForCreate) {
 		try {
-			const request = await fetch('/company/create', {
+			const request = await fetch('/companies/create', {
 				method: 'POST',
 				body: JSON.stringify(company),
 			});
@@ -46,7 +46,7 @@ export default class Company {
 
 	static async update(company: ICompanyForUpdate) {
 		try {
-			const request = await fetch('/company/update', {
+			const request = await fetch('/companies/update', {
 				method: 'PUT',
 				body: JSON.stringify(company),
 			});
