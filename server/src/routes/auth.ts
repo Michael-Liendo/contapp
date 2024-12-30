@@ -1,7 +1,7 @@
 import { UserForRegisterSchema, UserLoginSchema } from '@contapp/shared';
 
-import { login, register } from '../../controllers/auth';
-import requestValidation from '../../utils/requestValidation';
+import { login, register } from '../controllers/auth';
+import requestValidation from '../utils/requestValidation';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
 
