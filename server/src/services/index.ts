@@ -1,11 +1,11 @@
 import AccountsPlan from './accounts-plan';
 import Auth from './auth';
-import Company from './company';
-import User from './user';
+import Companies from './companies';
+import Users from './users';
 
 export default class Services {
 	static auth = Auth;
-	static user = User;
-	static company = Company;
+	static user = Users;
+	static company = Companies;
 	static accountsPlan = AccountsPlan;
 }

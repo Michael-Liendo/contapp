@@ -7,7 +7,7 @@ import { Jwt } from '../utils/jwt';
 
 export default class Auth {
 	static async login(data: IUserForLogin) {
-		const user = await Repository.user.getUserByEmail(data.email);
+		const user = await Repository.users.getUserByEmail(data.email);
 
 		if (!user) {
 			throw new UnauthorizedError('UnauthorizedError');
@@ -28,7 +28,7 @@ export default class Auth {
 	static async register(data: IUserForRegister) {
 		const { first_name, last_name, email, password } = data;
 
-		const user = await Repository.user.getUserByEmail(email);
+		const user = await Repository.users.getUserByEmail(email);
 
 		if (user) {
 			throw new BadRequestError('Email already exists', {
@@ -47,7 +47,7 @@ export default class Auth {
 			password: hashedPassword,
 		};
 
-		const id = await Repository.user.createUser(registeredUser);
+		const id = await Repository.users.createUser(registeredUser);
 
 		const token = await Auth.login({
 			email: data.email,

@@ -9,9 +9,9 @@ import Repository from '../repository';
 import { InternalServerError } from '../utils/errorHandler';
 import getPagination from '../utils/getPagination';
 
-export default class Company {
+export default class Companies {
 	static async getByID(company_id: string): Promise<ICompany | undefined> {
-		const company = await Repository.company.getCompanyByID(company_id);
+		const company = await Repository.companies.getCompanyByID(company_id);
 
 		return company;
 	}
@@ -20,7 +20,7 @@ export default class Company {
 		user_id: string,
 		r_pagination: Required<IPaginationRequest>,
 	): Promise<IFindAllResponse<ICompany>> {
-		const companies = await Repository.company.getUserCompanies(
+		const companies = await Repository.companies.getUserCompanies(
 			user_id,
 			r_pagination,
 		);
@@ -38,13 +38,13 @@ export default class Company {
 	}
 
 	static async create(companyDTO: ICompanyForCreate): Promise<ICompany> {
-		const company = await Repository.company.createCompany(companyDTO);
+		const company = await Repository.companies.createCompany(companyDTO);
 
 		return company;
 	}
 
 	static async remove(company_id: string): Promise<void> {
-		await Repository.company.remove(company_id);
+		await Repository.companies.remove(company_id);
 		return;
 	}
 
@@ -52,7 +52,10 @@ export default class Company {
 		company_id: string,
 		company: ICompanyForUpdate,
 	): Promise<ICompany> {
-		const updatedCompany = await Repository.company.update(company_id, company);
+		const updatedCompany = await Repository.companies.update(
+			company_id,
+			company,
+		);
 		if (!updatedCompany)
 			throw new InternalServerError('Error updating company');
 		return updatedCompany;
