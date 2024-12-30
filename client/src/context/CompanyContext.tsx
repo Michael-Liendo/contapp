@@ -27,13 +27,13 @@ const CompanyContext = createContext<CompanyContextType | undefined>(undefined);
 const CompanyProvider = ({ children }: { children: ReactNode }) => {
 	const queryClient = useQueryClient();
 	const { data } = useQuery(['company'], async () => {
-		const data = await Services.company.findAll();
+		const data = await Services.companies.findAll();
 		return data;
 	});
 
 	const create = useMutation({
 		mutationFn: (company: ICompanyForCreate) => {
-			return Services.company.create(company);
+			return Services.companies.create(company);
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries('company');
@@ -42,7 +42,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 
 	const update = useMutation({
 		mutationFn: (company: ICompanyForUpdate) => {
-			return Services.company.update(company);
+			return Services.companies.update(company);
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries('company');
@@ -51,7 +51,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 
 	const remove = useMutation({
 		mutationFn: (id: string) => {
-			return Services.company.remove(id);
+			return Services.companies.remove(id);
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries('company');

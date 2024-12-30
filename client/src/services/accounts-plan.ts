@@ -8,7 +8,7 @@ import type {
 	IPaginationResponse,
 } from '@contapp/shared';
 
-export default class AccountPlanService {
+export default class AccountsPlan {
 	static async findAll(companyId: string, pagination?: IPaginationRequest) {
 		try {
 			const queryParams = new URLSearchParams();

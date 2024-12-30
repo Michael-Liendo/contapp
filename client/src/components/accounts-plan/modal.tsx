@@ -39,7 +39,7 @@ export function AccountPlanModalMutate({
 
 	const update = useMutation({
 		mutationFn: (accountPlan: IAccountPlanForUpdate) => {
-			return Services.accountPlan.update(accountPlan);
+			return Services.accountsPlan.update(accountPlan);
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries('accounts-plan');
@@ -48,7 +48,7 @@ export function AccountPlanModalMutate({
 
 	const create = useMutation({
 		mutationFn: (accountPlan: IAccountPlanForCreate) => {
-			return Services.accountPlan.create(accountPlan);
+			return Services.accountsPlan.create(accountPlan);
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries('accounts-plan');

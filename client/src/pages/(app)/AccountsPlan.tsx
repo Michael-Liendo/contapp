@@ -24,9 +24,12 @@ export default function AccountsPlan() {
 	const { data, isLoading } = useQuery(
 		['accounts-plan', activeCompany, pagination],
 		async () => {
-			const data = await Services.accountPlan.findAll(activeCompany?.id ?? '', {
-				page: pagination?.page ?? 0,
-			});
+			const data = await Services.accountsPlan.findAll(
+				activeCompany?.id ?? '',
+				{
+					page: pagination?.page ?? 0,
+				},
+			);
 			setPagination(data.pagination);
 			return data.data;
 		},
