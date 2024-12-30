@@ -47,8 +47,8 @@ export default function routes(
 	});
 
 	fastify.register(auth, { prefix: '/auth' });
-	fastify.register(user, { prefix: '/user' });
-	fastify.register(company, { prefix: '/company' });
+	fastify.register(user, { prefix: '/users' });
+	fastify.register(company, { prefix: '/companies' });
 	fastify.register(accounts_plan, { prefix: '/accounts-plan' });
 
 	done();
