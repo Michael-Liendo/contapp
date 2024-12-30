@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-export const JournalDestinationEnum = ['DEBIT', 'CREDIT'] as const;
+export const JournalDestination = ['DEBIT', 'CREDIT'] as const;
 
-const JournalDestination = z.enum(JournalDestinationEnum);
+export const JournalDestinationEnum = z.enum(JournalDestination);
 
 export const JournalSchema = z.object({
 	id: z.string().describe('The unique identifier of the journal'),
@@ -15,7 +15,9 @@ export const JournalSchema = z.object({
 		.string()
 		.optional()
 		.describe('A brief description of the journal'),
-	destination: JournalDestination.describe('The destination of the journal'),
+	destination: JournalDestinationEnum.describe(
+		'The destination of the journal',
+	),
 	entry_date: z.coerce.date().describe('The date of the journal'),
 	created_at: z.coerce
 		.date()
@@ -58,6 +60,6 @@ export const JournalForCreateSchema = JournalSchema.omit({
 	created_at: true,
 	updated_at: true,
 }).extend({
-	destination: JournalDestination,
+	destination: JournalDestinationEnum,
 	journal_entries: z.array(JournalEntryForCreateSchema),
 });

@@ -14,7 +14,7 @@ export async function up(knex: Knex): Promise<void> {
 			.references('id')
 			.inTable('companies');
 		table.string('description').nullable();
-		table.enum('destination', JournalDestinationEnum).notNullable();
+		table.enum('destination', JournalDestinationEnum.options).notNullable();
 		table.date('entry_date').notNullable();
 		table.timestamps(true, true);
 	});
