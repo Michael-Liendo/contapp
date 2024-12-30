@@ -8,7 +8,7 @@ import type {
 import { InternalServerError } from '../utils/errorHandler';
 import database from './database';
 
-export class Company {
+export class Companies {
 	/**
 	 *  getCompanyByID - get a company with the ID
 	 * @param id string

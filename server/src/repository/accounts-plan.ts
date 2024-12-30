@@ -8,7 +8,7 @@ import type {
 	IPaginationRequest,
 } from '@contapp/shared';
 
-export class AccountPlan {
+export class AccountsPlan {
 	static async getByID(
 		account_plan_id: string,
 	): Promise<IAccountPlan | undefined> {
