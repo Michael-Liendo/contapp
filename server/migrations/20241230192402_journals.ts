@@ -19,24 +19,26 @@ export async function up(knex: Knex): Promise<void> {
 		table.date('entry_date').notNullable();
 		table.timestamps(true, true);
 	});
+	// 3. Crear secuencia para journal_number
+	await knex.raw(`
+    CREATE SEQUENCE journal_number_seq;
+  `);
 
+	// 4. Crear función para generar journal_number
 	await knex.raw(`
     CREATE OR REPLACE FUNCTION generate_journal_number()
     RETURNS TRIGGER AS $$
     DECLARE
-      max_number INTEGER;
+      next_number INTEGER;
     BEGIN
-      SELECT COALESCE(MAX(journal_number), 0) + 1 INTO max_number
-      FROM journals
-      WHERE company_id = NEW.company_id;
-      
-      NEW.journal_number = max_number;
+      SELECT nextval('journal_number_seq') INTO next_number;
+      NEW.journal_number = next_number;
       RETURN NEW;
     END;
     $$ LANGUAGE plpgsql;
   `);
 
-	// Crear un trigger que use la función
+	// 5. Crear trigger
 	await knex.raw(`
     CREATE TRIGGER set_journal_number
     BEFORE INSERT ON journals
