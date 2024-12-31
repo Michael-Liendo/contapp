@@ -7,7 +7,7 @@ export enum AuthRoutesEnum {
 }
 
 export enum PrivateRoutesEnum {
-	Home = '/home',
+	Home = '/',
 	AccountsPlan = '/accounts-plan',
 	ManageCompanies = '/manage-companies',
 }
