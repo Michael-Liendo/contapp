@@ -108,7 +108,11 @@ export default function Signup() {
 									onChange={handleChange}
 									required
 								/>
-								<Button type='submit' className='w-full mt-4'>
+								<Button
+									type='submit'
+									className='w-full mt-4'
+									disabled={isSubmitting}
+								>
 									{isSubmitting ? 'Loading...' : 'Sign Up'}
 								</Button>
 							</form>

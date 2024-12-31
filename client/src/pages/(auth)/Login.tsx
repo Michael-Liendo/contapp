@@ -89,7 +89,11 @@ export default function Login() {
 									onChange={handleChange}
 									required
 								/>
-								<Button type='submit' className='w-full mt-4'>
+								<Button
+									type='submit'
+									className='w-full mt-4'
+									disabled={isSubmitting}
+								>
 									{isSubmitting ? 'Loading...' : 'Login'}
 								</Button>
 							</form>
