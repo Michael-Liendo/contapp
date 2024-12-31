@@ -1,58 +1,53 @@
 import { useFormik } from 'formik';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { Check, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { toast } from '@/components/ui/use-toast';
 import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
-import { toast } from '@/components/ui/use-toast';
-
 
 export default function Login() {
 	const { setToken } = useAuth();
 	const navigate = useNavigate();
-	const [loading, setLoading] = useState(false);
 
-	const { values, errors, handleChange, handleSubmit } = useFormik({
-		initialValues: { email: '', password: '' },
-		validationSchema: toFormikValidationSchema(UserLoginSchema),
-		validateOnChange: false,
-		validateOnBlur: false,
-		onSubmit: async (values) => {
-			try {
-				setLoading(true);
-				const results = await Services.auth.login(values);
-				setToken(results.data.token);
-				navigate(PrivateRoutesEnum.Home);
-				toast({
-					description: (
-						<div className="flex items-center justify-between w-full space-x-4">
-							<span>Login Successful!</span>
-							<Check className="text-green-600 ml-auto" />
-						</div>
-					),
-				});
-			} catch (e) {
-				toast({
-					description: (
-						<div className="flex items-center justify-between w-full space-x-4">
-							<span>Invalid credentials</span>
-							<X className="text-red-600 ml-auto" />
-						</div>
-					),
-				})
-				console.error(e);
-			} finally {
-				setLoading(false);
-			}
-		},
-	});
+	const { values, errors, handleChange, handleSubmit, isSubmitting } =
+		useFormik({
+			initialValues: { email: '', password: '' },
+			validationSchema: toFormikValidationSchema(UserLoginSchema),
+			validateOnChange: false,
+			validateOnBlur: false,
+			onSubmit: async (values) => {
+				try {
+					const results = await Services.auth.login(values);
+					setToken(results.data.token);
+					navigate(PrivateRoutesEnum.Home);
+					toast({
+						description: (
+							<div className='flex items-center justify-between w-full space-x-4'>
+								<Check className='text-green-600 ml-auto' />
+								<span>Login Successful!</span>
+							</div>
+						),
+					});
+				} catch (e) {
+					toast({
+						description: (
+							<div className='flex items-center justify-between w-full space-x-4'>
+								<X className='text-red-600 ml-auto' />
+								<span>Invalid credentials</span>
+							</div>
+						),
+					});
+					console.error(e);
+				}
+			},
+		});
 
 	return (
 		<div className="min-h-screen relative flex justify-center items-center bg-no-repeat bg-cover bg-slate-800 bg-[url('https://images.unsplash.com/photo-1720712738661-9c0dcb92f06d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
@@ -95,7 +90,7 @@ export default function Login() {
 									required
 								/>
 								<Button type='submit' className='w-full mt-4'>
-									{loading ? 'Loading...' : 'Login'}
+									{isSubmitting ? 'Loading...' : 'Login'}
 								</Button>
 							</form>
 						</CardContent>
