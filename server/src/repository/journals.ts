@@ -1,5 +1,5 @@
+import type { IJournal, IJournalForCreate } from '@contapp/shared';
 import database from './database';
-import type { IJournalForCreate, IJournal } from '@contapp/shared';
 
 export class Journals {
 	/**

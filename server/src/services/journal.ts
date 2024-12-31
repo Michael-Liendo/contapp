@@ -1,7 +1,7 @@
 import type {
-	IJournalForCreate,
 	IJournal,
 	IJournalEntryForCreate,
+	IJournalForCreate,
 } from '@contapp/shared';
 import Repository from '../repository';
 

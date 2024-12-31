@@ -1,6 +1,6 @@
 import type { IJournalForCreate } from '@contapp/shared';
-import type { Reply, Request } from '../types';
 import Services from '../services';
+import type { Reply, Request } from '../types';
 
 export async function create(request: Request, reply: Reply) {
 	const journalDto = request.body as IJournalForCreate;
