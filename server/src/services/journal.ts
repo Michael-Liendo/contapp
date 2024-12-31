@@ -5,7 +5,7 @@ import type {
 } from '@contapp/shared';
 import Repository from '../repository';
 
-export class JournalService {
+export class Journal {
 	/**
 	 * Create a new journal and optionally its entries.
 	 * @param journalDto - Data for creating the journal.
