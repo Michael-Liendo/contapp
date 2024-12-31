@@ -1,5 +1,7 @@
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Check, X } from 'lucide-react';
 
 import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
@@ -9,10 +11,13 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
+import { toast } from '@/components/ui/use-toast';
+
 
 export default function Login() {
 	const { setToken } = useAuth();
 	const navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
 
 	const { values, errors, handleChange, handleSubmit } = useFormik({
 		initialValues: { email: '', password: '' },
@@ -21,12 +26,30 @@ export default function Login() {
 		validateOnBlur: false,
 		onSubmit: async (values) => {
 			try {
+				setLoading(true);
 				const results = await Services.auth.login(values);
-
 				setToken(results.data.token);
 				navigate(PrivateRoutesEnum.Home);
+				toast({
+					description: (
+						<div className="flex items-center justify-between w-full space-x-4">
+							<span>Login Successful!</span>
+							<Check className="text-green-600 ml-auto" />
+						</div>
+					),
+				});
 			} catch (e) {
+				toast({
+					description: (
+						<div className="flex items-center justify-between w-full space-x-4">
+							<span>Invalid credentials</span>
+							<X className="text-red-600 ml-auto" />
+						</div>
+					),
+				})
 				console.error(e);
+			} finally {
+				setLoading(false);
 			}
 		},
 	});
@@ -72,16 +95,16 @@ export default function Login() {
 									required
 								/>
 								<Button type='submit' className='w-full mt-4'>
-									Log in
+									{loading ? 'Loading...' : 'Login'}
 								</Button>
 							</form>
 						</CardContent>
 					</Card>
 					<div className='text-center w-full text-white mt-3'>
 						{'Do you not have an account? '}
-						<a className='underline' href={AuthRoutesEnum.Signup}>
+						<Link className='underline' to={AuthRoutesEnum.Signup}>
 							Sign Up
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>

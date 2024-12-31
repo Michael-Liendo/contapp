@@ -1,15 +1,22 @@
+import { Link, useNavigate } from 'react-router-dom';
+import { Check, X } from 'lucide-react';
+import { useState } from 'react';
+import { useFormik } from 'formik';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
-import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
 import { TextField } from '../../components/text-field';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
+import { toast } from '@/components/ui/use-toast';
 
 export default function Signup() {
+
+	const [loading, setLoading] = useState(false);
+
 	const { values, errors, handleChange, handleSubmit } = useFormik({
 		initialValues: { first_name: '', last_name: '', email: '', password: '' },
 		validationSchema: toFormikValidationSchema(UserLoginSchema),
@@ -17,12 +24,30 @@ export default function Signup() {
 		validateOnBlur: false,
 		onSubmit: async (values) => {
 			try {
+				setLoading(true);
 				const results = await Services.auth.register(values);
 				console.log(results);
 				setToken(results.data.token);
 				navigate(PrivateRoutesEnum.Home);
+				toast({
+					description: (
+						<div className="flex items-center justify-between w-full space-x-4">
+							<span>Account created successful!</span>
+							<Check className="text-green-600 ml-auto" />
+						</div>
+					),
+				});
 			} catch (e) {
-				console.error(e);
+				toast({
+					description: (
+						<div className="flex items-center justify-between w-full space-x-4">
+							<span>User Already exist</span>
+							<X className="text-red-600 ml-auto" />
+						</div>
+					),
+				})
+			} finally {
+				setLoading(false);
 			}
 		},
 	});
@@ -90,7 +115,7 @@ export default function Signup() {
 									required
 								/>
 								<Button type='submit' className='w-full mt-4'>
-									Sign up
+									{loading ? 'Loading...' : 'Sign Up'}
 								</Button>
 							</form>
 						</CardContent>
@@ -98,9 +123,9 @@ export default function Signup() {
 
 					<div className='text-center w-full text-white mt-3'>
 						{'Do you have an account? '}
-						<a className='underline' href={AuthRoutesEnum.Login}>
+						<Link className='underline' to={AuthRoutesEnum.Login}>
 							Log In
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>
