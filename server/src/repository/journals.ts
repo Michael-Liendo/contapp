@@ -1,4 +1,9 @@
-import type { IJournal, IJournalForCreate } from '@contapp/shared';
+import type {
+	IFindAllDatabase,
+	IJournal,
+	IJournalForCreate,
+	IPaginationRequest,
+} from '@contapp/shared';
 import database from './database';
 
 export class Journals {
@@ -35,10 +40,10 @@ export class Journals {
 	 */
 	static async listByCompany(
 		companyId: string,
-		page = 1,
-		limit = 10,
-	): Promise<{ data: IJournal[]; count: number }> {
-		const offset = (page - 1) * limit;
+		pagination: IPaginationRequest,
+	): Promise<IFindAllDatabase<IJournal>> {
+		const limit = pagination.limit ?? 100;
+		const offset = (pagination.page ? pagination.page : 0) * limit;
 
 		const countResult = await database<IJournal>('journals')
 			.where({ company_id: companyId })

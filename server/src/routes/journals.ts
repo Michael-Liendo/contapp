@@ -1,4 +1,4 @@
-import { create } from '../controllers/journals';
+import { create, listByCompany } from '../controllers/journals';
 import checkJwt from '../middlewares/checkJwt';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
@@ -14,6 +14,12 @@ export default function journals(
 		method: 'POST',
 		url: '/create',
 		handler: create,
+	});
+
+	fastify.route({
+		method: 'GET',
+		url: '/findAll/:company_id',
+		handler: listByCompany,
 	});
 
 	done();

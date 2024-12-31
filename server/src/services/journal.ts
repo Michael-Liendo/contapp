@@ -1,9 +1,12 @@
 import type {
+	IFindAllResponse,
 	IJournal,
 	IJournalEntryForCreate,
 	IJournalForCreate,
+	IPaginationRequest,
 } from '@contapp/shared';
 import Repository from '../repository';
+import getPagination from '../utils/getPagination';
 
 export class Journal {
 	/**
@@ -42,17 +45,18 @@ export class Journal {
 	 */
 	static async listByCompany(
 		companyId: string,
-		includeEntries = false,
-		page = 1,
-		limit = 10,
-	): Promise<{
-		data: { journal: IJournal; entries?: IJournalEntryForCreate[] }[];
-		count: number;
-	}> {
+		r_pagination: Required<IPaginationRequest>,
+		includeEntries = true,
+	): Promise<IFindAllResponse<IJournal>> {
 		const { data: journals, count } = await Repository.journals.listByCompany(
 			companyId,
-			page,
-			limit,
+			r_pagination,
+		);
+
+		const pagination = getPagination(
+			r_pagination.page,
+			r_pagination.limit,
+			count,
 		);
 
 		let result = journals.map((journal) => ({ journal }));
@@ -68,7 +72,7 @@ export class Journal {
 			);
 		}
 
-		return { data: result, count };
+		return { data: journals, pagination };
 	}
 
 	/**
