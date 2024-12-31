@@ -6,6 +6,7 @@ export const JournalDestinationEnum = z.enum(JournalDestination);
 
 export const JournalSchema = z.object({
 	id: z.string().describe('The unique identifier of the journal'),
+	journal_number: z.number().describe('The journal number'),
 	company_id: z
 		.string()
 		.describe(
