@@ -1,31 +1,50 @@
+import { useFormik } from 'formik';
+import { Check, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { toast } from '@/components/ui/use-toast';
 import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
-import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
 import { TextField } from '../../components/text-field';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
 
 export default function Signup() {
-	const { values, errors, handleChange, handleSubmit } = useFormik({
-		initialValues: { first_name: '', last_name: '', email: '', password: '' },
-		validationSchema: toFormikValidationSchema(UserLoginSchema),
-		validateOnChange: false,
-		validateOnBlur: false,
-		onSubmit: async (values) => {
-			try {
-				const results = await Services.auth.register(values);
-				console.log(results);
-				setToken(results.data.token);
-				navigate(PrivateRoutesEnum.Home);
-			} catch (e) {
-				console.error(e);
-			}
-		},
-	});
+	const { values, errors, handleChange, handleSubmit, isSubmitting } =
+		useFormik({
+			initialValues: { first_name: '', last_name: '', email: '', password: '' },
+			validationSchema: toFormikValidationSchema(UserLoginSchema),
+			validateOnChange: false,
+			validateOnBlur: false,
+			onSubmit: async (values) => {
+				try {
+					const results = await Services.auth.register(values);
+					console.log(results);
+					setToken(results.data.token);
+					navigate(PrivateRoutesEnum.Home);
+					toast({
+						description: (
+							<div className='flex items-center justify-between w-full space-x-4'>
+								<Check className='text-green-600 ml-auto' />
+								<span>Account created successful!</span>
+							</div>
+						),
+					});
+				} catch (e) {
+					toast({
+						description: (
+							<div className='flex items-center justify-between w-full space-x-4'>
+								<X className='text-red-600 ml-auto' />
+								<span>User Already exist</span>
+							</div>
+						),
+					});
+				}
+			},
+		});
 
 	const { setToken } = useAuth();
 	const navigate = useNavigate();
@@ -90,7 +109,7 @@ export default function Signup() {
 									required
 								/>
 								<Button type='submit' className='w-full mt-4'>
-									Sign up
+									{isSubmitting ? 'Loading...' : 'Sign Up'}
 								</Button>
 							</form>
 						</CardContent>
@@ -98,9 +117,9 @@ export default function Signup() {
 
 					<div className='text-center w-full text-white mt-3'>
 						{'Do you have an account? '}
-						<a className='underline' href={AuthRoutesEnum.Login}>
+						<Link className='underline' to={AuthRoutesEnum.Login}>
 							Log In
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>
