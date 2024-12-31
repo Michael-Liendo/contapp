@@ -19,12 +19,11 @@ export async function up(knex: Knex): Promise<void> {
 		table.date('entry_date').notNullable();
 		table.timestamps(true, true);
 	});
-	// 3. Crear secuencia para journal_number
+
 	await knex.raw(`
     CREATE SEQUENCE journal_number_seq;
   `);
 
-	// 4. Crear función para generar journal_number
 	await knex.raw(`
     CREATE OR REPLACE FUNCTION generate_journal_number()
     RETURNS TRIGGER AS $$
@@ -38,7 +37,6 @@ export async function up(knex: Knex): Promise<void> {
     $$ LANGUAGE plpgsql;
   `);
 
-	// 5. Crear trigger
 	await knex.raw(`
     CREATE TRIGGER set_journal_number
     BEFORE INSERT ON journals
