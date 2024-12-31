@@ -2,6 +2,8 @@ import { create, listByCompany } from '../controllers/journals';
 import checkJwt from '../middlewares/checkJwt';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
+import requestValidation from '../utils/requestValidation';
+import { JournalForCreateSchema } from '@contapp/shared';
 
 export default function journals(
 	fastify: FastifyInstance,
@@ -13,6 +15,7 @@ export default function journals(
 	fastify.route({
 		method: 'POST',
 		url: '/create',
+		preHandler: requestValidation(JournalForCreateSchema),
 		handler: create,
 	});
 
