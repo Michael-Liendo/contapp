@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { PrivateRoutesEnum } from '@/data/routesEnums';
+import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
@@ -79,7 +79,7 @@ export default function Login() {
 					</Card>
 					<div className='text-center w-full text-white mt-3'>
 						{'Do you not have an account? '}
-						<a className='underline' href='/signup'>
+						<a className='underline' href={AuthRoutesEnum.Signup}>
 							Sign Up
 						</a>
 					</div>

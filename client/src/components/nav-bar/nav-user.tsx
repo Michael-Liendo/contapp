@@ -30,7 +30,7 @@ export function NavUser() {
 	function handleLogout() {
 		logout();
 
-		navigate(AuthRoutesEnum.login);
+		navigate(AuthRoutesEnum.Login);
 	}
 
 	return (

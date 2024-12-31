@@ -1,7 +1,7 @@
 export enum PublicRoutesEnum {}
 
 export enum AuthRoutesEnum {
-	login = '/login',
+	Login = '/login',
 	Signup = '/signup',
 	Welcome = '/',
 }

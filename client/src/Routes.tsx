@@ -24,7 +24,7 @@ const PrivateRoutesWrapper = () => {
 			</AppLayout>
 		</CompanyProvider>
 	) : (
-		<Navigate to={AuthRoutesEnum.login} />
+		<Navigate to={AuthRoutesEnum.Login} />
 	);
 };
 
@@ -74,8 +74,8 @@ const AuthRoutes: JSX.Element[] = [
 		Component={Signup}
 	/>,
 	<Route
-		key={AuthRoutesEnum.login}
-		path={AuthRoutesEnum.login}
+		key={AuthRoutesEnum.Login}
+		path={AuthRoutesEnum.Login}
 		Component={Login}
 	/>,
 ];

@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
 import { useFormik } from 'formik';
@@ -19,7 +20,7 @@ export default function Signup() {
 				const results = await Services.auth.register(values);
 				console.log(results);
 				setToken(results.data.token);
-				navigate('/home');
+				navigate(PrivateRoutesEnum.Home);
 			} catch (e) {
 				console.error(e);
 			}
@@ -97,7 +98,7 @@ export default function Signup() {
 
 					<div className='text-center w-full text-white mt-3'>
 						{'Do you have an account? '}
-						<a className='underline' href='/login'>
+						<a className='underline' href={AuthRoutesEnum.Login}>
 							Log In
 						</a>
 					</div>
