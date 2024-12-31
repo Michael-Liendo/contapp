@@ -7,12 +7,18 @@ export async function up(knex: Knex): Promise<void> {
 			.unique()
 			.defaultTo(knex.raw('uuid_generate_v4()'))
 			.primary();
-		table.uuid('journal_id').notNullable().references('id').inTable('journals');
+		table
+			.uuid('journal_id')
+			.notNullable()
+			.references('id')
+			.inTable('journals')
+			.onDelete('CASCADE');
 		table
 			.uuid('account_id')
 			.notNullable()
 			.references('id')
-			.inTable('accounts_plan');
+			.inTable('accounts_plan')
+			.onDelete('CASCADE');
 		table.string('description').nullable();
 		table.decimal('debit').notNullable().defaultTo(0);
 		table.decimal('credit').notNullable().defaultTo(0);

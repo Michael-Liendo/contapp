@@ -13,7 +13,8 @@ export async function up(knex: Knex): Promise<void> {
 			.uuid('company_id')
 			.notNullable()
 			.references('id')
-			.inTable('companies');
+			.inTable('companies')
+			.onDelete('CASCADE');
 		table.string('description').nullable();
 		table.enum('destination', JournalDestinationEnum.options).notNullable();
 		table.date('entry_date').notNullable();
@@ -50,5 +51,9 @@ export async function down(knex: Knex): Promise<void> {
 
 	await knex.raw('DROP FUNCTION IF EXISTS generate_journal_number');
 
+	await knex.raw('DROP SEQUENCE IF EXISTS journal_number_seq');
+
 	await knex.schema.dropTableIfExists('journals');
+
+	await knex.raw('DROP TYPE IF EXISTS journal_destination');
 }

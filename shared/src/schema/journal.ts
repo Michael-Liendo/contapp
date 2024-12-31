@@ -61,6 +61,5 @@ export const JournalForCreateSchema = JournalSchema.omit({
 	created_at: true,
 	updated_at: true,
 }).extend({
-	destination: JournalDestinationEnum,
 	journal_entries: z.array(JournalEntryForCreateSchema),
 });
