@@ -1,3 +1,4 @@
+import { Journals } from '../repository/journals';
 import AccountsPlan from './accounts-plan';
 import Auth from './auth';
 import Companies from './companies';
@@ -8,4 +9,5 @@ export default class Services {
 	static user = Users;
 	static company = Companies;
 	static accountsPlan = AccountsPlan;
+	static journals = Journals;
 }
