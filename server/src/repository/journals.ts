@@ -5,6 +5,7 @@ import type {
 	IPaginationRequest,
 } from '@contapp/shared';
 import database from './database';
+import { InternalServerError } from '../utils/errorHandler';
 
 export class Journals {
 	/**
@@ -14,10 +15,16 @@ export class Journals {
 	 */
 	static async create(dto: IJournalForCreate): Promise<IJournal> {
 		const [journal] = await database<IJournal>('journals')
-			.insert(dto)
+			.insert({
+				company_id: dto.company_id,
+				description: dto.description,
+				destination: dto.destination,
+				entry_date: dto.entry_date,
+			})
 			.returning('*');
 
-		if (!journal) throw new Error('Error creating journal');
+		if (!journal) throw new InternalServerError('Error creating journal');
+
 		return journal;
 	}
 

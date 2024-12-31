@@ -45,9 +45,10 @@ export const JournalEntrySchema = z.object({
 	updated_at: z.coerce.date(),
 });
 
-export const JournalEntryForCreateSchema = JournalEntrySchema.omit({
+export const JournalEntryForCreateSchema = JournalEntrySchema.extend({
+	journal_id: z.string().optional(),
+}).omit({
 	id: true,
-	journal_id: true,
 	created_at: true,
 	updated_at: true,
 });
