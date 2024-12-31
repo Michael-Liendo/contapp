@@ -4,8 +4,8 @@ import type {
 	IJournalForCreate,
 	IPaginationRequest,
 } from '@contapp/shared';
-import database from './database';
 import { InternalServerError } from '../utils/errorHandler';
+import database from './database';
 
 export class Journals {
 	/**

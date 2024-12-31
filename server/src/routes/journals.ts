@@ -1,9 +1,9 @@
 import { create, listByCompany } from '../controllers/journals';
 import checkJwt from '../middlewares/checkJwt';
 
+import { JournalForCreateSchema } from '@contapp/shared';
 import type { FastifyInstance, RegisterOptions } from 'fastify';
 import requestValidation from '../utils/requestValidation';
-import { JournalForCreateSchema } from '@contapp/shared';
 
 export default function journals(
 	fastify: FastifyInstance,
