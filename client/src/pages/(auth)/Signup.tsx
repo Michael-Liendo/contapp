@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { Check, X } from 'lucide-react';
+import { Check, GalleryVerticalEnd, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
@@ -13,6 +13,9 @@ import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
 
 export default function Signup() {
+	const { setToken } = useAuth();
+	const navigate = useNavigate();
+
 	const { values, errors, handleChange, handleSubmit, isSubmitting } =
 		useFormik({
 			initialValues: { first_name: '', last_name: '', email: '', password: '' },
@@ -22,14 +25,13 @@ export default function Signup() {
 			onSubmit: async (values) => {
 				try {
 					const results = await Services.auth.register(values);
-					console.log(results);
 					setToken(results.data.token);
 					navigate(PrivateRoutesEnum.Home);
 					toast({
 						description: (
 							<div className='flex items-center justify-between w-full space-x-4'>
 								<Check className='text-green-600 ml-auto' />
-								<span>Account created successful!</span>
+								<span>Account created successfully!</span>
 							</div>
 						),
 					});
@@ -38,94 +40,103 @@ export default function Signup() {
 						description: (
 							<div className='flex items-center justify-between w-full space-x-4'>
 								<X className='text-red-600 ml-auto' />
-								<span>User Already exist</span>
+								<span>User already exists</span>
 							</div>
 						),
 					});
+					console.error(e);
 				}
 			},
 		});
 
-	const { setToken } = useAuth();
-	const navigate = useNavigate();
-
 	return (
-		<div className="min-h-screen relative flex justify-center items-center bg-no-repeat bg-cover bg-slate-800 bg-[url('https://images.unsplash.com/photo-1720712738661-9c0dcb92f06d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
-			<div className='absolute bg-black rounded-[50%] w-full h-full blur-[23rem]' />
-			<div className='flex justify-center items-center z-20'>
-				<div className='w-full'>
-					<h1 className='text-6xl text-center font-bold text-white mb-16'>
-						Contapp
-					</h1>
-
-					<Card className='w-96'>
-						<CardHeader>
-							<CardTitle>Sign up</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<form className='space-y-4' onSubmit={handleSubmit}>
-								<div className='flex justify-center w-full items-center space-x-3'>
-									<TextField
-										className='w-full'
-										name='first_name'
-										placeholder='John'
-										label='First Name'
-										value={values.first_name}
-										error={errors.first_name}
-										onChange={handleChange}
-										required
-									/>
-									<TextField
-										className='w-full'
-										name='last_name'
-										placeholder='Doe'
-										label='Last Name'
-										value={values.last_name}
-										error={errors.last_name}
-										onChange={handleChange}
-										required
-									/>
-								</div>
-								<TextField
-									type='email'
-									placeholder='example@email.com'
-									className='w-full'
-									name='email'
-									label='Email'
-									value={values.email}
-									error={errors.email}
-									onChange={handleChange}
-									required
-								/>
-								<TextField
-									label='Password'
-									className='w-full'
-									name='password'
-									type='password'
-									placeholder='* * * * * * *'
-									value={values.password}
-									error={errors.password}
-									onChange={handleChange}
-									required
-								/>
-								<Button
-									type='submit'
-									className='w-full mt-4'
-									disabled={isSubmitting}
-								>
-									{isSubmitting ? 'Loading...' : 'Sign Up'}
-								</Button>
-							</form>
-						</CardContent>
-					</Card>
-
-					<div className='text-center w-full text-white mt-3'>
-						{'Do you have an account? '}
-						<Link className='underline' to={AuthRoutesEnum.Login}>
-							Log In
-						</Link>
+		<div className='min-h-screen grid grid-cols-1 lg:grid-cols-2'>
+			<div className='flex flex-col justify-center items-center p-8'>
+				<div className='flex items-center gap-2 font-medium'>
+					<div className='flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground'>
+						<GalleryVerticalEnd className='size-4' />
 					</div>
+					<h1 className='text-xl font-bold'>ContApp</h1>
 				</div>
+				<br />
+				<p className='text-lg mb-10 text-center'>
+					Unase a nosotros y simplifique su gestión financiera
+				</p>
+
+				<Card className='w-full max-w-md'>
+					<CardHeader>
+						<CardTitle>Registro</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<form className='space-y-6' onSubmit={handleSubmit}>
+							<div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+								<TextField
+									name='first_name'
+									placeholder='John'
+									label='First Name'
+									value={values.first_name}
+									error={errors.first_name}
+									onChange={handleChange}
+									required
+								/>
+								<TextField
+									name='last_name'
+									placeholder='Doe'
+									label='Last Name'
+									value={values.last_name}
+									error={errors.last_name}
+									onChange={handleChange}
+									required
+								/>
+							</div>
+
+							<TextField
+								type='email'
+								name='email'
+								placeholder='example@email.com'
+								label='Email'
+								value={values.email}
+								error={errors.email}
+								onChange={handleChange}
+								required
+							/>
+
+							<TextField
+								type='password'
+								name='password'
+								placeholder='* * * * * * *'
+								label='Password'
+								value={values.password}
+								error={errors.password}
+								onChange={handleChange}
+								required
+							/>
+
+							<Button
+								type='submit'
+								className='w-full mt-4'
+								disabled={isSubmitting}
+							>
+								{isSubmitting ? 'Cargando...' : 'Registrarse'}
+							</Button>
+						</form>
+					</CardContent>
+				</Card>
+
+				<div className='text-center w-full mt-4'>
+					{'Ya tienes una cuenta? '}
+					<Link className='underline' to={AuthRoutesEnum.Login}>
+						Iniciar Sesión
+					</Link>
+				</div>
+			</div>
+
+			<div className='relative hidden bg-muted lg:block'>
+				<img
+					src='https://images.unsplash.com/photo-1720712738661-9c0dcb92f06d?q=80&w=2070&auto=format&fit=crop'
+					alt='Background'
+					className='absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale'
+				/>
 			</div>
 		</div>
 	);

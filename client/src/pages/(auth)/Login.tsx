@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { Check, X } from 'lucide-react';
+import { Check, GalleryVerticalEnd, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { TextField } from '@/components/text-field';
@@ -12,7 +12,7 @@ import { UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
 
-export default function Login() {
+export default function LoginPage() {
 	const { setToken } = useAuth();
 	const navigate = useNavigate();
 
@@ -50,62 +50,72 @@ export default function Login() {
 		});
 
 	return (
-		<div className="min-h-screen relative flex justify-center items-center bg-no-repeat bg-cover bg-slate-800 bg-[url('https://images.unsplash.com/photo-1720712738661-9c0dcb92f06d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
-			<div className='absolute bg-black rounded-[50%] w-full h-full blur-[23rem]' />
-			<div className='flex justify-center items-center z-20'>
-				<div className='w-full'>
-					<h1 className='text-6xl text-center font-bold text-white mb-16'>
-						ContApp
-					</h1>
-
-					<Card className='w-96'>
-						<CardHeader>
-							<CardTitle>Login</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<form className='space-y-4' onSubmit={handleSubmit}>
-								<TextField
-									type='email'
-									placeholder='example@email.com'
-									className='w-full'
-									autoComplete='email'
-									name='email'
-									label='Email Address'
-									value={values.email}
-									onChange={handleChange}
-									error={errors.email}
-									required
-								/>
-
-								<TextField
-									className='w-full'
-									name='password'
-									type='password'
-									autoComplete='current-password'
-									label='Password'
-									placeholder='* * * * * * *'
-									value={values.password}
-									error={errors.password}
-									onChange={handleChange}
-									required
-								/>
-								<Button
-									type='submit'
-									className='w-full mt-4'
-									disabled={isSubmitting}
-								>
-									{isSubmitting ? 'Loading...' : 'Login'}
-								</Button>
-							</form>
-						</CardContent>
-					</Card>
-					<div className='text-center w-full text-white mt-3'>
-						{'Do you not have an account? '}
-						<Link className='underline' to={AuthRoutesEnum.Signup}>
-							Sign Up
-						</Link>
+		<div className='min-h-screen grid grid-cols-1 lg:grid-cols-2'>
+			<div className='flex flex-col justify-center items-center p-8'>
+				<div className='flex items-center gap-2 font-medium'>
+					<div className='flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground'>
+						<GalleryVerticalEnd className='size-4' />
 					</div>
+					<h1 className='text-xl font-bold'>ContApp</h1>
 				</div>
+				<br />
+				<p className='text-lg mb-10 text-center'>
+					Unase a nosotros y simplifique su gestión financiera
+				</p>
+
+				<Card className='w-full max-w-md'>
+					<CardHeader>
+						<CardTitle>Inicio de sesión</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<form className='space-y-6' onSubmit={handleSubmit}>
+							<TextField
+								type='email'
+								name='email'
+								placeholder='example@email.com'
+								label='Email Address'
+								value={values.email}
+								error={errors.email}
+								onChange={handleChange}
+								required
+							/>
+
+							<TextField
+								type='password'
+								name='password'
+								placeholder='* * * * * * *'
+								label='Password'
+								value={values.password}
+								error={errors.password}
+								onChange={handleChange}
+								required
+							/>
+
+							<Button
+								type='submit'
+								className='w-full mt-4'
+								disabled={isSubmitting}
+							>
+								{isSubmitting ? 'Loading...' : 'Login'}
+							</Button>
+						</form>
+					</CardContent>
+				</Card>
+
+				<div className='text-center w-full mt-4'>
+					{"Don't have an account? "}
+					<Link className='underline' to={AuthRoutesEnum.Signup}>
+						Sign Up
+					</Link>
+				</div>
+			</div>
+
+			<div className='relative hidden bg-muted lg:block'>
+				<img
+					src='https://images.unsplash.com/photo-1720712738661-9c0dcb92f06d?q=80&w=2070&auto=format&fit=crop'
+					alt='Background'
+					className='absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale'
+				/>
 			</div>
 		</div>
 	);
