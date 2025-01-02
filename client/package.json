@@ -1,7 +1,7 @@
 {
 	"name": "@contapp/client",
 	"private": true,
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"type": "module",
 	"main": "src/main.js",
 	"scripts": {
