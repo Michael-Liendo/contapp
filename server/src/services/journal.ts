@@ -32,7 +32,7 @@ export class Journal {
 			);
 		}
 
-		const journal: IJournalQuery = { ...created_journal, entries: entries };
+		const journal: IJournalQuery = { ...created_journal, entries };
 
 		return { journal };
 	}
@@ -61,20 +61,20 @@ export class Journal {
 			count,
 		);
 
-		let result = journals.map((journal) => ({ journal }));
-
+		let result = journals;
 		if (includeEntries) {
-			result = await Promise.all(
-				result.map(async ({ journal }) => {
+			const entries = await Promise.all(
+				result.map(async (journal) => {
 					const entries = await Repository.journalEntries.listByJournal(
 						journal.id,
 					);
-					return { journal, entries };
+					return { ...journal, entries };
 				}),
 			);
+			result = entries.map((journal) => journal);
 		}
 
-		return { data: journals, pagination };
+		return { data: result, pagination };
 	}
 
 	/**
