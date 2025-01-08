@@ -1,6 +1,5 @@
 import type {
 	IFindAllResponse,
-	IJournal,
 	IJournalEntry,
 	IJournalForCreate,
 	IJournalQuery,
