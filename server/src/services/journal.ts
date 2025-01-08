@@ -1,8 +1,9 @@
 import type {
 	IFindAllResponse,
 	IJournal,
-	IJournalEntryForCreate,
+	IJournalEntry,
 	IJournalForCreate,
+	IJournalQuery,
 	IPaginationRequest,
 } from '@contapp/shared';
 import Repository from '../repository';
@@ -17,22 +18,24 @@ export class Journal {
 	 */
 	static async create(
 		journalDto: IJournalForCreate,
-	): Promise<{ journal: IJournal; entries?: IJournalEntryForCreate[] }> {
-		const journal = await Repository.journals.create(journalDto);
+	): Promise<{ journal: IJournalQuery }> {
+		const created_journal = await Repository.journals.create(journalDto);
 
-		let entries: IJournalEntryForCreate[] = [];
-		if (journalDto.journal_entries && journalDto.journal_entries.length > 0) {
+		let entries: IJournalEntry[] = [];
+		if (journalDto.entries && journalDto.entries.length > 0) {
 			entries = await Promise.all(
-				journalDto.journal_entries.map((entry) =>
+				journalDto.entries.map((entry) =>
 					Repository.journalEntries.create({
 						...entry,
-						journal_id: journal.id,
+						journal_id: created_journal.id,
 					}),
 				),
 			);
 		}
 
-		return { journal, entries };
+		const journal: IJournalQuery = { ...created_journal, entries: entries };
+
+		return { journal };
 	}
 
 	/**

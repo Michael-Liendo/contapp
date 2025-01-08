@@ -3,6 +3,7 @@ import type {
 	JournalEntryForCreateSchema,
 	JournalEntrySchema,
 	JournalForCreateSchema,
+	JournalQuerySchema,
 	JournalSchema,
 } from '../schema';
 
@@ -15,3 +16,5 @@ export interface IJournalEntry extends z.infer<typeof JournalEntrySchema> {}
 
 export interface IJournalEntryForCreate
 	extends z.infer<typeof JournalEntryForCreateSchema> {}
+
+export interface IJournalQuery extends z.infer<typeof JournalQuerySchema> {}

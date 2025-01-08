@@ -59,5 +59,9 @@ export const JournalForCreateSchema = JournalSchema.omit({
 	created_at: true,
 	updated_at: true,
 }).extend({
-	journal_entries: z.array(JournalEntryForCreateSchema).min(1),
+	entries: z.array(JournalEntryForCreateSchema).min(1),
+});
+
+export const JournalQuerySchema = JournalSchema.extend({
+	entries: z.array(JournalEntrySchema).optional(),
 });
