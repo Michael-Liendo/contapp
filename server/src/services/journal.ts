@@ -49,8 +49,8 @@ export class Journal {
 	static async listByCompany(
 		companyId: string,
 		r_pagination: Required<IPaginationRequest>,
-		includeEntries = true,
-	): Promise<IFindAllResponse<IJournal>> {
+		includeEntries = false,
+	): Promise<IFindAllResponse<IJournalQuery>> {
 		const { data: journals, count } = await Repository.journals.listByCompany(
 			companyId,
 			r_pagination,
