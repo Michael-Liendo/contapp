@@ -21,12 +21,6 @@ export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 		),
 	},
 	{
-		accessorKey: 'parent_id',
-		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title='Plan Padre' />
-		),
-	},
-	{
 		accessorKey: 'created_at',
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title='Fecha de creación' />
