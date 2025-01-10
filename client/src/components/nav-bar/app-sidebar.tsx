@@ -48,7 +48,7 @@ const data = {
 				},
 				{
 					title: 'Historial de Asientos',
-					url: '#',
+					url: PrivateRoutesEnum.JournalsHistory,
 					icon: History,
 				},
 			],

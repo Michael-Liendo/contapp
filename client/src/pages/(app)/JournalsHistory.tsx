@@ -1,0 +1,69 @@
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+
+import { JournalsDatagrid } from '@/components/journals/datagrid';
+import { DataTable } from '@/components/table/data-table';
+import { Button } from '@/components/ui/button';
+import { useCompanyContext } from '@/context/CompanyContext';
+import Services from '@/services';
+
+import type { IPaginationResponse } from '@contapp/shared';
+
+export default function JournalsHistory() {
+	const { activeCompany } = useCompanyContext();
+
+	const [pagination, setPagination] = useState<IPaginationResponse>({
+		page: 0,
+		limit: 100,
+		hasNextPage: false,
+		hasPreviousPage: false,
+		total: 0,
+	});
+
+	const { data, isLoading } = useQuery(
+		['journals-history', activeCompany, pagination],
+		async () => {
+			const data = await Services.accountsPlan.findAll(
+				activeCompany?.id ?? '',
+				{
+					page: pagination?.page ?? 0,
+				},
+			);
+			setPagination(data.pagination);
+			return data.data;
+		},
+		{
+			enabled: !!activeCompany?.id,
+		},
+	);
+
+	return (
+		<div>
+			<div className='flex justify-between items-center mb-5'>
+				<h1 className='text-xl'>Asientos contables</h1>
+
+				<Button
+					variant='default'
+					onClick={() => console.log('TO BE IMPLEMENTED')}
+				>
+					Crear
+				</Button>
+			</div>
+
+			<DataTable
+				pagination={pagination}
+				columns={JournalsDatagrid}
+				data={data || []}
+				loading={isLoading}
+				onPageChange={(page) => {
+					setPagination((prevPagination) => {
+						return {
+							...prevPagination,
+							page: page,
+						};
+					});
+				}}
+			/>
+		</div>
+	);
+}
