@@ -22,6 +22,15 @@ export const JournalsDatagrid: ColumnDef<IJournalQuery>[] = [
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title='Destino' />
 		),
+		cell: ({ row }) => {
+			return (
+				<div className='flex space-x-2'>
+					<span className='truncate font-medium'>
+						{row?.getValue('destination') === 'DEBIT' ? 'Debe' : 'Crédito'}
+					</span>
+				</div>
+			);
+		},
 	},
 	{
 		accessorKey: 'entry_date',
