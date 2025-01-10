@@ -6,8 +6,8 @@ import type {
 	IPaginationRequest,
 } from '@contapp/shared';
 import Repository from '../repository';
-import getPagination from '../utils/getPagination';
 import { NotFoundError } from '../utils/errorHandler';
+import getPagination from '../utils/getPagination';
 
 export class Journal {
 	/**

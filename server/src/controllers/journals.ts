@@ -1,8 +1,8 @@
 import type { IJournalForCreate, IPaginationRequest } from '@contapp/shared';
 import Services from '../services';
 import type { Reply, Request } from '../types';
-import { isValidUUID } from '../utils/isValidUUID';
 import { BadRequestError } from '../utils/errorHandler';
+import { isValidUUID } from '../utils/isValidUUID';
 
 export async function create(request: Request, reply: Reply) {
 	const journalDto = request.body as IJournalForCreate;
