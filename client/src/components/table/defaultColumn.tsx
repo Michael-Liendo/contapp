@@ -7,7 +7,13 @@ export const defaultColumn = <T,>(): Partial<ColumnDef<T>> => ({
 		const [value, setValue] = useState(initialValue);
 
 		const onBlur = () => {
-			table.options.meta?.updateData(index, id, value);
+			if (table.options.meta && 'updateData' in table.options.meta) {
+				(
+					table.options.meta as {
+						updateData: (index: number, id: string, value: unknown) => void;
+					}
+				).updateData(index, id, value);
+			}
 		};
 
 		useEffect(() => {
