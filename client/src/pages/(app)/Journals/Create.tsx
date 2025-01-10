@@ -17,23 +17,36 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
+import { useEffect } from 'react';
+import { Label } from '@/components/ui/label';
 
 export default function JournalsCreate() {
 	const { activeCompany } = useCompanyContext();
 
-	const { values, errors, handleChange, handleSubmit } = useFormik({
-		initialValues: {
-			description: '',
-			destination: JournalDestinationEnum.Values.DEBIT,
-			company_id: activeCompany?.id ?? '',
-			entries: [],
-			entry_date: new Date(),
-		} as IJournalForCreate,
-		validationSchema: toFormikValidationSchema(JournalForCreateSchema),
-		validateOnChange: false,
-		validateOnBlur: false,
-		onSubmit: async (values, { resetForm }) => {},
-	});
+	const { values, errors, handleChange, handleSubmit, setFieldValue } =
+		useFormik({
+			initialValues: {
+				description: '',
+				destination: JournalDestinationEnum.Values.DEBIT,
+				company_id: activeCompany?.id ?? '',
+				entries: [],
+				entry_date: new Date(),
+			},
+			validationSchema: toFormikValidationSchema(JournalForCreateSchema),
+			validateOnChange: false,
+			validateOnBlur: false,
+			onSubmit: async (values, { resetForm }) => {
+				console.log(values);
+			},
+		});
+
+	useEffect(() => {
+		setFieldValue('company_id', activeCompany?.id ?? '');
+	}, [activeCompany?.id]);
+
+	useEffect(() => {
+		console.log(errors);
+	}, [errors]);
 
 	return (
 		<div>
@@ -54,25 +67,29 @@ export default function JournalsCreate() {
 						value={values.description}
 						error={errors.description}
 						onChange={handleChange}
-						required
 					/>
 
-					<Select
-						defaultValue={values.destination}
-						onValueChange={handleChange}
-					>
-						<SelectTrigger className='w mt-6'>
-							<SelectValue placeholder='Destino' />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value={JournalDestinationEnum.Values.DEBIT}>
-								Debe
-							</SelectItem>
-							<SelectItem value={JournalDestinationEnum.Values.CREDIT}>
-								Crédito
-							</SelectItem>
-						</SelectContent>
-					</Select>
+					<div className='w-full'>
+						<Label htmlFor=''>
+							Destino <span className='text-red-600'>*</span>
+						</Label>
+						<Select
+							defaultValue={values.destination}
+							onValueChange={handleChange}
+						>
+							<SelectTrigger>
+								<SelectValue placeholder='Destino' />
+							</SelectTrigger>
+							<SelectContent id='destination'>
+								<SelectItem value={JournalDestinationEnum.Values.DEBIT}>
+									Debe
+								</SelectItem>
+								<SelectItem value={JournalDestinationEnum.Values.CREDIT}>
+									Crédito
+								</SelectItem>
+							</SelectContent>
+						</Select>
+					</div>
 
 					<TextField
 						label='Fecha del asiento'
@@ -81,9 +98,12 @@ export default function JournalsCreate() {
 						name='entry_date'
 						placeholder='Fecha de creación'
 						autoComplete='off'
-						value={values.entry_date.toDateString()}
+						value={values.entry_date?.toISOString().split('T')[0]}
 						error={errors.entry_date as string}
-						onChange={handleChange}
+						onChange={({ target: { value } }) => {
+							const date = new Date(value);
+							setFieldValue('entry_date', date);
+						}}
 						required
 					/>
 				</div>
