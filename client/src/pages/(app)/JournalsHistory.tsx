@@ -14,7 +14,7 @@ export default function JournalsHistory() {
 
 	const [pagination, setPagination] = useState<IPaginationResponse>({
 		page: 0,
-		limit: 100,
+		limit: 10,
 		hasNextPage: false,
 		hasPreviousPage: false,
 		total: 0,
@@ -23,11 +23,9 @@ export default function JournalsHistory() {
 	const { data, isLoading } = useQuery(
 		['journals-history', activeCompany, pagination],
 		async () => {
-			const data = await Services.accountsPlan.findAll(
+			const data = await Services.journals.findAll(
 				activeCompany?.id ?? '',
-				{
-					page: pagination?.page ?? 0,
-				},
+				pagination,
 			);
 			setPagination(data.pagination);
 			return data.data;

@@ -1,20 +1,30 @@
 import { DataTableRowActions } from '../table/actions';
 import { DataTableColumnHeader } from '../table/header';
 
-import type { IAccountPlan } from '@contapp/shared';
+import type { IJournalQuery } from '@contapp/shared';
 import type { ColumnDef } from '@tanstack/react-table';
 
 const masterName = 'accounts-plan';
 
-export const JournalsDatagrid: ColumnDef<IAccountPlan>[] = [
+export const JournalsDatagrid: ColumnDef<IJournalQuery>[] = [
 	{
-		accessorKey: 'name',
+		accessorKey: 'journal_number',
+		header: ({ column }) => <DataTableColumnHeader column={column} title='#' />,
+	},
+	{
+		accessorKey: 'description',
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title='Nombre' />
+			<DataTableColumnHeader column={column} title='Descripción' />
 		),
 	},
 	{
-		accessorKey: 'created_at',
+		accessorKey: 'destination',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title='Destino' />
+		),
+	},
+	{
+		accessorKey: 'entry_date',
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title='Fecha de creación' />
 		),
@@ -22,7 +32,7 @@ export const JournalsDatagrid: ColumnDef<IAccountPlan>[] = [
 			return (
 				<div className='flex space-x-2'>
 					<span className='truncate font-medium'>
-						{(row.getValue('created_at') as Date).toLocaleDateString('es-ES', {
+						{(row.getValue('entry_date') as Date).toLocaleDateString('es-ES', {
 							month: '2-digit',
 							day: '2-digit',
 							year: 'numeric',

@@ -63,5 +63,6 @@ export const JournalForCreateSchema = JournalSchema.omit({
 });
 
 export const JournalQuerySchema = JournalSchema.extend({
+	description: z.string().nullable(),
 	entries: z.array(JournalEntrySchema).optional(),
 });
