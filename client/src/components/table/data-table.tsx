@@ -29,16 +29,22 @@ interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	loading?: boolean;
-	onPageChange?: (pageIndex: number) => void;
 	pagination?: IPaginationResponse;
+	defaultColumn?: ColumnDef<TData, unknown>;
+	meta?: {
+		updateData: (rowIndex: number, columnId: string, value: unknown) => void;
+	};
+	onPageChange?: (pageIndex: number) => void;
 }
 
 export function DataTable<TData, TValue>({
 	columns,
 	data,
 	loading,
-	onPageChange,
 	pagination,
+	meta,
+	defaultColumn,
+	onPageChange,
 }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = useState({});
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -48,6 +54,7 @@ export function DataTable<TData, TValue>({
 	const table = useReactTable({
 		data,
 		columns,
+		defaultColumn: defaultColumn,
 		pageCount: pagination
 			? Math.ceil(pagination?.total / pagination?.limit)
 			: undefined,
@@ -62,6 +69,9 @@ export function DataTable<TData, TValue>({
 			},
 		},
 		manualPagination: true,
+		meta: {
+			updateData: meta?.updateData ?? (() => {}),
+		},
 		onRowSelectionChange: setRowSelection,
 		onSortingChange: setSorting,
 		onColumnFiltersChange: setColumnFilters,

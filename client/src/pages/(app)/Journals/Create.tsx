@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { useCompanyContext } from '@/context/CompanyContext';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 
+import { JournalsEntriesDatagrid } from '@/components/journals/entries-datagrid';
 import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -13,14 +14,20 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
+import { useEffect, useState } from 'react';
+
+import { DataTable } from '@/components/table/data-table';
+import { CommandShortcut } from '@/components/ui/command';
+import { useKeyboard } from '@/hooks/use-keyboard';
 import {
+	type IJournalEntryForCreate,
 	JournalDestinationEnum,
 	JournalForCreateSchema,
 } from '@contapp/shared';
-import { useEffect } from 'react';
 
 export default function JournalsCreate() {
 	const { activeCompany } = useCompanyContext();
+	const [entries, setEntries] = useState<IJournalEntryForCreate[]>([]);
 
 	const { values, errors, handleChange, handleSubmit, setFieldValue } =
 		useFormik({
@@ -28,7 +35,7 @@ export default function JournalsCreate() {
 				description: '',
 				destination: JournalDestinationEnum.Values.DEBIT,
 				company_id: activeCompany?.id ?? '',
-				entries: [],
+				entries: entries,
 				entry_date: new Date(),
 			},
 			validationSchema: toFormikValidationSchema(JournalForCreateSchema),
@@ -47,6 +54,17 @@ export default function JournalsCreate() {
 	useEffect(() => {
 		console.log(errors);
 	}, [errors]);
+
+	useEffect(() => {
+		setFieldValue('entries', entries);
+	}, [entries]);
+
+	useKeyboard('F2', () => {
+		setEntries((old) => [
+			...old,
+			{ account_id: undefined, description: '', debit: 0, credit: 0 },
+		]);
+	});
 
 	return (
 		<div>
@@ -107,6 +125,45 @@ export default function JournalsCreate() {
 						required
 					/>
 				</div>
+
+				<div className='flex justify-end space-x-4'>
+					<Button
+						size={'sm'}
+						variant='secondary'
+						onClick={() =>
+							setEntries((old) => [
+								...old,
+								{ account_id: undefined, description: '', debit: 0, credit: 0 },
+							])
+						}
+					>
+						<CommandShortcut>F2</CommandShortcut>
+						Agregar asiento
+					</Button>
+				</div>
+
+				<DataTable
+					columns={JournalsEntriesDatagrid}
+					data={entries}
+					loading={false}
+					meta={{
+						updateData(rowIndex, columnId, value) {
+							setEntries((old) =>
+								old.map((row, index) => {
+									if (index === rowIndex) {
+										return {
+											// biome-ignore lint/style/noNonNullAssertion: is not null
+											...old[rowIndex]!,
+											[columnId]: value,
+										};
+									}
+									return row;
+								}),
+							);
+						},
+					}}
+				/>
+
 				<Button form='create-journal' type='submit'>
 					Crear asiento contable
 				</Button>

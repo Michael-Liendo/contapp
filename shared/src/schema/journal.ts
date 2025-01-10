@@ -46,6 +46,7 @@ export const JournalEntrySchema = z.object({
 });
 
 export const JournalEntryForCreateSchema = JournalEntrySchema.extend({
+	account_id: z.string().optional(),
 	journal_id: z.string().optional(),
 }).omit({
 	id: true,
