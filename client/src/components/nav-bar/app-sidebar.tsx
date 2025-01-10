@@ -43,7 +43,7 @@ const data = {
 			items: [
 				{
 					title: 'Registrar Asiento Contable',
-					url: '#',
+					url: PrivateRoutesEnum.JournalsCreate,
 					icon: Notebook,
 				},
 				{
