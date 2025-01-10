@@ -7,6 +7,8 @@ import type {
 } from '@contapp/shared';
 import Repository from '../repository';
 import getPagination from '../utils/getPagination';
+import { BadRequestError, NotFoundError } from '../utils/errorHandler';
+import { isValidUUID } from '../utils/isValidUUID';
 
 export class Journal {
 	/**
@@ -50,6 +52,11 @@ export class Journal {
 		r_pagination: Required<IPaginationRequest>,
 		includeEntries = false,
 	): Promise<IFindAllResponse<IJournalQuery>> {
+		const company = await Repository.companies.getCompanyByID(companyId);
+		if (!company) {
+			throw new NotFoundError('Company not found');
+		}
+
 		const { data: journals, count } = await Repository.journals.listByCompany(
 			companyId,
 			r_pagination,

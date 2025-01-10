@@ -4,7 +4,7 @@ import company from './company';
 import user from './user';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
-import type { ErrorWithDetails } from '../utils/errorHandler';
+import { BadRequestError, type ErrorWithDetails } from '../utils/errorHandler';
 import journals from './journals';
 
 export default function routes(
@@ -33,9 +33,9 @@ export default function routes(
 					error.statusCode === 400
 						? [
 								{
-									code: error.details?.code,
-									path: error.details?.path,
-									message: error.details?.message,
+									code: error.details?.code ?? error.name,
+									path: error.details?.path ?? 'root',
+									message: error.details?.message ?? error.message,
 								},
 							]
 						: undefined,
