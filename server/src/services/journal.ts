@@ -7,8 +7,7 @@ import type {
 } from '@contapp/shared';
 import Repository from '../repository';
 import getPagination from '../utils/getPagination';
-import { BadRequestError, NotFoundError } from '../utils/errorHandler';
-import { isValidUUID } from '../utils/isValidUUID';
+import { NotFoundError } from '../utils/errorHandler';
 
 export class Journal {
 	/**

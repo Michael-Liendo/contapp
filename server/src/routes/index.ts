@@ -4,7 +4,7 @@ import company from './company';
 import user from './user';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
-import { BadRequestError, type ErrorWithDetails } from '../utils/errorHandler';
+import type { ErrorWithDetails } from '../utils/errorHandler';
 import journals from './journals';
 
 export default function routes(
@@ -13,17 +13,7 @@ export default function routes(
 	done: () => void,
 ) {
 	fastify.setErrorHandler((error: ErrorWithDetails, _, reply) => {
-		if (error.statusCode >= 500) {
-			fastify.log.error(error);
-			console.error(error);
-			return reply.code(error.statusCode || 500).send({
-				error: error.name || 'INTERNAL_SERVER_ERROR',
-				message: error.message,
-				// todo: check if this is the right send the stack
-				details: error.stack,
-			});
-		}
-		if (error.statusCode >= 400) {
+		if (error.statusCode >= 400 && error.statusCode < 500) {
 			fastify.log.info(error);
 			return reply.status(error.statusCode || 400).send({
 				success: false,
@@ -41,6 +31,14 @@ export default function routes(
 						: undefined,
 			});
 		}
+		fastify.log.error(error);
+		console.error(error);
+		return reply.code(error.statusCode || 500).send({
+			error: 'INTERNAL_SERVER_ERROR',
+			message: error.message,
+			// todo: check if this is the right send the stack
+			details: error.stack,
+		});
 	});
 
 	fastify.get('/', async () => {
