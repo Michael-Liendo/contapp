@@ -52,12 +52,12 @@ export class Journals {
 		const limit = pagination.limit ?? 100;
 		const offset = (pagination.page ? pagination.page : 0) * limit;
 
-		const countResult = await database<IJournal>('journals')
+		const totalResult = await database<IJournal>('journals')
 			.where({ company_id: companyId })
 			.count('id')
 			.first();
 
-		const count = Number(countResult?.count || 0);
+		const total = totalResult?.count ? Number(totalResult?.count) : 0;
 
 		const journals = await database<IJournal>('journals')
 			.where({ company_id: companyId })
@@ -65,7 +65,7 @@ export class Journals {
 			.limit(limit)
 			.offset(offset);
 
-		return { data: journals, count };
+		return { data: journals, count: total };
 	}
 
 	/**
