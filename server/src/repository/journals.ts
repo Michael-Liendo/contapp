@@ -1,4 +1,10 @@
-import type { IJournal, IJournalForCreate } from '@contapp/shared';
+import type {
+	IFindAllDatabase,
+	IJournal,
+	IJournalForCreate,
+	IPaginationRequest,
+} from '@contapp/shared';
+import { InternalServerError } from '../utils/errorHandler';
 import database from './database';
 
 export class Journals {
@@ -9,10 +15,16 @@ export class Journals {
 	 */
 	static async create(dto: IJournalForCreate): Promise<IJournal> {
 		const [journal] = await database<IJournal>('journals')
-			.insert(dto)
+			.insert({
+				company_id: dto.company_id,
+				description: dto.description,
+				destination: dto.destination,
+				entry_date: dto.entry_date,
+			})
 			.returning('*');
 
-		if (!journal) throw new Error('Error creating journal');
+		if (!journal) throw new InternalServerError('Error creating journal');
+
 		return journal;
 	}
 
@@ -35,10 +47,10 @@ export class Journals {
 	 */
 	static async listByCompany(
 		companyId: string,
-		page = 1,
-		limit = 10,
-	): Promise<{ data: IJournal[]; count: number }> {
-		const offset = (page - 1) * limit;
+		pagination: IPaginationRequest,
+	): Promise<IFindAllDatabase<IJournal>> {
+		const limit = pagination.limit ?? 100;
+		const offset = (pagination.page ? pagination.page : 0) * limit;
 
 		const countResult = await database<IJournal>('journals')
 			.where({ company_id: companyId })

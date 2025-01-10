@@ -36,21 +36,18 @@ export const JournalEntrySchema = z.object({
 		.string()
 		.optional()
 		.describe('The description of the journal entry'),
-	debit: z
-		.number()
-		.min(0)
-		.default(0)
-		.describe('The debit amount for this journal entry'),
+	debit: z.number().min(0).describe('The debit amount for this journal entry'),
 	credit: z
 		.number()
 		.min(0)
-		.default(0)
 		.describe('The credit amount for this journal entry'),
 	created_at: z.coerce.date(),
 	updated_at: z.coerce.date(),
 });
 
-export const JournalEntryForCreateSchema = JournalEntrySchema.omit({
+export const JournalEntryForCreateSchema = JournalEntrySchema.extend({
+	journal_id: z.string().optional(),
+}).omit({
 	id: true,
 	created_at: true,
 	updated_at: true,
@@ -58,8 +55,13 @@ export const JournalEntryForCreateSchema = JournalEntrySchema.omit({
 
 export const JournalForCreateSchema = JournalSchema.omit({
 	id: true,
+	journal_number: true,
 	created_at: true,
 	updated_at: true,
 }).extend({
-	journal_entries: z.array(JournalEntryForCreateSchema),
+	entries: z.array(JournalEntryForCreateSchema).min(1),
+});
+
+export const JournalQuerySchema = JournalSchema.extend({
+	entries: z.array(JournalEntrySchema).optional(),
 });

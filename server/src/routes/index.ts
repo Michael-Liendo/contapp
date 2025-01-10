@@ -13,17 +13,7 @@ export default function routes(
 	done: () => void,
 ) {
 	fastify.setErrorHandler((error: ErrorWithDetails, _, reply) => {
-		if (error.statusCode >= 500) {
-			fastify.log.error(error);
-			console.error(error);
-			return reply.code(error.statusCode || 500).send({
-				error: error.name || 'INTERNAL_SERVER_ERROR',
-				message: error.message,
-				// todo: check if this is the right send the stack
-				details: error.stack,
-			});
-		}
-		if (error.statusCode >= 400) {
+		if (error.statusCode >= 400 && error.statusCode < 500) {
 			fastify.log.info(error);
 			return reply.status(error.statusCode || 400).send({
 				success: false,
@@ -33,14 +23,22 @@ export default function routes(
 					error.statusCode === 400
 						? [
 								{
-									code: error.details?.code,
-									path: error.details?.path,
-									message: error.details?.message,
+									code: error.details?.code ?? error.name,
+									path: error.details?.path ?? 'root',
+									message: error.details?.message ?? error.message,
 								},
 							]
 						: undefined,
 			});
 		}
+		fastify.log.error(error);
+		console.error(error);
+		return reply.code(error.statusCode || 500).send({
+			error: 'INTERNAL_SERVER_ERROR',
+			message: error.message,
+			// todo: check if this is the right send the stack
+			details: error.stack,
+		});
 	});
 
 	fastify.get('/', async () => {
