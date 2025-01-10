@@ -30,7 +30,6 @@ interface DataTableProps<TData, TValue> {
 	data: TData[];
 	loading?: boolean;
 	pagination?: IPaginationResponse;
-	defaultColumn?: ColumnDef<TData, unknown>;
 	meta?: {
 		updateData: (rowIndex: number, columnId: string, value: unknown) => void;
 	};
@@ -43,7 +42,6 @@ export function DataTable<TData, TValue>({
 	loading,
 	pagination,
 	meta,
-	defaultColumn,
 	onPageChange,
 }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = useState({});
@@ -54,7 +52,6 @@ export function DataTable<TData, TValue>({
 	const table = useReactTable({
 		data,
 		columns,
-		defaultColumn: defaultColumn,
 		pageCount: pagination
 			? Math.ceil(pagination?.total / pagination?.limit)
 			: undefined,
