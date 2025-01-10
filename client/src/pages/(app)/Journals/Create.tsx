@@ -3,13 +3,9 @@ import { useFormik } from 'formik';
 import { useCompanyContext } from '@/context/CompanyContext';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 
-import {
-	type IJournalForCreate,
-	JournalDestinationEnum,
-	JournalForCreateSchema,
-} from '@contapp/shared';
-import { Button } from '@/components/ui/button';
 import { TextField } from '@/components/text-field';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import {
 	Select,
 	SelectContent,
@@ -17,8 +13,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
+import {
+	JournalDestinationEnum,
+	JournalForCreateSchema,
+} from '@contapp/shared';
 import { useEffect } from 'react';
-import { Label } from '@/components/ui/label';
 
 export default function JournalsCreate() {
 	const { activeCompany } = useCompanyContext();

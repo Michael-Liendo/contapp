@@ -11,11 +11,11 @@ import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 import useAuth from './hooks/useAuth';
 import AccountsPlan from './pages/(app)/AccountsPlan';
 import Home from './pages/(app)/Home';
+import JournalsCreate from './pages/(app)/Journals/Create';
 import JournalsHistory from './pages/(app)/Journals/History';
 import ManageCompanies from './pages/(app)/ManageCompanies';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
-import JournalsCreate from './pages/(app)/Journals/Create';
 
 const PrivateRoutesWrapper = () => {
 	const { token } = useAuth();
