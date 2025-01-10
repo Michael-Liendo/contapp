@@ -33,7 +33,11 @@ export class Journal {
 			);
 		}
 
-		const journal: IJournalQuery = { ...created_journal, entries };
+		const journal: IJournalQuery = {
+			...created_journal,
+			description: journalDto.description ?? null,
+			entries,
+		};
 
 		return { journal };
 	}
@@ -67,7 +71,7 @@ export class Journal {
 			count,
 		);
 
-		let result = journals;
+		let result: IJournalQuery[] = journals as IJournalQuery[];
 		if (includeEntries) {
 			const entries = await Promise.all(
 				result.map(async (journal) => {
