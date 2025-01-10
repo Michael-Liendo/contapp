@@ -33,7 +33,11 @@ export class Journal {
 			);
 		}
 
-		const journal: IJournalQuery = { ...created_journal, entries };
+		const journal: IJournalQuery = {
+			...created_journal,
+			description: journalDto.description ?? null,
+			entries,
+		};
 
 		return { journal };
 	}
@@ -56,7 +60,7 @@ export class Journal {
 			throw new NotFoundError('Company not found');
 		}
 
-		const { data: journals, count } = await Repository.journals.listByCompany(
+		const journals = await Repository.journals.listByCompany(
 			companyId,
 			r_pagination,
 		);
@@ -64,10 +68,10 @@ export class Journal {
 		const pagination = getPagination(
 			r_pagination.page,
 			r_pagination.limit,
-			count,
+			journals.count,
 		);
 
-		let result = journals;
+		let result: IJournalQuery[] = journals.data as IJournalQuery[];
 		if (includeEntries) {
 			const entries = await Promise.all(
 				result.map(async (journal) => {

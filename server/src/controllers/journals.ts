@@ -19,8 +19,8 @@ export async function listByCompany(
 	request: Request,
 	reply: Reply,
 ): Promise<void> {
+	const { page = 0, limit = 10 } = request.query as IPaginationRequest;
 	const { company_id } = request.params as { company_id: string };
-	const { page = 1, limit = 10 } = request.query as IPaginationRequest;
 
 	if (!isValidUUID(company_id)) {
 		throw new BadRequestError('Invalid company id');
