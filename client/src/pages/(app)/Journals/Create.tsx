@@ -36,6 +36,7 @@ export default function JournalsCreate() {
 			validateOnBlur: false,
 			onSubmit: async (values, { resetForm }) => {
 				console.log(values);
+				resetForm();
 			},
 		});
 
