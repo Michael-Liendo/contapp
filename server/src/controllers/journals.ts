@@ -19,7 +19,7 @@ export async function listByCompany(
 	request: Request,
 	reply: Reply,
 ): Promise<void> {
-	const { page = 1, limit = 10 } = request.query as IPaginationRequest;
+	const { page = 0, limit = 10 } = request.query as IPaginationRequest;
 	const { company_id } = request.params as { company_id: string };
 
 	if (!isValidUUID(company_id)) {
