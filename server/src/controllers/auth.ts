@@ -13,7 +13,7 @@ export async function login(request: Request, reply: Reply) {
 
 	return reply
 		.code(201)
-		.send({ success: true, message: 'User created', data: { token: user } });
+		.send({ success: true, message: 'User logged', data: { token: user } });
 }
 
 export async function register(request: Request, reply: Reply) {

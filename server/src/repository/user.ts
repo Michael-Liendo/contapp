@@ -1,6 +1,7 @@
-import type { IUser, IUserForRegister } from '@contapp/shared';
+import { UserSchema, type IUser, type IUserForRegister } from '@contapp/shared';
 import { InternalServerError } from '../utils/errorHandler';
 import database from './database';
+import { z } from 'zod';
 
 export class Users {
 	/**
@@ -36,4 +37,31 @@ export class Users {
 		if (!user) throw new InternalServerError('Error creating user');
 		return user.id;
 	}
+
+	/**
+     *  updateUser - updates a user's information
+     * @param id string
+     * @param userUpdates Partial<IUser> - fields to update
+     * @returns boolean - true if the update was successful
+     */
+    static async updateUser(id: string, userUpdates: Partial<IUser>): Promise<boolean> {
+        try {
+            const validData = UserSchema.partial().parse(userUpdates);
+
+            const rowsUpdated = await database('users')
+                .where({ id })
+                .update({ ...validData, updated_at: new Date() });
+
+            if (rowsUpdated === 0) {
+                throw new Error(`User with id ${id} not found`);
+            }
+
+            return true;
+        } catch (error) {
+            if (error instanceof z.ZodError) {
+                throw new Error(`Validation Error: ${error.message}`);
+            }
+            throw new InternalServerError(`Error updating user: ${error}`);
+        }
+    }
 }

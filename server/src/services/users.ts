@@ -7,4 +7,8 @@ export default class Users {
 
 		return user;
 	}
+	
+	static async updateUser(id: string, userUpdates: Partial<IUser>): Promise<boolean> {
+        return Repository.users.updateUser(id, userUpdates);
+    }
 }

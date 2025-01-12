@@ -7,6 +7,7 @@
 	"scripts": {
 		"start": "NODE_ENV=production node dist/src/index.js",
 		"dev": "tsx src/index.ts",
+		"dev:watch": "tsx watch src/index.ts",
 		"build": "tsc",
 		"migrations:make": "knex migrate:make -x ts",
 		"migrations:up": "knex migrate:latest",
