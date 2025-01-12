@@ -1,7 +1,7 @@
-import { UserSchema, type IUser, type IUserForRegister } from '@contapp/shared';
+import { type IUser, type IUserForRegister, UserSchema } from '@contapp/shared';
+import { z } from 'zod';
 import { InternalServerError } from '../utils/errorHandler';
 import database from './database';
-import { z } from 'zod';
 
 export class Users {
 	/**
@@ -39,29 +39,32 @@ export class Users {
 	}
 
 	/**
-     *  updateUser - updates a user's information
-     * @param id string
-     * @param userUpdates Partial<IUser> - fields to update
-     * @returns boolean - true if the update was successful
-     */
-    static async updateUser(id: string, userUpdates: Partial<IUser>): Promise<boolean> {
-        try {
-            const validData = UserSchema.partial().parse(userUpdates);
+	 *  updateUser - updates a user's information
+	 * @param id string
+	 * @param userUpdates Partial<IUser> - fields to update
+	 * @returns boolean - true if the update was successful
+	 */
+	static async updateUser(
+		id: string,
+		userUpdates: Partial<IUser>,
+	): Promise<boolean> {
+		try {
+			const validData = UserSchema.partial().parse(userUpdates);
 
-            const rowsUpdated = await database('users')
-                .where({ id })
-                .update({ ...validData, updated_at: new Date() });
+			const rowsUpdated = await database('users')
+				.where({ id })
+				.update({ ...validData, updated_at: new Date() });
 
-            if (rowsUpdated === 0) {
-                throw new Error(`User with id ${id} not found`);
-            }
+			if (rowsUpdated === 0) {
+				throw new Error(`User with id ${id} not found`);
+			}
 
-            return true;
-        } catch (error) {
-            if (error instanceof z.ZodError) {
-                throw new Error(`Validation Error: ${error.message}`);
-            }
-            throw new InternalServerError(`Error updating user: ${error}`);
-        }
-    }
+			return true;
+		} catch (error) {
+			if (error instanceof z.ZodError) {
+				throw new Error(`Validation Error: ${error.message}`);
+			}
+			throw new InternalServerError(`Error updating user: ${error}`);
+		}
+	}
 }

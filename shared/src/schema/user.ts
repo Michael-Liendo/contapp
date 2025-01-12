@@ -27,20 +27,9 @@ export const UserForUpdateSchema = z.object({
 	last_name: z.string().optional(),
 	password: z.string().optional(),
 	old_password: z.string().optional(),
-}).superRefine((data, ctx) => {
-    if (data.password && !data.old_password) {
-      ctx.addIssue({
-		code: "custom",
-        path: ["old_password"],
-        message: "Old password is required when setting a new password.",
-      });
-    }
-
-    if (data.old_password && !data.password) {
-      ctx.addIssue({
-		code: "custom",
-        path: ["password"],
-        message: "New password is required when providing the old password.",
-      });
-    }
-  });
+}).refine((data) => {
+	return (!data.password || data.old_password) && (!data.old_password || data.password);
+}, {
+	message: "Password and old_password must both be provided if one is present.",
+	path: ["password"],
+});

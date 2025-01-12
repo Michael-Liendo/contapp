@@ -1,9 +1,9 @@
-import { me, UserController } from '../controllers/users';
+import { UserController, me } from '../controllers/users';
 import checkJwt from '../middlewares/checkJwt';
 
+import { UserForUpdateSchema } from '@contapp/shared';
 import type { FastifyInstance, RegisterOptions } from 'fastify';
 import requestValidation from '../utils/requestValidation';
-import { UserForUpdateSchema } from '@contapp/shared';
 
 export default function user(
 	fastify: FastifyInstance,
