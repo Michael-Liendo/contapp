@@ -22,14 +22,23 @@ export const UserLoginSchema = z.object({
 	password: z.string().min(4),
 });
 
-export const UserForUpdateSchema = z.object({
-	first_name: z.string().optional(),
-	last_name: z.string().optional(),
-	password: z.string().optional(),
-	old_password: z.string().optional(),
-}).refine((data) => {
-	return (!data.password || data.old_password) && (!data.old_password || data.password);
-}, {
-	message: "Password and old_password must both be provided if one is present.",
-	path: ["password"],
-});
+export const UserForUpdateSchema = z
+	.object({
+		first_name: z.string().optional(),
+		last_name: z.string().optional(),
+		password: z.string().optional(),
+		old_password: z.string().optional(),
+	})
+	.refine(
+		(data) => {
+			return (
+				(!data.password || data.old_password) &&
+				(!data.old_password || data.password)
+			);
+		},
+		{
+			message:
+				'Password and old_password must both be provided if one is present.',
+			path: ['password'],
+		},
+	);
