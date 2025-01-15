@@ -30,9 +30,7 @@ interface DataTableProps<TData, TValue> {
 	data: TData[];
 	loading?: boolean;
 	pagination?: IPaginationResponse;
-	meta?: {
-		updateData: (rowIndex: number, columnId: string, value: unknown) => void;
-	};
+
 	onPageChange?: (pageIndex: number) => void;
 }
 
@@ -41,7 +39,6 @@ export function DataTable<TData, TValue>({
 	data,
 	loading,
 	pagination,
-	meta,
 	onPageChange,
 }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = useState({});
@@ -66,9 +63,6 @@ export function DataTable<TData, TValue>({
 			},
 		},
 		manualPagination: true,
-		meta: {
-			updateData: meta?.updateData ?? (() => {}),
-		},
 		onRowSelectionChange: setRowSelection,
 		onSortingChange: setSorting,
 		onColumnFiltersChange: setColumnFilters,

@@ -144,22 +144,6 @@ export default function JournalsCreate() {
 					columns={JournalsEntriesDatagrid}
 					data={entries}
 					loading={false}
-					meta={{
-						updateData(rowIndex, columnId, value) {
-							setEntries((old) =>
-								old.map((row, index) => {
-									if (index === rowIndex) {
-										return {
-											// biome-ignore lint/style/noNonNullAssertion: is not null
-											...old[rowIndex]!,
-											[columnId]: value,
-										};
-									}
-									return row;
-								}),
-							);
-						},
-					}}
 				/>
 				{errors.entries && (
 					<div className='text-red-600 text-sm'>
