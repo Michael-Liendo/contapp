@@ -157,7 +157,7 @@ export function DataTable<TData, TValue>({
 					</TableBody>
 				</Table>
 			</div>
-			<DataTablePagination table={table} />
+			{pagination && <DataTablePagination table={table} />}
 		</div>
 	);
 }

@@ -67,6 +67,10 @@ export default function JournalsCreate() {
 		]);
 	});
 
+	useEffect(() => {
+		console.log(errors);
+	}, [errors]);
+
 	return (
 		<div>
 			<form
@@ -165,6 +169,20 @@ export default function JournalsCreate() {
 						},
 					}}
 				/>
+				{errors.entries && (
+					<div className='text-red-600 text-sm'>
+						{Array.isArray(errors.entries)
+							? errors.entries.map((error, index) => {
+									const errorKey = Object.keys(error)[0] as keyof typeof error;
+									return (
+										<div key={errorKey}>
+											{index + 1} {errorKey}: {error[errorKey]}
+										</div>
+									);
+								})
+							: JSON.stringify(errors.entries)}
+					</div>
+				)}
 
 				<Button form='create-journal' type='submit'>
 					Crear asiento contable
