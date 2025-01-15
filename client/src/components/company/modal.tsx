@@ -110,7 +110,7 @@ export function CompanyModalMutate({
 							required
 						/>
 						<TextField
-							label='Identificación fiscal'
+							label='RIF'
 							type='text'
 							id='company_fiscal_identification'
 							name='fiscal_identification'
