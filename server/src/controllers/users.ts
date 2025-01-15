@@ -11,7 +11,7 @@ export async function update(req: Request, reply: Reply) {
 	const { id, password } = req.user as Required<IUser>;
 	const userUpdates = req.body as IUserForUpdate;
 
-	const updated = await Services.user.updateUser(id, userUpdates, password);
+	const updated = await Services.user.update(id, userUpdates, password);
 	reply
 		.status(200)
 		.send({ success: true, message: 'User updated', data: updated });

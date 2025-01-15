@@ -10,7 +10,7 @@ export default class Users {
 		return user;
 	}
 
-	static async updateUser(
+	static async update(
 		id: string,
 		userUpdates: Partial<IUserForUpdate>,
 		password: string,
