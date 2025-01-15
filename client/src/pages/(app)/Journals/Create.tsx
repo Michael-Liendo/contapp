@@ -62,7 +62,8 @@ export default function JournalsCreate() {
 	useKeyboard('F2', () => {
 		setEntries((old) => [
 			...old,
-			{ account_id: undefined, description: '', debit: 0, credit: 0 },
+			// todo: improve this from '' to undefined
+			{ account_id: '', description: '', debit: 0, credit: 0 },
 		]);
 	});
 
@@ -133,7 +134,8 @@ export default function JournalsCreate() {
 						onClick={() =>
 							setEntries((old) => [
 								...old,
-								{ account_id: undefined, description: '', debit: 0, credit: 0 },
+								// todo: improve this from '' to undefined
+								{ account_id: '', description: '', debit: 0, credit: 0 },
 							])
 						}
 					>
