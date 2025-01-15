@@ -17,7 +17,7 @@ export const CompanyDatagrid: ColumnDef<ICompany>[] = [
 	{
 		accessorKey: 'fiscal_identification',
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title='Identificación' />
+			<DataTableColumnHeader column={column} title='RIF' />
 		),
 		cell: ({ row }) => {
 			return (

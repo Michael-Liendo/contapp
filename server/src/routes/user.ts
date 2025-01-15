@@ -1,7 +1,9 @@
-import { me } from '../controllers/users';
+import { me, update } from '../controllers/users';
 import checkJwt from '../middlewares/checkJwt';
 
+import { UserForUpdateSchema } from '@contapp/shared';
 import type { FastifyInstance, RegisterOptions } from 'fastify';
+import requestValidation from '../utils/requestValidation';
 
 export default function user(
 	fastify: FastifyInstance,
@@ -14,6 +16,13 @@ export default function user(
 		method: 'GET',
 		url: '/me',
 		handler: me,
+	});
+
+	fastify.route({
+		method: 'PUT',
+		url: '/update',
+		preHandler: requestValidation(UserForUpdateSchema),
+		handler: update,
 	});
 
 	done();

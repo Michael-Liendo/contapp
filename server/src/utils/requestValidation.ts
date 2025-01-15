@@ -1,8 +1,10 @@
-import type { ZodObject } from 'zod';
+import type { ZodEffects, ZodObject } from 'zod';
 import type { Reply, Request } from '../types';
 
-// biome-ignore lint/suspicious/noExplicitAny: That is any
-const requestValidation = (schema: ZodObject<any>) => {
+const requestValidation = (
+	// biome-ignore lint/suspicious/noExplicitAny: That is any
+	schema: ZodObject<any> | ZodEffects<ZodObject<any, any, any>, any, any>,
+) => {
 	return async (req: Request, reply: Reply) => {
 		if (!schema) return;
 

@@ -19,3 +19,7 @@ export interface IUserForRegister
 	extends z.infer<typeof UserForRegisterSchema> {}
 
 export interface IUser extends z.infer<typeof UserSchema> {}
+
+export interface IUserForUpdate extends Partial<IUser> {
+	old_password: string;
+}
