@@ -1,5 +1,7 @@
-import type { IUser } from '@contapp/shared';
+import type { IUser, IUserForUpdate } from '@contapp/shared';
 import Repository from '../repository';
+import { BadRequestError } from '../utils/errorHandler';
+import { comparePassword, hashPassword } from '../utils/password';
 
 export default class Users {
 	static async getByID(userID: string): Promise<IUser | undefined> {
@@ -10,8 +12,17 @@ export default class Users {
 
 	static async updateUser(
 		id: string,
-		userUpdates: Partial<IUser>,
+		userUpdates: Partial<IUserForUpdate>,
+		password: string,
 	): Promise<boolean> {
-		return Repository.users.updateUser(id, userUpdates);
+		if (userUpdates.password && userUpdates.old_password && password) {
+			if (!(await comparePassword(userUpdates.old_password, password))) {
+				throw new BadRequestError('Invalid password');
+			}
+			const hashedPassword = await hashPassword(userUpdates.password);
+			userUpdates.password = hashedPassword;
+		}
+		const updated = await Repository.users.updateUser(id, userUpdates);
+		return updated;
 	}
 }

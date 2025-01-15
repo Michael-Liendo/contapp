@@ -1,4 +1,4 @@
-import { UserController, me } from '../controllers/users';
+import { me, update } from '../controllers/users';
 import checkJwt from '../middlewares/checkJwt';
 
 import { UserForUpdateSchema } from '@contapp/shared';
@@ -22,7 +22,7 @@ export default function user(
 		method: 'PUT',
 		url: '/',
 		preHandler: requestValidation(UserForUpdateSchema),
-		handler: UserController.updateUser,
+		handler: update,
 	});
 
 	done();
