@@ -49,11 +49,9 @@ export class Users {
 		userUpdates: Partial<IUser>,
 	): Promise<boolean> {
 		try {
-			const validData = UserSchema.partial().parse(userUpdates);
-
 			const rowsUpdated = await database('users')
 				.where({ id })
-				.update({ ...validData, updated_at: new Date() });
+				.update({ ...userUpdates, updated_at: new Date() });
 
 			if (rowsUpdated === 0) {
 				throw new Error(`User with id ${id} not found`);
@@ -61,9 +59,6 @@ export class Users {
 
 			return true;
 		} catch (error) {
-			if (error instanceof z.ZodError) {
-				throw new Error(`Validation Error: ${error.message}`);
-			}
 			throw new InternalServerError(`Error updating user: ${error}`);
 		}
 	}
