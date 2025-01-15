@@ -52,10 +52,6 @@ export default function JournalsCreate() {
 	}, [activeCompany?.id]);
 
 	useEffect(() => {
-		console.log(errors);
-	}, [errors]);
-
-	useEffect(() => {
 		setFieldValue('entries', entries);
 	}, [entries]);
 
@@ -66,10 +62,6 @@ export default function JournalsCreate() {
 			{ account_id: '', description: '', debit: 0, credit: 0 },
 		]);
 	});
-
-	useEffect(() => {
-		console.log(errors);
-	}, [errors]);
 
 	return (
 		<div>
@@ -180,7 +172,7 @@ export default function JournalsCreate() {
 										</div>
 									);
 								})
-							: JSON.stringify(errors.entries)}
+							: errors.entries}
 					</div>
 				)}
 
