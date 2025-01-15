@@ -1,5 +1,4 @@
-import { type IUser, type IUserForRegister, UserSchema } from '@contapp/shared';
-import { z } from 'zod';
+import type { IUser, IUserForRegister } from '@contapp/shared';
 import { InternalServerError } from '../utils/errorHandler';
 import database from './database';
 
