@@ -36,4 +36,29 @@ export class Users {
 		if (!user) throw new InternalServerError('Error creating user');
 		return user.id;
 	}
+
+	/**
+	 *  updateUser - updates a user's information
+	 * @param id string
+	 * @param userUpdates Partial<IUser> - fields to update
+	 * @returns boolean - true if the update was successful
+	 */
+	static async updateUser(
+		id: string,
+		userUpdates: Partial<IUser>,
+	): Promise<boolean> {
+		try {
+			const rowsUpdated = await database('users')
+				.where({ id })
+				.update({ ...userUpdates, updated_at: new Date() });
+
+			if (rowsUpdated === 0) {
+				throw new Error(`User with id ${id} not found`);
+			}
+
+			return true;
+		} catch (error) {
+			throw new InternalServerError(`Error updating user: ${error}`);
+		}
+	}
 }
