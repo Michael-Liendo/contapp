@@ -29,16 +29,17 @@ interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	loading?: boolean;
-	onPageChange?: (pageIndex: number) => void;
 	pagination?: IPaginationResponse;
+
+	onPageChange?: (pageIndex: number) => void;
 }
 
 export function DataTable<TData, TValue>({
 	columns,
 	data,
 	loading,
-	onPageChange,
 	pagination,
+	onPageChange,
 }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = useState({});
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -150,7 +151,7 @@ export function DataTable<TData, TValue>({
 					</TableBody>
 				</Table>
 			</div>
-			<DataTablePagination table={table} />
+			{pagination && <DataTablePagination table={table} />}
 		</div>
 	);
 }
