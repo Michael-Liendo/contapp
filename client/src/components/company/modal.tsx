@@ -144,17 +144,17 @@ export function CompanyModalMutate({
 							error={errors.email}
 							onChange={handleChange}
 						/>
-						<TextField 
-  						  label='Dirección'
-                id='company_address'
-                name='address'
-                placeholder='Clxx #xx-xx'
-                autoComplete='on'
-                value={values.address}
-                error={errors.address}
-                onChange={handleChange}
-                required
-  						/>
+						<TextField
+							label='Dirección'
+							id='company_address'
+							name='address'
+							placeholder='Clxx #xx-xx'
+							autoComplete='on'
+							value={values.address}
+							error={errors.address}
+							onChange={handleChange}
+							required
+						/>
 					</form>
 				</div>
 				<DialogFooter>
