@@ -38,6 +38,7 @@ export function CompanyModalMutate({
 			phone: '',
 			fiscal_identification: '',
 			email: '',
+			address: '',
 		},
 		validationSchema: toFormikValidationSchema(CompanyForCreateSchema),
 		validateOnChange: false,
@@ -69,6 +70,7 @@ export function CompanyModalMutate({
 				phone: isEdit.phone ?? '',
 				fiscal_identification: isEdit.fiscal_identification ?? '',
 				email: isEdit.email ?? '',
+				address: isEdit.address ?? '',
 			});
 		}
 	}, [isEdit]);
@@ -140,6 +142,16 @@ export function CompanyModalMutate({
 							autoComplete='off'
 							value={values.email}
 							error={errors.email}
+							onChange={handleChange}
+						/>
+						<TextField
+							label='Dirección'
+							id='company_address'
+							name='address'
+							placeholder='Clxx #xx-xx'
+							autoComplete='on'
+							value={values.address}
+							error={errors.address}
 							onChange={handleChange}
 						/>
 					</form>

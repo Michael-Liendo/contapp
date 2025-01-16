@@ -22,6 +22,7 @@ export const CompanyForCreateSchema = z.object({
 		.union([z.literal(''), z.string().email()])
 		.transform((value) => (value === '' ? undefined : value))
 		.optional(),
+	address: z.string().optional(),
 	default_currency: z.string().optional(),
 });
 
