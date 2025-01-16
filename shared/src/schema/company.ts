@@ -27,10 +27,6 @@ export const CompanyForCreateSchema = z.object({
 		.transform((value) => (value === '' ? undefined : value))
 		.optional(),
 	address: z.string(),
-	country: z.string(),
-	city: z.string(),
-	state: z.string(),
-	zipCode: z.string().optional(),
 	default_currency: z.string().optional(),
 });
 
