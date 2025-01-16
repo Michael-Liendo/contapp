@@ -153,7 +153,6 @@ export function CompanyModalMutate({
 							value={values.address}
 							error={errors.address}
 							onChange={handleChange}
-							required
 						/>
 					</form>
 				</div>
