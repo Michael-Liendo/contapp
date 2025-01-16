@@ -9,6 +9,10 @@ export const CompanySchema = z.object({
 	email: z.string().email().nullable(),
 	default_currency: z.string().nullable(),
 	address: z.string().nullable(),
+	country: z.string().nullable(),
+	city: z.string().nullable(),
+	state: z.string().nullable(),
+	zipCode: z.string().nullable(),
 	created_at: z.coerce.date(),
 	updated_at: z.coerce.date(),
 });
@@ -22,6 +26,11 @@ export const CompanyForCreateSchema = z.object({
 		.union([z.literal(''), z.string().email()])
 		.transform((value) => (value === '' ? undefined : value))
 		.optional(),
+	address: z.string(),
+	country: z.string(),
+	city: z.string(),
+	state: z.string(),
+	zipCode: z.string().optional(),
 	default_currency: z.string().optional(),
 });
 

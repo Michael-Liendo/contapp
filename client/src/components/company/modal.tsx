@@ -38,6 +38,11 @@ export function CompanyModalMutate({
 			phone: '',
 			fiscal_identification: '',
 			email: '',
+			address: '',
+			country: '',
+			city: '',
+			state: '',
+			zipCode: '',
 		},
 		validationSchema: toFormikValidationSchema(CompanyForCreateSchema),
 		validateOnChange: false,
@@ -69,6 +74,11 @@ export function CompanyModalMutate({
 				phone: isEdit.phone ?? '',
 				fiscal_identification: isEdit.fiscal_identification ?? '',
 				email: isEdit.email ?? '',
+				address: isEdit.address ?? '',
+				country: isEdit.country ?? '',
+				city: isEdit.city ?? '',
+				state: isEdit.state ?? '',
+				zipCode: isEdit.zipCode ?? '',
 			});
 		}
 	}, [isEdit]);
@@ -142,6 +152,66 @@ export function CompanyModalMutate({
 							error={errors.email}
 							onChange={handleChange}
 						/>
+						<div className='grid grid-cols-3 gap-2'>
+  						<TextField 
+  						  label='Dirección'
+                id='company_address'
+                name='address'
+                placeholder='Clxx #xx-xx'
+                autoComplete='on'
+                value={values.address}
+                error={errors.address}
+                onChange={handleChange}
+                required
+  						/>
+              <TextField 
+                label='País'
+                type='text'
+                id='company_country'
+                name='country'
+                placeholder='United States'
+                autoComplete='on'
+                value={values.country}
+                error={errors.country}
+                onChange={handleChange}
+                required
+              />
+              <TextField 
+                label='Ciudad'
+                type='text'
+                id='company_city'
+                name='city'
+                placeholder='Seattle'
+                autoComplete='on'
+                value={values.city}
+                error={errors.city}
+                onChange={handleChange}
+                required
+              />
+              <TextField 
+                label='Estado'
+                type='text'
+                id='company_state'
+                name='state'
+                placeholder='Washington'
+                autoComplete='on'
+                value={values.state}
+                error={errors.state}
+                onChange={handleChange}
+                required
+              />
+              <TextField 
+                label='Código Postal'
+                type='number'
+                id='company_codeZip'
+                name='codeZip'
+                placeholder='98005'
+                autoComplete='on'
+                value={values.zipCode}
+                error={errors.zipCode}
+                onChange={handleChange}
+              />
+						</div>
 					</form>
 				</div>
 				<DialogFooter>
