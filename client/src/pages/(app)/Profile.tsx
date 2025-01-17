@@ -1,29 +1,14 @@
-import useAuth from '@/actions/src/hooks/useAuth';
-import { Avatar, AvatarImage, AvatarFallback } from "@/actions/src/components/ui/avatar";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/actions/src/components/ui/card";
-import { Button } from '@/actions/src/components/ui/button';
-import { Check, PencilLine } from 'lucide-react';
-import { TextField } from '@/actions/src/components/text-field';
+import useAuth from "@/hooks/useAuth";
+import { useState, useEffect } from "react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Card, CardHeader, CardTitle, CardFooter, CardContent } from "@/components/ui/card";
+import { PencilLine, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { TextField } from "@/components/text-field";
 
 export default function Profile() {
-  const { user, setUser } = useAuth();  // Destructure both 'user' and 'setUser' from 'useAuth'
- 
-   const confirmUpdateUser = () => {
-     const fieldEmail = (document.getElementById('user_email') as HTMLInputElement)?.value;
-     const fieldFirstName = (document.getElementById('user_firstname') as HTMLInputElement)?.value;
-     const fieldLastName = (document.getElementById('user_lastname') as HTMLInputElement)?.value;
- 
-     if (user) {
-       setUser({
-         ...user,
-         email: fieldEmail,
-         first_name: fieldFirstName,
-         last_name: fieldLastName,
-       });
-     }
-     
-     
-   };
+  const { user } = useAuth();
+
   return (
     <Card>
       <CardHeader>
@@ -44,8 +29,8 @@ export default function Profile() {
           id='create-company'
           noValidate
         >
-          <div className='flex flex-cols-3 flex-rows-3 gap-5 sm:flex-wrap'>
-            <div className='flex gap-1 w-full space-y-6'>
+          <div className='flex flex-wrap gap-5'>
+            <div className='flex gap-1 w-full sm:w-full lg:w-[35%] space-y-6'>
               <TextField
                 label='Correo'
                 type='text'
@@ -57,7 +42,7 @@ export default function Profile() {
                 <PencilLine />
               </Button>
             </div>
-            <div className='flex gap-1 w-full space-y-6'>
+            <div className='flex gap-1 w-full sm:w-full lg:w-[30%] space-y-6'>
               <TextField
                 label='Nombres'
                 type='text'
@@ -69,7 +54,7 @@ export default function Profile() {
                 <PencilLine />
               </Button>
             </div>
-            <div className='flex gap-1 w-full space-y-6'>
+            <div className='flex gap-1 w-full sm:w-full lg:w-[30%] space-y-6'>
               <TextField
                 label='Apellidos'
                 type='text'
@@ -85,10 +70,12 @@ export default function Profile() {
         </form>
       </CardContent>
       <CardFooter>
-        <Button className='' variant='default' size='sm' onClick={confirmUpdateUser}>
+        <div className="flex w-full lg:justify-end sm:justify-center">
+        <Button variant='default' size='sm'>
           Confirmar cambios
           <Check className='opacity-50' />
         </Button>
+        </div>
       </CardFooter>
     </Card>
   )

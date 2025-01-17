@@ -1,6 +1,6 @@
 'use client';
 
-import { BadgeCheck, ChevronsUpDown, LogOut } from 'lucide-react';
+import { BadgeCheck, ChevronsUpDown, LogOut, UserPen } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -18,7 +18,7 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from '@/components/ui/sidebar';
-import { AuthRoutesEnum } from '@/data/routesEnums';
+import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import useAuth from '@/hooks/useAuth';
 import { useNavigate } from 'react-router';
 
@@ -31,6 +31,10 @@ export function NavUser() {
 		logout();
 
 		navigate(AuthRoutesEnum.Login);
+	}
+
+	function handleProfile() {
+		navigate(PrivateRoutesEnum.Profile);
 	}
 
 	return (
@@ -88,6 +92,11 @@ export function NavUser() {
 								Account
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
+						<DropdownMenuSeparator />
+						<DropdownMenuItem onClick={() => handleProfile()}>
+							<UserPen className='size-4 mr-1' />
+							Editar perfil
+						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem onClick={() => handleLogout()}>
 							<LogOut className='size-4 mr-1' />
