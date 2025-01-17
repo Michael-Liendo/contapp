@@ -1,4 +1,5 @@
 import useAuth from "@/hooks/useAuth";
+import Users from "@/services/users";
 import { useState, useEffect } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardHeader, CardTitle, CardFooter, CardContent } from "@/components/ui/card";
@@ -8,6 +9,33 @@ import { TextField } from "@/components/text-field";
 
 export default function Profile() {
   const { user } = useAuth();
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+  });
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        firstName: user.first_name || '',
+        lastName: user.last_name || '',
+        email: user.email || '',
+      });
+    }
+  }, [user]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const confirmChanges = () => {
+    console.log('Changes confirmed:', formData);
+  };
 
   return (
     <Card>
@@ -71,10 +99,10 @@ export default function Profile() {
       </CardContent>
       <CardFooter>
         <div className="flex w-full lg:justify-end sm:justify-center">
-        <Button variant='default' size='sm'>
-          Confirmar cambios
-          <Check className='opacity-50' />
-        </Button>
+          <Button variant='default' size='sm' onClick={confirmChanges}>
+            Confirmar cambios
+            <Check className='opacity-50' />
+          </Button>
         </div>
       </CardFooter>
     </Card>
