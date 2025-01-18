@@ -14,9 +14,9 @@ import Home from './pages/(app)/Home';
 import JournalsCreate from './pages/(app)/Journals/Create';
 import JournalsHistory from './pages/(app)/Journals/History';
 import ManageCompanies from './pages/(app)/ManageCompanies';
+import Profile from './pages/(app)/Profile';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
-import Profile from './pages/(app)/Profile';
 
 const PrivateRoutesWrapper = () => {
 	const { token } = useAuth();
