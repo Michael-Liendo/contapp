@@ -71,6 +71,7 @@ export default function Profile() {
 								type='text'
 								id='user_email'
 								placeholder={user?.email}
+								// todo: y esto a los otros input
 								readOnly={!inputView.email}
 							/>
 							<Button
