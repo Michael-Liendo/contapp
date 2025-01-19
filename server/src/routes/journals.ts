@@ -16,7 +16,7 @@ export default function journals(
 	fastify.route({
 		method: 'POST',
 		url: '/create',
-		preHandler: requestValidation(JournalForCreateSchema),
+		preValidation: requestValidation(JournalForCreateSchema),
 		handler: create,
 	});
 

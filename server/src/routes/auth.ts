@@ -13,14 +13,14 @@ export default function auth(
 	fastify.route({
 		method: 'POST',
 		url: '/login',
-		preHandler: requestValidation(UserLoginSchema),
+		preValidation: requestValidation(UserLoginSchema),
 		handler: login,
 	});
 
 	fastify.route({
 		method: 'POST',
 		url: '/register',
-		preHandler: requestValidation(UserForRegisterSchema),
+		preValidation: requestValidation(UserForRegisterSchema),
 		handler: register,
 	});
 

@@ -21,14 +21,14 @@ export default function accounts_plan(
 	fastify.route({
 		method: 'POST',
 		url: '/create',
-		preHandler: requestValidation(AccountPlanForCreateSchema),
+		preValidation: requestValidation(AccountPlanForCreateSchema),
 		handler: create,
 	});
 
 	fastify.route({
 		method: 'PUT',
 		url: '/update/:account_plan_id',
-		preHandler: requestValidation(AccountPlanForCreateSchema),
+		preValidation: requestValidation(AccountPlanForCreateSchema),
 		handler: update,
 	});
 

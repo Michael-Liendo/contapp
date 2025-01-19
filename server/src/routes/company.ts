@@ -25,7 +25,7 @@ export default function company(
 	fastify.route({
 		method: 'POST',
 		url: '/create',
-		preHandler: requestValidation(CompanyForCreateSchema),
+		preValidation: requestValidation(CompanyForCreateSchema),
 		handler: create,
 	});
 
@@ -38,7 +38,7 @@ export default function company(
 	fastify.route({
 		method: 'PUT',
 		url: '/update',
-		preHandler: requestValidation(CompanyForUpdateSchema),
+		preValidation: requestValidation(CompanyForUpdateSchema),
 		handler: update,
 	});
 
