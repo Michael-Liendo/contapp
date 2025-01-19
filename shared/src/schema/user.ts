@@ -24,8 +24,12 @@ export const UserLoginSchema = z.object({
 
 export const UserForUpdateSchema = z
 	.object({
-		first_name: z.string().optional(),
-		last_name: z.string().optional(),
+		email: z
+			.string()
+			.min(1, 'El correo es requerido')
+			.email('El correo es invalido'),
+		first_name: z.string().min(2, 'El nombre es requerido'),
+		last_name: z.string().min(2, 'El apellido es requerido'),
 		password: z.string().optional(),
 		old_password: z.string().optional(),
 	})

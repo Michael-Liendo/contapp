@@ -15,7 +15,7 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserForUpdateSchema } from '@contapp/shared';
 import { useFormik } from 'formik';
 import { Check, PencilLine } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Profile() {
 	const { user } = useAuth();
@@ -27,13 +27,19 @@ export default function Profile() {
 	});
 
 	const toggleEditField = (field: keyof typeof fieldEditMode) => {
+		const input = document.querySelector(
+			`[name="${field}"]`,
+		) as HTMLInputElement;
+		if (input) {
+			input.focus();
+		}
 		setFieldEditMode((prev) => ({
 			...prev,
 			[field]: !prev[field],
 		}));
 	};
 
-	const { values, handleChange, handleSubmit } = useFormik({
+	const { values, errors, handleChange, handleSubmit, resetForm } = useFormik({
 		initialValues: {
 			first_name: user?.first_name,
 			last_name: user?.last_name,
@@ -50,6 +56,18 @@ export default function Profile() {
 			});
 		},
 	});
+
+	useEffect(() => {
+		resetForm({
+			values: {
+				first_name: user?.first_name,
+				last_name: user?.last_name,
+				email: user?.email,
+				password: undefined,
+				old_password: undefined,
+			},
+		});
+	}, [user]);
 
 	return (
 		<Card>
@@ -76,6 +94,7 @@ export default function Profile() {
 								name: 'email',
 								value: values.email,
 								placeholder: user?.email,
+								error: errors.email,
 								isEditable: fieldEditMode.email,
 								onEdit: () => toggleEditField('email'),
 							},
@@ -84,6 +103,7 @@ export default function Profile() {
 								id: 'user_first_name',
 								name: 'first_name',
 								value: values.first_name,
+								error: errors.first_name,
 								placeholder: user?.first_name,
 								isEditable: fieldEditMode.first_name,
 								onEdit: () => toggleEditField('first_name'),
@@ -93,12 +113,22 @@ export default function Profile() {
 								id: 'user_last_name',
 								name: 'last_name',
 								value: values.last_name,
+								error: errors.last_name,
 								placeholder: user?.last_name,
 								isEditable: fieldEditMode.last_name,
 								onEdit: () => toggleEditField('last_name'),
 							},
 						].map(
-							({ name, label, id, value, placeholder, isEditable, onEdit }) => (
+							({
+								name,
+								label,
+								id,
+								value,
+								placeholder,
+								error,
+								isEditable,
+								onEdit,
+							}) => (
 								<div
 									key={id}
 									className='flex gap-1 w-full sm:w-full lg:w-[30%] space-y-6'
@@ -108,6 +138,7 @@ export default function Profile() {
 										type='text'
 										id={id}
 										name={name}
+										error={error}
 										value={value}
 										placeholder={placeholder}
 										readOnly={!isEditable}
