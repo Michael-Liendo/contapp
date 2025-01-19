@@ -32,7 +32,7 @@ export default class Users {
 
 			const response = await request.json();
 
-			return UserSchema.parse(response.data);
+			return response.success;
 		} catch (error) {
 			console.log('userServices', error);
 			throw error;

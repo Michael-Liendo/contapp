@@ -70,7 +70,6 @@ export default function Profile() {
 				<CardContent>
 					<div className='flex flex-wrap gap-5'>
 						{[
-							// i make this array to avoid repeat the same code
 							{
 								label: 'Correo',
 								id: 'user_email',
@@ -109,9 +108,8 @@ export default function Profile() {
 										type='text'
 										id={id}
 										name={name}
-										value={isEditable ? value : ''}
-										// placeholder TODO: change this placeholder to value, so yet not working good
-										placeholder={!isEditable ? placeholder : ''}
+										value={value}
+										placeholder={placeholder}
 										readOnly={!isEditable}
 										onChange={handleChange}
 									/>
