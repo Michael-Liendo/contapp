@@ -1,7 +1,7 @@
 import type { IUser } from '@contapp/shared';
 import { createContext, useEffect, useState } from 'react';
-import Services from '../services';
 import { useQuery, useQueryClient } from 'react-query';
+import Services from '../services';
 
 export interface AuthContextProps {
 	isLoading: boolean;
