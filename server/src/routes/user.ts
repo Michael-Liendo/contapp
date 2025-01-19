@@ -21,7 +21,7 @@ export default function user(
 	fastify.route({
 		method: 'PUT',
 		url: '/update',
-		preHandler: requestValidation(UserForUpdateSchema),
+		preValidation: requestValidation(UserForUpdateSchema),
 		handler: update,
 	});
 

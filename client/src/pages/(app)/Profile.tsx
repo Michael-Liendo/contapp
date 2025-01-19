@@ -16,8 +16,10 @@ import { UserForUpdateSchema } from '@contapp/shared';
 import { useFormik } from 'formik';
 import { Check, PencilLine } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useQueryClient } from 'react-query';
 
 export default function Profile() {
+	const queryClient = useQueryClient();
 	const { user } = useAuth();
 
 	const [fieldEditMode, setFieldEditMode] = useState({
@@ -49,13 +51,17 @@ export default function Profile() {
 		},
 		validationSchema: toFormikValidationSchema(UserForUpdateSchema),
 		onSubmit: async (values) => {
-			const updated = await Services.users.update(values);
+			const updated = await Services.users.update(
+				UserForUpdateSchema.parse(values),
+			);
 
-			if (!updated) return console.log('Error updating user');
+			if (!updated) return console.error('Error updating user');
 
 			toast({
 				title: 'Tu usuario fue actualizado',
 			});
+
+			queryClient.invalidateQueries('user');
 		},
 	});
 
@@ -83,7 +89,9 @@ export default function Profile() {
 						</AvatarFallback>
 					</Avatar>
 				</div>
-				<CardTitle>Hola, {user?.first_name}</CardTitle>
+				<CardTitle>
+					Hola, {user?.first_name} {user?.last_name}
+				</CardTitle>
 				<p className='opacity-50'>Edita tu información de perfil</p>
 			</CardHeader>
 			<form noValidate onSubmit={handleSubmit}>
