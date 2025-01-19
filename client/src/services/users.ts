@@ -22,7 +22,7 @@ export default class Users {
 	static async update(user: IUserForUpdate) {
 		try {
 			const request = await fetch('/users/update', {
-				method: 'POST',
+				method: 'PUT',
 				body: JSON.stringify(user),
 			});
 
