@@ -32,7 +32,7 @@ export default class Users {
 
 			const response = await request.json();
 
-			return response.success;
+			return response.success as boolean;
 		} catch (error) {
 			console.log('userServices', error);
 			throw error;

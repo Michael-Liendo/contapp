@@ -1,6 +1,7 @@
 import type { IUser } from '@contapp/shared';
 import { createContext, useEffect, useState } from 'react';
 import Services from '../services';
+import { useQuery, useQueryClient } from 'react-query';
 
 export interface AuthContextProps {
 	isLoading: boolean;
@@ -16,11 +17,17 @@ export const AuthContext = createContext<AuthContextProps | undefined>(
 );
 
 export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
-	const [user, setUser] = useState<IUser>();
+	const queryClient = useQueryClient();
+
 	const [loading, setLoading] = useState(true);
 	const [token, setToken] = useState<string | undefined>(
 		localStorage.getItem('token') ?? undefined,
 	);
+
+	const { user, isLoading } = useQuery(['user'], async () => {
+		const user = await Services.users.me();
+		return user;
+	});
 
 	const checkUser = async () => {
 		setLoading(true);
@@ -37,7 +44,7 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 	};
 
 	useEffect(() => {
-		checkUser();
+		queryClient.invalidateQueries('accounts-plan');
 	}, [token]);
 
 	const updateUser = async (user: IUser) => {

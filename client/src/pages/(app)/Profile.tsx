@@ -51,6 +51,8 @@ export default function Profile() {
 		onSubmit: async (values) => {
 			const updated = await Services.users.update(values);
 
+			if (!updated) return console.log('Error updating user');
+
 			toast({
 				title: 'Tu usuario fue actualizado',
 			});
