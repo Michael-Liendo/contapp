@@ -24,8 +24,21 @@ export const UserLoginSchema = z.object({
 
 export const UserForUpdateSchema = z
 	.object({
-		first_name: z.string().optional(),
-		last_name: z.string().optional(),
+		email: z
+			.string({ required_error: 'El correo es requerido' })
+			.email('El correo es invalido')
+			.optional()
+			.transform((value) => (value === '' ? undefined : value)),
+		first_name: z
+			.string({
+				required_error: 'El nombre es requerido',
+			})
+			.optional()
+			.transform((value) => (value === '' ? undefined : value)),
+		last_name: z
+			.string({ required_error: 'El apellido es requerido' })
+			.optional()
+			.transform((value) => (value === '' ? undefined : value)),
 		password: z.string().optional(),
 		old_password: z.string().optional(),
 	})

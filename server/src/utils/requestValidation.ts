@@ -36,7 +36,7 @@ const requestValidation = (
 				errors,
 			});
 		} else {
-			return;
+			req.body = result.data;
 		}
 	};
 };
