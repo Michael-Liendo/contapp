@@ -31,7 +31,7 @@ export default function LoginPage() {
 						description: (
 							<div className='flex items-center justify-between w-full space-x-4'>
 								<Check className='text-green-600 ml-auto' />
-								<span>Login Successful!</span>
+								<span>Inicio de sesión exitoso!</span>
 							</div>
 						),
 					});
@@ -40,7 +40,7 @@ export default function LoginPage() {
 						description: (
 							<div className='flex items-center justify-between w-full space-x-4'>
 								<X className='text-red-600 ml-auto' />
-								<span>Invalid credentials</span>
+								<span>Credenciales inválidas</span>
 							</div>
 						),
 					});
@@ -73,7 +73,7 @@ export default function LoginPage() {
 								type='email'
 								name='email'
 								placeholder='example@email.com'
-								label='Email Address'
+								label='Correo'
 								value={values.email}
 								error={errors.email}
 								onChange={handleChange}
@@ -84,7 +84,7 @@ export default function LoginPage() {
 								type='password'
 								name='password'
 								placeholder='* * * * * * *'
-								label='Password'
+								label='Contraseña'
 								value={values.password}
 								error={errors.password}
 								onChange={handleChange}
@@ -96,16 +96,16 @@ export default function LoginPage() {
 								className='w-full mt-4'
 								disabled={isSubmitting}
 							>
-								{isSubmitting ? 'Loading...' : 'Login'}
+								{isSubmitting ? 'Cargando...' : 'Entrar'}
 							</Button>
 						</form>
 					</CardContent>
 				</Card>
 
 				<div className='text-center w-full mt-4'>
-					{"Don't have an account? "}
+					{"No tienes una cuenta? "}
 					<Link className='underline' to={AuthRoutesEnum.Signup}>
-						Sign Up
+						Regístrate
 					</Link>
 				</div>
 			</div>
