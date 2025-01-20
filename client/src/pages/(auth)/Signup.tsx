@@ -31,7 +31,7 @@ export default function Signup() {
 						description: (
 							<div className='flex items-center justify-between w-full space-x-4'>
 								<Check className='text-green-600 ml-auto' />
-								<span>Account created successfully!</span>
+								<span>Cuenta creada exitosamente!</span>
 							</div>
 						),
 					});
@@ -40,7 +40,7 @@ export default function Signup() {
 						description: (
 							<div className='flex items-center justify-between w-full space-x-4'>
 								<X className='text-red-600 ml-auto' />
-								<span>User already exists</span>
+								<span>El usuario ya existe</span>
 							</div>
 						),
 					});
@@ -73,7 +73,7 @@ export default function Signup() {
 								<TextField
 									name='first_name'
 									placeholder='John'
-									label='First Name'
+									label='Nombre'
 									value={values.first_name}
 									error={errors.first_name}
 									onChange={handleChange}
@@ -82,7 +82,7 @@ export default function Signup() {
 								<TextField
 									name='last_name'
 									placeholder='Doe'
-									label='Last Name'
+									label='Apellido'
 									value={values.last_name}
 									error={errors.last_name}
 									onChange={handleChange}
@@ -94,7 +94,7 @@ export default function Signup() {
 								type='email'
 								name='email'
 								placeholder='example@email.com'
-								label='Email'
+								label='Correo'
 								value={values.email}
 								error={errors.email}
 								onChange={handleChange}
@@ -105,7 +105,7 @@ export default function Signup() {
 								type='password'
 								name='password'
 								placeholder='* * * * * * *'
-								label='Password'
+								label='Contraseña'
 								value={values.password}
 								error={errors.password}
 								onChange={handleChange}
