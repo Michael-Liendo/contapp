@@ -103,7 +103,7 @@ export default function LoginPage() {
 				</Card>
 
 				<div className='text-center w-full mt-4'>
-					{"No tienes una cuenta? "}
+					{'No tienes una cuenta? '}
 					<Link className='underline' to={AuthRoutesEnum.Signup}>
 						Regístrate
 					</Link>
