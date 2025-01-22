@@ -1,8 +1,4 @@
-import * as dotenv from 'dotenv';
-
 import type { Knex } from 'knex';
-
-dotenv.config();
 
 const knexConfig: { [key: string]: Knex.Config } = {
 	development: {
@@ -28,4 +24,4 @@ const knexConfig: { [key: string]: Knex.Config } = {
 	},
 };
 
-module.exports = knexConfig[process.env.NODE_ENV || 'development'];
+export default knexConfig[process.env.NODE_ENV || 'development'];
