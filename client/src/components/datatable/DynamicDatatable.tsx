@@ -24,7 +24,7 @@ interface DynamicDataTableProps {
 	/** Configuración de la tabla (columnas, tipos, etc.). */
 	config: TableConfig | undefined;
 	/** Función que se ejecuta al enviar nuevos datos. */
-	onSubmit: (newData: RowData) => void;
+	onChange: (newData: RowData) => void;
 }
 
 /**
@@ -33,7 +33,7 @@ interface DynamicDataTableProps {
 export function DynamicDataTable({
 	initialData,
 	config,
-	onSubmit,
+	onChange,
 }: DynamicDataTableProps) {
 	const {
 		data,
@@ -54,7 +54,7 @@ export function DynamicDataTable({
 	const handleSaveNewRow = (newData: RowData) => {
 		handleSave(data.length, newData);
 		setIsCreatingNewRow(false);
-		onSubmit(newData);
+		onChange(newData);
 	};
 
 	/** Cancela la creación de una nueva fila. */

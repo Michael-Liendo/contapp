@@ -78,14 +78,25 @@ export default function CreatePage() {
   /**
    * Maneja el envío de un nuevo asiento contable.
    */
-  const handleSubmit = (data: any) => {
+  const handleChange = (data: any) => {
     setEntries((prev) => {
       const updatedEntries = [...prev, data];
-      console.log(updatedEntries);
       return updatedEntries;
     });
     resetForm();
   };
+
+  /**
+   * Envio de datos.
+   */
+  const handleSubmit = () => {
+	const newData = {
+		...formData,
+		entries: entries,
+	}
+	// Logica de API.
+	console.log(newData);
+  }
 
   /**
    * Restaura el formulario a su estado inicial.
@@ -148,7 +159,7 @@ export default function CreatePage() {
         </div>
 
         {/* Sección del formulario */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
@@ -196,7 +207,7 @@ export default function CreatePage() {
       <DynamicDataTable
         config={tableConfig}
         initialData={entries}
-        onSubmit={handleSubmit}
+        onChange={handleChange}
       />
     </div>
   );
