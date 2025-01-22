@@ -1,4 +1,3 @@
-const { Knex } = require('knex');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -29,7 +28,5 @@ const knexConfig = {
 	},
 };
 
-module.exports =
-	knexConfig[
-		(process.env.NODE_ENV as 'development' | 'production') || 'development'
-	];
+// @ts-ignore
+module.exports = knexConfig[process.env.NODE_ENV || 'development'];
