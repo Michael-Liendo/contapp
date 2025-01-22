@@ -38,4 +38,8 @@ const config: { [key: string]: Knex.Config } = {
 	},
 };
 
-module.exports = config[process.env.NODE_ENV || 'development'];
+const knexConfig = config[process.env.NODE_ENV || 'development'];
+
+const knex = require('knex')(knexConfig);
+
+module.exports = knex;
