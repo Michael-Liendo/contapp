@@ -1,49 +1,79 @@
-import { useState, useCallback } from "react"
-import type { RowData, TableConfig } from "../types/datatable"
+import { useCallback, useState } from 'react';
+import type { RowData, TableConfig } from '../types/datatable';
 
+/**
+ * Hook personalizado para manejar los datos de una tabla dinámica.
+ * @param initialData Datos iniciales de la tabla.
+ * @param config Configuración de la tabla, incluyendo columnas y campo primario.
+ * @returns Funciones y estados para manejar ediciones, eliminaciones, y autocompletado en la tabla.
+ */
 export function useDataTable(initialData: RowData[], config?: TableConfig) {
-  const [data, setData] = useState<RowData[]>(initialData)
-  const [editingRow, setEditingRow] = useState<number | null>(null)
+	// Estado para los datos de la tabla
+	const [data, setData] = useState<RowData[]>(initialData);
+	// Estado para la fila que se está editando
+	const [editingRow, setEditingRow] = useState<number | null>(null);
 
-  const handleEdit = useCallback((index: number | null) => {
-    setEditingRow(index)
-  }, [])
+	/**
+	 * Inicia o cancela la edición de una fila específica.
+	 * @param index Índice de la fila que se va a editar, o null para cancelar.
+	 */
+	const handleEdit = useCallback((index: number | null) => {
+		setEditingRow(index);
+	}, []);
 
-  const handleSave = useCallback((index: number, newData: RowData) => {
-    setData((prevData) => {
-      const newDataArray = [...prevData]
-      if (index === prevData.length) {
-        // Adding a new row
-        newDataArray.push(newData)
-      } else {
-        // Updating an existing row
-        newDataArray[index] = newData
-      }
-      return newDataArray
-    })
-    setEditingRow(null)
-  }, [])
+	/**
+	 * Guarda los cambios realizados en una fila.
+	 * @param index Índice de la fila que se está editando.
+	 * @param newData Nuevos datos para la fila.
+	 */
+	const handleSave = useCallback((index: number, newData: RowData) => {
+		setData((prevData) => {
+			const newDataArray = [...prevData];
+			if (index === prevData.length) {
+				// Si el índice es igual al tamaño del array, se agrega una nueva fila
+				newDataArray.push(newData);
+			} else {
+				// Actualiza una fila existente
+				newDataArray[index] = newData;
+			}
+			return newDataArray;
+		});
+		setEditingRow(null);
+	}, []);
 
-  const handleDelete = useCallback((index: number) => {
-    setData((prevData) => prevData.filter((_, i) => i !== index))
-  }, [])
+	/**
+	 * Elimina una fila específica de la tabla.
+	 * @param index Índice de la fila que se va a eliminar.
+	 */
+	const handleDelete = useCallback((index: number) => {
+		setData((prevData) => prevData.filter((_, i) => i !== index));
+	}, []);
 
-  const handleAutocomplete = useCallback(
-    (value: string) => {
-      if (!config || !config.primaryField) return []
-      const primaryField = config.primaryField
-      return data.filter((row) => row[primaryField].toString().toLowerCase().includes(value.toLowerCase()))
-    },
-    [data, config],
-  )
+	/**
+	 * Filtra los datos de la tabla según el valor proporcionado.
+	 * @param value Valor utilizado para filtrar las filas.
+	 * @returns Lista de filas que coinciden con el valor.
+	 */
+	const handleAutocomplete = useCallback(
+		(value: string) => {
+			if (!config || !config.primaryField) return [];
+			const primaryField = config.primaryField;
+			return data.filter((row) =>
+				row[primaryField]
+					.toString()
+					.toLowerCase()
+					.includes(value.toLowerCase()),
+			);
+		},
+		[data, config],
+	);
 
-  return {
-    data,
-    editingRow,
-    handleEdit,
-    handleSave,
-    handleDelete,
-    handleAutocomplete,
-  }
+	return {
+		data,
+		editingRow,
+		handleEdit,
+		handleSave,
+		handleDelete,
+		handleAutocomplete,
+	};
 }
-
