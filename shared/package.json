@@ -20,5 +20,8 @@
 		"lint": "biome format ./ && biome check ./",
 		"format": "biome format --write ./ && biome check --write ./",
 		"format:unsafe": "biome format --write ./ && biome check --write --unsafe ./"
+	},
+	"devDependencies": {
+		"typescript": "^5.7.2"
 	}
 }
