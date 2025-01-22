@@ -28,7 +28,8 @@
 		"server:migrations:down": "npm run migrations:down -w @contapp/server"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.8.3"
+		"@biomejs/biome": "1.8.3",
+		"@types/bcrypt": "^5.0.2"
 	},
 	"dependencies": {
 		"zod": "^3.24.1"
