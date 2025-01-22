@@ -1,10 +1,9 @@
-import * as dotenv from 'dotenv';
-
-import type { Knex } from 'knex';
+const { Knex } = require('knex');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
-const knexConfig: { [key: string]: Knex.Config } = {
+const knexConfig = {
 	development: {
 		client: 'pg',
 		connection: {
@@ -30,4 +29,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
 	},
 };
 
-module.exports = knexConfig[process.env.NODE_ENV || 'development'];
+module.exports =
+	knexConfig[
+		(process.env.NODE_ENV as 'development' | 'production') || 'development'
+	];

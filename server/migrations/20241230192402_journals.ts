@@ -22,7 +22,13 @@ export async function up(knex: Knex): Promise<void> {
 	});
 
 	await knex.raw(`
-    CREATE SEQUENCE journal_number_seq;
+		DO $$
+		BEGIN
+			IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'journal_number_seq') THEN
+				CREATE SEQUENCE journal_number_seq;
+			END IF;
+		END
+		$$;
   `);
 
 	await knex.raw(`
