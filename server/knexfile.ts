@@ -28,10 +28,11 @@ const config: { [key: string]: Knex.Config } = {
 	production: {
 		client: 'pg',
 		connection: {
-			host: '0.0.0.0',
+			host: process.env.POSTGRES_HOST,
 			user: process.env.POSTGRES_USER,
 			password: process.env.POSTGRES_PASSWORD,
 			database: process.env.POSTGRES_DB,
+			ssl: true,
 		},
 		pool: { min: 0, max: 10 },
 	},
