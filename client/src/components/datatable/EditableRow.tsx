@@ -135,11 +135,11 @@ export function EditableRow<T>({
 				<Button
 					onClick={() => onSave(editedData)}
 					variant='ghost'
-					className='size-[40px] p-0'
+					className='size-7 p-0'
 				>
 					<Check />
 				</Button>
-				<Button onClick={onCancel} variant='ghost' className='size-[40px] p-0'>
+				<Button onClick={onCancel} variant='ghost' className='size-7 p-0'>
 					<X />
 				</Button>
 			</td>
