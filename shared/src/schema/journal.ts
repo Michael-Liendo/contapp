@@ -36,8 +36,11 @@ export const JournalEntrySchema = z.object({
 		.string()
 		.optional()
 		.describe('The description of the journal entry'),
-	debit: z.number().min(0).describe('The debit amount for this journal entry'),
-	credit: z
+	debit: z.coerce
+		.number()
+		.min(0)
+		.describe('The debit amount for this journal entry'),
+	credit: z.coerce
 		.number()
 		.min(0)
 		.describe('The credit amount for this journal entry'),
