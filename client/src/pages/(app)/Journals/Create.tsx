@@ -6,10 +6,25 @@ import type {
 	RowData,
 	TableConfig,
 } from '@/components/datatable/types/datatable';
+import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
-import type { IAccountPlan, IJournalForCreate } from '@contapp/shared';
+import {
+	JournalDestinationEnum,
+	type IAccountPlan,
+	type IJournalForCreate,
+} from '@contapp/shared';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -177,44 +192,55 @@ export default function CreatePage() {
 				{/* Sección del formulario */}
 				<form className='space-y-6'>
 					<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-						<div className='space-y-2'>
-							<label className='block text-sm font-medium text-gray-700'>
-								Descripción
-							</label>
-							<input
-								name='description'
-								value={formData.description}
-								onChange={handleInputChange}
-								className='w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-								placeholder='Descripción del asiento contable'
-							/>
-						</div>
-						<div className='space-y-2'>
-							<label className='block text-sm font-medium text-gray-700'>
-								Destino
-							</label>
-							<select
-								name='destination'
-								value={formData.destination}
-								onChange={handleInputChange}
-								className='w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+						<TextField
+							type='text'
+							label='Descripción'
+							id='description'
+							name='description'
+							placeholder='Descripción del asiento contable'
+							autoComplete='off'
+							// value={values.description}
+							// error={errors.description}
+							// onChange={handleChange}
+						/>
+
+						<div className='w-full'>
+							<Label htmlFor=''>
+								Destino <span className='text-red-600'>*</span>
+							</Label>
+							<Select
+							// defaultValue={values.destination}
+							// onValueChange={handleChange}
 							>
-								<option value='DEBIT'>Debe</option>
-								<option value='CREDIT'>Haber</option>
-							</select>
+								<SelectTrigger>
+									<SelectValue placeholder='Destino' />
+								</SelectTrigger>
+								<SelectContent id='destination'>
+									<SelectItem value={JournalDestinationEnum.Values.DEBIT}>
+										Debe
+									</SelectItem>
+									<SelectItem value={JournalDestinationEnum.Values.CREDIT}>
+										Crédito
+									</SelectItem>
+								</SelectContent>
+							</Select>
 						</div>
-						<div className='space-y-2'>
-							<label className='block text-sm font-medium text-gray-700'>
-								Fecha del asiento
-							</label>
-							<input
-								type='date'
-								name='entry_date'
-								value={formData.entry_date}
-								onChange={handleInputChange}
-								className='w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-							/>
-						</div>
+
+						<TextField
+							label='Fecha del asiento'
+							type='date'
+							id='entry_date'
+							name='entry_date'
+							placeholder='Fecha de creación'
+							autoComplete='off'
+							// value={values.entry_date?.toISOString().split('T')[0]}
+							// error={errors.entry_date as string}
+							// onChange={({ target: { value } }) => {
+							// const date = new Date(value);
+							// setFieldValue('entry_date', date);
+							// }}
+							required
+						/>
 					</div>
 				</form>
 			</div>
