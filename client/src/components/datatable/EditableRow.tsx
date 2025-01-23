@@ -50,7 +50,7 @@ export function EditableRow<T>({
 	}, [rowData]);
 
 	/** Maneja los cambios en los campos de entrada de la fila editable. */
-	const handleInputChange = (key: string, value: string) => {
+	const handleInputChange = (key: string, value: string | number) => {
 		setEditedData((prev) => ({ ...prev, [key]: value }));
 	};
 
@@ -106,7 +106,14 @@ export function EditableRow<T>({
 							<Input
 								type={column.type}
 								value={(editedData[column.key] as string).toString()}
-								onChange={(e) => handleInputChange(column.key, e.target.value)}
+								onChange={(e) =>
+									handleInputChange(
+										column.key,
+										column.type === 'number'
+											? Number(e.target.value)
+											: e.target.value,
+									)
+								}
 								className='w-full'
 							/>
 						)

@@ -4,7 +4,6 @@ import { DynamicDataTable } from '@/components/datatable/DynamicDatatable';
 import { useDataTable } from '@/components/datatable/hooks/useDatatable';
 import type {
 	IOption,
-	RowData,
 	TableConfig,
 } from '@/components/datatable/types/datatable';
 import { TextField } from '@/components/text-field';
@@ -19,11 +18,14 @@ import {
 } from '@/components/ui/select';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
+import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import {
 	type IAccountPlan,
-	type IJournalForCreate,
+	type IJournalEntryForCreate,
 	JournalDestinationEnum,
+	JournalForCreateSchema,
 } from '@contapp/shared';
+import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -56,15 +58,23 @@ export default function CreatePage() {
 	// Estados
 	const { activeCompany } = useCompanyContext(); // Contexto para los datos de la empresa activa
 
-	// Datos del formulario para crear o editar un asiento
-	const [formData, setFormData] = useState<AccountingEntry>({
-		id: '',
-		company_id: activeCompany?.id,
-		description: '',
-		destination: 'Debe',
-		entry_date: new Date().toISOString().split('T')[0],
-		entries: [],
-	});
+	const { values, errors, handleChange, handleSubmit, setFieldValue } =
+		useFormik({
+			initialValues: {
+				description: '',
+				destination: JournalDestinationEnum.Values.DEBIT,
+				company_id: activeCompany?.id ?? '',
+				entries: [],
+				entry_date: new Date(),
+			},
+			validationSchema: toFormikValidationSchema(JournalForCreateSchema),
+			validateOnChange: false,
+			validateOnBlur: false,
+			onSubmit: async (values, { resetForm }) => {
+				console.log(values);
+				resetForm();
+			},
+		});
 
 	// Configuración para la tabla de datos
 	const [tableConfig, setTableConfig] = useState<TableConfig>({
@@ -90,37 +100,7 @@ export default function CreatePage() {
 
 	// Hook personalizado para manejar los datos de la tabla
 	const { data, editingRow, handleEdit, handleSave, handleDelete } =
-		useDataTable([], tableConfig);
-
-	/**
-	 * Restaura el formulario a su estado inicial.
-	 */
-	const resetForm = () => {
-		setFormData({
-			id: '',
-			company_id: activeCompany?.id,
-			description: '',
-			destination: 'Debe',
-			entry_date: new Date().toISOString().split('T')[0],
-			entries: [],
-		});
-	};
-
-	/**
-	 * Envio de datos.
-	 */
-	const handleSubmit = () => {
-		const newData = {
-			...formData,
-			entries: data.map((entry: RowData<IJournalForCreate>) => {
-				const { id, debit, credit, description, journal_id } = entry;
-				return { account_id: id, debit, credit, description, journal_id };
-			}),
-		};
-		// Logica de API.
-		console.log(newData);
-		resetForm();
-	};
+		useDataTable<IJournalEntryForCreate>([], tableConfig);
 
 	// Obtiene los datos de las cuentas para la empresa activa
 	const { data: servicesData } = useQuery(
@@ -148,18 +128,18 @@ export default function CreatePage() {
 	}, [servicesData]);
 
 	useEffect(() => {
-		console.log('Se actualizo data', data);
+		setFieldValue('entries', data);
 	}, [data]);
 
 	return (
-		<div>
+		<form onSubmit={handleSubmit}>
 			{/* Sección de encabezado */}
 			<div className='mb-4'>
 				<div className='flex flex-row justify-between'>
 					<h4 className='text-xl mb-6'>Nuevo Asiento Contable</h4>
 					<div>
 						<Button
-							onClick={handleSubmit}
+							type='submit'
 							className='w-full'
 							variant='default'
 							color='#000'
@@ -179,9 +159,9 @@ export default function CreatePage() {
 							name='description'
 							placeholder='Descripción del asiento contable'
 							autoComplete='off'
-							// value={values.description}
-							// error={errors.description}
-							// onChange={handleChange}
+							value={values.description}
+							error={errors.description}
+							onChange={handleChange}
 						/>
 
 						<div className='w-full'>
@@ -189,8 +169,8 @@ export default function CreatePage() {
 								Destino <span className='text-red-600'>*</span>
 							</Label>
 							<Select
-							// defaultValue={values.destination}
-							// onValueChange={handleChange}
+								defaultValue={values.destination}
+								onValueChange={handleChange}
 							>
 								<SelectTrigger>
 									<SelectValue placeholder='Destino' />
@@ -213,12 +193,12 @@ export default function CreatePage() {
 							name='entry_date'
 							placeholder='Fecha de creación'
 							autoComplete='off'
-							// value={values.entry_date?.toISOString().split('T')[0]}
-							// error={errors.entry_date as string}
-							// onChange={({ target: { value } }) => {
-							// const date = new Date(value);
-							// setFieldValue('entry_date', date);
-							// }}
+							value={values.entry_date?.toISOString().split('T')[0]}
+							error={errors.entry_date as string}
+							onChange={({ target: { value } }) => {
+								const date = new Date(value);
+								setFieldValue('entry_date', date);
+							}}
 							required
 						/>
 					</div>
@@ -234,6 +214,25 @@ export default function CreatePage() {
 				handleSave={handleSave}
 				handleDelete={handleDelete}
 			/>
-		</div>
+
+			{errors.entries && (
+				<div className='text-red-600 text-sm'>
+					{Array.isArray(errors.entries)
+						? errors.entries.map((error, index) => {
+								const errorKey = Object.keys(error)[0];
+								const errorValue = error[errorKey as keyof typeof error];
+								return (
+									<div key={errorKey}>
+										{index + 1} {errorKey}:{' '}
+										{typeof errorValue === 'function'
+											? errorValue.toString()
+											: errorValue}
+									</div>
+								);
+							})
+						: errors.entries}
+				</div>
+			)}
+		</form>
 	);
 }
