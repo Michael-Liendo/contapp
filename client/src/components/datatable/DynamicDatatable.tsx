@@ -80,7 +80,7 @@ export function DynamicDataTable<T>({
 	return (
 		<div className='space-y-4'>
 			<Table className='border-collapse border border-gray-200 rounded-lg'>
-				<TableHeader className='uppercase'>
+				<TableHeader>
 					<TableRow>
 						{visibleColumns.map((column) => (
 							<TableHead className='w-[445px]' key={column.key}>

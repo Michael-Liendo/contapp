@@ -30,28 +30,6 @@ import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
 /**
- * Interfaz que representa un asiento contable.
- */
-export interface AccountingEntry {
-	id: string;
-	company_id: string | undefined;
-	description: string;
-	destination: 'Debe' | 'Haber';
-	entry_date: string;
-	entries: AccountingItem[];
-}
-
-/**
- * Interfaz que representa un ítem dentro de un asiento contable.
- */
-export interface AccountingItem {
-	id: string;
-	account: string;
-	debit: number;
-	credit: number;
-}
-
-/**
  * Componente para crear o editar un asiento contable.
  */
 export default function CreatePage() {
