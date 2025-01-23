@@ -116,14 +116,14 @@ export function DynamicDataTable<T>({
 									<Button
 										onClick={() => handleEdit(index)}
 										variant='ghost'
-										className='size-[40px] p-0'
+										className='size-7 p-0'
 									>
 										<Pencil />
 									</Button>
 									<Button
 										onClick={() => handleDelete(index)}
 										variant='ghost'
-										className='size-[40px] p-0'
+										className='size-7 p-0'
 									>
 										<Trash2 />
 									</Button>
