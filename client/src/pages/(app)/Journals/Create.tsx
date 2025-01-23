@@ -50,6 +50,9 @@ export default function CreatePage() {
 			validateOnBlur: false,
 			onSubmit: async (values, { resetForm }) => {
 				console.log(values);
+				const journal = await Services.journals.create(values);
+
+				console.log(journal);
 				resetForm();
 			},
 		});
