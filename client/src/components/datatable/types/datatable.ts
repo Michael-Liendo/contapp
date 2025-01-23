@@ -6,6 +6,7 @@ export interface IOption {
 export interface ColumnConfig {
 	key: string;
 	label: string;
+	defaultValue?: string | number;
 	editable: boolean;
 	type: 'text' | 'number' | 'email' | 'select' | 'autocomplete-select';
 	options?: IOption[]; // Para los tipos 'select' y 'autocomplete-select'

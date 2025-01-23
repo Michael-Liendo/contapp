@@ -109,7 +109,7 @@ export function DynamicDataTable<T>({
 											? column.options?.find(
 													(option) => option.id === row[column.key],
 												)?.value
-											: String(row[column.key])}
+											: String(row[column.key]) || column.defaultValue}
 									</TableCell>
 								))}
 								<TableCell>

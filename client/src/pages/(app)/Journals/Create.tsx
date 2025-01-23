@@ -70,8 +70,8 @@ export default function CreatePage() {
 				editable: true,
 				type: 'text',
 			},
-			{ key: 'debit', label: 'Debe Total', editable: true, type: 'number' },
-			{ key: 'credit', label: 'Haber Total', editable: true, type: 'number' },
+			{ key: 'debit', label: 'Debe Total', editable: true, type: 'number', defaultValue: 0 },
+			{ key: 'credit', label: 'Haber Total', editable: true, type: 'number', defaultValue: 0 },
 		],
 		primaryField: 'id',
 	});
@@ -106,7 +106,12 @@ export default function CreatePage() {
 	}, [servicesData]);
 
 	useEffect(() => {
-		setFieldValue('entries', data);
+		const dataWithDefaults = data.map((entry) => {
+			if (!entry.debit) entry.debit = 0;
+			if (!entry.credit) entry.credit = 0;
+			return entry;
+		}); // Completar con valores por defecto
+		setFieldValue('entries', dataWithDefaults);
 	}, [data]);
 
 	return (
