@@ -98,7 +98,7 @@ export default function CreatePage() {
 					description: (
 						<div className='flex items-center justify-between w-full space-x-4'>
 							<Check className='text-green-600 ml-auto' />
-							<span>Diario creado</span>
+							<span>Diario creado {journal.journal_number}</span>
 						</div>
 					),
 				});
