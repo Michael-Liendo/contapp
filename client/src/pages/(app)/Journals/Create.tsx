@@ -70,7 +70,7 @@ export default function CreatePage() {
 	const [tableConfig, setTableConfig] = useState<TableConfig>({
 		columns: [
 			{
-				key: 'id',
+				key: 'account_id',
 				label: 'Cuenta',
 				editable: true,
 				type: 'autocomplete-select',

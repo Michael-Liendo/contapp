@@ -90,7 +90,7 @@ export function EditableRow<T>({
 												<CommandItem
 													key={option.id}
 													onSelect={() =>
-														handleInputChange(column.key, option.value)
+														handleInputChange(column.key, option.id)
 													}
 												>
 													{option.value}
