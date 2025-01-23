@@ -75,7 +75,7 @@ export function DynamicDataTable({
 
 	// Crea una fila vacía basada en la configuración de columnas
 	const emptyRow: RowData = Object.fromEntries(
-		config.columns.map((col) => [col.key, ''])
+		config.columns.map((col) => [col.key, '']),
 	);
 
 	const visibleColumns = config.columns; // Columnas visibles
@@ -97,7 +97,7 @@ export function DynamicDataTable({
 					{initialData.map((row, index) =>
 						editingRow === index ? (
 							<EditableRow
-								key={index}
+								key={row.id}
 								rowData={row}
 								columns={config.columns}
 								allData={initialData}
@@ -105,7 +105,7 @@ export function DynamicDataTable({
 								onCancel={() => handleEdit(null)}
 							/>
 						) : (
-							<TableRow key={index}>
+							<TableRow key={row.id}>
 								{visibleColumns.map((column) => (
 									<TableCell key={column.key}>{row[column.key]}</TableCell>
 								))}
@@ -126,7 +126,7 @@ export function DynamicDataTable({
 									</Button>
 								</TableCell>
 							</TableRow>
-						)
+						),
 					)}
 					{isCreatingNewRow ? (
 						<EditableRow
@@ -141,12 +141,14 @@ export function DynamicDataTable({
 							className='hover:bg-gray-100 cursor-pointer'
 							onClick={handleCreateNewRow}
 						>
-							{visibleColumns.map((column, index) => (
-								<TableCell key={index} className='text-gray-400'>
-									{index === 0 ? 'Haga clic para agregar una nueva fila' : ''}
+							{visibleColumns.map((column) => (
+								<TableCell key={column.key} className='text-gray-400'>
+									{column.key === visibleColumns[0].key
+										? 'Haga clic para agregar una nueva fila'
+										: ''}
 								</TableCell>
 							))}
-							<TableCell></TableCell>
+							<TableCell />
 						</TableRow>
 					)}
 				</TableBody>

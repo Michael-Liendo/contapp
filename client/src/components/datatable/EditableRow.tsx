@@ -63,8 +63,8 @@ export function EditableRow({
 									<SelectValue placeholder='Seleccionar...' />
 								</SelectTrigger>
 								<SelectContent>
-									{column.options?.map((option, index) => (
-										<SelectItem key={index} value={option.value}>
+									{column.options?.map((option) => (
+										<SelectItem key={option.value} value={option.value}>
 											{option.label}
 										</SelectItem>
 									))}
@@ -83,9 +83,7 @@ export function EditableRow({
 							<Input
 								type={column.type}
 								value={editedData[column.key].toString()}
-								onChange={(e) =>
-									handleInputChange(column.key, e.target.value)
-								}
+								onChange={(e) => handleInputChange(column.key, e.target.value)}
 								className='w-full'
 							/>
 						)
@@ -102,11 +100,7 @@ export function EditableRow({
 				>
 					<Check />
 				</Button>
-				<Button
-					onClick={onCancel}
-					variant='ghost'
-					className='size-[40px] p-0'
-				>
+				<Button onClick={onCancel} variant='ghost' className='size-[40px] p-0'>
 					<X />
 				</Button>
 			</td>
