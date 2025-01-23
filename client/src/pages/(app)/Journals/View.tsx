@@ -34,6 +34,21 @@ export default function JournalsHistory() {
 
 	return (
 		<div>
+			<div className='bg-zinc-50 rounded-sm p-2 mb-8'>
+				<div className='border p-3 rounded-sm flex flex-row justify-between mb-3'>
+					<p>Description</p>
+					<p>Destiny</p>
+					<p>Date</p>
+					<p>Company</p>
+				</div>
+				<div className='flex flex-row ml-5 mr-5 justify-between'>
+					<p id='valueDesc'>value</p>
+					<p id='valueDestiny'>value</p>
+					<p id='valueDate'>value</p>
+					<p id='valueCompany'>value</p>
+				</div>
+			</div>
+
 			<div className='flex justify-between items-center mb-5'>
 				<h1 className='text-xl'>Entries Datas Journals</h1>
 			</div>
