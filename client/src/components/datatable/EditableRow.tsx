@@ -1,16 +1,18 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select';
 import { Check, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { AutocompleteSelect } from './AutoCompleteSelect';
 import type { ColumnConfig, RowData } from './types/datatable';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import {
+	Command,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+  } from "@/components/ui/command"
 
 /**
  * Propiedades que acepta el componente EditableRow.
@@ -55,21 +57,32 @@ export function EditableRow({
 				<td key={column.key} className='p-2'>
 					{column.editable ? (
 						column.type === 'select' ? (
-							<Select
-								value={editedData[column.key].toString()}
-								onValueChange={(value) => handleInputChange(column.key, value)}
-							>
-								<SelectTrigger>
-									<SelectValue placeholder='Seleccionar...' />
-								</SelectTrigger>
-								<SelectContent>
-									{column.options?.map((option) => (
-										<SelectItem key={option.value} value={option.value}>
-											{option.label}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
+							<Popover>
+								<PopoverTrigger asChild>
+									<Button variant="outline" className="w-full justify-between">
+									{editedData[column.key]?.toString() || 'Seleccionar'}
+									</Button>
+								</PopoverTrigger>
+								<PopoverContent className="w-full p-2">
+									<Command>
+										<CommandInput
+											placeholder="Buscar..."
+											onChange={(e) => handleInputChange(column.key, e.target.value)}
+										/>
+										<CommandList>
+											{column.options.map((option) => (
+											<CommandItem
+												key={option.value}
+												onSelect={() => handleInputChange(column.key, option.value)}
+											>
+												{option.label}
+											</CommandItem>
+											))}
+										</CommandList>
+									</Command>
+								</PopoverContent>
+							</Popover>
+
 						) : column.type === 'autocomplete-select' ? (
 							<AutocompleteSelect
 								options={allData}
