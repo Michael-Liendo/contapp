@@ -77,7 +77,7 @@ export default function CreatePage() {
 				key: 'id',
 				label: 'Cuenta',
 				editable: true,
-				type: 'select',
+				type: 'autocomplete-select',
 				options: [] as { value: string; label: string }[],
 			},
 			{

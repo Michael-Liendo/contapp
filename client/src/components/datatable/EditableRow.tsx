@@ -11,6 +11,13 @@ import { useEffect, useState } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { AutocompleteSelect } from './AutoCompleteSelect';
 import type { ColumnConfig, RowData } from './types/datatable';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '../ui/select';
 
 /**
  * Propiedades que acepta el componente EditableRow.
@@ -55,6 +62,22 @@ export function EditableRow({
 				<td key={column.key} className='p-2'>
 					{column.editable ? (
 						column.type === 'select' ? (
+							<Select
+								value={editedData[column.key].toString()}
+								onValueChange={(value) => handleInputChange(column.key, value)}
+							>
+								<SelectTrigger>
+									<SelectValue placeholder='Seleccionar...' />
+								</SelectTrigger>
+								<SelectContent>
+									{column.options?.map((option) => (
+										<SelectItem key={option.value} value={option.value}>
+											{option.label}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						) : column.type === 'autocomplete-select' ? (
 							<Popover>
 								<PopoverTrigger asChild>
 									<Button variant='outline' className='w-full justify-between'>
@@ -84,15 +107,6 @@ export function EditableRow({
 									</Command>
 								</PopoverContent>
 							</Popover>
-						) : column.type === 'autocomplete-select' ? (
-							<AutocompleteSelect
-								options={allData}
-								onSelect={(selected) =>
-									handleInputChange(column.key, selected[column.key])
-								}
-								placeholder='Seleccionar...'
-								value={editedData[column.key].toString()}
-							/>
 						) : (
 							<Input
 								type={column.type}
