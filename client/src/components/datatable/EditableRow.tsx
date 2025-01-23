@@ -105,7 +105,7 @@ export function EditableRow<T>({
 						) : (
 							<Input
 								type={column.type}
-								value={(editedData[column.key] as string).toString()}
+								value={column.type === 'number' ? 0 : (editedData[column.key] as string).toString()}
 								onChange={(e) =>
 									handleInputChange(
 										column.key,
