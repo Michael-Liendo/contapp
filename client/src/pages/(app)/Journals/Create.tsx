@@ -6,6 +6,11 @@ import type { TableConfig } from '@/components/datatable/types/datatable';
 import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
+import type {
+	IAccountPlan,
+	IJournalEntryForCreate,
+	IJournalForCreate,
+} from '@contapp/shared';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -36,11 +41,10 @@ export interface AccountingItem {
  */
 export default function CreatePage() {
 	// Estados
-	const [editingEntry, setEditingEntry] = useState<AccountingEntry | null>(
+	const [editingEntry, setEditingEntry] = useState<IJournalForCreate | null>(
 		null,
 	); // Seguimiento del asiento que se está editando
 	const { activeCompany } = useCompanyContext(); // Contexto para los datos de la empresa activa
-	const [entries, setEntries] = useState<AccountingItem[]>([]); // Lista de ítems contables
 
 	// Datos del formulario para crear o editar un asiento
 	const [formData, setFormData] = useState<AccountingEntry>({
@@ -83,32 +87,6 @@ export default function CreatePage() {
 	};
 
 	/**
-	 * Maneja el envío de un nuevo asiento contable.
-	 */
-	const handleChange = (data: any) => {
-		setEntries((prev) => {
-			const updatedEntries = [...prev, data];
-			return updatedEntries;
-		});
-		resetForm();
-	};
-
-	/**
-	 * Envio de datos.
-	 */
-	const handleSubmit = () => {
-		const newData = {
-			...formData,
-			entries: data.map((entry: any) => {
-				const { id, ...rest } = entry;
-				return { ...rest, account_id: id };
-			}),
-		};
-		// Logica de API.
-		console.log(newData);
-	};
-
-	/**
 	 * Restaura el formulario a su estado inicial.
 	 */
 	const resetForm = () => {
@@ -123,6 +101,22 @@ export default function CreatePage() {
 		});
 	};
 
+	/**
+	 * Envio de datos.
+	 */
+	const handleSubmit = () => {
+		const newData = {
+			...formData,
+			entries: data.map((entry: IJournalEntryForCreate & { id: string }) => {
+				const { id, ...rest } = entry;
+				return { ...rest, account_id: id };
+			}),
+		};
+		// Logica de API.
+		console.log(newData);
+		resetForm();
+	};
+
 	// Obtiene los datos de las cuentas para la empresa activa
 	const { data: servicesData } = useQuery(
 		['accounts-plan', activeCompany],
@@ -135,14 +129,15 @@ export default function CreatePage() {
 		},
 	);
 
-	// Actualiza la configuración de la tabla cuando se obtienen los datos de las cuentas
 	useEffect(() => {
 		if (servicesData) {
 			const updatedConfig = { ...tableConfig };
-			updatedConfig.columns[0].options = servicesData.map((account: any) => ({
-				value: account.id,
-				label: `${account.nomenclature} - ${account.name}`,
-			}));
+			updatedConfig.columns[0].options = servicesData.map(
+				(account: IAccountPlan) => ({
+					value: account.id,
+					label: `${account.nomenclature} - ${account.name}`,
+				}),
+			);
 			setTableConfig(updatedConfig);
 		}
 	}, [servicesData]);
@@ -223,7 +218,6 @@ export default function CreatePage() {
 			<DynamicDataTable
 				config={tableConfig}
 				initialData={data}
-				onChange={handleChange}
 				editingRow={editingRow}
 				handleEdit={handleEdit}
 				handleSave={handleSave}

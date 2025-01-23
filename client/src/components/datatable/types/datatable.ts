@@ -1,9 +1,9 @@
-export interface ColumnConfig {
+export interface ColumnConfig<SelectOptions = unknown> {
 	key: string;
 	label: string;
 	editable: boolean;
 	type: 'text' | 'number' | 'email' | 'select' | 'autocomplete-select';
-	options?: any[]; // Para los tipos 'select' y 'autocomplete-select'
+	options?: SelectOptions[]; // Para los tipos 'select' y 'autocomplete-select'
 }
 
 export interface TableConfig {
@@ -11,6 +11,6 @@ export interface TableConfig {
 	primaryField: string;
 }
 
-export interface RowData {
-	[key: string]: any | any;
+export interface RowData<T> {
+	[key: string]: T | unknown;
 }

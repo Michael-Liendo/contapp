@@ -17,19 +17,18 @@ import type { RowData, TableConfig } from './types/datatable';
 /**
  * Propiedades que acepta el componente DynamicDataTable.
  */
-interface DynamicDataTableProps {
+interface DynamicDataTableProps<T> {
 	/** Datos iniciales que se mostrarán en la tabla. */
-	initialData: RowData[];
+	initialData: RowData<T>[];
 	/** Configuración de la tabla (columnas, tipos, etc.). */
 	config: TableConfig | undefined;
 	/** Función que se ejecuta al enviar nuevos datos. */
-	onChange: (newData: RowData) => void;
 	/** Índice de la fila que se está editando. */
 	editingRow: number | null;
 	/** Función para editar una fila específica. */
 	handleEdit: (index: number | null) => void;
 	/** Función para guardar los cambios de una fila. */
-	handleSave: (index: number, newData: RowData) => void;
+	handleSave: (index: number, newData: RowData<T>) => void;
 	/** Función para eliminar una fila específica. */
 	handleDelete: (index: number) => void;
 }
@@ -37,15 +36,14 @@ interface DynamicDataTableProps {
 /**
  * Componente de tabla dinámica que permite editar, eliminar y crear nuevas filas.
  */
-export function DynamicDataTable({
+export function DynamicDataTable<T>({
 	initialData,
 	config,
-	onChange,
 	editingRow,
 	handleEdit,
 	handleSave,
 	handleDelete,
-}: DynamicDataTableProps) {
+}: DynamicDataTableProps<T>) {
 	const [isCreatingNewRow, setIsCreatingNewRow] = useState(false); // Estado para manejar la creación de nuevas filas
 
 	/** Maneja la creación de una nueva fila. */
@@ -55,10 +53,9 @@ export function DynamicDataTable({
 	};
 
 	/** Guarda los datos de una nueva fila. */
-	const handleSaveNewRow = (newData: RowData) => {
+	const handleSaveNewRow = (newData: RowData<T>) => {
 		handleSave(initialData.length, newData);
 		setIsCreatingNewRow(false);
-		onChange(newData);
 	};
 
 	/** Cancela la creación de una nueva fila. */
@@ -74,7 +71,7 @@ export function DynamicDataTable({
 	}
 
 	// Crea una fila vacía basada en la configuración de columnas
-	const emptyRow: RowData = Object.fromEntries(
+	const emptyRow: RowData<T> = Object.fromEntries(
 		config.columns.map((col) => [col.key, '']),
 	);
 
@@ -97,7 +94,7 @@ export function DynamicDataTable({
 					{initialData.map((row, index) =>
 						editingRow === index ? (
 							<EditableRow
-								key={row.id}
+								key={row.id as string}
 								rowData={row}
 								columns={config.columns}
 								allData={initialData}
@@ -105,9 +102,11 @@ export function DynamicDataTable({
 								onCancel={() => handleEdit(null)}
 							/>
 						) : (
-							<TableRow key={row.id}>
+							<TableRow key={row.id as string}>
 								{visibleColumns.map((column) => (
-									<TableCell key={column.key}>{row[column.key]}</TableCell>
+									<TableCell key={column.key}>
+										{String(row[column.key])}
+									</TableCell>
 								))}
 								<TableCell>
 									<Button
