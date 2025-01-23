@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { useQuery } from 'react-query';
 import { DataTable } from '@/components/table/data-table';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
 
-import type { IPaginationResponse } from '@contapp/shared';
 import { JournalsEntriesDatagrid } from '@/components/journals/entries-datagrid';
+import type { IPaginationResponse } from '@contapp/shared';
 
 export default function JournalsHistory() {
 	const { activeCompany } = useCompanyContext();
@@ -36,7 +36,7 @@ export default function JournalsHistory() {
 		<div>
 			<div className='flex justify-between items-center mb-5'>
 				<h1 className='text-xl'>Entries Datas Journals</h1>
-		</div>
+			</div>
 
 			<DataTable
 				pagination={pagination}
@@ -52,6 +52,6 @@ export default function JournalsHistory() {
 					});
 				}}
 			/>
-	</div>
+		</div>
 	);
 }

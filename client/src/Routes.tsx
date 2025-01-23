@@ -80,8 +80,8 @@ const PrivateRoutes: JSX.Element[] = [
 		Component={JournalsHistory}
 	/>,
 	<Route
-    key={PrivateRoutesEnum.JournalsView}
-    path={PrivateRoutesEnum.JournalsView}
+		key={PrivateRoutesEnum.JournalsView}
+		path={PrivateRoutesEnum.JournalsView}
 		Component={JournalsView}
 	/>,
 	<Route
