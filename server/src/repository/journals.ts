@@ -1,9 +1,9 @@
 import {
-	JournalSchema,
 	type IFindAllDatabase,
 	type IJournal,
 	type IJournalForCreate,
 	type IPaginationRequest,
+	JournalSchema,
 } from '@contapp/shared';
 import { InternalServerError } from '../utils/errorHandler';
 import database from './database';

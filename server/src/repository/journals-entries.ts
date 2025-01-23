@@ -1,7 +1,7 @@
 import {
-	JournalEntrySchema,
 	type IJournalEntry,
 	type IJournalEntryForCreate,
+	JournalEntrySchema,
 } from '@contapp/shared';
 import database from './database';
 
