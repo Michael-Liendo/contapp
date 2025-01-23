@@ -16,6 +16,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '../ui/select';
+import { TableRow } from '../ui/table';
 import type { ColumnConfig, RowData } from './types/datatable';
 
 /**
@@ -55,7 +56,7 @@ export function EditableRow<T>({
 	};
 
 	return (
-		<tr>
+		<TableRow>
 			{columns.map((column) => (
 				<td key={column.key} className='p-2'>
 					{column.editable ? (
@@ -138,6 +139,6 @@ export function EditableRow<T>({
 					<X />
 				</Button>
 			</td>
-		</tr>
+		</TableRow>
 	);
 }
