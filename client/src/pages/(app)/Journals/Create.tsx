@@ -1,6 +1,7 @@
 'use client';
 
 import { DynamicDataTable } from '@/components/datatable/DynamicDatatable';
+import { useDataTable } from '@/components/datatable/hooks/useDatatable';
 import type { TableConfig } from '@/components/datatable/types/datatable';
 import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
@@ -65,6 +66,15 @@ export default function CreatePage() {
     primaryField: 'id',
   });
 
+  // Hook personalizado para manejar los datos de la tabla
+  const {
+	data,
+	editingRow,
+	handleEdit,
+	handleSave,
+	handleDelete,
+  } = useDataTable([], tableConfig);
+
   /**
    * Actualiza el estado de los datos del formulario cuando cambian las entradas.
    */
@@ -90,9 +100,13 @@ export default function CreatePage() {
    * Envio de datos.
    */
   const handleSubmit = () => {
+
 	const newData = {
 		...formData,
-		entries: entries,
+		entries: data.map((entry: any) => {
+			const { id, ...rest } = entry;
+			return { ...rest, account_id: id };
+		}),
 	}
 	// Logica de API.
 	console.log(newData);
@@ -114,7 +128,7 @@ export default function CreatePage() {
   };
 
   // Obtiene los datos de las cuentas para la empresa activa
-  const { data } = useQuery(
+  const { data: servicesData } = useQuery(
     ['accounts-plan', activeCompany],
     async () => {
       const data = await Services.accountsPlan.findAll(activeCompany?.id ?? '');
@@ -127,14 +141,18 @@ export default function CreatePage() {
 
   // Actualiza la configuración de la tabla cuando se obtienen los datos de las cuentas
   useEffect(() => {
-    if (data) {
+    if (servicesData) {
       const updatedConfig = { ...tableConfig };
-      updatedConfig.columns[0].options = data.map((account: any) => ({
+      updatedConfig.columns[0].options = servicesData.map((account: any) => ({
         value: account.id,
         label: `${account.nomenclature} - ${account.name}`,
       }));
       setTableConfig(updatedConfig);
     }
+  }, [servicesData]);
+
+  useEffect(() => {
+	console.log("Se actualizo data", data);
   }, [data]);
 
   // Renderizado
@@ -183,8 +201,8 @@ export default function CreatePage() {
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="Debe">Debe</option>
-                <option value="Haber">Haber</option>
+                <option value="DEBIT">Debe</option>
+                <option value="CREDIT">Haber</option>
               </select>
             </div>
             <div className="space-y-2">
@@ -206,8 +224,12 @@ export default function CreatePage() {
       {/* Sección de la tabla de datos */}
       <DynamicDataTable
         config={tableConfig}
-        initialData={entries}
+        initialData={data}
         onChange={handleChange}
+		editingRow={editingRow}
+		handleEdit={handleEdit}
+		handleSave={handleSave}
+		handleDelete={handleDelete}
       />
     </div>
   );

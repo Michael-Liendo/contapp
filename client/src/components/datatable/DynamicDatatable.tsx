@@ -12,7 +12,6 @@ import {
 import { Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { EditableRow } from './EditableRow';
-import { useDataTable } from './hooks/useDatatable';
 import type { RowData, TableConfig } from './types/datatable';
 
 /**
@@ -25,6 +24,14 @@ interface DynamicDataTableProps {
 	config: TableConfig | undefined;
 	/** Función que se ejecuta al enviar nuevos datos. */
 	onChange: (newData: RowData) => void;
+	/** Índice de la fila que se está editando. */
+	editingRow: number | null;
+	/** Función para editar una fila específica. */
+	handleEdit: (index: number | null) => void;
+	/** Función para guardar los cambios de una fila. */
+	handleSave: (index: number, newData: RowData) => void;
+	/** Función para eliminar una fila específica. */
+	handleDelete: (index: number) => void;
 }
 
 /**
@@ -34,25 +41,22 @@ export function DynamicDataTable({
 	initialData,
 	config,
 	onChange,
+	editingRow,
+	handleEdit,
+	handleSave,
+	handleDelete,
 }: DynamicDataTableProps) {
-	const {
-		data,
-		editingRow,
-		handleEdit,
-		handleSave,
-		handleDelete,
-	} = useDataTable(initialData, config);
 	const [isCreatingNewRow, setIsCreatingNewRow] = useState(false); // Estado para manejar la creación de nuevas filas
 
 	/** Maneja la creación de una nueva fila. */
 	const handleCreateNewRow = () => {
 		setIsCreatingNewRow(true);
-		handleEdit(data.length);
+		handleEdit(initialData.length);
 	};
 
 	/** Guarda los datos de una nueva fila. */
 	const handleSaveNewRow = (newData: RowData) => {
-		handleSave(data.length, newData);
+		handleSave(initialData.length, newData);
 		setIsCreatingNewRow(false);
 		onChange(newData);
 	};
@@ -90,13 +94,13 @@ export function DynamicDataTable({
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{data.map((row, index) =>
+					{initialData.map((row, index) =>
 						editingRow === index ? (
 							<EditableRow
 								key={index}
 								rowData={row}
 								columns={config.columns}
-								allData={data}
+								allData={initialData}
 								onSave={(newData) => handleSave(index, newData)}
 								onCancel={() => handleEdit(null)}
 							/>
@@ -128,7 +132,7 @@ export function DynamicDataTable({
 						<EditableRow
 							rowData={emptyRow}
 							columns={config.columns}
-							allData={data}
+							allData={initialData}
 							onSave={handleSaveNewRow}
 							onCancel={handleCancelNewRow}
 						/>
