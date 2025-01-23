@@ -12,5 +12,6 @@ export enum PrivateRoutesEnum {
 	ManageCompanies = '/manage-companies',
 	JournalsCreate = '/journals/create',
 	JournalsHistory = '/journals/history',
+	JournalsView = '/journals/resume',
 	Profile = '/profile',
 }
