@@ -19,7 +19,11 @@ export async function listByCompany(
 	request: Request,
 	reply: Reply,
 ): Promise<void> {
-	const { page = 0, limit = 10 } = request.query as IPaginationRequest;
+	const {
+		page = 0,
+		limit = 10,
+		include_entries,
+	} = request.query as IPaginationRequest & { include_entries?: boolean };
 	const { company_id } = request.params as { company_id: string };
 
 	if (!isValidUUID(company_id)) {
@@ -29,6 +33,7 @@ export async function listByCompany(
 	const { data, pagination } = await Services.journals.listByCompany(
 		company_id,
 		{ page, limit },
+		include_entries,
 	);
 
 	return reply.code(200).send({

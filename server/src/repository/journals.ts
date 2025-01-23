@@ -1,8 +1,9 @@
-import type {
-	IFindAllDatabase,
-	IJournal,
-	IJournalForCreate,
-	IPaginationRequest,
+import {
+	JournalSchema,
+	type IFindAllDatabase,
+	type IJournal,
+	type IJournalForCreate,
+	type IPaginationRequest,
 } from '@contapp/shared';
 import { InternalServerError } from '../utils/errorHandler';
 import database from './database';
@@ -25,7 +26,7 @@ export class Journals {
 
 		if (!journal) throw new InternalServerError('Error creating journal');
 
-		return journal;
+		return JournalSchema.parse(journal);
 	}
 
 	/**
