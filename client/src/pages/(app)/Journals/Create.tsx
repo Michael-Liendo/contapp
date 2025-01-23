@@ -9,11 +9,7 @@ import type {
 import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
-import type {
-	IAccountPlan,
-	IJournalEntryForCreate,
-	IJournalForCreate,
-} from '@contapp/shared';
+import type { IAccountPlan, IJournalForCreate } from '@contapp/shared';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -68,6 +64,12 @@ export default function CreatePage() {
 				editable: true,
 				type: 'select',
 				options: [] as { value: string; label: string }[],
+			},
+			{
+				key: 'description',
+				label: 'Descripción',
+				editable: true,
+				type: 'text',
 			},
 			{ key: 'debit', label: 'Debe Total', editable: true, type: 'number' },
 			{ key: 'credit', label: 'Haber Total', editable: true, type: 'number' },
