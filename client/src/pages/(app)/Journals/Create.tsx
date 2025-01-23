@@ -1,9 +1,11 @@
-import { useFormik } from 'formik';
+'use client';
 
-import { useCompanyContext } from '@/context/CompanyContext';
-import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
-
-import { JournalsEntriesDatagrid } from '@/components/journals/entries-datagrid';
+import { DynamicDataTable } from '@/components/datatable/DynamicDatatable';
+import { useDataTable } from '@/components/datatable/hooks/useDatatable';
+import type {
+	IOption,
+	TableConfig,
+} from '@/components/datatable/types/datatable';
 import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -14,20 +16,25 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import { useEffect, useState } from 'react';
-
-import { DataTable } from '@/components/table/data-table';
-import { CommandShortcut } from '@/components/ui/command';
-import { useKeyboard } from '@/hooks/use-keyboard';
+import { useCompanyContext } from '@/context/CompanyContext';
+import Services from '@/services';
+import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import {
+	type IAccountPlan,
 	type IJournalEntryForCreate,
 	JournalDestinationEnum,
 	JournalForCreateSchema,
 } from '@contapp/shared';
+import { useFormik } from 'formik';
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 
-export default function JournalsCreate() {
-	const { activeCompany } = useCompanyContext();
-	const [entries, setEntries] = useState<IJournalEntryForCreate[]>([]);
+/**
+ * Componente para crear o editar un asiento contable.
+ */
+export default function CreatePage() {
+	// Estados
+	const { activeCompany } = useCompanyContext(); // Contexto para los datos de la empresa activa
 
 	const { values, errors, handleChange, handleSubmit, setFieldValue } =
 		useFormik({
@@ -35,7 +42,7 @@ export default function JournalsCreate() {
 				description: '',
 				destination: JournalDestinationEnum.Values.DEBIT,
 				company_id: activeCompany?.id ?? '',
-				entries: entries,
+				entries: [],
 				entry_date: new Date(),
 			},
 			validationSchema: toFormikValidationSchema(JournalForCreateSchema),
@@ -47,123 +54,180 @@ export default function JournalsCreate() {
 			},
 		});
 
-	useEffect(() => {
-		setFieldValue('company_id', activeCompany?.id ?? '');
-	}, [activeCompany?.id]);
-
-	useEffect(() => {
-		setFieldValue('entries', entries);
-	}, [entries]);
-
-	useKeyboard('F2', () => {
-		setEntries((old) => [
-			...old,
-			// todo: improve this from '' to undefined
-			{ account_id: '', description: '', debit: 0, credit: 0 },
-		]);
+	// Configuración para la tabla de datos
+	const [tableConfig, setTableConfig] = useState<TableConfig>({
+		columns: [
+			{
+				key: 'account_id',
+				label: 'Cuenta',
+				editable: true,
+				type: 'autocomplete-select',
+				options: [] as IOption[],
+			},
+			{
+				key: 'description',
+				label: 'Descripción',
+				editable: true,
+				type: 'text',
+			},
+			{
+				key: 'debit',
+				label: 'Debe Total',
+				editable: true,
+				type: 'number',
+				defaultValue: 0,
+			},
+			{
+				key: 'credit',
+				label: 'Haber Total',
+				editable: true,
+				type: 'number',
+				defaultValue: 0,
+			},
+		],
+		primaryField: 'id',
 	});
+
+	// Hook personalizado para manejar los datos de la tabla
+	const { data, editingRow, handleEdit, handleSave, handleDelete } =
+		useDataTable<IJournalEntryForCreate>([], tableConfig);
+
+	// Obtiene los datos de las cuentas para la empresa activa
+	const { data: servicesData } = useQuery(
+		['accounts-plan', activeCompany],
+		async () => {
+			const data = await Services.accountsPlan.findAll(activeCompany?.id ?? '');
+			return data.data;
+		},
+		{
+			enabled: !!activeCompany?.id,
+		},
+	);
+
+	useEffect(() => {
+		if (servicesData) {
+			const updatedConfig = { ...tableConfig };
+			updatedConfig.columns[0].options = servicesData.map(
+				(account: IAccountPlan) => ({
+					id: account.id,
+					value: `${account.nomenclature} - ${account.name}`,
+				}),
+			);
+			setTableConfig(updatedConfig);
+		}
+	}, [servicesData]);
+
+	useEffect(() => {
+		const dataWithDefaults = data.map((entry) => {
+			if (!entry.debit) entry.debit = 0;
+			if (!entry.credit) entry.credit = 0;
+			return entry;
+		}); // Completar con valores por defecto
+		setFieldValue('entries', dataWithDefaults);
+	}, [data]);
 
 	return (
 		<div>
-			<form
-				id='create-journal'
-				className='space-y-4'
-				onSubmit={handleSubmit}
-				noValidate
-			>
-				<div className='flex justify-between space-x-4'>
-					<TextField
-						type='text'
-						label='Descripción'
-						id='description'
-						name='description'
-						placeholder='Descripción del asiento contable'
-						autoComplete='off'
-						value={values.description}
-						error={errors.description}
-						onChange={handleChange}
-					/>
-
-					<div className='w-full'>
-						<Label htmlFor=''>
-							Destino <span className='text-red-600'>*</span>
-						</Label>
-						<Select
-							defaultValue={values.destination}
-							onValueChange={handleChange}
+			{/* Sección de encabezado */}
+			<form onSubmit={handleSubmit} className='mb-4'>
+				<div className='flex flex-row justify-between'>
+					<h4 className='text-xl mb-6'>Nuevo Asiento Contable</h4>
+					<div>
+						<Button
+							type='submit'
+							className='w-full'
+							variant='default'
+							color='#000'
 						>
-							<SelectTrigger>
-								<SelectValue placeholder='Destino' />
-							</SelectTrigger>
-							<SelectContent id='destination'>
-								<SelectItem value={JournalDestinationEnum.Values.DEBIT}>
-									Debe
-								</SelectItem>
-								<SelectItem value={JournalDestinationEnum.Values.CREDIT}>
-									Crédito
-								</SelectItem>
-							</SelectContent>
-						</Select>
+							Crear
+						</Button>
 					</div>
-
-					<TextField
-						label='Fecha del asiento'
-						type='date'
-						id='entry_date'
-						name='entry_date'
-						placeholder='Fecha de creación'
-						autoComplete='off'
-						value={values.entry_date?.toISOString().split('T')[0]}
-						error={errors.entry_date as string}
-						onChange={({ target: { value } }) => {
-							const date = new Date(value);
-							setFieldValue('entry_date', date);
-						}}
-						required
-					/>
 				</div>
 
-				<div className='flex justify-end space-x-4'>
-					<Button
-						size={'sm'}
-						variant='secondary'
-						onClick={() =>
-							setEntries((old) => [
-								...old,
-								// todo: improve this from '' to undefined
-								{ account_id: '', description: '', debit: 0, credit: 0 },
-							])
-						}
-					>
-						<CommandShortcut>F2</CommandShortcut>
-						Agregar asiento
-					</Button>
-				</div>
+				{/* Sección del formulario */}
+				<form className='space-y-6'>
+					<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+						<TextField
+							type='text'
+							label='Descripción'
+							id='description'
+							name='description'
+							placeholder='Descripción del asiento contable'
+							autoComplete='off'
+							value={values.description}
+							error={errors.description}
+							onChange={handleChange}
+						/>
 
-				<DataTable
-					columns={JournalsEntriesDatagrid}
-					data={entries}
-					loading={false}
-				/>
-				{errors.entries && (
-					<div className='text-red-600 text-sm'>
-						{Array.isArray(errors.entries)
-							? errors.entries.map((error, index) => {
-									const errorKey = Object.keys(error)[0] as keyof typeof error;
-									return (
-										<div key={errorKey}>
-											{index + 1} {errorKey}: {error[errorKey]}
-										</div>
-									);
-								})
-							: errors.entries}
+						<div className='w-full'>
+							<Label htmlFor=''>
+								Destino <span className='text-red-600'>*</span>
+							</Label>
+							<Select
+								defaultValue={values.destination}
+								onValueChange={handleChange}
+							>
+								<SelectTrigger>
+									<SelectValue placeholder='Destino' />
+								</SelectTrigger>
+								<SelectContent id='destination'>
+									<SelectItem value={JournalDestinationEnum.Values.DEBIT}>
+										Debe
+									</SelectItem>
+									<SelectItem value={JournalDestinationEnum.Values.CREDIT}>
+										Crédito
+									</SelectItem>
+								</SelectContent>
+							</Select>
+						</div>
+
+						<TextField
+							label='Fecha del asiento'
+							type='date'
+							id='entry_date'
+							name='entry_date'
+							placeholder='Fecha de creación'
+							autoComplete='off'
+							value={values.entry_date?.toISOString().split('T')[0]}
+							error={errors.entry_date as string}
+							onChange={({ target: { value } }) => {
+								const date = new Date(value);
+								setFieldValue('entry_date', date);
+							}}
+							required
+						/>
 					</div>
-				)}
-
-				<Button form='create-journal' type='submit'>
-					Crear asiento contable
-				</Button>
+				</form>
 			</form>
+
+			{/* Sección de la tabla de datos */}
+			<DynamicDataTable
+				config={tableConfig}
+				initialData={data}
+				editingRow={editingRow}
+				handleEdit={handleEdit}
+				handleSave={handleSave}
+				handleDelete={handleDelete}
+			/>
+
+			{errors.entries && (
+				<div className='text-red-600 text-sm'>
+					{Array.isArray(errors.entries)
+						? errors.entries.map((error, index) => {
+								const errorKey = Object.keys(error)[0];
+								const errorValue = error[errorKey as keyof typeof error];
+								return (
+									<div key={errorKey}>
+										{index + 1} {errorKey}:{' '}
+										{typeof errorValue === 'function'
+											? errorValue.toString()
+											: errorValue}
+									</div>
+								);
+							})
+						: errors.entries}
+				</div>
+			)}
 		</div>
 	);
 }
