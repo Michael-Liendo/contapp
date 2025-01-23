@@ -2,7 +2,10 @@
 
 import { DynamicDataTable } from '@/components/datatable/DynamicDatatable';
 import { useDataTable } from '@/components/datatable/hooks/useDatatable';
-import type { TableConfig } from '@/components/datatable/types/datatable';
+import type {
+	RowData,
+	TableConfig,
+} from '@/components/datatable/types/datatable';
 import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
@@ -107,9 +110,9 @@ export default function CreatePage() {
 	const handleSubmit = () => {
 		const newData = {
 			...formData,
-			entries: data.map((entry: IJournalEntryForCreate & { id: string }) => {
-				const { id, ...rest } = entry;
-				return { ...rest, account_id: id };
+			entries: data.map((entry: RowData<IJournalForCreate>) => {
+				const { id, debit, credit, description, journal_id } = entry;
+				return { account_id: id, debit, credit, description, journal_id };
 			}),
 		};
 		// Logica de API.

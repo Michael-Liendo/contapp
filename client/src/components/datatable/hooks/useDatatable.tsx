@@ -7,9 +7,12 @@ import type { RowData, TableConfig } from '../types/datatable';
  * @param config Configuración de la tabla, incluyendo columnas y campo primario.
  * @returns Funciones y estados para manejar ediciones, eliminaciones, y autocompletado en la tabla.
  */
-export function useDataTable(initialData: RowData[], config?: TableConfig) {
+export function useDataTable<T>(
+	initialData: RowData<T>[],
+	config?: TableConfig,
+) {
 	// Estado para los datos de la tabla
-	const [data, setData] = useState<RowData[]>(initialData);
+	const [data, setData] = useState<RowData<T>[]>(initialData);
 	// Estado para la fila que se está editando
 	const [editingRow, setEditingRow] = useState<number | null>(null);
 
@@ -26,7 +29,7 @@ export function useDataTable(initialData: RowData[], config?: TableConfig) {
 	 * @param index Índice de la fila que se está editando.
 	 * @param newData Nuevos datos para la fila.
 	 */
-	const handleSave = useCallback((index: number, newData: RowData) => {
+	const handleSave = useCallback((index: number, newData: RowData<T>) => {
 		setData((prevData) => {
 			const newDataArray = [...prevData];
 			if (index === prevData.length) {
@@ -59,10 +62,7 @@ export function useDataTable(initialData: RowData[], config?: TableConfig) {
 			if (!config || !config.primaryField) return [];
 			const primaryField = config.primaryField;
 			return data.filter((row) =>
-				row[primaryField]
-					.toString()
-					.toLowerCase()
-					.includes(value.toLowerCase()),
+				String(row[primaryField]).toLowerCase().includes(value.toLowerCase()),
 			);
 		},
 		[data, config],
