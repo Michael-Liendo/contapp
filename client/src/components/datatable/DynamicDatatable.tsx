@@ -105,7 +105,11 @@ export function DynamicDataTable<T>({
 							<TableRow key={row.id as string}>
 								{visibleColumns.map((column) => (
 									<TableCell key={column.key}>
-										{String(row[column.key])}
+										{['autocomplete-select', 'select'].includes(column.type)
+											? column.options?.find(
+													(option) => option.id === row[column.key],
+												)?.value
+											: String(row[column.key])}
 									</TableCell>
 								))}
 								<TableCell>

@@ -79,7 +79,9 @@ export function EditableRow<T>({
 							<Popover>
 								<PopoverTrigger asChild>
 									<Button variant='outline' className='w-full justify-between'>
-										{editedData[column.key]?.toString() || 'Seleccionar'}
+										{column.options?.find(
+											(option) => option.id === editedData[column.key],
+										)?.value || 'Seleccionar'}
 									</Button>
 								</PopoverTrigger>
 								<PopoverContent className='w-full p-2'>
