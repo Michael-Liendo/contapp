@@ -43,7 +43,6 @@ export function EditableRow<T>({
 	onSave,
 	onCancel,
 }: EditableRowProps<T>) {
-	console.log(rowData);
 	const [editedData, setEditedData] = useState<RowData<T>>(rowData); // Estado para los datos editados de la fila
 
 	useEffect(() => {
