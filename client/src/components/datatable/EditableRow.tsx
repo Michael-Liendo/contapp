@@ -82,7 +82,9 @@ export function EditableRow<T>({
 									<Button variant='outline' className='w-full justify-between'>
 										{column.options?.find(
 											(option) => option.id === editedData[column.key],
-										)?.value || column.defaultValue || 'Seleccionar cuenta'}
+										)?.value ||
+											column.defaultValue ||
+											'Seleccionar cuenta'}
 									</Button>
 								</PopoverTrigger>
 								<PopoverContent className='w-full p-2'>
@@ -108,8 +110,10 @@ export function EditableRow<T>({
 								type={column.type}
 								value={
 									column.type === 'number'
-										? Number(editedData[column.key] as string | number) || column.defaultValue
-										: (editedData[column.key] as string | number) || column.defaultValue
+										? Number(editedData[column.key] as string | number) ||
+											column.defaultValue
+										: (editedData[column.key] as string | number) ||
+											column.defaultValue
 								}
 								onChange={(e) =>
 									handleInputChange(

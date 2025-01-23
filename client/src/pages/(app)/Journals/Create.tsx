@@ -70,8 +70,20 @@ export default function CreatePage() {
 				editable: true,
 				type: 'text',
 			},
-			{ key: 'debit', label: 'Debe Total', editable: true, type: 'number', defaultValue: 0 },
-			{ key: 'credit', label: 'Haber Total', editable: true, type: 'number', defaultValue: 0 },
+			{
+				key: 'debit',
+				label: 'Debe Total',
+				editable: true,
+				type: 'number',
+				defaultValue: 0,
+			},
+			{
+				key: 'credit',
+				label: 'Haber Total',
+				editable: true,
+				type: 'number',
+				defaultValue: 0,
+			},
 		],
 		primaryField: 'id',
 	});
