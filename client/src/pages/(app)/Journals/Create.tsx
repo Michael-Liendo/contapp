@@ -110,9 +110,9 @@ export default function CreatePage() {
 	}, [data]);
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<div>
 			{/* Sección de encabezado */}
-			<div className='mb-4'>
+			<form onSubmit={handleSubmit} className='mb-4'>
 				<div className='flex flex-row justify-between'>
 					<h4 className='text-xl mb-6'>Nuevo Asiento Contable</h4>
 					<div>
@@ -181,7 +181,7 @@ export default function CreatePage() {
 						/>
 					</div>
 				</form>
-			</div>
+			</form>
 
 			{/* Sección de la tabla de datos */}
 			<DynamicDataTable
@@ -211,6 +211,6 @@ export default function CreatePage() {
 						: errors.entries}
 				</div>
 			)}
-		</form>
+		</div>
 	);
 }
