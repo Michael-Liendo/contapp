@@ -9,8 +9,6 @@ import { Input } from '@/components/ui/input';
 import { Check, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { AutocompleteSelect } from './AutoCompleteSelect';
-import type { ColumnConfig, RowData } from './types/datatable';
 import {
 	Select,
 	SelectContent,
@@ -18,19 +16,20 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '../ui/select';
+import type { ColumnConfig, RowData } from './types/datatable';
 
 /**
  * Propiedades que acepta el componente EditableRow.
  */
-interface EditableRowProps {
+interface EditableRowProps<T> {
 	/** Datos de la fila que se está editando. */
-	rowData: RowData;
+	rowData: RowData<T>;
 	/** Configuración de las columnas de la tabla. */
 	columns: ColumnConfig[];
 	/** Todos los datos de la tabla. */
-	allData: RowData[];
+	allData: RowData<T>[];
 	/** Función que se ejecuta al guardar la fila editada. */
-	onSave: (newData: RowData) => void;
+	onSave: (newData: RowData<T>) => void;
 	/** Función que se ejecuta al cancelar la edición de la fila. */
 	onCancel: () => void;
 }
@@ -38,21 +37,20 @@ interface EditableRowProps {
 /**
  * Componente que permite editar una fila en la tabla de manera dinámica.
  */
-export function EditableRow({
+export function EditableRow<T>({
 	rowData,
 	columns,
-	allData,
 	onSave,
 	onCancel,
-}: EditableRowProps) {
-	const [editedData, setEditedData] = useState<RowData>(rowData); // Estado para los datos editados de la fila
+}: EditableRowProps<T>) {
+	const [editedData, setEditedData] = useState<RowData<T>>(rowData); // Estado para los datos editados de la fila
 
 	useEffect(() => {
 		setEditedData(rowData); // Actualiza los datos editados cuando cambian los datos originales
 	}, [rowData]);
 
 	/** Maneja los cambios en los campos de entrada de la fila editable. */
-	const handleInputChange = (key: string, value: string | number) => {
+	const handleInputChange = (key: string, value: string) => {
 		setEditedData((prev) => ({ ...prev, [key]: value }));
 	};
 
@@ -63,7 +61,7 @@ export function EditableRow({
 					{column.editable ? (
 						column.type === 'select' ? (
 							<Select
-								value={editedData[column.key].toString()}
+								value={(editedData[column.key] as string).toString()}
 								onValueChange={(value) => handleInputChange(column.key, value)}
 							>
 								<SelectTrigger>
@@ -71,8 +69,8 @@ export function EditableRow({
 								</SelectTrigger>
 								<SelectContent>
 									{column.options?.map((option) => (
-										<SelectItem key={option.value} value={option.value}>
-											{option.label}
+										<SelectItem key={option.id} value={option.id}>
+											{option.value}
 										</SelectItem>
 									))}
 								</SelectContent>
@@ -86,21 +84,16 @@ export function EditableRow({
 								</PopoverTrigger>
 								<PopoverContent className='w-full p-2'>
 									<Command>
-										<CommandInput
-											placeholder='Buscar...'
-											onChange={(e) =>
-												handleInputChange(column.key, e.target.value)
-											}
-										/>
+										<CommandInput placeholder='Buscar...' />
 										<CommandList>
-											{column.options.map((option) => (
+											{column.options?.map((option) => (
 												<CommandItem
-													key={option.value}
+													key={option.id}
 													onSelect={() =>
 														handleInputChange(column.key, option.value)
 													}
 												>
-													{option.label}
+													{option.value}
 												</CommandItem>
 											))}
 										</CommandList>
@@ -110,13 +103,13 @@ export function EditableRow({
 						) : (
 							<Input
 								type={column.type}
-								value={editedData[column.key].toString()}
+								value={(editedData[column.key] as string).toString()}
 								onChange={(e) => handleInputChange(column.key, e.target.value)}
 								className='w-full'
 							/>
 						)
 					) : (
-						editedData[column.key]
+						(editedData[column.key] as string)
 					)}
 				</td>
 			))}

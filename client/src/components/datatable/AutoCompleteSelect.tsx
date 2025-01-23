@@ -17,16 +17,16 @@ import {
 import { cn } from '@/lib/utils';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import * as React from 'react';
-import type { RowData } from './types/datatable';
+import type { IOption } from './types/datatable';
 
 /**
  * Propiedades que acepta el componente AutocompleteSelect.
  */
 interface AutocompleteSelectProps {
 	/** Lista de opciones para seleccionar. */
-	options: RowData[];
+	options: IOption[];
 	/** Función que se ejecuta al seleccionar un valor. */
-	onSelect: (value: RowData) => void;
+	onSelect: (value: IOption) => void;
 	/** Placeholder que se muestra cuando no hay un valor seleccionado. */
 	placeholder: string;
 	/** Valor actualmente seleccionado. */
@@ -65,7 +65,7 @@ export function AutocompleteSelect({
 						<CommandGroup>
 							{options.map((option) => (
 								<CommandItem
-									key={option[Object.keys(option)[0]]}
+									key={option.id}
 									onSelect={() => {
 										onSelect(option);
 										setOpen(false);
@@ -74,12 +74,10 @@ export function AutocompleteSelect({
 									<Check
 										className={cn(
 											'mr-2 h-4 w-4',
-											value === option[Object.keys(option)[0]]
-												? 'opacity-100'
-												: 'opacity-0',
+											value === option.value ? 'opacity-100' : 'opacity-0',
 										)}
 									/>
-									{option[Object.keys(option)[0]]}
+									{option.value}
 								</CommandItem>
 							))}
 						</CommandGroup>

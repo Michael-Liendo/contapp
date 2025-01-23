@@ -1,9 +1,14 @@
-export interface ColumnConfig<SelectOptions = unknown> {
+export interface IOption {
+	id: string;
+	value: string;
+}
+
+export interface ColumnConfig {
 	key: string;
 	label: string;
 	editable: boolean;
 	type: 'text' | 'number' | 'email' | 'select' | 'autocomplete-select';
-	options?: SelectOptions[]; // Para los tipos 'select' y 'autocomplete-select'
+	options?: IOption[]; // Para los tipos 'select' y 'autocomplete-select'
 }
 
 export interface TableConfig {

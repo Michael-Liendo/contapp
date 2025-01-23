@@ -3,6 +3,7 @@
 import { DynamicDataTable } from '@/components/datatable/DynamicDatatable';
 import { useDataTable } from '@/components/datatable/hooks/useDatatable';
 import type {
+	IOption,
 	RowData,
 	TableConfig,
 } from '@/components/datatable/types/datatable';
@@ -12,18 +13,16 @@ import { Label } from '@/components/ui/label';
 import {
 	Select,
 	SelectContent,
-	SelectGroup,
 	SelectItem,
-	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
 import {
-	JournalDestinationEnum,
 	type IAccountPlan,
 	type IJournalForCreate,
+	JournalDestinationEnum,
 } from '@contapp/shared';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
@@ -55,9 +54,6 @@ export interface AccountingItem {
  */
 export default function CreatePage() {
 	// Estados
-	const [editingEntry, setEditingEntry] = useState<IJournalForCreate | null>(
-		null,
-	); // Seguimiento del asiento que se está editando
 	const { activeCompany } = useCompanyContext(); // Contexto para los datos de la empresa activa
 
 	// Datos del formulario para crear o editar un asiento
@@ -78,7 +74,7 @@ export default function CreatePage() {
 				label: 'Cuenta',
 				editable: true,
 				type: 'autocomplete-select',
-				options: [] as { value: string; label: string }[],
+				options: [] as IOption[],
 			},
 			{
 				key: 'description',
@@ -97,20 +93,9 @@ export default function CreatePage() {
 		useDataTable([], tableConfig);
 
 	/**
-	 * Actualiza el estado de los datos del formulario cuando cambian las entradas.
-	 */
-	const handleInputChange = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-	) => {
-		const { name, value } = e.target;
-		setFormData((prev) => ({ ...prev, [name]: value }));
-	};
-
-	/**
 	 * Restaura el formulario a su estado inicial.
 	 */
 	const resetForm = () => {
-		setEditingEntry(null);
 		setFormData({
 			id: '',
 			company_id: activeCompany?.id,
@@ -154,8 +139,8 @@ export default function CreatePage() {
 			const updatedConfig = { ...tableConfig };
 			updatedConfig.columns[0].options = servicesData.map(
 				(account: IAccountPlan) => ({
-					value: account.id,
-					label: `${account.nomenclature} - ${account.name}`,
+					id: account.id,
+					value: `${account.nomenclature} - ${account.name}`,
 				}),
 			);
 			setTableConfig(updatedConfig);
@@ -166,17 +151,12 @@ export default function CreatePage() {
 		console.log('Se actualizo data', data);
 	}, [data]);
 
-	// Renderizado
 	return (
 		<div>
 			{/* Sección de encabezado */}
 			<div className='mb-4'>
 				<div className='flex flex-row justify-between'>
-					<h4 className='text-xl mb-6'>
-						{editingEntry
-							? 'Editar Asiento Contable'
-							: 'Nuevo Asiento Contable'}
-					</h4>
+					<h4 className='text-xl mb-6'>Nuevo Asiento Contable</h4>
 					<div>
 						<Button
 							onClick={handleSubmit}
