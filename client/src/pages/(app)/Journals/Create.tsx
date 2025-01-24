@@ -16,6 +16,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
+import { toast } from '@/components/ui/use-toast';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
@@ -26,6 +27,7 @@ import {
 	JournalForCreateSchema,
 } from '@contapp/shared';
 import { useFormik } from 'formik';
+import { Check } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -35,24 +37,6 @@ import { useQuery } from 'react-query';
 export default function CreatePage() {
 	// Estados
 	const { activeCompany } = useCompanyContext(); // Contexto para los datos de la empresa activa
-
-	const { values, errors, handleChange, handleSubmit, setFieldValue } =
-		useFormik({
-			initialValues: {
-				description: '',
-				destination: JournalDestinationEnum.Values.DEBIT,
-				company_id: activeCompany?.id ?? '',
-				entries: [],
-				entry_date: new Date(),
-			},
-			validationSchema: toFormikValidationSchema(JournalForCreateSchema),
-			validateOnChange: false,
-			validateOnBlur: false,
-			onSubmit: async (values, { resetForm }) => {
-				console.log(values);
-				resetForm();
-			},
-		});
 
 	// Configuración para la tabla de datos
 	const [tableConfig, setTableConfig] = useState<TableConfig>({
@@ -89,8 +73,37 @@ export default function CreatePage() {
 	});
 
 	// Hook personalizado para manejar los datos de la tabla
-	const { data, editingRow, handleEdit, handleSave, handleDelete } =
+	const { data, editingRow, handleEdit, handleSave, handleDelete, setData } =
 		useDataTable<IJournalEntryForCreate>([], tableConfig);
+
+	const { values, errors, handleChange, handleSubmit, setFieldValue } =
+		useFormik({
+			initialValues: {
+				description: '',
+				destination: JournalDestinationEnum.Values.DEBIT,
+				company_id: activeCompany?.id ?? '',
+				entries: [],
+				entry_date: new Date(),
+			},
+			validationSchema: toFormikValidationSchema(JournalForCreateSchema),
+			validateOnChange: false,
+			validateOnBlur: false,
+			onSubmit: async (values, { resetForm }) => {
+				const journal = await Services.journals.create(values);
+
+				resetForm();
+				setData([]);
+
+				toast({
+					description: (
+						<div className='flex items-center justify-between w-full space-x-4'>
+							<Check className='text-green-600 ml-auto' />
+							<span>Diario creado {journal.journal_number}</span>
+						</div>
+					),
+				});
+			},
+		});
 
 	// Obtiene los datos de las cuentas para la empresa activa
 	const { data: servicesData } = useQuery(

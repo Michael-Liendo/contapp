@@ -1,4 +1,7 @@
+import * as dotenv from 'dotenv';
 import type { Knex } from 'knex';
+
+dotenv.config();
 
 const knexConfig: { [key: string]: Knex.Config } = {
 	development: {

@@ -31,6 +31,8 @@ export default class Journals {
 				queryParams.append('limit', pagination.limit.toString());
 			}
 
+			queryParams.append('include_entries', String(true));
+
 			const request = await fetch(
 				`/journals/findAll/${companyId}?${queryParams.toString()}`,
 			);

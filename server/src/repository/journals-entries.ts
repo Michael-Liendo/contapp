@@ -1,4 +1,8 @@
-import type { IJournalEntry, IJournalEntryForCreate } from '@contapp/shared';
+import {
+	type IJournalEntry,
+	type IJournalEntryForCreate,
+	JournalEntrySchema,
+} from '@contapp/shared';
 import database from './database';
 
 export class JournalEntries {
@@ -13,7 +17,7 @@ export class JournalEntries {
 			.returning('*');
 
 		if (!entry) throw new Error('Error creating journal entry');
-		return entry;
+		return JournalEntrySchema.parse(entry);
 	}
 
 	/**
@@ -25,7 +29,8 @@ export class JournalEntries {
 		const entries = await database<IJournalEntry>('journal_entries')
 			.where({ journal_id: journalId })
 			.orderBy('created_at', 'asc');
-		return entries;
+
+		return JournalEntrySchema.array().parse(entries);
 	}
 
 	/**

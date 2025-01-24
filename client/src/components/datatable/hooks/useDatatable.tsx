@@ -71,6 +71,7 @@ export function useDataTable<T>(
 	return {
 		data,
 		editingRow,
+		setData,
 		handleEdit,
 		handleSave,
 		handleDelete,
