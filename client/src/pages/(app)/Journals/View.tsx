@@ -32,7 +32,7 @@ export default function JournalsHistory() {
 		<div>
 			<div className='flex justify-between items-center mb-5'>
 				<h1 className='text-3xl text-primary font-bold'>
-					{data?.journal_number}
+					#{data?.journal_number}
 				</h1>
 				<h1 className='text-xl font-bold'>
 					{companies.find((company) => company.id === data?.company_id)?.name}
