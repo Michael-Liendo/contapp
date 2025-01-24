@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { AccountPlanSchema } from './account_plan';
 
 export const JournalDestination = ['DEBIT', 'CREDIT'] as const;
 
@@ -65,7 +66,18 @@ export const JournalForCreateSchema = JournalSchema.omit({
 	entries: z.array(JournalEntryForCreateSchema).min(1),
 });
 
+export const JournalEntryQuerySchema = JournalEntrySchema.omit({
+	journal_id: true,
+}).extend({
+	account: AccountPlanSchema.omit({
+		id: true,
+		company_id: true,
+		created_at: true,
+		updated_at: true,
+	}),
+});
+
 export const JournalQuerySchema = JournalSchema.extend({
 	description: z.string().nullable(),
-	entries: z.array(JournalEntrySchema).optional(),
+	entries: z.array(JournalEntrySchema),
 });
