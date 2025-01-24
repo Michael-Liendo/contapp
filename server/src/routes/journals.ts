@@ -1,6 +1,6 @@
 import { JournalForCreateSchema } from '@contapp/shared';
 
-import { create, listByCompany } from '../controllers/journals';
+import { create, findOne, listByCompany } from '../controllers/journals';
 import checkJwt from '../middlewares/checkJwt';
 import requestValidation from '../utils/requestValidation';
 
@@ -19,6 +19,8 @@ export default function journals(
 		preValidation: requestValidation(JournalForCreateSchema),
 		handler: create,
 	});
+
+	fastify.route({ method: 'GET', url: '/findOne/:id', handler: findOne });
 
 	fastify.route({
 		method: 'GET',

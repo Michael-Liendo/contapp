@@ -13,6 +13,7 @@ import AccountsPlan from './pages/(app)/AccountsPlan';
 import Home from './pages/(app)/Home';
 import JournalsCreate from './pages/(app)/Journals/Create';
 import JournalsHistory from './pages/(app)/Journals/History';
+import JournalsView from './pages/(app)/Journals/View';
 import ManageCompanies from './pages/(app)/ManageCompanies';
 import Profile from './pages/(app)/Profile';
 import Login from './pages/(auth)/Login';
@@ -77,6 +78,11 @@ const PrivateRoutes: JSX.Element[] = [
 		key={PrivateRoutesEnum.JournalsHistory}
 		path={PrivateRoutesEnum.JournalsHistory}
 		Component={JournalsHistory}
+	/>,
+	<Route
+		key={PrivateRoutesEnum.JournalsView}
+		path={PrivateRoutesEnum.JournalsView}
+		Component={JournalsView}
 	/>,
 	<Route
 		key={PrivateRoutesEnum.Profile}

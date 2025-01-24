@@ -12,11 +12,6 @@ export async function up(knex: Knex): Promise<void> {
 			.notNullable()
 			.references('id')
 			.inTable('companies');
-		table
-			.uuid('parent_id')
-			.nullable()
-			.references('id')
-			.inTable('accounts_plan');
 		table.string('nomenclature').notNullable();
 		table.string('name').notNullable();
 		table.timestamps(true, true);

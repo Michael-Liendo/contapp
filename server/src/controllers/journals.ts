@@ -15,6 +15,17 @@ export async function create(request: Request, reply: Reply) {
 	});
 }
 
+export async function findOne(request: Request, reply: Reply): Promise<void> {
+	const { id } = request.params as { id: string };
+
+	const journal = await Services.journals.getByID(id);
+	return reply.code(200).send({
+		success: true,
+		message: 'Journal found',
+		data: journal,
+	});
+}
+
 export async function listByCompany(
 	request: Request,
 	reply: Reply,

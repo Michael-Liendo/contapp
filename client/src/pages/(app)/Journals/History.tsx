@@ -3,10 +3,10 @@ import { useQuery } from 'react-query';
 
 import { JournalsDatagrid } from '@/components/journals/datagrid';
 import { DataTable } from '@/components/table/data-table';
-import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
 
+import { PrivateRoutesEnum } from '@/data/routesEnums';
 import type { IPaginationResponse } from '@contapp/shared';
 
 export default function JournalsHistory() {
@@ -38,18 +38,12 @@ export default function JournalsHistory() {
 		<div>
 			<div className='flex justify-between items-center mb-5'>
 				<h1 className='text-xl'>Asientos contables</h1>
-
-				<Button
-					variant='default'
-					onClick={() => console.log('TO BE IMPLEMENTED')}
-				>
-					Crear
-				</Button>
 			</div>
 
 			<DataTable
 				pagination={pagination}
 				columns={JournalsDatagrid}
+				route={PrivateRoutesEnum.JournalsView.replace('/:journal_id', '')}
 				data={data || []}
 				loading={isLoading}
 				onPageChange={(page) => {

@@ -1,16 +1,15 @@
 import { DataTableColumnHeader } from '../table/header';
 
-import type { IJournalEntryForCreate } from '@contapp/shared';
+import type { IJournalEntryQuery } from '@contapp/shared';
 import type { ColumnDef } from '@tanstack/react-table';
 
-const masterName = 'journals';
-
-export const JournalsEntriesDatagrid: ColumnDef<IJournalEntryForCreate>[] = [
+export const JournalsEntriesDatagrid: ColumnDef<IJournalEntryQuery>[] = [
 	{
-		accessorKey: 'account_id',
+		accessorKey: 'account',
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title='Cuenta' />
 		),
+		accessorFn: (row) => `${row.account.nomenclature} - ${row.account.name}`,
 	},
 	{
 		accessorKey: 'description',

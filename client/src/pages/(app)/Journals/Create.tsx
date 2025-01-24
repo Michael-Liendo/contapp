@@ -158,59 +158,57 @@ export default function CreatePage() {
 				</div>
 
 				{/* Sección del formulario */}
-				<form className='space-y-6'>
-					<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-						<TextField
-							type='text'
-							label='Descripción'
-							id='description'
-							name='description'
-							placeholder='Descripción del asiento contable'
-							autoComplete='off'
-							value={values.description}
-							error={errors.description}
-							onChange={handleChange}
-						/>
+				<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+					<TextField
+						type='text'
+						label='Descripción'
+						id='description'
+						name='description'
+						placeholder='Descripción del asiento contable'
+						autoComplete='off'
+						value={values.description}
+						error={errors.description}
+						onChange={handleChange}
+					/>
 
-						<div className='w-full'>
-							<Label htmlFor=''>
-								Destino <span className='text-red-600'>*</span>
-							</Label>
-							<Select
-								defaultValue={values.destination}
-								onValueChange={handleChange}
-							>
-								<SelectTrigger>
-									<SelectValue placeholder='Destino' />
-								</SelectTrigger>
-								<SelectContent id='destination'>
-									<SelectItem value={JournalDestinationEnum.Values.DEBIT}>
-										Debe
-									</SelectItem>
-									<SelectItem value={JournalDestinationEnum.Values.CREDIT}>
-										Crédito
-									</SelectItem>
-								</SelectContent>
-							</Select>
-						</div>
-
-						<TextField
-							label='Fecha del asiento'
-							type='date'
-							id='entry_date'
-							name='entry_date'
-							placeholder='Fecha de creación'
-							autoComplete='off'
-							value={values.entry_date?.toISOString().split('T')[0]}
-							error={errors.entry_date as string}
-							onChange={({ target: { value } }) => {
-								const date = new Date(value);
-								setFieldValue('entry_date', date);
-							}}
-							required
-						/>
+					<div className='w-full'>
+						<Label htmlFor=''>
+							Destino <span className='text-red-600'>*</span>
+						</Label>
+						<Select
+							defaultValue={values.destination}
+							onValueChange={handleChange}
+						>
+							<SelectTrigger>
+								<SelectValue placeholder='Destino' />
+							</SelectTrigger>
+							<SelectContent id='destination'>
+								<SelectItem value={JournalDestinationEnum.Values.DEBIT}>
+									Debe
+								</SelectItem>
+								<SelectItem value={JournalDestinationEnum.Values.CREDIT}>
+									Crédito
+								</SelectItem>
+							</SelectContent>
+						</Select>
 					</div>
-				</form>
+
+					<TextField
+						label='Fecha del asiento'
+						type='date'
+						id='entry_date'
+						name='entry_date'
+						placeholder='Fecha de creación'
+						autoComplete='off'
+						value={values.entry_date?.toISOString().split('T')[0]}
+						error={errors.entry_date as string}
+						onChange={({ target: { value } }) => {
+							const date = new Date(value);
+							setFieldValue('entry_date', date);
+						}}
+						required
+					/>
+				</div>
 			</form>
 
 			{/* Sección de la tabla de datos */}
