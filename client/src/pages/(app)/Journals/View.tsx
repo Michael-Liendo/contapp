@@ -1,7 +1,6 @@
 import { DataTable } from '@/components/table/data-table';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
-import { useState } from 'react';
 import { useQuery } from 'react-query';
 
 import { JournalsEntriesDatagrid } from '@/components/journals/entries-datagrid';
@@ -13,45 +12,35 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import {
-	type IPaginationResponse,
-	JournalDestinationEnum,
-} from '@contapp/shared';
+import { JournalDestinationEnum } from '@contapp/shared';
 import { Select } from '@radix-ui/react-select';
+import { useParams } from 'react-router';
 
 export default function JournalsHistory() {
-	const { activeCompany } = useCompanyContext();
-
-	const [pagination, setPagination] = useState<IPaginationResponse>({
-		page: 0,
-		limit: 0,
-		hasNextPage: false,
-		hasPreviousPage: false,
-		total: 0,
-	});
+	const { journal_id } = useParams() as { journal_id: string };
+	const { companies } = useCompanyContext();
 
 	const { data, isLoading } = useQuery(
-		['journals-history', activeCompany, pagination],
+		['journals-view', journal_id],
 		async () => {
-			const data = await Services.journals.findAll(activeCompany?.id ?? '', {
-				page: pagination?.page ?? 0,
-			});
-			setPagination(data.pagination);
-			return data.data;
-		},
-		{
-			enabled: !!activeCompany?.id,
+			const data = await Services.journals.findOne(journal_id);
+			return data;
 		},
 	);
 
 	return (
 		<div>
 			<div className='flex justify-between items-center mb-5'>
-				<h1 className='text-3xl text-primary font-bold'>55</h1>
-				<h1 className='text-xl font-bold'>{activeCompany?.name}</h1>
+				<h1 className='text-3xl text-primary font-bold'>
+					{data?.journal_number}
+				</h1>
+				<h1 className='text-xl font-bold'>
+					{companies.find((company) => company.id === data?.company_id)?.name}
+				</h1>
 			</div>
 			<div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-5'>
 				<TextField
+					value={data?.description || ''}
 					type='text'
 					label='Descripción'
 					id='description'
@@ -64,7 +53,7 @@ export default function JournalsHistory() {
 
 				<div className='w-full'>
 					<Label>Destino</Label>
-					<Select disabled>
+					<Select disabled value={data?.destination}>
 						<SelectTrigger>
 							<SelectValue placeholder='Destino' />
 						</SelectTrigger>
@@ -88,6 +77,7 @@ export default function JournalsHistory() {
 					name='entry_date'
 					placeholder='Fecha de creación'
 					autoComplete='off'
+					value={data?.entry_date?.toISOString().split('T')[0]}
 				/>
 			</div>
 
@@ -97,7 +87,7 @@ export default function JournalsHistory() {
 
 			<DataTable
 				columns={JournalsEntriesDatagrid}
-				data={[]}
+				data={data?.entries || []}
 				loading={isLoading}
 			/>
 		</div>

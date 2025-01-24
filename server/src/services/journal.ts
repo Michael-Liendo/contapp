@@ -6,8 +6,9 @@ import type {
 	IPaginationRequest,
 } from '@contapp/shared';
 import Repository from '../repository';
-import { NotFoundError } from '../utils/errorHandler';
+import { BadRequestError, NotFoundError } from '../utils/errorHandler';
 import getPagination from '../utils/getPagination';
+import { isValidUUID } from '../utils/isValidUUID';
 
 export class Journal {
 	/**
@@ -48,6 +49,9 @@ export class Journal {
 	 * @returns The journal if found, otherwise null.
 	 */
 	static async getByID(id: string): Promise<IJournalQuery> {
+		if (!isValidUUID(id)) {
+			throw new BadRequestError('Invalid journal id');
+		}
 		const journal = await Repository.journals.getById(id);
 
 		if (!journal) {
