@@ -13,8 +13,10 @@ import {
 	useReactTable,
 } from '@tanstack/react-table';
 
+import { cn } from '@/lib/utils';
 import type { IPaginationResponse } from '@contapp/shared';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
 	Table,
 	TableBody,
@@ -24,8 +26,6 @@ import {
 	TableRow,
 } from '../ui/table';
 import { DataTablePagination } from './pagination';
-import { Link, useNavigate } from 'react-router-dom';
-import { cn } from '@/lib/utils';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];

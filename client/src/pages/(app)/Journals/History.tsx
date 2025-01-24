@@ -3,12 +3,11 @@ import { useQuery } from 'react-query';
 
 import { JournalsDatagrid } from '@/components/journals/datagrid';
 import { DataTable } from '@/components/table/data-table';
-import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
 
-import type { IPaginationResponse } from '@contapp/shared';
 import { PrivateRoutesEnum } from '@/data/routesEnums';
+import type { IPaginationResponse } from '@contapp/shared';
 
 export default function JournalsHistory() {
 	const { activeCompany } = useCompanyContext();

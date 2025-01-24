@@ -1,18 +1,18 @@
 import { DataTable } from '@/components/table/data-table';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
-import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
+import { useParams } from 'react-router';
 
 import { JournalsEntriesDatagrid } from '@/components/journals/entries-datagrid';
 import { TextField } from '@/components/text-field';
 import { Label } from '@/components/ui/label';
 import {
+	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-	Select,
 } from '@/components/ui/select';
 import { JournalDestinationEnum } from '@contapp/shared';
 
