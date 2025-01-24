@@ -1,15 +1,12 @@
 import ButtonTooltip from '@/components/home/ButtonTooltip';
-import { textFeatures, textGettingStart } from '@/components/home/content';
+import { textGettingStart } from '@/components/home/content';
 import {
 	Card,
-	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
 import useSEO from '@/hooks/use-seo';
-import { CheckCircle } from 'lucide-react';
 
 export default function HomeApp() {
 	useSEO({
@@ -30,35 +27,16 @@ export default function HomeApp() {
 					cuentas.
 				</p>
 			</header>
-
-			<section className='mb-12'>
-				<h2 className='text-2xl font-semibold mb-4'>Actualizaciones</h2>
-				<div className='grid md:grid-cols-1 lg:grid-cols-3 gap-6'>
-					{textFeatures.map((feature) => (
-						<Card key={feature.id}>
-							<CardHeader>
-								<CardTitle className='flex items-center'>
-									<CheckCircle className='mr-2 h-5 w-5 text-green-500' />
-									{feature.title}
-									<ButtonTooltip link={feature.link} />
-								</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<p>{feature.desc}</p>
-							</CardContent>
-							<CardFooter>{feature.date}</CardFooter>
-						</Card>
-					))}
-				</div>
-			</section>
-
 			<section>
 				<h2 className='text-2xl font-semibold mb-4'>Primeros pasos</h2>
 				<div className='grid md:grid-cols-1 lg:grid-cols-3 gap-6'>
 					{textGettingStart.map((step) => (
 						<Card key={step.id}>
 							<CardHeader>
-								<CardTitle>{step.title}</CardTitle>
+								<div className='flex mb-3'>
+									<CardTitle className='mr-2'>{step.title}</CardTitle>
+									<ButtonTooltip link={step.link} />
+								</div>
 								<CardDescription>{step.description}</CardDescription>
 							</CardHeader>
 						</Card>
