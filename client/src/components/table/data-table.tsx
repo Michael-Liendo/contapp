@@ -95,8 +95,8 @@ export function DataTable<TData, TValue>({
 	});
 
 	function handleGoToRoute(id: string | undefined) {
-		if (!id) {
-			console.warn('Row data id is undefined');
+		if (!id || !route) {
+			console.warn('Row data id or route is undefined');
 			return;
 		}
 		navigate(`${route}/${id}`);
