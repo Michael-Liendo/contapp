@@ -43,6 +43,23 @@ export class Journal {
 	}
 
 	/**
+	 * Get a journal by its ID and return journal with entries.
+	 * @param id - The unique identifier of the journal.
+	 * @returns The journal if found, otherwise null.
+	 */
+	static async getByID(id: string): Promise<IJournalQuery> {
+		const journal = await Repository.journals.getById(id);
+
+		if (!journal) {
+			throw new NotFoundError('Journal not found');
+		}
+
+		const entries = await Repository.journalEntries.listByJournal(id);
+
+		return { ...journal, entries };
+	}
+
+	/**
 	 * Get all journals for a company with their entries (if required).
 	 * @param companyId - The company ID.
 	 * @param includeEntries - Whether to include journal entries.

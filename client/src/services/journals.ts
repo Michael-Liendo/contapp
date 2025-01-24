@@ -8,6 +8,19 @@ import {
 } from '@contapp/shared';
 
 export default class Journals {
+	static async findOne(id: string) {
+		try {
+			const request = await fetch(`/journals/findOne/${id}`);
+
+			const response = await request.json();
+
+			return JournalQuerySchema.parse(response?.data);
+		} catch (error) {
+			console.error('AccountPlanService.findOne', error);
+			throw error;
+		}
+	}
+
 	static async findAll(companyId: string, pagination?: IPaginationRequest) {
 		try {
 			const queryParams = new URLSearchParams();

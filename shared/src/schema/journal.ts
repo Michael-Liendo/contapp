@@ -14,7 +14,7 @@ export const JournalSchema = z.object({
 		),
 	description: z
 		.string()
-		.optional()
+		.nullable()
 		.describe('A brief description of the journal'),
 	destination: JournalDestinationEnum.describe(
 		'The destination of the journal',
