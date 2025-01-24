@@ -97,18 +97,9 @@ export default function JournalsHistory() {
 			</div>
 
 			<DataTable
-				pagination={pagination}
 				columns={JournalsEntriesDatagrid}
 				data={[]}
 				loading={isLoading}
-				onPageChange={(page) => {
-					setPagination((prevPagination) => {
-						return {
-							...prevPagination,
-							page: page,
-						};
-					});
-				}}
 			/>
 		</div>
 	);
