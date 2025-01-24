@@ -47,7 +47,6 @@ export default function JournalsHistory() {
 	return (
 		<div>
 			<div className='flex justify-between items-center mb-5'>
-				{/* numero del asiento y compania */}
 				<h1 className='text-3xl text-primary font-bold'>55</h1>
 				<h1 className='text-xl font-bold'>{activeCompany?.name}</h1>
 			</div>
