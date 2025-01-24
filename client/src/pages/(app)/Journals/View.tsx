@@ -5,7 +5,19 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 
 import { JournalsEntriesDatagrid } from '@/components/journals/entries-datagrid';
-import type { IPaginationResponse } from '@contapp/shared';
+import {
+	JournalDestinationEnum,
+	type IPaginationResponse,
+} from '@contapp/shared';
+import { TextField } from '@/components/text-field';
+import { Select } from '@radix-ui/react-select';
+import { Label } from '@/components/ui/label';
+import {
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select';
 
 export default function JournalsHistory() {
 	const { activeCompany } = useCompanyContext();
@@ -34,19 +46,45 @@ export default function JournalsHistory() {
 
 	return (
 		<div>
-			<div className='bg-zinc-50 rounded-sm p-2 mb-8'>
-				<div className='border p-3 rounded-sm flex flex-row justify-between mb-3'>
-					<p>Description</p>
-					<p>Destiny</p>
-					<p>Date</p>
-					<p>Company</p>
+			<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+				<TextField
+					type='text'
+					label='Descripción'
+					id='description'
+					name='description'
+					placeholder='Descripción del asiento contable'
+					autoComplete='off'
+					readOnly
+					disabled
+				/>
+
+				<div className='w-full'>
+					<Label>Destino</Label>
+					<Select disabled>
+						<SelectTrigger>
+							<SelectValue placeholder='Destino' />
+						</SelectTrigger>
+						<SelectContent id='destination'>
+							<SelectItem value={JournalDestinationEnum.Values.DEBIT}>
+								Debe
+							</SelectItem>
+							<SelectItem value={JournalDestinationEnum.Values.CREDIT}>
+								Crédito
+							</SelectItem>
+						</SelectContent>
+					</Select>
 				</div>
-				<div className='flex flex-row ml-5 mr-5 justify-between'>
-					<p id='valueDesc'>value</p>
-					<p id='valueDestiny'>value</p>
-					<p id='valueDate'>value</p>
-					<p id='valueCompany'>value</p>
-				</div>
+
+				<TextField
+					readOnly
+					disabled
+					label='Fecha del asiento'
+					type='date'
+					id='entry_date'
+					name='entry_date'
+					placeholder='Fecha de creación'
+					autoComplete='off'
+				/>
 			</div>
 
 			<div className='flex justify-between items-center mb-5'>
