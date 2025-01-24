@@ -79,5 +79,5 @@ export const JournalEntryQuerySchema = JournalEntrySchema.omit({
 
 export const JournalQuerySchema = JournalSchema.extend({
 	description: z.string().nullable(),
-	entries: z.array(JournalEntrySchema),
+	entries: z.array(JournalEntryQuerySchema),
 });

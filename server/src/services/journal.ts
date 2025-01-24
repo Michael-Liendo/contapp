@@ -34,10 +34,27 @@ export class Journal {
 			);
 		}
 
+		const entriesWithAccount = await Promise.all(
+			entries.map(async (entry) => {
+				const account = await Repository.accountsPlan.getByID(entry.account_id);
+				if (!account) {
+					throw new NotFoundError('Account not found');
+				}
+
+				return {
+					...entry,
+					account: {
+						name: account.name,
+						nomenclature: account.nomenclature,
+					},
+				};
+			}),
+		);
+
 		const journal: IJournalQuery = {
 			...created_journal,
 			description: journalDto.description ?? null,
-			entries,
+			entries: entriesWithAccount,
 		};
 
 		return { journal };
@@ -60,7 +77,25 @@ export class Journal {
 
 		const entries = await Repository.journalEntries.listByJournal(id);
 
-		return { ...journal, entries };
+		// format the entries and get the account for the entry
+		const entriesWithAccount = await Promise.all(
+			entries.map(async (entry) => {
+				const account = await Repository.accountsPlan.getByID(entry.account_id);
+				if (!account) {
+					throw new BadRequestError('Account not found');
+				}
+				return {
+					...entry,
+					account: {
+						id: account.id,
+						name: account.name,
+						nomenclature: account.nomenclature,
+					},
+				};
+			}),
+		);
+
+		return { ...journal, entries: entriesWithAccount };
 	}
 
 	/**
@@ -99,7 +134,28 @@ export class Journal {
 					const entries = await Repository.journalEntries.listByJournal(
 						journal.id,
 					);
-					return { ...journal, entries };
+
+					// format the entries and get the account for the entry
+					const entriesWithAccount = await Promise.all(
+						entries.map(async (entry) => {
+							const account = await Repository.accountsPlan.getByID(
+								entry.account_id,
+							);
+							if (!account) {
+								throw new BadRequestError('Account not found');
+							}
+							return {
+								...entry,
+								account: {
+									id: account.id,
+									name: account.name,
+									nomenclature: account.nomenclature,
+								},
+							};
+						}),
+					);
+
+					return { ...journal, entries: entriesWithAccount };
 				}),
 			);
 			result = entries.map((journal) => journal);
