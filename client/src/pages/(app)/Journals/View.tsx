@@ -5,12 +5,7 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 
 import { JournalsEntriesDatagrid } from '@/components/journals/entries-datagrid';
-import {
-	JournalDestinationEnum,
-	type IPaginationResponse,
-} from '@contapp/shared';
 import { TextField } from '@/components/text-field';
-import { Select } from '@radix-ui/react-select';
 import { Label } from '@/components/ui/label';
 import {
 	SelectContent,
@@ -18,6 +13,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
+import {
+	type IPaginationResponse,
+	JournalDestinationEnum,
+} from '@contapp/shared';
+import { Select } from '@radix-ui/react-select';
 
 export default function JournalsHistory() {
 	const { activeCompany } = useCompanyContext();
@@ -46,7 +46,12 @@ export default function JournalsHistory() {
 
 	return (
 		<div>
-			<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+			<div className='flex justify-between items-center mb-5'>
+				{/* numero del asiento y compania */}
+				<h1 className='text-3xl text-primary font-bold'>55</h1>
+				<h1 className='text-xl font-bold'>{activeCompany?.name}</h1>
+			</div>
+			<div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-5'>
 				<TextField
 					type='text'
 					label='Descripción'
@@ -88,7 +93,7 @@ export default function JournalsHistory() {
 			</div>
 
 			<div className='flex justify-between items-center mb-5'>
-				<h1 className='text-xl'>Entries Datas Journals</h1>
+				<h1 className='text-xl'>Asientos contables</h1>
 			</div>
 
 			<DataTable
