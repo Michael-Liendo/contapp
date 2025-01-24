@@ -67,7 +67,7 @@ export const JournalForCreateSchema = JournalSchema.omit({
 });
 
 export const JournalEntryQuerySchema = JournalEntrySchema.omit({
-	journal_id: true,
+	account_id: true,
 }).extend({
 	account: AccountPlanSchema.omit({
 		id: true,

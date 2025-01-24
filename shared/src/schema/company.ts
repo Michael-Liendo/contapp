@@ -7,7 +7,6 @@ export const CompanySchema = z.object({
 	phone: z.string().nullable(),
 	fiscal_identification: z.string().nullable(),
 	email: z.string().email().nullable(),
-	default_currency: z.string().nullable(),
 	address: z.string().nullable(),
 	created_at: z.coerce.date(),
 	updated_at: z.coerce.date(),
@@ -23,7 +22,6 @@ export const CompanyForCreateSchema = z.object({
 		.transform((value) => (value === '' ? undefined : value))
 		.optional(),
 	address: z.string().optional(),
-	default_currency: z.string().optional(),
 });
 
 export const CompanyForUpdateSchema = z

@@ -1,6 +1,7 @@
 import type { z } from 'zod';
 import type {
 	JournalEntryForCreateSchema,
+	JournalEntryQuerySchema,
 	JournalEntrySchema,
 	JournalForCreateSchema,
 	JournalQuerySchema,
@@ -16,5 +17,8 @@ export interface IJournalEntry extends z.infer<typeof JournalEntrySchema> {}
 
 export interface IJournalEntryForCreate
 	extends z.infer<typeof JournalEntryForCreateSchema> {}
+
+export interface IJournalEntryQuery
+	extends z.infer<typeof JournalEntryQuerySchema> {}
 
 export interface IJournalQuery extends z.infer<typeof JournalQuerySchema> {}
