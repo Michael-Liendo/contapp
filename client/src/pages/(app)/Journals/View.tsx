@@ -1,6 +1,7 @@
 import { DataTable } from '@/components/table/data-table';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
+import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 
 import { JournalsEntriesDatagrid } from '@/components/journals/entries-datagrid';
@@ -11,10 +12,9 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
+	Select,
 } from '@/components/ui/select';
 import { JournalDestinationEnum } from '@contapp/shared';
-import { Select } from '@radix-ui/react-select';
-import { useParams } from 'react-router';
 
 export default function JournalsHistory() {
 	const { journal_id } = useParams() as { journal_id: string };

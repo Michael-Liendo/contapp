@@ -24,13 +24,15 @@ import {
 	TableRow,
 } from '../ui/table';
 import { DataTablePagination } from './pagination';
+import { Link, useNavigate } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	loading?: boolean;
 	pagination?: IPaginationResponse;
-
+	route?: string;
 	onPageChange?: (pageIndex: number) => void;
 }
 
@@ -38,9 +40,12 @@ export function DataTable<TData, TValue>({
 	columns,
 	data,
 	loading,
+	route,
 	pagination,
 	onPageChange,
 }: DataTableProps<TData, TValue>) {
+	const navigate = useNavigate();
+
 	const [rowSelection, setRowSelection] = useState({});
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -89,6 +94,14 @@ export function DataTable<TData, TValue>({
 		getFacetedUniqueValues: getFacetedUniqueValues(),
 	});
 
+	function handleGoToRoute(id: string | undefined) {
+		if (!id) {
+			console.warn('Row data id is undefined');
+			return;
+		}
+		navigate(`${route}/${id}`);
+	}
+
 	return (
 		<div className='space-y-4 w-full'>
 			{/* <DataTableToolbar table={table} /> */}
@@ -123,21 +136,32 @@ export function DataTable<TData, TValue>({
 								</TableCell>
 							</TableRow>
 						) : table.getRowModel().rows?.length ? (
-							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && 'selected'}
-								>
-									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
-										</TableCell>
-									))}
-								</TableRow>
-							))
+							table.getRowModel().rows.map((row) => {
+								const rowData = row.original as { id?: string };
+								return (
+									<>
+										<TableRow
+											key={row.id}
+											onClick={() => {
+												handleGoToRoute(rowData.id);
+											}}
+											className={cn({
+												'cursor-pointer': !!route,
+											})}
+											data-state={row.getIsSelected() && 'selected'}
+										>
+											{row.getVisibleCells().map((cell) => (
+												<TableCell key={cell.id}>
+													{flexRender(
+														cell.column.columnDef.cell,
+														cell.getContext(),
+													)}
+												</TableCell>
+											))}
+										</TableRow>
+									</>
+								);
+							})
 						) : (
 							<TableRow>
 								<TableCell
