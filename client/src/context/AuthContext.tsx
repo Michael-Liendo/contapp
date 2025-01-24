@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 	});
 
 	useEffect(() => {
-		queryClient.invalidateQueries('accounts-plan');
+		queryClient.invalidateQueries('user');
 	}, [token]);
 
 	const updateToken = async (token: string) => {
