@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { formatCurrencyValue } from '@/utils/formatCurrencyValue';
 
 export function TotalizingHeader({
@@ -24,13 +25,21 @@ export function TotalizingHeader({
 		<div className='flex items-center mt-3 space-x-3'>
 			<div>
 				<span className='font-semibold mr-3'>Total deber:</span>
-				<span className='text-xl font-bold'>
+				<span
+					className={cn('text-xl font-bold text-primary', {
+						'text-red-500': finalTotalCredit !== finalTotalDebit,
+					})}
+				>
 					{formatCurrencyValue(finalTotalDebit)}
 				</span>
 			</div>
 			<div>
 				<span className='font-semibold mr-3'>Total haber:</span>
-				<span className='text-xl font-bold'>
+				<span
+					className={cn('text-xl font-bold text-primary', {
+						'text-red-500': finalTotalCredit !== finalTotalDebit,
+					})}
+				>
 					{formatCurrencyValue(finalTotalCredit)}
 				</span>
 			</div>
