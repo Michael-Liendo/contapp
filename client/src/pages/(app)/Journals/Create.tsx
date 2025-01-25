@@ -6,6 +6,7 @@ import type {
 	IOption,
 	TableConfig,
 } from '@/components/datatable/types/datatable';
+import { TotalizingHeader } from '@/components/journals/totalization-header';
 import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -239,6 +240,7 @@ export default function CreatePage() {
 						: errors.entries}
 				</div>
 			)}
+			<TotalizingHeader entries={values.entries} />
 		</div>
 	);
 }

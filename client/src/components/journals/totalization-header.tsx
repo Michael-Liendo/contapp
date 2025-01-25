@@ -1,12 +1,11 @@
 import { formatCurrencyValue } from '@/utils/formatCurrencyValue';
-import type { IJournalEntryQuery } from '@contapp/shared';
 
 export function TotalizingHeader({
 	totalDebit,
 	totalCredit,
 	entries,
 }: {
-	entries?: IJournalEntryQuery[];
+	entries?: { debit: number; credit: number }[];
 	totalDebit?: number;
 	totalCredit?: number;
 }) {
