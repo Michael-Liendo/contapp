@@ -1,4 +1,4 @@
-import { PrivateRoutesEnum } from "@/data/routesEnums";
+import { PrivateRoutesEnum } from '@/data/routesEnums';
 interface TextGettingStart {
 	id: number;
 	title: string;
