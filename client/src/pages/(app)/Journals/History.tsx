@@ -8,6 +8,7 @@ import Services from '@/services';
 
 import { PrivateRoutesEnum } from '@/data/routesEnums';
 import type { IPaginationResponse } from '@contapp/shared';
+import { Label } from '@/components/ui/label';
 
 export default function JournalsHistory() {
 	const { activeCompany } = useCompanyContext();
@@ -39,6 +40,7 @@ export default function JournalsHistory() {
 			<div className='flex justify-between items-center mb-5'>
 				<h1 className='text-xl'>Asientos contables</h1>
 			</div>
+			<Label>Has click en un asiento para ver mas información</Label>
 
 			<DataTable
 				pagination={pagination}
