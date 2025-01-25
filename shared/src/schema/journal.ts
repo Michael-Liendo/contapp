@@ -16,6 +16,7 @@ export const JournalSchema = z.object({
 	description: z
 		.string()
 		.nullable()
+		.optional()
 		.describe('A brief description of the journal'),
 	destination: JournalDestinationEnum.describe(
 		'The destination of the journal',
@@ -63,7 +64,24 @@ export const JournalForCreateSchema = JournalSchema.omit({
 	created_at: true,
 	updated_at: true,
 }).extend({
-	entries: z.array(JournalEntryForCreateSchema).min(1),
+	entries: z
+		.array(JournalEntryForCreateSchema)
+		.min(1, { message: 'Debe tener al menos una entrada' })
+		.refine(
+			(data) => {
+				const totalDebit = data.reduce((acc, entry) => {
+					return acc + entry.debit;
+				}, 0);
+				const totalCredit = data.reduce((acc, entry) => {
+					return acc + entry.credit;
+				}, 0);
+
+				return totalDebit === totalCredit;
+			},
+			{
+				message: 'La sumatoria de los debes y haberes debe ser igual',
+			},
+		),
 });
 
 export const JournalEntryQuerySchema = JournalEntrySchema.omit({
