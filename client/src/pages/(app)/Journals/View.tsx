@@ -15,6 +15,8 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { JournalDestinationEnum } from '@contapp/shared';
+import { formatCurrencyValue } from '@/utils/formatCurrencyValue';
+import { TotalizingHeader } from '@/components/journals/totalization-header';
 
 export default function JournalsHistory() {
 	const { journal_id } = useParams() as { journal_id: string };
@@ -30,10 +32,14 @@ export default function JournalsHistory() {
 
 	return (
 		<div>
-			<div className='flex justify-between items-center mb-5'>
-				<h1 className='text-3xl text-primary font-bold'>
-					#{data?.journal_number}
-				</h1>
+			<div className='flex justify-between items-start mb-5'>
+				<div>
+					<h1 className='text-3xl text-primary font-bold'>
+						#{data?.journal_number}
+					</h1>
+
+					<TotalizingHeader entries={data?.entries} />
+				</div>
 				<h1 className='text-xl font-bold'>
 					{companies.find((company) => company.id === data?.company_id)?.name}
 				</h1>
