@@ -6,9 +6,9 @@ import { DataTable } from '@/components/table/data-table';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
 
+import { Label } from '@/components/ui/label';
 import { PrivateRoutesEnum } from '@/data/routesEnums';
 import type { IPaginationResponse } from '@contapp/shared';
-import { Label } from '@/components/ui/label';
 
 export default function JournalsHistory() {
 	const { activeCompany } = useCompanyContext();

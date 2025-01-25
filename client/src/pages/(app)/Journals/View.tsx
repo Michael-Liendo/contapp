@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 
 import { JournalsEntriesDatagrid } from '@/components/journals/entries-datagrid';
+import { TotalizingHeader } from '@/components/journals/totalization-header';
 import { TextField } from '@/components/text-field';
 import { Label } from '@/components/ui/label';
 import {
@@ -15,8 +16,6 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { JournalDestinationEnum } from '@contapp/shared';
-import { formatCurrencyValue } from '@/utils/formatCurrencyValue';
-import { TotalizingHeader } from '@/components/journals/totalization-header';
 
 export default function JournalsHistory() {
 	const { journal_id } = useParams() as { journal_id: string };
