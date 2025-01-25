@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 
 import { JournalsEntriesDatagrid } from '@/components/journals/entries-datagrid';
+import { TotalizingHeader } from '@/components/journals/totalization-header';
 import { TextField } from '@/components/text-field';
 import { Label } from '@/components/ui/label';
 import {
@@ -30,10 +31,12 @@ export default function JournalsHistory() {
 
 	return (
 		<div>
-			<div className='flex justify-between items-center mb-5'>
-				<h1 className='text-3xl text-primary font-bold'>
-					#{data?.journal_number}
-				</h1>
+			<div className='flex justify-between items-start mb-5'>
+				<div>
+					<h1 className='text-3xl text-primary font-bold'>
+						#{data?.journal_number}
+					</h1>
+				</div>
 				<h1 className='text-xl font-bold'>
 					{companies.find((company) => company.id === data?.company_id)?.name}
 				</h1>
@@ -85,6 +88,7 @@ export default function JournalsHistory() {
 				<h1 className='text-xl'>Asientos contables</h1>
 			</div>
 
+			<TotalizingHeader entries={data?.entries} />
 			<DataTable
 				columns={JournalsEntriesDatagrid}
 				data={data?.entries || []}

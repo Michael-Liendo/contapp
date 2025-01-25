@@ -6,6 +6,7 @@ import type {
 	IOption,
 	TableConfig,
 } from '@/components/datatable/types/datatable';
+import { TotalizingHeader } from '@/components/journals/totalization-header';
 import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -139,6 +140,15 @@ export default function CreatePage() {
 		setFieldValue('entries', dataWithDefaults);
 	}, [data]);
 
+	useEffect(() => {
+		setFieldValue('company_id', activeCompany?.id ?? '');
+	}, [activeCompany?.id]);
+
+	// errores
+	useEffect(() => {
+		console.log(errors);
+	}, [errors]);
+
 	return (
 		<div>
 			{/* Sección de encabezado */}
@@ -176,8 +186,8 @@ export default function CreatePage() {
 							Destino <span className='text-red-600'>*</span>
 						</Label>
 						<Select
-							defaultValue={values.destination}
-							onValueChange={handleChange}
+							value={values.destination}
+							onValueChange={(value) => setFieldValue('destination', value)}
 						>
 							<SelectTrigger>
 								<SelectValue placeholder='Destino' />
@@ -210,6 +220,8 @@ export default function CreatePage() {
 					/>
 				</div>
 			</form>
+
+			<TotalizingHeader entries={values.entries} />
 
 			{/* Sección de la tabla de datos */}
 			<DynamicDataTable

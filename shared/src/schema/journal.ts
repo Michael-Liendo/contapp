@@ -51,11 +51,22 @@ export const JournalEntrySchema = z.object({
 
 export const JournalEntryForCreateSchema = JournalEntrySchema.extend({
 	journal_id: z.string().optional(),
-}).omit({
-	id: true,
-	created_at: true,
-	updated_at: true,
-});
+})
+	.omit({
+		id: true,
+		created_at: true,
+		updated_at: true,
+	})
+	.refine(
+		(data) =>
+			(data.debit > 0 && data.credit === 0) ||
+			(data.credit > 0 && data.debit === 0),
+		{
+			message:
+				'Tiene que tener un valor de débito o un valor de crédito, pero no ambos',
+			path: ['root'],
+		},
+	);
 
 export const JournalForCreateSchema = JournalSchema.omit({
 	id: true,
@@ -63,7 +74,24 @@ export const JournalForCreateSchema = JournalSchema.omit({
 	created_at: true,
 	updated_at: true,
 }).extend({
-	entries: z.array(JournalEntryForCreateSchema).min(1),
+	entries: z
+		.array(JournalEntryForCreateSchema)
+		.min(1, { message: 'Debe tener al menos una entrada' })
+		.refine(
+			(data) => {
+				const totalDebit = data.reduce((acc, entry) => {
+					return acc + entry.debit;
+				}, 0);
+				const totalCredit = data.reduce((acc, entry) => {
+					return acc + entry.credit;
+				}, 0);
+
+				return totalDebit === totalCredit;
+			},
+			{
+				message: 'La sumatoria de los debes y haberes debe ser igual',
+			},
+		),
 });
 
 export const JournalEntryQuerySchema = JournalEntrySchema.omit({
