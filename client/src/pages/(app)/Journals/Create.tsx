@@ -212,6 +212,8 @@ export default function CreatePage() {
 				</div>
 			</form>
 
+			<TotalizingHeader entries={values.entries} />
+
 			{/* Sección de la tabla de datos */}
 			<DynamicDataTable
 				config={tableConfig}
@@ -240,7 +242,6 @@ export default function CreatePage() {
 						: errors.entries}
 				</div>
 			)}
-			<TotalizingHeader entries={values.entries} />
 		</div>
 	);
 }

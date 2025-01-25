@@ -36,8 +36,6 @@ export default function JournalsHistory() {
 					<h1 className='text-3xl text-primary font-bold'>
 						#{data?.journal_number}
 					</h1>
-
-					<TotalizingHeader entries={data?.entries} />
 				</div>
 				<h1 className='text-xl font-bold'>
 					{companies.find((company) => company.id === data?.company_id)?.name}
@@ -90,6 +88,7 @@ export default function JournalsHistory() {
 				<h1 className='text-xl'>Asientos contables</h1>
 			</div>
 
+			<TotalizingHeader entries={data?.entries} />
 			<DataTable
 				columns={JournalsEntriesDatagrid}
 				data={data?.entries || []}
