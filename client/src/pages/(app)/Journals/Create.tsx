@@ -144,11 +144,6 @@ export default function CreatePage() {
 		setFieldValue('company_id', activeCompany?.id ?? '');
 	}, [activeCompany?.id]);
 
-	// errores
-	useEffect(() => {
-		console.log(errors);
-	}, [errors]);
-
 	return (
 		<div>
 			{/* Sección de encabezado */}
