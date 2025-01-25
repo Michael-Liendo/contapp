@@ -177,8 +177,8 @@ export default function CreatePage() {
 							Destino <span className='text-red-600'>*</span>
 						</Label>
 						<Select
-							defaultValue={values.destination}
-							onValueChange={handleChange}
+							value={values.destination}
+							onValueChange={(value) => setFieldValue('destination', value)}
 						>
 							<SelectTrigger>
 								<SelectValue placeholder='Destino' />
