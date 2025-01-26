@@ -74,6 +74,7 @@ export const JournalForCreateSchema = JournalSchema.omit({
 	created_at: true,
 	updated_at: true,
 }).extend({
+	description: z.string().optional(),
 	entries: z
 		.array(JournalEntryForCreateSchema)
 		.min(1, { message: 'Debe tener al menos una entrada' })
