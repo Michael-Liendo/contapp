@@ -16,7 +16,7 @@ export default function getPagination(
 	}
 	const total = count;
 	const hasPreviousPage = pageNumber > 1;
-	const hasNextPage = pageNumber < Math.ceil(total / limitNumber);
+	const hasNextPage = pageNumber < Math.ceil(total / limitNumber) - 1;
 
 	return {
 		page: pageNumber,
