@@ -6,8 +6,9 @@ import type {
 	IFindAllResponse,
 	IPaginationRequest,
 } from '@contapp/shared';
-import { InternalServerError } from '../utils/errorHandler';
+import { BadRequestError, InternalServerError } from '../utils/errorHandler';
 import getPagination from '../utils/getPagination';
+import { isCompanyOwner } from '../utils/isCompanyOwner';
 
 export default class AccountsPlan {
 	static async getByID(
@@ -41,7 +42,10 @@ export default class AccountsPlan {
 
 	static async create(
 		account_plan_dto: IAccountPlanForCreate,
+		userId: string,
 	): Promise<IAccountPlan> {
+		await isCompanyOwner(account_plan_dto.company_id, userId);
+
 		const account_plan = await Repository.accountsPlan.create(account_plan_dto);
 
 		return account_plan;
@@ -50,7 +54,16 @@ export default class AccountsPlan {
 	static async update(
 		account_plan_id: string,
 		account_plan: IAccountPlanForCreate,
+		userId: string,
 	): Promise<IAccountPlan> {
+		const accountPlan = await Repository.accountsPlan.getByID(account_plan_id);
+
+		if (!accountPlan) {
+			throw new BadRequestError('Account plan not found');
+		}
+
+		await isCompanyOwner(accountPlan.company_id, userId);
+
 		const updatedAccountPlan = await Repository.accountsPlan.update(
 			account_plan_id,
 			account_plan,
@@ -62,7 +75,15 @@ export default class AccountsPlan {
 		return updatedAccountPlan;
 	}
 
-	static async delete(account_plan_id: string): Promise<void> {
+	static async delete(account_plan_id: string, userId: string): Promise<void> {
+		const accountPlan = await Repository.accountsPlan.getByID(account_plan_id);
+
+		if (!accountPlan) {
+			throw new BadRequestError('Account plan not found');
+		}
+
+		await isCompanyOwner(accountPlan.company_id, userId);
+
 		await Repository.accountsPlan.delete(account_plan_id);
 		return;
 	}

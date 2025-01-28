@@ -1,4 +1,7 @@
-import { AccountPlanForCreateSchema } from '@contapp/shared';
+import {
+	AccountPlanForCreateSchema,
+	AccountPlanForUpdateSchema,
+} from '@contapp/shared';
 import { create, findAll, remove, update } from '../controllers/accounts-plan';
 import checkJwt from '../middlewares/checkJwt';
 import requestValidation from '../utils/requestValidation';
@@ -28,7 +31,7 @@ export default function accounts_plan(
 	fastify.route({
 		method: 'PUT',
 		url: '/update/:account_plan_id',
-		preValidation: requestValidation(AccountPlanForCreateSchema),
+		preValidation: requestValidation(AccountPlanForUpdateSchema),
 		handler: update,
 	});
 
