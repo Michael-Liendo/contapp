@@ -53,9 +53,9 @@ export default class AccountsPlan {
 		}
 	}
 
-	static async update(plan: IAccountPlanForUpdate) {
+	static async update(id: string, plan: IAccountPlanForUpdate) {
 		try {
-			const request = await fetch(`/accounts-plan/update/${plan.id}`, {
+			const request = await fetch(`/accounts-plan/update/${id}`, {
 				method: 'PUT',
 				body: JSON.stringify(plan),
 			});

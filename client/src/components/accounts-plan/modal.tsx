@@ -39,7 +39,8 @@ export function AccountPlanModalMutate({
 
 	const update = useMutation({
 		mutationFn: (accountPlan: IAccountPlanForUpdate) => {
-			return Services.accountsPlan.update(accountPlan);
+			if (!isEdit?.id) throw new Error('Account plan id is required');
+			return Services.accountsPlan.update(isEdit?.id, accountPlan);
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries('accounts-plan');
