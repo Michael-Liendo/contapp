@@ -16,3 +16,13 @@ export async function update(req: Request, reply: Reply) {
 		.status(200)
 		.send({ success: true, message: 'User updated', data: updated });
 }
+
+export async function deleteUser(req: Request, reply: Reply) {
+	const { id } = req.user as Required<IUser>;
+
+	const deleted = await Services.user.delete(id);
+
+	reply
+		.status(200)
+		.send({ success: true, message: 'User deleted', data: deleted });
+}

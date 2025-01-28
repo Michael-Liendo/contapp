@@ -25,4 +25,9 @@ export default class Users {
 		const updated = await Repository.users.updateUser(id, userUpdates);
 		return updated;
 	}
+
+	static async delete(id: string): Promise<boolean> {
+		const deleted = await Repository.users.deleteUser(id);
+		return deleted;
+	}
 }
