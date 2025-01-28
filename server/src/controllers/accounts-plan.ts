@@ -25,9 +25,9 @@ export async function findAll(request: Request, reply: Reply) {
 
 export async function create(request: Request, reply: Reply) {
 	const account_plan = request.body as IAccountPlanForCreate;
+	const { id } = request.user as { id: string };
 
-	// todo: every person with the id can create an account plan
-	const accounts_plan = await Services.accountsPlan.create(account_plan);
+	const accounts_plan = await Services.accountsPlan.create(account_plan, id);
 
 	return reply
 		.code(201)
@@ -37,11 +37,12 @@ export async function create(request: Request, reply: Reply) {
 export async function update(request: Request, reply: Reply) {
 	const { account_plan_id } = request.params as { account_plan_id: string };
 	const account_plan = request.body as IAccountPlanForCreate;
+	const { id } = request.user as { id: string };
 
-	// todo: every person with the id can create an account plan
 	const updatedAccountPlan = await Services.accountsPlan.update(
 		account_plan_id,
 		account_plan,
+		id,
 	);
 
 	return reply
@@ -51,9 +52,10 @@ export async function update(request: Request, reply: Reply) {
 
 export async function remove(request: Request, reply: Reply) {
 	const { account_plan_id } = request.params as { account_plan_id: string };
+	const { id } = request.user as { id: string };
 
 	// todo: every person with the id can create an account plan
-	await Services.accountsPlan.delete(account_plan_id);
+	await Services.accountsPlan.delete(account_plan_id, id);
 
 	return reply.code(204).send({
 		success: true,

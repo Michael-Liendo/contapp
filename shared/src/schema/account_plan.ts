@@ -15,6 +15,4 @@ export const AccountPlanForCreateSchema = z.object({
 	name: z.string(),
 });
 
-export const AccountPlanForUpdateSchema = z
-	.object({ id: z.string() })
-	.merge(AccountPlanForCreateSchema.partial());
+export const AccountPlanForUpdateSchema = AccountPlanForCreateSchema.partial();
