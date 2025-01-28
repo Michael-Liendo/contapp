@@ -1,4 +1,4 @@
-import { me, update } from '../controllers/users';
+import { deleteUser, me, update } from '../controllers/users';
 import checkJwt from '../middlewares/checkJwt';
 
 import { UserForUpdateSchema } from '@contapp/shared';
@@ -23,6 +23,12 @@ export default function user(
 		url: '/update',
 		preValidation: requestValidation(UserForUpdateSchema),
 		handler: update,
+	});
+
+	fastify.route({
+		method: 'DELETE',
+		url: '/delete',
+		handler: deleteUser,
 	});
 
 	done();

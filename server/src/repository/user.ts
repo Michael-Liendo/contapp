@@ -61,4 +61,16 @@ export class Users {
 			throw new InternalServerError(`Error updating user: ${error}`);
 		}
 	}
+
+	static async deleteUser(id: string): Promise<boolean> {
+		try {
+			const rowsDeleted = await database('users').where({ id }).del();
+			if (rowsDeleted === 0) {
+				throw new Error(`User with id ${id} not found`);
+			}
+			return true;
+		} catch (error) {
+			throw new InternalServerError(`Error deleting user: ${error}`);
+		}
+	}
 }
