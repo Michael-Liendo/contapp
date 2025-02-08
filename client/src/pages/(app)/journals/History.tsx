@@ -8,8 +8,8 @@ import Services from '@/services';
 
 import { Label } from '@/components/ui/label';
 import { PrivateRoutesEnum } from '@/data/routesEnums';
-import type { IPaginationResponse } from '@contapp/shared';
 import useSEO from '@/hooks/use-seo';
+import type { IPaginationResponse } from '@contapp/shared';
 
 export default function JournalsHistory() {
 	useSEO({

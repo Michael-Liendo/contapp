@@ -15,8 +15,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import { JournalDestinationEnum } from '@contapp/shared';
 import useSEO from '@/hooks/use-seo';
+import { JournalDestinationEnum } from '@contapp/shared';
 
 export default function JournalsHistory() {
 	useSEO({
