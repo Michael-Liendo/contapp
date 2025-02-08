@@ -68,7 +68,7 @@ export default function LoginPage() {
 				</div>
 				<br />
 				<p className='text-lg mb-10 text-center'>
-					Unase a nosotros y simplifique su gestión financiera
+					Inicie sesión y simplifique su gestión financiera
 				</p>
 
 				<Card className='w-full max-w-md'>

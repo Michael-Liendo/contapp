@@ -5,6 +5,7 @@ import {
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface ButtonTooltipProps {
 	link: string;
@@ -15,12 +16,12 @@ export default function ButtonTooltip({ link }: ButtonTooltipProps) {
 		<TooltipProvider>
 			<Tooltip>
 				<TooltipTrigger>
-					<a href={link} rel='noopener noreferrer'>
+					<Link to={link} rel='noopener noreferrer'>
 						<ExternalLink
 							className='size-6
 					transition-all duration-100 hover:opacity-50 hover:translate-x-1 hover:text-blue-900'
 						/>
-					</a>
+					</Link>
 				</TooltipTrigger>
 				<TooltipContent>
 					<p>Ir a la ruta</p>
