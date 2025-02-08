@@ -1,6 +1,10 @@
 import database from './database';
 
-import type { ITrialBalance, ITrialBalanceRequest } from '@contapp/shared';
+import {
+	TrialBalanceSchema,
+	type ITrialBalance,
+	type ITrialBalanceRequest,
+} from '@contapp/shared';
 
 export class TrialBalances {
 	/**
@@ -42,12 +46,22 @@ export class TrialBalances {
 			]);
 
 		// Calculate final balance
-		return result.map((account) => ({
-			...account,
+
+		const formattedResult = result.map((account) => ({
+			account_plan: {
+				id: account.account_id,
+				nomenclature: account.nomenclature,
+				name: account.account_name,
+			},
+			initial_balance: Number(account.initial_balance),
+			debits: Number(account.debits),
+			credits: Number(account.credits),
 			final_balance:
 				Number(account.initial_balance) +
 				Number(account.debits) -
 				Number(account.credits),
 		}));
+
+		return TrialBalanceSchema.array().parse(formattedResult);
 	}
 }

@@ -1,4 +1,4 @@
-import { findAll } from '../controllers/accounts-plan';
+import { trialBalance } from '../controllers/reports';
 import checkJwt from '../middlewares/checkJwt';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
@@ -13,7 +13,7 @@ export default function reports(
 	fastify.route({
 		method: 'GET',
 		url: '/trial-balance',
-		handler: findAll,
+		handler: trialBalance,
 	});
 
 	done();
