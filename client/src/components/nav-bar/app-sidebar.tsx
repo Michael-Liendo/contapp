@@ -61,11 +61,6 @@ const data = {
 					url: PrivateRoutesEnum.ReportsTrialBalance,
 					icon: ClipboardMinus,
 				},
-				{
-					title: 'Exportar a Excel',
-					url: '#',
-					icon: Notebook,
-				},
 			],
 		},
 		{
