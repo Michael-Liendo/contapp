@@ -2,7 +2,7 @@ import TrialBalanceTable from '@/components/reports/trialBalanceTable';
 import { DatePickerWithRange } from '@/components/ui/date-picker-with-range';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
-import { addDays, format } from 'date-fns';
+import { format, subDays } from 'date-fns';
 import { useState } from 'react';
 import type { DateRange } from 'react-day-picker';
 import { useQuery } from 'react-query';
@@ -11,8 +11,8 @@ export default function TrialBalance() {
 	const { activeCompany } = useCompanyContext();
 
 	const [dateRange, setDateRange] = useState<DateRange | undefined>({
-		from: new Date(2025, 0, 20),
-		to: addDays(new Date(2025, 0, 20), 20),
+		from: subDays(new Date(), 30),
+		to: new Date(),
 	});
 
 	const { data, isLoading, error } = useQuery({
