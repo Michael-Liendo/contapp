@@ -8,9 +8,18 @@ import Services from '@/services';
 
 import { Label } from '@/components/ui/label';
 import { PrivateRoutesEnum } from '@/data/routesEnums';
+import useSEO from '@/hooks/use-seo';
 import type { IPaginationResponse } from '@contapp/shared';
 
 export default function JournalsHistory() {
+	useSEO({
+		title: 'Historial de asientos | Contapp',
+		description:
+			'Vea y gestiona tu historial de asientos contables en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
+		keywords:
+			'contapp, gestionar, operaciones, balances, plan de cuentas, asientos',
+	});
+
 	const { activeCompany } = useCompanyContext();
 
 	const [pagination, setPagination] = useState<IPaginationResponse>({

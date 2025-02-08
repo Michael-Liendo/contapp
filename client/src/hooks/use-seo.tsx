@@ -29,8 +29,8 @@ const useSEO = ({ title, description, keywords, author, robots }: SEOProps) => {
 
 		setMetaTag('description', description);
 		setMetaTag('keywords', keywords);
-		setMetaTag('author', author);
-		setMetaTag('robots', robots);
+		setMetaTag('author', 'Contapp Team');
+		setMetaTag('robots', 'index, follow');
 	}, [title, description, keywords, author, robots]);
 };
 

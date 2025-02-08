@@ -10,12 +10,10 @@ import useSEO from '@/hooks/use-seo';
 
 export default function HomeApp() {
 	useSEO({
-		title: 'Home Page - Contapp',
+		title: 'Inicio | Contapp',
 		description:
-			'Welcome to the home page of Contapp, your app for managing contacts.',
-		keywords: 'contacts, management, app, Contapp',
-		author: 'Contapp Team',
-		robots: 'index, follow',
+			'Bienvenido a Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
+		keywords: 'contapp, gestionar, operaciones, balances, plan de cuentas',
 	});
 
 	return (

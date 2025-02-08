@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
 import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
+import useSEO from '@/hooks/use-seo';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
 import { TextField } from '../../components/text-field';
@@ -13,6 +14,13 @@ import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
 
 export default function Signup() {
+	useSEO({
+		title: 'Registro | Contapp',
+		description:
+			'Regístrate en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
+		keywords:
+			'contapp, gestionar, operaciones, balances, plan de cuentas, registro',
+	});
 	const { setToken } = useAuth();
 	const navigate = useNavigate();
 

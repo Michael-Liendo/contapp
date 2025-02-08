@@ -9,6 +9,7 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
+import useSEO from '@/hooks/use-seo';
 import useAuth from '@/hooks/useAuth';
 import Services from '@/services';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
@@ -19,6 +20,13 @@ import { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
 
 export default function Profile() {
+	useSEO({
+		title: 'Perfil | Contapp',
+		description:
+			'Edite su perfil en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
+		keywords:
+			'contapp, gestionar, operaciones, balances, plan de cuentas, perfil',
+	});
 	const queryClient = useQueryClient();
 	const { user } = useAuth();
 
