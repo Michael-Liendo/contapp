@@ -1,12 +1,11 @@
 'use client';
 
-import { BadgeCheck, ChevronsUpDown, LogOut, UserPen } from 'lucide-react';
+import { ChevronsUpDown, LogOut, UserPen } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
@@ -85,13 +84,6 @@ export function NavUser() {
 								</div>
 							</div>
 						</DropdownMenuLabel>
-						<DropdownMenuSeparator />
-						<DropdownMenuGroup>
-							<DropdownMenuItem>
-								<BadgeCheck className='size-4 mr-1' />
-								Account
-							</DropdownMenuItem>
-						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem onClick={() => handleProfile()}>
 							<UserPen className='size-4 mr-1' />
