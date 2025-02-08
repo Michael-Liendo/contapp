@@ -2,6 +2,7 @@ import AccountsPlan from './accounts-plan';
 import Auth from './auth';
 import Companies from './companies';
 import { Journal } from './journal';
+import { TrialBalanceService } from './trial-balance';
 import Users from './users';
 
 export default class Services {
@@ -10,4 +11,5 @@ export default class Services {
 	static company = Companies;
 	static accountsPlan = AccountsPlan;
 	static journals = Journal;
+	static trialBalance = TrialBalanceService;
 }

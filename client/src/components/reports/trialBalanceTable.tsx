@@ -1,0 +1,111 @@
+import type { ITrialBalance } from '@contapp/shared';
+
+export default function TrialBalanceTable({
+	data,
+}: {
+	data: ITrialBalance[];
+}) {
+	const totalDebits = data.reduce((acc, item) => acc + item.debits, 0);
+	const totalCredits = data.reduce((acc, item) => acc + item.credits, 0);
+
+	const totalDebit = data.reduce((acc, item) => acc + item.debits, 0);
+	const totalCredit = data.reduce((acc, item) => acc + item.credits, 0);
+	const totalBalance = totalDebit - totalCredit;
+
+	return (
+		<div className='w-full mt-10'>
+			<div className='overflow-x-auto'>
+				<table className='w-full border-collapse border border-gray-300 '>
+					<thead>
+						<tr>
+							<th
+								rowSpan={2}
+								className='border border-gray-300 px-4 py-2 w-[10%]'
+							>
+								Nro
+							</th>
+							<th
+								rowSpan={2}
+								className='border border-gray-300 px-4 py-2 w-[20%]'
+							>
+								Cuentas
+							</th>
+							<th
+								colSpan={2}
+								className='border border-gray-300 px-4 py-2 w-[30%]'
+							>
+								Sumas
+							</th>
+							<th
+								colSpan={2}
+								className='border border-gray-300 px-4 py-2 w-[40%]'
+							>
+								Saldos
+							</th>
+						</tr>
+						<tr>
+							<th className='border border-gray-300 px-4 py-2 w-[15%]'>Debe</th>
+							<th className='border border-gray-300 px-4 py-2 w-[15%]'>
+								Haber
+							</th>
+							<th className='border border-gray-300 px-4 py-2 w-[20%]'>
+								Deudor
+							</th>
+							<th className='border border-gray-300 px-4 py-2 w-[20%]'>
+								Acreedor
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{data.map((trial) => {
+							const balance = trial.debits - trial.credits;
+							return (
+								<tr key={trial.account_plan.id}>
+									<td className='border border-gray-300 px-4 py-2 text-center'>
+										{trial.account_plan.nomenclature}
+									</td>
+									<td className='border border-gray-300 px-4 py-2'>
+										{trial.account_plan.name}
+									</td>
+									<td className='border border-gray-300 px-4 py-2 text-right'>
+										{trial.debits}
+									</td>
+									<td className='border border-gray-300 px-4 py-2 text-right'>
+										{trial.credits}
+									</td>
+									<td className='border border-gray-300 px-4 py-2 text-right'>
+										{balance > 0 ? balance : 0}
+									</td>
+									<td className='border border-gray-300 px-4 py-2 text-right'>
+										{balance < 0 ? Math.abs(balance) : 0}
+									</td>
+								</tr>
+							);
+						})}
+
+						<tr className='font-bold'>
+							<td
+								className='border border-gray-300 px-4 py-2 text-center'
+								colSpan={2}
+							>
+								<span>Totales:</span>
+							</td>
+							<td className='border border-gray-300 px-4 py-2 text-right'>
+								{totalDebits}
+							</td>
+							<td className='border border-gray-300 px-4 py-2 text-right'>
+								{totalCredits}
+							</td>
+							<td className='border border-gray-300 px-4 py-2 text-right'>
+								{totalBalance > 0 ? totalBalance : 0}
+							</td>
+							<td className='border border-gray-300 px-4 py-2 text-right'>
+								{totalBalance < 0 ? Math.abs(totalBalance) : 0}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	);
+}
