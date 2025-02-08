@@ -2,7 +2,7 @@ import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
-import { DatePickerWithRange } from '@/components/date-picker-with-range';
+import { DatePickerWithRange } from '@/components/ui/date-picker-with-range';
 import { addDays } from 'date-fns';
 import type { DateRange } from 'react-day-picker';
 
