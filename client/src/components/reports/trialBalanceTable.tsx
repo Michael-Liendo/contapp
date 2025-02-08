@@ -5,13 +5,12 @@ export default function TrialBalanceTable({
 }: {
 	data: ITrialBalance[];
 }) {
-	const total = data.reduce((acc, item) => acc + item.final_balance, 0);
 	const totalDebits = data.reduce((acc, item) => acc + item.debits, 0);
 	const totalCredits = data.reduce((acc, item) => acc + item.credits, 0);
-	const totalFinalBalance = data.reduce(
-		(acc, item) => acc + item.final_balance,
-		0,
-	);
+
+	const totalDebit = data.reduce((acc, item) => acc + item.debits, 0);
+	const totalCredit = data.reduce((acc, item) => acc + item.credits, 0);
+	const totalBalance = totalDebit - totalCredit;
 
 	return (
 		<div className='w-full mt-10'>
@@ -58,28 +57,31 @@ export default function TrialBalanceTable({
 						</tr>
 					</thead>
 					<tbody>
-						{data.map((trial) => (
-							<tr key={trial.account_plan.id}>
-								<td className='border border-gray-300 px-4 py-2 text-center'>
-									{trial.account_plan.nomenclature}
-								</td>
-								<td className='border border-gray-300 px-4 py-2'>
-									{trial.account_plan.name}
-								</td>
-								<td className='border border-gray-300 px-4 py-2 text-right'>
-									{trial.debits}
-								</td>
-								<td className='border border-gray-300 px-4 py-2 text-right'>
-									{trial.credits}
-								</td>
-								<td className='border border-gray-300 px-4 py-2 text-right'>
-									{trial.initial_balance}
-								</td>
-								<td className='border border-gray-300 px-4 py-2 text-right'>
-									{trial.final_balance}
-								</td>
-							</tr>
-						))}
+						{data.map((trial) => {
+							const balance = trial.debits - trial.credits;
+							return (
+								<tr key={trial.account_plan.id}>
+									<td className='border border-gray-300 px-4 py-2 text-center'>
+										{trial.account_plan.nomenclature}
+									</td>
+									<td className='border border-gray-300 px-4 py-2'>
+										{trial.account_plan.name}
+									</td>
+									<td className='border border-gray-300 px-4 py-2 text-right'>
+										{trial.debits}
+									</td>
+									<td className='border border-gray-300 px-4 py-2 text-right'>
+										{trial.credits}
+									</td>
+									<td className='border border-gray-300 px-4 py-2 text-right'>
+										{balance > 0 ? balance : 0}
+									</td>
+									<td className='border border-gray-300 px-4 py-2 text-right'>
+										{balance < 0 ? Math.abs(balance) : 0}
+									</td>
+								</tr>
+							);
+						})}
 
 						<tr className='font-bold'>
 							<td
@@ -95,10 +97,10 @@ export default function TrialBalanceTable({
 								{totalCredits}
 							</td>
 							<td className='border border-gray-300 px-4 py-2 text-right'>
-								{totalFinalBalance}
+								{totalBalance > 0 ? totalBalance : 0}
 							</td>
 							<td className='border border-gray-300 px-4 py-2 text-right'>
-								{totalFinalBalance - total}
+								{totalBalance < 0 ? Math.abs(totalBalance) : 0}
 							</td>
 						</tr>
 					</tbody>
