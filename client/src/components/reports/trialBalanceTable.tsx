@@ -7,10 +7,8 @@ export default function TrialBalanceTable({
 }) {
 	const totalDebits = data.reduce((acc, item) => acc + item.debits, 0);
 	const totalCredits = data.reduce((acc, item) => acc + item.credits, 0);
-
-	const totalDebit = data.reduce((acc, item) => acc + item.debits, 0);
-	const totalCredit = data.reduce((acc, item) => acc + item.credits, 0);
-	const totalBalance = totalDebit - totalCredit;
+	const totalInital = data.reduce((acc, item) => acc + item.initial_balance, 0);
+	const totalFinal = data.reduce((acc, item) => acc + item.final_balance, 0);
 
 	return (
 		<div className='w-full mt-10'>
@@ -18,54 +16,34 @@ export default function TrialBalanceTable({
 				<table className='w-full border-collapse border border-gray-300 '>
 					<thead>
 						<tr>
-							<th
-								rowSpan={2}
-								className='border border-gray-300 px-4 py-2 w-[10%]'
-							>
-								Nro
-							</th>
-							<th
-								rowSpan={2}
-								className='border border-gray-300 px-4 py-2 w-[20%]'
-							>
+							<th className='border border-gray-300 px-4 py-2 w-[10%]'>Nro</th>
+							<th className='border border-gray-300 px-4 py-2 w-[20%]'>
 								Cuentas
 							</th>
-							<th
-								colSpan={2}
-								className='border border-gray-300 px-4 py-2 w-[30%]'
-							>
-								Sumas
+							<th className='border border-gray-300 px-4 py-2 w-[20%]'>
+								Saldo inicial
 							</th>
-							<th
-								colSpan={2}
-								className='border border-gray-300 px-4 py-2 w-[40%]'
-							>
-								Saldos
-							</th>
-						</tr>
-						<tr>
-							<th className='border border-gray-300 px-4 py-2 w-[15%]'>Debe</th>
-							<th className='border border-gray-300 px-4 py-2 w-[15%]'>
+							<th className='border border-gray-300 px-4 py-2 w-[20%]'>Debe</th>
+							<th className='border border-gray-300 px-4 py-2 w-[20%]'>
 								Haber
 							</th>
 							<th className='border border-gray-300 px-4 py-2 w-[20%]'>
-								Deudor
-							</th>
-							<th className='border border-gray-300 px-4 py-2 w-[20%]'>
-								Acreedor
+								Saldo final
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						{data.map((trial) => {
-							const balance = trial.debits - trial.credits;
 							return (
 								<tr key={trial.account_plan.id}>
 									<td className='border border-gray-300 px-4 py-2 text-center'>
 										{trial.account_plan.nomenclature}
 									</td>
-									<td className='border border-gray-300 px-4 py-2'>
+									<td className='border border-gray-300 px-4 py-2 text-center'>
 										{trial.account_plan.name}
+									</td>
+									<td className='border border-gray-300 px-4 py-2 text-right'>
+										{trial.initial_balance}
 									</td>
 									<td className='border border-gray-300 px-4 py-2 text-right'>
 										{trial.debits}
@@ -74,10 +52,7 @@ export default function TrialBalanceTable({
 										{trial.credits}
 									</td>
 									<td className='border border-gray-300 px-4 py-2 text-right'>
-										{balance > 0 ? balance : 0}
-									</td>
-									<td className='border border-gray-300 px-4 py-2 text-right'>
-										{balance < 0 ? Math.abs(balance) : 0}
+										{trial.final_balance}
 									</td>
 								</tr>
 							);
@@ -91,16 +66,16 @@ export default function TrialBalanceTable({
 								<span>Totales:</span>
 							</td>
 							<td className='border border-gray-300 px-4 py-2 text-right'>
+								{totalInital}
+							</td>
+							<td className='border border-gray-300 px-4 py-2 text-right'>
 								{totalDebits}
 							</td>
 							<td className='border border-gray-300 px-4 py-2 text-right'>
 								{totalCredits}
 							</td>
 							<td className='border border-gray-300 px-4 py-2 text-right'>
-								{totalBalance > 0 ? totalBalance : 0}
-							</td>
-							<td className='border border-gray-300 px-4 py-2 text-right'>
-								{totalBalance < 0 ? Math.abs(totalBalance) : 0}
+								{totalFinal}
 							</td>
 						</tr>
 					</tbody>
