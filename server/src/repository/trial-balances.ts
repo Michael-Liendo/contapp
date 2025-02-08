@@ -17,8 +17,7 @@ export class TrialBalances {
 	): Promise<ITrialBalance[]> {
 		const { company_id, start_date, end_date } = params;
 
-		// Query to get accounts with balance or movements in the period
-		const result = await database<ITrialBalance>('accounts_plan as a')
+		const result = await database('accounts_plan as a')
 			.leftJoin('journal_entries as je', 'a.id', 'je.account_id')
 			.leftJoin('journals as j', 'je.journal_id', 'j.id')
 			.where('a.company_id', company_id)
@@ -28,9 +27,9 @@ export class TrialBalances {
 			])
 			.groupBy('a.id', 'a.nomenclature', 'a.name')
 			.select([
-				'a.id as account_id',
+				'a.id',
 				'a.nomenclature',
-				'a.name as account_name',
+				'a.name',
 				database.raw(
 					'COALESCE(SUM(CASE WHEN j.entry_date < ? THEN je.debit - je.credit ELSE 0 END), 0) as initial_balance',
 					[start_date],
@@ -45,22 +44,25 @@ export class TrialBalances {
 				),
 			]);
 
-		// Calculate final balance
-
-		const formattedResult = result.map((account) => ({
-			account_plan: {
-				id: account.account_id,
-				nomenclature: account.nomenclature,
-				name: account.account_name,
-			},
-			initial_balance: Number(account.initial_balance),
-			debits: Number(account.debits),
-			credits: Number(account.credits),
-			final_balance:
-				Number(account.initial_balance) +
-				Number(account.debits) -
-				Number(account.credits),
-		}));
+		// Format result to match the expected schema
+		const formattedResult = result
+			.map((account) => ({
+				account_plan: {
+					id: account.id,
+					nomenclature: account.nomenclature,
+					name: account.name,
+				},
+				initial_balance: Number(account.initial_balance),
+				debits: Number(account.debits),
+				credits: Number(account.credits),
+				final_balance:
+					Number(account.initial_balance) +
+					Number(account.debits) -
+					Number(account.credits),
+			}))
+			.sort((a, b) =>
+				a.account_plan.nomenclature.localeCompare(b.account_plan.nomenclature),
+			);
 
 		return TrialBalanceSchema.array().parse(formattedResult);
 	}

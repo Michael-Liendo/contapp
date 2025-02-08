@@ -16,7 +16,7 @@ export default function TrialBalanceTable({
 	return (
 		<div className='w-full mt-10'>
 			<div className='overflow-x-auto'>
-				<table className='w-full border-collapse border border-gray-300'>
+				<table className='w-full border-collapse border border-gray-300 '>
 					<thead>
 						<tr>
 							<th
@@ -85,7 +85,9 @@ export default function TrialBalanceTable({
 							<td
 								className='border border-gray-300 px-4 py-2 text-center'
 								colSpan={2}
-							/>
+							>
+								<span>Totales:</span>
+							</td>
 							<td className='border border-gray-300 px-4 py-2 text-right'>
 								{totalDebits}
 							</td>
