@@ -58,7 +58,7 @@ const data = {
 			items: [
 				{
 					title: 'Balance de Comprobación',
-					url: '#',
+					url: PrivateRoutesEnum.ReportsTrialBalance,
 					icon: ClipboardMinus,
 				},
 				{

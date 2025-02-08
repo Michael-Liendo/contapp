@@ -11,13 +11,14 @@ import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 import useAuth from './hooks/useAuth';
 import AccountsPlan from './pages/(app)/AccountsPlan';
 import Home from './pages/(app)/Home';
-import JournalsCreate from './pages/(app)/Journals/Create';
-import JournalsHistory from './pages/(app)/Journals/History';
-import JournalsView from './pages/(app)/Journals/View';
+import JournalsCreate from './pages/(app)/journals/Create';
+import JournalsHistory from './pages/(app)/journals/History';
+import JournalsView from './pages/(app)/journals/View';
 import ManageCompanies from './pages/(app)/ManageCompanies';
 import Profile from './pages/(app)/Profile';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
+import TrialBalance from './pages/(app)/reports/TrialBalance';
 
 const PrivateRoutesWrapper = () => {
 	const { token } = useAuth();
@@ -83,6 +84,11 @@ const PrivateRoutes: JSX.Element[] = [
 		key={PrivateRoutesEnum.JournalsView}
 		path={PrivateRoutesEnum.JournalsView}
 		Component={JournalsView}
+	/>,
+	<Route
+		key={PrivateRoutesEnum.ReportsTrialBalance}
+		path={PrivateRoutesEnum.ReportsTrialBalance}
+		Component={TrialBalance}
 	/>,
 	<Route
 		key={PrivateRoutesEnum.Profile}
