@@ -1,10 +1,12 @@
 import type { ITrialBalance } from '@contapp/shared';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { useRef } from 'react';
+import * as XLSX from 'xlsx';
+import { Button } from '../ui/button';
 
-export default function TrialBalanceTable({
-	data,
-}: {
-	data: ITrialBalance[];
-}) {
+export default function TrialBalanceTable({ data }: { data: ITrialBalance[] }) {
+	const tableRef = useRef<HTMLTableElement>(null);
 	const totalDebits = data.reduce((acc, item) => acc + item.debits, 0);
 	const totalCredits = data.reduce((acc, item) => acc + item.credits, 0);
 	const totalInitial = data.reduce(
@@ -13,10 +15,66 @@ export default function TrialBalanceTable({
 	);
 	const totalFinal = data.reduce((acc, item) => acc + item.final_balance, 0);
 
+	// Función para exportar a Excel
+	const exportToExcel = () => {
+		const ws = XLSX.utils.table_to_sheet(tableRef.current);
+		const wb = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(wb, ws, 'Balance de Comprobación');
+		XLSX.writeFile(wb, 'balance-de-comprobacion.xlsx');
+	};
+
+	// Función para exportar a PDF
+	const exportToPDF = () => {
+		const doc = new jsPDF();
+		doc.text('Balance de Comprobación', 14, 10);
+
+		const tableData = data.map((trial) => [
+			trial.account_plan.nomenclature,
+			trial.account_plan.name,
+			trial.initial_balance.toFixed(2),
+			trial.debits.toFixed(2),
+			trial.credits.toFixed(2),
+			trial.final_balance.toFixed(2),
+		]);
+
+		// Agregar totales a la tabla
+		tableData.push([
+			'Totales:',
+			'',
+			totalInitial.toFixed(2),
+			totalDebits.toFixed(2),
+			totalCredits.toFixed(2),
+			totalFinal.toFixed(2),
+		]);
+
+		autoTable(doc, {
+			head: [
+				['Nro', 'Cuentas', 'Saldo Inicial', 'Debe', 'Haber', 'Saldo Final'],
+			],
+			body: tableData,
+			startY: 20,
+		});
+
+		doc.save('balance-de-comprobacion.pdf');
+	};
 	return (
 		<div className='w-full mt-10'>
+			<div className='flex gap-4 mb-4 justify-end'>
+				<Button
+					onClick={exportToExcel}
+					className='bg-green-500 hover:bg-green-600'
+				>
+					Exportar a Excel
+				</Button>
+				<Button onClick={exportToPDF} className='bg-blue-500 hover:bg-blue-600'>
+					Exportar a PDF
+				</Button>
+			</div>
 			<div className='overflow-x-auto'>
-				<table className='w-full border-collapse border border-gray-300 '>
+				<table
+					ref={tableRef}
+					className='w-full border-collapse border border-gray-300 '
+				>
 					<thead>
 						<tr>
 							<th className='border border-gray-300 px-4 py-2 w-[10%]'>Nro</th>
