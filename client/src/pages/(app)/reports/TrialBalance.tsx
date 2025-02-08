@@ -36,6 +36,7 @@ export default function TrialBalance() {
 
 	return (
 		<div>
+			<h1 className='text-xl'>Balances de Comprobación</h1>
 			<DatePickerWithRange
 				date={dateRange}
 				setDate={(date) => setDateRange(date)}
