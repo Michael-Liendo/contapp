@@ -7,7 +7,10 @@ export default function TrialBalanceTable({
 }) {
 	const totalDebits = data.reduce((acc, item) => acc + item.debits, 0);
 	const totalCredits = data.reduce((acc, item) => acc + item.credits, 0);
-	const totalInital = data.reduce((acc, item) => acc + item.initial_balance, 0);
+	const totalInitial = data.reduce(
+		(acc, item) => acc + item.initial_balance,
+		0,
+	);
 	const totalFinal = data.reduce((acc, item) => acc + item.final_balance, 0);
 
 	return (
@@ -66,7 +69,7 @@ export default function TrialBalanceTable({
 								<span>Totales:</span>
 							</td>
 							<td className='border border-gray-300 px-4 py-2 text-right'>
-								{totalInital}
+								{totalInitial}
 							</td>
 							<td className='border border-gray-300 px-4 py-2 text-right'>
 								{totalDebits}
