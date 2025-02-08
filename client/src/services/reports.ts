@@ -1,5 +1,5 @@
 import fetch from '@/utils/fetch';
-import { TrialBalanceSchema, type ITrialBalanceRequest } from '@contapp/shared';
+import { type ITrialBalanceRequest, TrialBalanceSchema } from '@contapp/shared';
 
 export default class Reports {
 	static async trialBalance(query: ITrialBalanceRequest) {

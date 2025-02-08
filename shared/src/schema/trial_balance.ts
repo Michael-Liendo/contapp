@@ -7,9 +7,11 @@ export const TrialBalanceRequestSchema = z.object({
 		.uuid()
 		.describe('The unique identifier of the company requesting the balance'),
 	start_date: z.coerce
+		.string()
 		.date()
 		.describe('Start date of the period in YYYY-MM-DD format'),
 	end_date: z.coerce
+		.string()
 		.date()
 		.describe('End date of the period in YYYY-MM-DD format'),
 });

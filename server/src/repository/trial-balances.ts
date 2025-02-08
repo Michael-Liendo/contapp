@@ -1,9 +1,9 @@
 import database from './database';
 
 import {
-	TrialBalanceSchema,
 	type ITrialBalance,
 	type ITrialBalanceRequest,
+	TrialBalanceSchema,
 } from '@contapp/shared';
 
 export class TrialBalances {
