@@ -20,7 +20,7 @@ export default function TrialBalanceTable({ data }: { data: ITrialBalance[] }) {
 		const ws = XLSX.utils.table_to_sheet(tableRef.current);
 		const wb = XLSX.utils.book_new();
 		XLSX.utils.book_append_sheet(wb, ws, 'Balance de Comprobación');
-		XLSX.writeFile(wb, 'Trial_Balance.xlsx');
+		XLSX.writeFile(wb, 'balance-de-comprobacion.xlsx');
 	};
 
 	// Función para exportar a PDF
@@ -55,7 +55,7 @@ export default function TrialBalanceTable({ data }: { data: ITrialBalance[] }) {
 			startY: 20,
 		});
 
-		doc.save('Balance de Comprobación.pdf');
+		doc.save('balance-de-comprobacion.pdf');
 	};
 	return (
 		<div className='w-full mt-10'>
