@@ -16,8 +16,17 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { JournalDestinationEnum } from '@contapp/shared';
+import useSEO from '@/hooks/use-seo';
 
 export default function JournalsHistory() {
+	useSEO({
+		title: 'Historial de asientos | Contapp',
+		description:
+			'Vea y gestiona tu historial de asientos contables en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
+		keywords:
+			'contapp, gestionar, operaciones, balances, plan de cuentas, asientos',
+	});
+
 	const { journal_id } = useParams() as { journal_id: string };
 	const { companies } = useCompanyContext();
 

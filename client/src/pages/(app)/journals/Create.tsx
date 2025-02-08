@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/select';
 import { toast } from '@/components/ui/use-toast';
 import { useCompanyContext } from '@/context/CompanyContext';
+import useSEO from '@/hooks/use-seo';
 import Services from '@/services';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import {
@@ -36,6 +37,14 @@ import { useQuery } from 'react-query';
  * Componente para crear o editar un asiento contable.
  */
 export default function CreatePage() {
+	useSEO({
+		title: 'Crear asiento contable | Contapp',
+		description:
+			'Crea un nuevo asiento contable en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
+		keywords:
+			'contapp, gestionar, operaciones, balances, plan de cuentas, asientos',
+	});
+
 	// Estados
 	const { activeCompany } = useCompanyContext(); // Contexto para los datos de la empresa activa
 

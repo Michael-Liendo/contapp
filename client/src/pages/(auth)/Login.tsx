@@ -11,8 +11,16 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
+import useSEO from '@/hooks/use-seo';
 
 export default function LoginPage() {
+	useSEO({
+		title: 'Inicio de sesión | Contapp',
+		description:
+			'Inicie sesión en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
+		keywords:
+			'contapp, gestionar, operaciones, balances, plan de cuentas, login',
+	});
 	const { setToken } = useAuth();
 	const navigate = useNavigate();
 

@@ -3,12 +3,20 @@ import { AccountPlanModalMutate } from '@/components/accounts-plan/modal';
 import { DataTable } from '@/components/table/data-table';
 import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
+import useSEO from '@/hooks/use-seo';
 import Services from '@/services';
 import type { IPaginationResponse } from '@contapp/shared';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 
 export default function AccountsPlan() {
+	useSEO({
+		title: 'Plan de cuentas | Contapp',
+		description:
+			'Vea y gestiona tu plan de cuentas en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
+		keywords:
+			'contapp, gestionar, operaciones, balances, plan de cuentas, cuentas',
+	});
 	const { activeCompany } = useCompanyContext();
 
 	const [creationOpen, setCreationOpen] = useState(false);
