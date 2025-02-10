@@ -9,6 +9,7 @@ export const UserForRegisterSchema = z.object({
 
 export const UserSchema = z.object({
 	id: z.string(),
+	active: z.boolean(),
 	first_name: z.string(),
 	last_name: z.string(),
 	email: z.string().email().describe('unique'),

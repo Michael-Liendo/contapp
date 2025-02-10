@@ -8,6 +8,7 @@ export async function up(knex: Knex): Promise<void> {
 			.unique()
 			.defaultTo(knex.raw('uuid_generate_v4()'))
 			.primary();
+		table.boolean('active').notNullable().defaultTo(true);
 		table.string('first_name').notNullable();
 		table.string('last_name').notNullable();
 		table.string('email').notNullable().unique();
