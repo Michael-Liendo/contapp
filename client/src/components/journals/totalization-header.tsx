@@ -24,7 +24,7 @@ export function TotalizingHeader({
 	return (
 		<div className='flex items-center mt-3 space-x-3'>
 			<div>
-				<span className='font-semibold mr-3'>Total deber:</span>
+				<span className='font-semibold mr-3'>Total debe:</span>
 				<span
 					className={cn('text-xl font-bold text-primary', {
 						'text-red-500': finalTotalCredit !== finalTotalDebit,
