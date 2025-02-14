@@ -7,16 +7,7 @@ import { useParams } from 'react-router';
 import { JournalsEntriesDatagrid } from '@/components/journals/entries-datagrid';
 import { TotalizingHeader } from '@/components/journals/totalization-header';
 import { TextField } from '@/components/text-field';
-import { Label } from '@/components/ui/label';
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select';
 import useSEO from '@/hooks/use-seo';
-import { JournalDestinationEnum } from '@contapp/shared';
 
 export default function JournalsHistory() {
 	useSEO({
@@ -62,23 +53,6 @@ export default function JournalsHistory() {
 					readOnly
 					disabled
 				/>
-
-				<div className='w-full'>
-					<Label>Destino</Label>
-					<Select disabled value={data?.destination}>
-						<SelectTrigger>
-							<SelectValue placeholder='Destino' />
-						</SelectTrigger>
-						<SelectContent id='destination'>
-							<SelectItem value={JournalDestinationEnum.Values.DEBIT}>
-								Debe
-							</SelectItem>
-							<SelectItem value={JournalDestinationEnum.Values.CREDIT}>
-								Crédito
-							</SelectItem>
-						</SelectContent>
-					</Select>
-				</div>
 
 				<TextField
 					readOnly

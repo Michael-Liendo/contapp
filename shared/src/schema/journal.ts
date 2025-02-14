@@ -1,10 +1,6 @@
 import { z } from 'zod';
 import { AccountPlanSchema } from './account_plan';
 
-export const JournalDestination = ['DEBIT', 'CREDIT'] as const;
-
-export const JournalDestinationEnum = z.enum(JournalDestination);
-
 export const JournalSchema = z.object({
 	id: z.string().describe('The unique identifier of the journal'),
 	journal_number: z.number().describe('The journal number'),
@@ -17,9 +13,6 @@ export const JournalSchema = z.object({
 		.string()
 		.nullable()
 		.describe('A brief description of the journal'),
-	destination: JournalDestinationEnum.describe(
-		'The destination of the journal',
-	),
 	entry_date: z.coerce.date().describe('The date of the journal'),
 	created_at: z.coerce
 		.date()

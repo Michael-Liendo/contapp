@@ -25,7 +25,6 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import {
 	type IAccountPlan,
 	type IJournalEntryForCreate,
-	JournalDestinationEnum,
 	JournalForCreateSchema,
 } from '@contapp/shared';
 import { useFormik } from 'formik';
@@ -90,7 +89,6 @@ export default function CreatePage() {
 		useFormik({
 			initialValues: {
 				description: '',
-				destination: JournalDestinationEnum.Values.DEBIT,
 				company_id: activeCompany?.id ?? '',
 				entries: [],
 				entry_date: new Date(),
@@ -184,28 +182,6 @@ export default function CreatePage() {
 						error={errors.description}
 						onChange={handleChange}
 					/>
-
-					<div className='w-full'>
-						<Label htmlFor=''>
-							Destino <span className='text-red-600'>*</span>
-						</Label>
-						<Select
-							value={values.destination}
-							onValueChange={(value) => setFieldValue('destination', value)}
-						>
-							<SelectTrigger>
-								<SelectValue placeholder='Destino' />
-							</SelectTrigger>
-							<SelectContent id='destination'>
-								<SelectItem value={JournalDestinationEnum.Values.DEBIT}>
-									Debe
-								</SelectItem>
-								<SelectItem value={JournalDestinationEnum.Values.CREDIT}>
-									Crédito
-								</SelectItem>
-							</SelectContent>
-						</Select>
-					</div>
 
 					<TextField
 						label='Fecha del asiento'

@@ -19,7 +19,6 @@ export class Journals {
 			.insert({
 				company_id: dto.company_id,
 				description: dto.description,
-				destination: dto.destination,
 				entry_date: dto.entry_date,
 			})
 			.returning('*');
