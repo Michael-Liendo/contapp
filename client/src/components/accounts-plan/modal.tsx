@@ -135,6 +135,19 @@ export function AccountPlanModalMutate({
 					</DialogHeader>
 					<div>
 						<TextField
+							label='Código de cuenta contable'
+							type='text'
+							id='nomenclature'
+							name='nomenclature'
+							placeholder='Nomenclatura del plan de cuentas'
+							autoComplete='off'
+							value={values.nomenclature}
+							error={errors.nomenclature}
+							onChange={handleChange}
+							required
+						/>
+
+						<TextField
 							label='Nombre'
 							type='text'
 							id='name'
@@ -143,18 +156,6 @@ export function AccountPlanModalMutate({
 							autoComplete='off'
 							value={values.name}
 							error={errors.name}
-							onChange={handleChange}
-							required
-						/>
-						<TextField
-							label='Nomenclatura'
-							type='text'
-							id='nomenclature'
-							name='nomenclature'
-							placeholder='Nomenclatura del plan de cuentas'
-							autoComplete='off'
-							value={values.nomenclature}
-							error={errors.nomenclature}
 							onChange={handleChange}
 							required
 						/>
