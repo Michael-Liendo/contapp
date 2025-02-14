@@ -1,3 +1,4 @@
+import { NeedCompany } from '@/components/need-company';
 import TrialBalanceTable from '@/components/reports/trialBalanceTable';
 import { DatePickerWithRange } from '@/components/ui/date-picker-with-range';
 import { useCompanyContext } from '@/context/CompanyContext';
@@ -38,6 +39,8 @@ export default function TrialBalance() {
 			}),
 		enabled: !!dateRange?.from && !!dateRange?.to && !!activeCompany,
 	});
+
+	if (!activeCompany?.id) return <NeedCompany />;
 
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>Error: {String(error)}</div>;

@@ -7,6 +7,7 @@ import type {
 	TableConfig,
 } from '@/components/datatable/types/datatable';
 import { TotalizingHeader } from '@/components/journals/totalization-header';
+import { NeedCompany } from '@/components/need-company';
 import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -150,6 +151,8 @@ export default function CreatePage() {
 	useEffect(() => {
 		setFieldValue('company_id', activeCompany?.id ?? '');
 	}, [activeCompany?.id]);
+
+	if (!activeCompany?.id) return <NeedCompany />;
 
 	return (
 		<div>

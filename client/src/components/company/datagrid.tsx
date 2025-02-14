@@ -5,7 +5,7 @@ import type { ICompany } from '@contapp/shared';
 import type { ColumnDef } from '@tanstack/react-table';
 import { CompanyModalMutate } from './modal';
 
-const masterName = 'company';
+const masterName = 'companies';
 
 export const CompanyDatagrid: ColumnDef<ICompany>[] = [
 	{

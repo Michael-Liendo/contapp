@@ -1,5 +1,6 @@
 import { AccountPlanDatagrid } from '@/components/accounts-plan/datagrid';
 import { AccountPlanModalMutate } from '@/components/accounts-plan/modal';
+import { NeedCompany } from '@/components/need-company';
 import { DataTable } from '@/components/table/data-table';
 import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
@@ -46,7 +47,7 @@ export default function AccountsPlan() {
 		},
 	);
 
-	if (!activeCompany?.id) return null;
+	if (!activeCompany?.id) return <NeedCompany />;
 
 	return (
 		<div>

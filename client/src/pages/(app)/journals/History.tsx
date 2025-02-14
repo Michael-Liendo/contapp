@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { PrivateRoutesEnum } from '@/data/routesEnums';
 import useSEO from '@/hooks/use-seo';
 import type { IPaginationResponse } from '@contapp/shared';
+import { NeedCompany } from '@/components/need-company';
 
 export default function JournalsHistory() {
 	useSEO({
@@ -43,6 +44,8 @@ export default function JournalsHistory() {
 			enabled: !!activeCompany?.id,
 		},
 	);
+
+	if (!activeCompany?.id) return <NeedCompany />;
 
 	return (
 		<div>
