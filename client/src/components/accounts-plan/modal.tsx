@@ -148,7 +148,7 @@ export function AccountPlanModalMutate({
 						/>
 
 						<TextField
-							label='Nombre'
+							label='Nombre de cuenta contable'
 							type='text'
 							id='name'
 							name='name'
