@@ -11,13 +11,19 @@ export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 	{
 		accessorKey: 'nomenclature',
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title='Nomenclatura' />
+			<DataTableColumnHeader
+				column={column}
+				title='Código de cuenta contable'
+			/>
 		),
 	},
 	{
 		accessorKey: 'name',
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title='Nombre' />
+			<DataTableColumnHeader
+				column={column}
+				title='Nombre de cuenta contable'
+			/>
 		),
 	},
 	{
