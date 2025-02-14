@@ -56,7 +56,7 @@ export default function TrialBalance() {
 			{data && data.length > 0 ? (
 				<TrialBalanceTable data={data} />
 			) : (
-				<div>No data available for the selected period.</div>
+				<div>No hay datos para mostrar</div>
 			)}
 		</div>
 	);
