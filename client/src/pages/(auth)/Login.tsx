@@ -32,7 +32,10 @@ export default function LoginPage() {
 			validateOnBlur: false,
 			onSubmit: async (values) => {
 				try {
-					const results = await Services.auth.login(values);
+					const results = await Services.auth.login({
+						email: values.email.toLowerCase(),
+						password: values.password,
+					});
 					setToken(results.data.token);
 					navigate(PrivateRoutesEnum.Home);
 					toast({
