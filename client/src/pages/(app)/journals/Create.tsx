@@ -10,14 +10,6 @@ import { TotalizingHeader } from '@/components/journals/totalization-header';
 import { NeedCompany } from '@/components/need-company';
 import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select';
 import { toast } from '@/components/ui/use-toast';
 import { useCompanyContext } from '@/context/CompanyContext';
 import useSEO from '@/hooks/use-seo';

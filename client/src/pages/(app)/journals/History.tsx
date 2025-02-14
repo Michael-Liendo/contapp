@@ -6,11 +6,11 @@ import { DataTable } from '@/components/table/data-table';
 import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
 
+import { NeedCompany } from '@/components/need-company';
 import { Label } from '@/components/ui/label';
 import { PrivateRoutesEnum } from '@/data/routesEnums';
 import useSEO from '@/hooks/use-seo';
 import type { IPaginationResponse } from '@contapp/shared';
-import { NeedCompany } from '@/components/need-company';
 
 export default function JournalsHistory() {
 	useSEO({
