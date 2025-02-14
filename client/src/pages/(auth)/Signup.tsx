@@ -32,7 +32,10 @@ export default function Signup() {
 			validateOnBlur: false,
 			onSubmit: async (values) => {
 				try {
-					const results = await Services.auth.register(values);
+					const results = await Services.auth.register({
+						...values,
+						email: values.email.toLowerCase(),
+					});
 					setToken(results.data.token);
 					navigate(PrivateRoutesEnum.Home);
 					toast({

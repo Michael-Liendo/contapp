@@ -5,12 +5,12 @@ export const formatCurrencyValue = (
 ) => {
 	// catch the infinity for return the 0
 	if (value === Number.POSITIVE_INFINITY || value === Number.NEGATIVE_INFINITY)
-		return `${currency}${(0).toLocaleString('US', {
+		return `${currency}${(0).toLocaleString('en-US', {
 			minimumFractionDigits: decimalDigits ?? 2,
 			maximumFractionDigits: decimalDigits ?? 2,
 		})}`;
 
-	return `${currency}${(value || 0).toLocaleString('US', {
+	return `${currency}${(value || 0).toLocaleString('en-US', {
 		minimumFractionDigits: decimalDigits ?? 2,
 		maximumFractionDigits: decimalDigits ?? 2,
 	})}`;

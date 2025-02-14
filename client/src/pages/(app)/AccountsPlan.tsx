@@ -46,6 +46,8 @@ export default function AccountsPlan() {
 		},
 	);
 
+	if (!activeCompany?.id) return null;
+
 	return (
 		<div>
 			<div className='flex justify-between items-center mb-5'>
