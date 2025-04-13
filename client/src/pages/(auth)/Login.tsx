@@ -14,6 +14,7 @@ import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
 import Divider from '@/components/divider';
 import { useCallback } from 'react';
+import { signInWithCustomToken } from 'firebase/auth';
 
 export default function LoginPage() {
 	useSEO({
@@ -39,7 +40,11 @@ export default function LoginPage() {
 						password: values.password,
 					});
 					setToken(results.token);
-					navigate(PrivateRoutesEnum.Home);
+
+					await Services.firebase.signInWithCustomToken(results.fbToken);
+
+					await Services.firebase.logEvent('login', { email: values.email });
+
 					toast({
 						description: (
 							<div className='flex items-center justify-between w-full space-x-4'>
@@ -48,6 +53,8 @@ export default function LoginPage() {
 							</div>
 						),
 					});
+
+					navigate(PrivateRoutesEnum.Home);
 				} catch (e) {
 					toast({
 						description: (
