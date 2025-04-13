@@ -4,6 +4,7 @@ dotenv.config();
 import cors from '@fastify/cors';
 import Fastify from 'fastify';
 
+import { EnvConfig } from './config/env';
 import database from './repository/database';
 import routes from './routes';
 
@@ -12,7 +13,7 @@ const fastify = Fastify();
 
 // Cors
 fastify.register(cors, {
-	origin: process.env?.CORS_ORIGIN?.split(',') || '*',
+	origin: EnvConfig().CORS_ORIGIN.split(','),
 });
 
 // Declare a route
@@ -36,8 +37,8 @@ database
 // Run the server!
 fastify.listen(
 	{
-		port: Number(process.env.PORT) || 3000,
-		host: process.env.HOST || '127.0.0.1',
+		port: Number(EnvConfig().PORT),
+		host: EnvConfig().HOST,
 	},
 	(err, address) => {
 		if (err) {

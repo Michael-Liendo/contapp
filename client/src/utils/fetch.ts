@@ -1,3 +1,5 @@
+import { EnvConfig } from '@/config/env';
+
 const Fetch = () => {
 	return async (url: string, options?: RequestInit) => {
 		const defaultOptions: { Authorization?: string } = {};
@@ -5,7 +7,7 @@ const Fetch = () => {
 		if (token) {
 			defaultOptions.Authorization = `Bearer ${token}`;
 		}
-		const apiUrl = `${import.meta.env.VITE_API_URL}/api${url}`;
+		const apiUrl = `${EnvConfig().apiUrl}/api${url}`;
 		const requestOptions = {
 			...options,
 			headers: new Headers({

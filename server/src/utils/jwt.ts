@@ -1,4 +1,5 @@
 import jwt, { type JwtPayload } from 'jsonwebtoken';
+import { EnvConfig } from '../config/env';
 import { UnauthorizedError } from './errorHandler';
 
 export class Jwt {
@@ -6,7 +7,7 @@ export class Jwt {
 		return new Promise((resolve, reject) => {
 			jwt.sign(
 				payload,
-				process.env.JWT_PRIVATE_KEY as string,
+				EnvConfig().JWT_PRIVATE_KEY as string,
 				{ expiresIn: '20d' },
 				(err, token) => {
 					if (err) {
@@ -23,7 +24,7 @@ export class Jwt {
 		try {
 			const userToken = jwt.verify(
 				token,
-				process.env.JWT_PRIVATE_KEY as string,
+				EnvConfig().JWT_PRIVATE_KEY as string,
 			);
 			return userToken as JwtPayload;
 		} catch (_error) {
