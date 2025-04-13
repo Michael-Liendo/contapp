@@ -3,8 +3,8 @@ import { BadRequestError, UnauthorizedError } from '../utils/errorHandler';
 import { comparePassword, hashPassword } from '../utils/password';
 
 import type { IUser, IUserForLogin, IUserForRegister } from '@contapp/shared';
-import { Jwt } from '../utils/jwt';
 import Services from '.';
+import { Jwt } from '../utils/jwt';
 
 export default class Auth {
 	static async login(data: IUserForLogin) {

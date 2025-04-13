@@ -1,6 +1,6 @@
 import { credential } from 'firebase-admin';
-import type { AppOptions } from 'firebase-admin/app';
 import * as firebaseAdmin from 'firebase-admin';
+import type { AppOptions } from 'firebase-admin/app';
 
 const credentials = credential.cert(
 	require('../../firebase-service-account.json'),
