@@ -22,10 +22,9 @@ export default class Users {
 				throw new BadRequestError('Invalid password');
 			}
 			const hashedPassword = await hashPassword(userUpdates.password);
-			// remove old_password from userUpdates
 			userUpdates.password = hashedPassword;
 		}
-		const { old_password, ...userToUpdate } = userUpdates;
+		const { old_password: removedValue, ...userToUpdate } = userUpdates;
 
 		const updated = await Repository.users.updateUser(id, userToUpdate);
 		return updated;
