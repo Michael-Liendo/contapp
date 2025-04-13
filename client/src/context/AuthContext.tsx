@@ -23,7 +23,6 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 	);
 
 	const { data: user, isLoading } = useQuery(['user'], async () => {
-		if (!token) return;
 		const user = await Services.users.me();
 		return user;
 	});

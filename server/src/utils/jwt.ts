@@ -1,7 +1,7 @@
+import { OAuth2Client } from 'google-auth-library';
 import jwt, { type JwtPayload } from 'jsonwebtoken';
 import { EnvConfig } from '../config/env';
 import { UnauthorizedError } from './errorHandler';
-import { OAuth2Client } from 'google-auth-library';
 
 export class Jwt {
 	static createToken(payload: object): Promise<string> {

@@ -8,13 +8,13 @@ import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
+import { EnvConfig } from '@/config/env';
 import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import useSEO from '@/hooks/use-seo';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { type ISignInWithProvider, UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
-import { EnvConfig } from '@/config/env';
 
 export default function LoginPage() {
 	useSEO({
