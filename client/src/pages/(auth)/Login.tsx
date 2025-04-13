@@ -38,7 +38,7 @@ export default function LoginPage() {
 						email: values.email.toLowerCase(),
 						password: values.password,
 					});
-					setToken(results.data.token);
+					setToken(results.token);
 					navigate(PrivateRoutesEnum.Home);
 					toast({
 						description: (
