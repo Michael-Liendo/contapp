@@ -25,7 +25,7 @@ export default class Auth {
 
 			const response = await request.json();
 
-			return response;
+			return response.data;
 		} catch (error) {
 			console.error(error);
 		}
