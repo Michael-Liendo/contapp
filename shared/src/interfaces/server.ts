@@ -45,3 +45,17 @@ export interface IPaginationResponse {
 	hasPreviousPage: boolean;
 	hasNextPage: boolean;
 }
+
+export interface IGoogleLoginResponse {
+	accessToken: { token: string };
+	idToken: string;
+	profile: {
+		email: string;
+		familyName: string;
+		givenName: string;
+		id: string;
+		name: string;
+		imageUrl: string;
+	};
+	responseType: string;
+}

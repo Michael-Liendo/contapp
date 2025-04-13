@@ -1,4 +1,8 @@
-import type { IUserForLogin, IUserForRegister } from '@contapp/shared';
+import type {
+	IGoogleLoginResponse,
+	IUserForLogin,
+	IUserForRegister,
+} from '@contapp/shared';
 import fetch from '../utils/fetch';
 
 export default class Auth {
@@ -19,6 +23,21 @@ export default class Auth {
 	static async login(data: IUserForLogin) {
 		try {
 			const request = await fetch('/auth/login', {
+				method: 'POST',
+				body: JSON.stringify(data),
+			});
+
+			const response = await request.json();
+
+			return response.data;
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	static async signInWithProvider(data: IGoogleLoginResponse) {
+		try {
+			const request = await fetch('/auth/login-provider', {
 				method: 'POST',
 				body: JSON.stringify(data),
 			});

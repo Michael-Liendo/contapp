@@ -11,7 +11,7 @@ import { toast } from '@/components/ui/use-toast';
 import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import useSEO from '@/hooks/use-seo';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
-import { UserLoginSchema } from '@contapp/shared';
+import { IGoogleLoginResponse, UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
 
@@ -78,14 +78,15 @@ export default function LoginPage() {
 
 		const res = await SocialLogin.login({
 			provider: 'google',
-			options: {
-				scopes: ['email', 'profile'],
-				forceRefreshToken: true,
-			},
+			options: { scopes: ['email', 'profile'], forceRefreshToken: true },
 		});
+		console.log(res.result);
 
-		console.log(res);
+		const results = await Services.auth.signInWithProvider(
+			res.result as IGoogleLoginResponse,
+		);
 	};
+
 	return (
 		<div className='min-h-screen grid grid-cols-1 lg:grid-cols-2'>
 			<div className='flex flex-col justify-center items-center p-8'>
