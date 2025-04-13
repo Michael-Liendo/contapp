@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import type { Knex } from 'knex';
+import { EnvConfig } from '../config/env';
 
 dotenv.config();
 
@@ -7,20 +8,20 @@ const knexConfig: { [key: string]: Knex.Config } = {
 	development: {
 		client: 'pg',
 		connection: {
-			host: process.env.POSTGRES_HOST,
-			user: process.env.POSTGRES_USER,
-			password: process.env.POSTGRES_PASSWORD,
-			database: process.env.POSTGRES_DB,
+			host: EnvConfig().POSTGRES_HOST,
+			user: EnvConfig().POSTGRES_USER,
+			password: EnvConfig().POSTGRES_PASSWORD,
+			database: EnvConfig().POSTGRES_DB,
 		},
 		pool: { min: 0, max: 10 },
 	},
 	production: {
 		client: 'pg',
 		connection: {
-			host: process.env.POSTGRES_HOST,
-			user: process.env.POSTGRES_USER,
-			password: process.env.POSTGRES_PASSWORD,
-			database: process.env.POSTGRES_DB,
+			host: EnvConfig().POSTGRES_HOST,
+			user: EnvConfig().POSTGRES_USER,
+			password: EnvConfig().POSTGRES_PASSWORD,
+			database: EnvConfig().POSTGRES_DB,
 			ssl: {
 				rejectUnauthorized: false,
 			},
@@ -29,4 +30,4 @@ const knexConfig: { [key: string]: Knex.Config } = {
 	},
 };
 
-export default knexConfig[process.env.NODE_ENV || 'development'];
+export default knexConfig[EnvConfig().NODE_ENV];
