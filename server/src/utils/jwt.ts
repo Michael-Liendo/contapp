@@ -46,7 +46,6 @@ export class Jwt {
 
 			const email = payload?.email ?? '';
 
-			console.log('here', payload);
 			return email;
 		} catch (_error) {
 			throw new UnauthorizedError('INVALID_TOKEN');

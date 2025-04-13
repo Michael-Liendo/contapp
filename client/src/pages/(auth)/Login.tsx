@@ -84,6 +84,23 @@ export default function LoginPage() {
 		const results = await Services.auth.signInWithProvider(
 			res as unknown as ISignInWithProvider,
 		);
+
+		setToken(results.token);
+
+		await Services.firebase.signInWithCustomToken(results.fbToken);
+
+		await Services.firebase.logEvent('login', { email: values.email });
+
+		toast({
+			description: (
+				<div className='flex items-center justify-between w-full space-x-4'>
+					<Check className='text-green-600 ml-auto' />
+					<span>Inicio de sesión exitoso!</span>
+				</div>
+			),
+		});
+
+		navigate(PrivateRoutesEnum.Home);
 	};
 
 	return (
