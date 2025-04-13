@@ -1,5 +1,5 @@
 import type {
-	IGoogleLoginResponse,
+	ISignInWithProvider,
 	IUserForLogin,
 	IUserForRegister,
 } from '@contapp/shared';
@@ -35,7 +35,7 @@ export default class Auth {
 		}
 	}
 
-	static async signInWithProvider(data: IGoogleLoginResponse) {
+	static async signInWithProvider(data: ISignInWithProvider) {
 		try {
 			const request = await fetch('/auth/login-provider', {
 				method: 'POST',

@@ -11,7 +11,7 @@ import { toast } from '@/components/ui/use-toast';
 import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import useSEO from '@/hooks/use-seo';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
-import { IGoogleLoginResponse, UserLoginSchema } from '@contapp/shared';
+import { type ISignInWithProvider, UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
 
@@ -80,10 +80,9 @@ export default function LoginPage() {
 			provider: 'google',
 			options: { scopes: ['email', 'profile'], forceRefreshToken: true },
 		});
-		console.log(res.result);
 
 		const results = await Services.auth.signInWithProvider(
-			res.result as IGoogleLoginResponse,
+			res as unknown as ISignInWithProvider,
 		);
 	};
 
