@@ -1,6 +1,6 @@
 import jwt, { type JwtPayload } from 'jsonwebtoken';
-import { UnauthorizedError } from './errorHandler';
 import { EnvConfig } from '../config/env';
+import { UnauthorizedError } from './errorHandler';
 
 export class Jwt {
 	static createToken(payload: object): Promise<string> {
