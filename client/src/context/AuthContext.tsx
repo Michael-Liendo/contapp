@@ -1,6 +1,6 @@
 import type { IUser } from '@contapp/shared';
 import { createContext, useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import Services from '../services';
 
 export interface AuthContextProps {
@@ -16,8 +16,6 @@ export const AuthContext = createContext<AuthContextProps | undefined>(
 );
 
 export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
-	const queryClient = useQueryClient();
-
 	const [token, setToken] = useState<string | undefined>(
 		localStorage.getItem('token') ?? undefined,
 	);
