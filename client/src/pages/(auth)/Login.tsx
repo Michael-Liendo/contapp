@@ -1,7 +1,7 @@
+import { SocialLogin } from '@capgo/capacitor-social-login';
 import { useFormik } from 'formik';
 import { Check, GalleryVerticalEnd, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { SocialLogin } from '@capgo/capacitor-social-login';
 
 import Divider from '@/components/divider';
 import { TextField } from '@/components/text-field';
@@ -14,7 +14,6 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
-import { useEffect } from 'react';
 
 export default function LoginPage() {
 	useSEO({
