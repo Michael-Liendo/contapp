@@ -8,13 +8,19 @@ import Services from '.';
 
 export default class Auth {
 	static async login(data: IUserForLogin) {
-		const user = await Repository.users.getUserByEmail(data.email);
+		const exitsUser = await Repository.users.getUserByEmail(data.email);
 
-		if (!user) {
+		if (!exitsUser) {
 			throw new UnauthorizedError('UnauthorizedError');
 		}
 
-		const { password, ...userWithoutPassword } = user as Required<IUser>;
+		const fbExitsUser = await Services.firebase.getUserByEmail(data.email);
+
+		if (!fbExitsUser && exitsUser) {
+			await Services.firebase.createUser(exitsUser);
+		}
+
+		const { password, ...userWithoutPassword } = exitsUser as Required<IUser>;
 
 		const isCorrectPassword = await comparePassword(data.password, password);
 
@@ -32,9 +38,9 @@ export default class Auth {
 	static async register(data: IUserForRegister) {
 		const { first_name, last_name, email, password } = data;
 
-		const user = await Repository.users.getUserByEmail(email);
+		const existsUser = await Repository.users.getUserByEmail(email);
 
-		if (user) {
+		if (existsUser) {
 			throw new BadRequestError('Email already exists', {
 				code: 'EMAIL_ALREADY_EXISTS',
 				path: 'email',
@@ -51,13 +57,14 @@ export default class Auth {
 			password: hashedPassword,
 		};
 
-		const id = await Repository.users.createUser(registeredUser);
+		const user = await Repository.users.createUser(registeredUser);
+		await Services.firebase.createUser(user);
 
 		const token = await Auth.login({
 			email: data.email,
 			password: data.password,
 		});
 
-		return { id, token };
+		return { user, token: token, fbToken: token.fbToken };
 	}
 }

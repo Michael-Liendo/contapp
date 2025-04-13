@@ -29,12 +29,12 @@ export class Users {
 	 * @param userDTO IUserForRegister
 	 * @returns string id
 	 */
-	static async createUser(userDTO: IUserForRegister): Promise<string> {
+	static async createUser(userDTO: IUserForRegister): Promise<IUser> {
 		const [user] = await database<IUser>('users')
 			.insert(userDTO)
-			.returning('id');
+			.returning('*');
 		if (!user) throw new InternalServerError('Error creating user');
-		return user.id;
+		return user;
 	}
 
 	/**
