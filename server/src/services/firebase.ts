@@ -17,7 +17,7 @@ export class FirebaseService {
 		try {
 			const user = await app.auth().getUserByEmail(email);
 			return user.toJSON();
-		} catch (error) {
+		} catch (_error) {
 			return undefined;
 		}
 	}
