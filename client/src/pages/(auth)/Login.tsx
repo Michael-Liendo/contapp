@@ -12,6 +12,8 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
+import Divider from '@/components/divider';
+import { useCallback } from 'react';
 
 export default function LoginPage() {
 	useSEO({
@@ -110,6 +112,15 @@ export default function LoginPage() {
 								{isSubmitting ? 'Cargando...' : 'Entrar'}
 							</Button>
 						</form>
+						<Divider className='mt-4'>continua con</Divider>
+						<div className='flex items-center justify-center gap-4'>
+							<Button variant={'ghost'} size={'icon'}>
+								G
+							</Button>
+							<Button variant={'ghost'} size={'icon'}>
+								A
+							</Button>
+						</div>
 					</CardContent>
 				</Card>
 
