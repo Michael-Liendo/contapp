@@ -22,18 +22,24 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 		localStorage.getItem('token') ?? undefined,
 	);
 
-	const { data: user, isLoading } = useQuery(['user'], async () => {
+	const {
+		data: user,
+		isLoading,
+		refetch,
+	} = useQuery(['user'], async () => {
+		if (!token) return;
 		const user = await Services.users.me();
 		return user;
 	});
 
 	useEffect(() => {
-		queryClient.invalidateQueries('user');
+		refetch();
 	}, [token]);
 
 	const updateToken = async (token: string) => {
 		localStorage.setItem('token', token);
 		setToken(token);
+		refetch();
 	};
 
 	const logout = async () => {
