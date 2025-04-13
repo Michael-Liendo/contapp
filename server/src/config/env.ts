@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 const {
 	NODE_ENV = 'development',
 	PORT = 3000,
@@ -9,6 +12,8 @@ const {
 	POSTGRES_USER = 'user',
 	POSTGRES_DB = 'server-app',
 	HOST = '127.0.0.1',
+	FIREBASE_PRIVATE_KEY,
+	FIREBASE_CLIENT_EMAIL,
 } = process.env;
 
 export const EnvConfig = () => {
@@ -24,6 +29,8 @@ export const EnvConfig = () => {
 			POSTGRES_PASSWORD,
 			POSTGRES_USER,
 			POSTGRES_DB,
+			FIREBASE_PRIVATE_KEY,
+			FIREBASE_CLIENT_EMAIL,
 		};
 	}
 
@@ -38,5 +45,7 @@ export const EnvConfig = () => {
 		POSTGRES_PASSWORD,
 		POSTGRES_USER,
 		POSTGRES_DB,
+		FIREBASE_PRIVATE_KEY,
+		FIREBASE_CLIENT_EMAIL,
 	};
 };
