@@ -1,13 +1,10 @@
 import { credential } from 'firebase-admin';
 import type { AppOptions } from 'firebase-admin/app';
 import * as firebaseAdmin from 'firebase-admin';
-import { EnvConfig } from './env';
 
-const credentials = credential.cert({
-	projectId: 'project-for-create-app',
-	privateKey: EnvConfig().FIREBASE_PRIVATE_KEY,
-	clientEmail: EnvConfig().FIREBASE_CLIENT_EMAIL,
-});
+const credentials = credential.cert(
+	require('../../firebase-service-account.json'),
+);
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
