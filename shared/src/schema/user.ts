@@ -14,6 +14,8 @@ export const UserSchema = z.object({
 	last_name: z.string(),
 	email: z.string().email().describe('unique'),
 	password: z.string().optional(),
+	terms_accepted: z.boolean(),
+	email_confirmed_at: z.coerce.date(),
 	created_at: z.coerce.date(),
 	updated_at: z.coerce.date(),
 });
