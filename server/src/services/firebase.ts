@@ -16,7 +16,7 @@ export class FirebaseService {
 	static async getUserByEmail(email: string) {
 		try {
 			const user = await app.auth().getUserByEmail(email);
-			return user;
+			return user.toJSON();
 		} catch (error) {
 			return undefined;
 		}
