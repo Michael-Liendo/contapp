@@ -13,6 +13,8 @@ export async function up(knex: Knex): Promise<void> {
 		table.string('last_name').notNullable();
 		table.string('email').notNullable().unique();
 		table.string('password').notNullable();
+		table.boolean('terms_accepted').notNullable().defaultTo(false);
+		table.timestamp('email_confirmed_at').nullable();
 		table.timestamps(true, true);
 	});
 }
