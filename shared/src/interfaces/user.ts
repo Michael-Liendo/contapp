@@ -6,10 +6,7 @@ import type {
 	UserSchema,
 } from '../schema';
 
-export interface IUserForLogin extends z.infer<typeof UserLoginSchema> {
-	email: string;
-	password: string;
-}
+export interface IUserForLogin extends z.infer<typeof UserLoginSchema> {}
 
 export interface ILoggedInUser {
 	token: string;
