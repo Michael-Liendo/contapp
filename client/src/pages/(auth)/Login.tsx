@@ -13,8 +13,6 @@ import { UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
 import Divider from '@/components/divider';
-import { useCallback } from 'react';
-import { signInWithCustomToken } from 'firebase/auth';
 
 export default function LoginPage() {
 	useSEO({
@@ -69,6 +67,7 @@ export default function LoginPage() {
 			},
 		});
 
+	const googleSignIn = async () => {};
 	return (
 		<div className='min-h-screen grid grid-cols-1 lg:grid-cols-2'>
 			<div className='flex flex-col justify-center items-center p-8'>
@@ -121,7 +120,7 @@ export default function LoginPage() {
 						</form>
 						<Divider className='mt-4'>continua con</Divider>
 						<div className='flex items-center justify-center gap-4'>
-							<Button variant={'ghost'} size={'icon'}>
+							<Button variant={'ghost'} size={'icon'} onClick={googleSignIn}>
 								G
 							</Button>
 							<Button variant={'ghost'} size={'icon'}>
