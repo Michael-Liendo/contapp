@@ -1,6 +1,6 @@
 import { UserForRegisterSchema, UserLoginSchema } from '@contapp/shared';
 
-import { login, register } from '../controllers/auth';
+import { login, provider, register } from '../controllers/auth';
 import requestValidation from '../utils/requestValidation';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
@@ -15,6 +15,14 @@ export default function auth(
 		url: '/login',
 		preValidation: requestValidation(UserLoginSchema),
 		handler: login,
+	});
+
+	fastify.route({
+		method: 'POST',
+		url: '/provider',
+		// todo: validate provider
+		// preValidation: requestValidation(UserLoginSchema),
+		handler: provider,
 	});
 
 	fastify.route({

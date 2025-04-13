@@ -12,6 +12,7 @@ const {
 	POSTGRES_USER = 'user',
 	POSTGRES_DB = 'server-app',
 	HOST = '127.0.0.1',
+	GOOGLE_WEB_CLIENT_ID = '236430944478-v1nsr5mai4ertrhfcmbuemofndg8i5j9.apps.googleusercontent.com',
 	FIREBASE_PRIVATE_KEY,
 	FIREBASE_CLIENT_EMAIL,
 } = process.env;
@@ -29,6 +30,7 @@ export const EnvConfig = () => {
 			POSTGRES_PASSWORD,
 			POSTGRES_USER,
 			POSTGRES_DB,
+			GOOGLE_WEB_CLIENT_ID,
 			FIREBASE_PRIVATE_KEY,
 			FIREBASE_CLIENT_EMAIL,
 		};
@@ -45,6 +47,7 @@ export const EnvConfig = () => {
 		POSTGRES_PASSWORD,
 		POSTGRES_USER,
 		POSTGRES_DB,
+		GOOGLE_WEB_CLIENT_ID,
 		FIREBASE_PRIVATE_KEY,
 		FIREBASE_CLIENT_EMAIL,
 	};

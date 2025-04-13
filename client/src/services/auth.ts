@@ -37,7 +37,7 @@ export default class Auth {
 
 	static async signInWithProvider(data: ISignInWithProvider) {
 		try {
-			const request = await fetch('/auth/login-provider', {
+			const request = await fetch('/auth/provider', {
 				method: 'POST',
 				body: JSON.stringify(data),
 			});

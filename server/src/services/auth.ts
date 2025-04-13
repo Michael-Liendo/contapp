@@ -35,6 +35,48 @@ export default class Auth {
 		return { token, fbToken };
 	}
 
+	static async loginProvider(data: Record<string, unknown>, provider: string) {
+		if (provider === 'google') {
+			const googleData = data as unknown as {
+				accessToken: { token: string };
+				idToken: string;
+				profile: {
+					email: string;
+					familyName: string;
+					givenName: string;
+					id: string;
+					name: string;
+					imageUrl: string;
+				};
+				responseType: string;
+			};
+
+			const email = await Jwt.verifyGoogleToken(googleData.idToken, true);
+
+			const user = await Repository.users.getUserByEmail(email);
+
+			if (!user) {
+				// todo: create user
+				/* 	user = await Repository.users.createUser({
+					first_name: googleData.profile.givenName,
+					last_name: googleData.profile.familyName,
+					email: googleData.profile.email.toLowerCase(),
+				});
+				await Services.firebase.createUser(user); */
+				throw new BadRequestError('Email not found', {
+					code: 'EMAIL_NOT_FOUND',
+					path: 'email',
+					message: 'Email not found',
+				});
+			}
+
+			const token = await Jwt.createToken({ id: user.id });
+			const fbToken = await Services.firebase.createCustomToken(user.id);
+
+			return { token, fbToken };
+		}
+	}
+
 	static async register(data: IUserForRegister) {
 		const { first_name, last_name, email, password } = data;
 

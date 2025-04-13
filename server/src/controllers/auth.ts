@@ -1,6 +1,10 @@
 import Services from '../services';
 
-import type { IUserForLogin, IUserForRegister } from '@contapp/shared';
+import type {
+	ISignInWithProvider,
+	IUserForLogin,
+	IUserForRegister,
+} from '@contapp/shared';
 import type { Reply, Request } from '../types';
 
 export async function login(request: Request, reply: Reply) {
@@ -10,6 +14,16 @@ export async function login(request: Request, reply: Reply) {
 		email,
 		password,
 	});
+
+	return reply
+		.code(201)
+		.send({ success: true, message: 'User logged', data: tokens });
+}
+
+export async function provider(request: Request, reply: Reply) {
+	const body = request.body as ISignInWithProvider;
+
+	const tokens = await Services.auth.loginProvider(body.result, body.provider);
 
 	return reply
 		.code(201)
