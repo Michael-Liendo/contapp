@@ -6,14 +6,14 @@ import type { Reply, Request } from '../types';
 export async function login(request: Request, reply: Reply) {
 	const { email, password } = request.body as IUserForLogin;
 
-	const user = await Services.auth.login({
+	const tokens = await Services.auth.login({
 		email,
 		password,
 	});
 
 	return reply
 		.code(201)
-		.send({ success: true, message: 'User logged', data: { token: user } });
+		.send({ success: true, message: 'User logged', data: tokens });
 }
 
 export async function register(request: Request, reply: Reply) {

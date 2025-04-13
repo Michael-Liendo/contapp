@@ -4,6 +4,7 @@ import { comparePassword, hashPassword } from '../utils/password';
 
 import type { IUser, IUserForLogin, IUserForRegister } from '@contapp/shared';
 import { Jwt } from '../utils/jwt';
+import Services from '.';
 
 export default class Auth {
 	static async login(data: IUserForLogin) {
@@ -21,8 +22,11 @@ export default class Auth {
 			throw new UnauthorizedError('UnauthorizedError');
 		}
 
-		const jwt = await Jwt.createToken({ id: userWithoutPassword.id });
-		return jwt;
+		const token = await Jwt.createToken({ id: userWithoutPassword.id });
+		const fbToken = await Services.firebase.createCustomToken(
+			userWithoutPassword.id,
+		);
+		return { token, fbToken };
 	}
 
 	static async register(data: IUserForRegister) {
