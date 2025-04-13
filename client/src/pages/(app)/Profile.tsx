@@ -58,7 +58,7 @@ export default function Profile() {
 			old_password: undefined,
 		},
 		validationSchema: toFormikValidationSchema(UserForUpdateSchema),
-		onSubmit: async (values) => {
+		onSubmit: async (values, { setFieldValue }) => {
 			const updated = await Services.users.update(
 				UserForUpdateSchema.parse(values),
 			);
@@ -70,6 +70,9 @@ export default function Profile() {
 			});
 
 			queryClient.invalidateQueries('user');
+
+			setFieldValue('old_password', '');
+			setFieldValue('password', '');
 		},
 	});
 
@@ -173,6 +176,31 @@ export default function Profile() {
 								</div>
 							),
 						)}
+					</div>
+					{/* password */}
+					<div className='flex gap-1 w-full sm:w-full lg:w-1/2'>
+						{/* old password */}
+						<TextField
+							label='Contraseña anterior'
+							type='password'
+							id='old_password'
+							name='old_password'
+							error={errors.old_password}
+							value={values.old_password}
+							placeholder={'* * * *'}
+							onChange={handleChange}
+						/>
+						{/* new password */}
+						<TextField
+							label='Nueva contraseña'
+							type='password'
+							id='password'
+							name='password'
+							error={errors.password}
+							value={values.password}
+							placeholder={'* * * *'}
+							onChange={handleChange}
+						/>
 					</div>
 				</CardContent>
 
