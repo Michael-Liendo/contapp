@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import { Check, GalleryVerticalEnd, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { SocialLogin } from '@capgo/capacitor-social-login';
 
 import Divider from '@/components/divider';
 import { TextField } from '@/components/text-field';
@@ -13,6 +14,7 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
+import { useEffect } from 'react';
 
 export default function LoginPage() {
 	useSEO({
@@ -67,7 +69,24 @@ export default function LoginPage() {
 			},
 		});
 
-	const googleSignIn = async () => {};
+	const googleSignIn = async () => {
+		await SocialLogin.initialize({
+			google: {
+				webClientId:
+					'236430944478-v1nsr5mai4ertrhfcmbuemofndg8i5j9.apps.googleusercontent.com',
+			},
+		});
+
+		const res = await SocialLogin.login({
+			provider: 'google',
+			options: {
+				scopes: ['email', 'profile'],
+				forceRefreshToken: true,
+			},
+		});
+
+		console.log(res);
+	};
 	return (
 		<div className='min-h-screen grid grid-cols-1 lg:grid-cols-2'>
 			<div className='flex flex-col justify-center items-center p-8'>
