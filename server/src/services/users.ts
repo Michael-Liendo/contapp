@@ -13,16 +13,20 @@ export default class Users {
 	static async update(
 		id: string,
 		userUpdates: Partial<IUserForUpdate>,
-		password: string,
+		hash_old_password: string,
 	): Promise<boolean> {
-		if (userUpdates.password && userUpdates.old_password && password) {
-			if (!(await comparePassword(userUpdates.old_password, password))) {
+		if (userUpdates.password && userUpdates.old_password && hash_old_password) {
+			if (
+				!(await comparePassword(userUpdates.old_password, hash_old_password))
+			) {
 				throw new BadRequestError('Invalid password');
 			}
 			const hashedPassword = await hashPassword(userUpdates.password);
 			userUpdates.password = hashedPassword;
 		}
-		const updated = await Repository.users.updateUser(id, userUpdates);
+		const { old_password: removedValue, ...userToUpdate } = userUpdates;
+
+		const updated = await Repository.users.updateUser(id, userToUpdate);
 		return updated;
 	}
 
