@@ -20,7 +20,9 @@
 		"type": "git",
 		"url": "git+ssh://git@github.com/Michael-Liendo/contapp.git"
 	},
-	"keywords": ["server"],
+	"keywords": [
+		"server"
+	],
 	"author": "Michael Liendo <contact@michaelliendo.com> (https://michaelliendo.com/)",
 	"license": "MIT",
 	"bugs": {
@@ -36,6 +38,7 @@
 		"fastify": "^4.29.0",
 		"fastify-plugin": "^4.5.1",
 		"firebase-admin": "^13.2.0",
+		"google-auth-library": "^9.15.1",
 		"http-status-codes": "^2.3.0",
 		"jsonwebtoken": "^9.0.2",
 		"knex": "^3.1.0",

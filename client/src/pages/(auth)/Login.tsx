@@ -14,6 +14,7 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { type ISignInWithProvider, UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
+import { EnvConfig } from '@/config/env';
 
 export default function LoginPage() {
 	useSEO({
@@ -71,8 +72,7 @@ export default function LoginPage() {
 	const googleSignIn = async () => {
 		await SocialLogin.initialize({
 			google: {
-				webClientId:
-					'236430944478-v1nsr5mai4ertrhfcmbuemofndg8i5j9.apps.googleusercontent.com',
+				webClientId: EnvConfig().googleWebClientId,
 			},
 		});
 
