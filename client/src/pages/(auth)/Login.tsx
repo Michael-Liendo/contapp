@@ -16,6 +16,7 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { type ISignInWithProvider, UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
+import { useCallback, useEffect } from 'react';
 
 export default function LoginPage() {
 	useSEO({
@@ -70,13 +71,19 @@ export default function LoginPage() {
 			},
 		});
 
-	const googleSignIn = async () => {
+	const initializeSocialLogin = useCallback(async () => {
 		await SocialLogin.initialize({
 			google: {
 				webClientId: EnvConfig().googleWebClientId,
 			},
 		});
+	}, []);
 
+	useEffect(() => {
+		initializeSocialLogin();
+	}, []);
+
+	const googleSignIn = async () => {
 		const res = await SocialLogin.login({
 			provider: 'google',
 			options: { scopes: ['email', 'profile'], forceRefreshToken: true },
