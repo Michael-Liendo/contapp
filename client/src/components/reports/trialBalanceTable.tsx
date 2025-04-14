@@ -2,7 +2,6 @@ import type { ITrialBalance } from '@contapp/shared';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { useRef } from 'react';
-import * as XLSX from 'xlsx';
 import { Button } from '../ui/button';
 
 export default function TrialBalanceTable({ data }: { data: ITrialBalance[] }) {
@@ -16,12 +15,12 @@ export default function TrialBalanceTable({ data }: { data: ITrialBalance[] }) {
 	const totalFinal = data.reduce((acc, item) => acc + item.final_balance, 0);
 
 	// Función para exportar a Excel
-	const exportToExcel = () => {
+	/* const exportToExcel = () => {
 		const ws = XLSX.utils.table_to_sheet(tableRef.current);
 		const wb = XLSX.utils.book_new();
 		XLSX.utils.book_append_sheet(wb, ws, 'Balance de Comprobación');
 		XLSX.writeFile(wb, 'balance-de-comprobacion.xlsx');
-	};
+	}; */
 
 	// Función para exportar a PDF
 	const exportToPDF = () => {
@@ -61,7 +60,7 @@ export default function TrialBalanceTable({ data }: { data: ITrialBalance[] }) {
 		<div className='w-full mt-10'>
 			<div className='flex gap-4 mb-4 justify-end'>
 				<Button
-					onClick={exportToExcel}
+					// onClick={exportToExcel}
 					className='bg-green-500 hover:bg-green-600'
 				>
 					Exportar a Excel

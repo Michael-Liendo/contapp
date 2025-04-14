@@ -45,3 +45,8 @@ export interface IPaginationResponse {
 	hasPreviousPage: boolean;
 	hasNextPage: boolean;
 }
+
+export interface ISignInWithProvider {
+	provider: 'google';
+	result: Record<string, unknown>;
+}

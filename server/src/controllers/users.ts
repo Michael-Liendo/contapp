@@ -1,5 +1,6 @@
-import type { IUser, IUserForUpdate } from '@contapp/shared';
 import Services from '../services';
+
+import type { IUser, IUserForUpdate } from '@contapp/shared';
 import type { Reply, Request } from '../types';
 
 export async function me(request: Request, reply: Reply) {

@@ -1,6 +1,7 @@
 import AccountsPlan from './accounts-plan';
 import Auth from './auth';
 import Companies from './companies';
+import { FirebaseService } from './firebase';
 import { Journal } from './journal';
 import { TrialBalanceService } from './trial-balance';
 import Users from './users';
@@ -12,4 +13,5 @@ export default class Services {
 	static accountsPlan = AccountsPlan;
 	static journals = Journal;
 	static trialBalance = TrialBalanceService;
+	static firebase = FirebaseService;
 }

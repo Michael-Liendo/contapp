@@ -1,15 +1,19 @@
+import { SocialLogin } from '@capgo/capacitor-social-login';
 import { useFormik } from 'formik';
 import { Check, GalleryVerticalEnd, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import Divider from '@/components/divider';
+import GoogleIcon from '@/components/icons/google';
 import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
+import { EnvConfig } from '@/config/env';
 import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import useSEO from '@/hooks/use-seo';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
-import { UserLoginSchema } from '@contapp/shared';
+import { type ISignInWithProvider, UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
 
@@ -36,8 +40,12 @@ export default function LoginPage() {
 						email: values.email.toLowerCase(),
 						password: values.password,
 					});
-					setToken(results.data.token);
-					navigate(PrivateRoutesEnum.Home);
+					setToken(results.token);
+
+					await Services.firebase.signInWithCustomToken(results.fbToken);
+
+					await Services.firebase.logEvent('login', { email: values.email });
+
 					toast({
 						description: (
 							<div className='flex items-center justify-between w-full space-x-4'>
@@ -46,6 +54,8 @@ export default function LoginPage() {
 							</div>
 						),
 					});
+
+					navigate(PrivateRoutesEnum.Home);
 				} catch (e) {
 					toast({
 						description: (
@@ -59,6 +69,42 @@ export default function LoginPage() {
 				}
 			},
 		});
+
+	const googleSignIn = async () => {
+		await SocialLogin.initialize({
+			google: {
+				webClientId: EnvConfig().googleWebClientId,
+			},
+		});
+
+		const res = await SocialLogin.login({
+			provider: 'google',
+			options: { scopes: ['email', 'profile'], forceRefreshToken: true },
+		});
+
+		const results = await Services.auth.signInWithProvider(
+			res as unknown as ISignInWithProvider,
+		);
+
+		setToken(results.token);
+
+		await Services.firebase.signInWithCustomToken(results.fbToken);
+
+		await Services.firebase.logEvent('login_with_provider', {
+			provider: 'google',
+		});
+
+		toast({
+			description: (
+				<div className='flex items-center justify-between w-full space-x-4'>
+					<Check className='text-green-600 ml-auto' />
+					<span>Inicio de sesión exitoso!</span>
+				</div>
+			),
+		});
+
+		navigate(PrivateRoutesEnum.Home);
+	};
 
 	return (
 		<div className='min-h-screen grid grid-cols-1 lg:grid-cols-2'>
@@ -110,6 +156,12 @@ export default function LoginPage() {
 								{isSubmitting ? 'Cargando...' : 'Entrar'}
 							</Button>
 						</form>
+						<Divider className='mt-4'>continua con</Divider>
+						<div className='flex items-center justify-center gap-4'>
+							<Button variant={'ghost'} size={'icon'} onClick={googleSignIn}>
+								<GoogleIcon />
+							</Button>
+						</div>
 					</CardContent>
 				</Card>
 

@@ -1,3 +1,4 @@
+import { Preferences } from '@capacitor/preferences';
 import { type IUserForUpdate, UserSchema } from '@contapp/shared';
 import fetch from '../utils/fetch';
 
@@ -6,7 +7,7 @@ export default class Users {
 		try {
 			const request = await fetch('/users/me');
 			if (request.status === 401) {
-				localStorage.removeItem('token');
+				await Preferences.remove({ key: 'token' });
 				throw new Error('Unauthorized');
 			}
 
@@ -34,7 +35,7 @@ export default class Users {
 
 			return response.success as boolean;
 		} catch (error) {
-			console.log('userServices', error);
+			console.error('userServices', error);
 			throw error;
 		}
 	}

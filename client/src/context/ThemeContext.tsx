@@ -1,3 +1,4 @@
+import { Preferences } from '@capacitor/preferences';
 import { createContext, useEffect, useState } from 'react';
 
 type Theme = 'dark' | 'light' | 'system';
@@ -27,9 +28,15 @@ export function ThemeProvider({
 	storageKey = 'vite-ui-theme',
 	...props
 }: ThemeProviderProps) {
-	const [theme, setTheme] = useState<Theme>(
-		() => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
-	);
+	const [theme, setTheme] = useState<Theme>(defaultTheme);
+
+	useEffect(() => {
+		async function getTheme() {
+			const { value: theme } = await Preferences.get({ key: storageKey });
+			setTheme((theme as Theme) ?? defaultTheme);
+		}
+		getTheme();
+	}, [storageKey, defaultTheme]);
 
 	useEffect(() => {
 		const root = window.document.documentElement;
@@ -51,8 +58,8 @@ export function ThemeProvider({
 
 	const value = {
 		theme,
-		setTheme: (theme: Theme) => {
-			localStorage.setItem(storageKey, theme);
+		setTheme: async (theme: Theme) => {
+			await Preferences.set({ key: storageKey, value: theme });
 			setTheme(theme);
 		},
 	};

@@ -3,17 +3,24 @@ import { BadRequestError, UnauthorizedError } from '../utils/errorHandler';
 import { comparePassword, hashPassword } from '../utils/password';
 
 import type { IUser, IUserForLogin, IUserForRegister } from '@contapp/shared';
+import Services from '.';
 import { Jwt } from '../utils/jwt';
 
 export default class Auth {
 	static async login(data: IUserForLogin) {
-		const user = await Repository.users.getUserByEmail(data.email);
+		const exitsUser = await Repository.users.getUserByEmail(data.email);
 
-		if (!user) {
+		if (!exitsUser) {
 			throw new UnauthorizedError('UnauthorizedError');
 		}
 
-		const { password, ...userWithoutPassword } = user as Required<IUser>;
+		const fbExitsUser = await Services.firebase.getUserByEmail(data.email);
+
+		if (!fbExitsUser && exitsUser) {
+			await Services.firebase.createUser(exitsUser);
+		}
+
+		const { password, ...userWithoutPassword } = exitsUser as Required<IUser>;
 
 		const isCorrectPassword = await comparePassword(data.password, password);
 
@@ -21,16 +28,70 @@ export default class Auth {
 			throw new UnauthorizedError('UnauthorizedError');
 		}
 
-		const jwt = await Jwt.createToken({ id: userWithoutPassword.id });
-		return jwt;
+		const token = await Jwt.createToken({ id: userWithoutPassword.id });
+		const fbToken = await Services.firebase.createCustomToken(
+			userWithoutPassword.id,
+		);
+		return { token, fbToken };
+	}
+
+	static async loginProvider(data: Record<string, unknown>, provider: string) {
+		if (provider === 'google') {
+			const googleData = data as unknown as {
+				accessToken: { token: string };
+				idToken: string;
+				profile: {
+					email: string;
+					familyName: string;
+					givenName: string;
+					id: string;
+					name: string;
+					imageUrl: string;
+				};
+				responseType: string;
+			};
+
+			const email = await Jwt.verifyGoogleToken(googleData.idToken, true);
+
+			let user = await Repository.users.getUserByEmail(email);
+
+			if (!user) {
+				user = await Repository.users.createUser({
+					first_name: googleData.profile.givenName,
+					last_name: googleData.profile.familyName,
+					email: googleData.profile.email.toLowerCase(),
+					// todo: check this
+					password: '',
+				});
+				await Services.firebase.createUser(user);
+			}
+
+			const token = await Jwt.createToken({ id: user.id });
+			const fbToken = await Services.firebase.createCustomToken(user.id);
+
+			return { token, fbToken };
+		}
+	}
+
+	static async renewToken(id: string) {
+		const user = await Repository.users.getUserByID(id);
+
+		if (!user) {
+			throw new UnauthorizedError('UnauthorizedError');
+		}
+		const token = await Jwt.createToken({ id: user.id });
+
+		const fbToken = await Services.firebase.createCustomToken(user.id);
+
+		return { token, fbToken };
 	}
 
 	static async register(data: IUserForRegister) {
 		const { first_name, last_name, email, password } = data;
 
-		const user = await Repository.users.getUserByEmail(email);
+		const existsUser = await Repository.users.getUserByEmail(email);
 
-		if (user) {
+		if (existsUser) {
 			throw new BadRequestError('Email already exists', {
 				code: 'EMAIL_ALREADY_EXISTS',
 				path: 'email',
@@ -47,13 +108,14 @@ export default class Auth {
 			password: hashedPassword,
 		};
 
-		const id = await Repository.users.createUser(registeredUser);
+		const user = await Repository.users.createUser(registeredUser);
+		await Services.firebase.createUser(user);
 
 		const token = await Auth.login({
 			email: data.email,
 			password: data.password,
 		});
 
-		return { id, token };
+		return { user, token: token, fbToken: token.fbToken };
 	}
 }

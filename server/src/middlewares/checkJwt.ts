@@ -9,11 +9,11 @@ import type { Request } from '../types';
 
 function getUser(fastify: FastifyInstance, _: unknown, done: () => void) {
 	fastify.decorateRequest('user', undefined);
-	fastify.addHook('preHandler', checkJwt);
+	fastify.addHook('preHandler', checkRequestJwt);
 	done();
 }
 
-async function checkJwt(request: Request) {
+export async function checkRequestJwt(request: Request) {
 	const authorization = request.headers.authorization;
 
 	const token = authorization?.split(' ')[1];
