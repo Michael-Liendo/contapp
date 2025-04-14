@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
 import { useQuery } from 'react-query';
 import Services from '../services';
 
 import type { IUser } from '@contapp/shared';
-import { onAuthStateChanged } from 'firebase/auth';
 
 export interface AuthContextProps {
 	isLoading: boolean;
