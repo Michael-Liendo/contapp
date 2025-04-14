@@ -78,7 +78,7 @@ export default function LoginPage() {
 
 		const res = await SocialLogin.login({
 			provider: 'google',
-			options: { scopes: ['email', 'profile'], forceRefreshToken: true },
+			options: { scopes: ['email', 'profile'] },
 		});
 
 		const results = await Services.auth.signInWithProvider(
@@ -90,7 +90,7 @@ export default function LoginPage() {
 		await Services.firebase.signInWithCustomToken(results.fbToken);
 
 		await Services.firebase.logEvent('login_with_provider', {
-			email: values.email,
+			provider: 'google',
 		});
 
 		toast({

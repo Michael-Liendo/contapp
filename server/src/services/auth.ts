@@ -53,21 +53,17 @@ export default class Auth {
 
 			const email = await Jwt.verifyGoogleToken(googleData.idToken, true);
 
-			const user = await Repository.users.getUserByEmail(email);
+			let user = await Repository.users.getUserByEmail(email);
 
 			if (!user) {
-				// todo: create user
-				/* 	user = await Repository.users.createUser({
+				user = await Repository.users.createUser({
 					first_name: googleData.profile.givenName,
 					last_name: googleData.profile.familyName,
 					email: googleData.profile.email.toLowerCase(),
+					// todo: check this
+					password: '',
 				});
-				await Services.firebase.createUser(user); */
-				throw new BadRequestError('Email not found', {
-					code: 'EMAIL_NOT_FOUND',
-					path: 'email',
-					message: 'Email not found',
-				});
+				await Services.firebase.createUser(user);
 			}
 
 			const token = await Jwt.createToken({ id: user.id });
@@ -78,9 +74,16 @@ export default class Auth {
 	}
 
 	static async renewToken(id: string) {
-		const fbToken = await Services.firebase.createCustomToken(id);
+		const user = await Repository.users.getUserByID(id);
 
-		return { fbToken };
+		if (!user) {
+			throw new UnauthorizedError('UnauthorizedError');
+		}
+		const token = await Jwt.createToken({ id: user.id });
+
+		const fbToken = await Services.firebase.createCustomToken(user.id);
+
+		return { token, fbToken };
 	}
 
 	static async register(data: IUserForRegister) {

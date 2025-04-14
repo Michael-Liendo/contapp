@@ -34,7 +34,7 @@ export default class Users {
 
 			return response.success as boolean;
 		} catch (error) {
-			console.log('userServices', error);
+			console.error('userServices', error);
 			throw error;
 		}
 	}
