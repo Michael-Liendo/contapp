@@ -16,7 +16,7 @@ import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { type ISignInWithProvider, UserLoginSchema } from '@contapp/shared';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function LoginPage() {
 	useSEO({
