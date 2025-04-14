@@ -89,7 +89,9 @@ export default function LoginPage() {
 
 		await Services.firebase.signInWithCustomToken(results.fbToken);
 
-		await Services.firebase.logEvent('login', { email: values.email });
+		await Services.firebase.logEvent('login_with_provider', {
+			email: values.email,
+		});
 
 		toast({
 			description: (

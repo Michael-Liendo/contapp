@@ -33,7 +33,7 @@ export class Jwt {
 		}
 	}
 
-	static async verifyGoogleToken(idToken: string, isWeb: boolean) {
+	static async verifyGoogleToken(idToken: string, _isWeb: boolean) {
 		try {
 			const client = new OAuth2Client(EnvConfig().GOOGLE_WEB_CLIENT_ID);
 
