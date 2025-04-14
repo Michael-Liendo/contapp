@@ -77,6 +77,12 @@ export default class Auth {
 		}
 	}
 
+	static async renewToken(id: string) {
+		const fbToken = await Services.firebase.createCustomToken(id);
+
+		return { fbToken };
+	}
+
 	static async register(data: IUserForRegister) {
 		const { first_name, last_name, email, password } = data;
 

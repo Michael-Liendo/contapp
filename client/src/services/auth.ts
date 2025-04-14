@@ -49,4 +49,18 @@ export default class Auth {
 			console.error(error);
 		}
 	}
+
+	static async renewToken() {
+		try {
+			const request = await fetch('/auth/renew', {
+				method: 'POST',
+			});
+
+			const response = await request.json();
+
+			return response.data;
+		} catch (error) {
+			console.error(error);
+		}
+	}
 }
