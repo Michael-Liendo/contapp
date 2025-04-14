@@ -1,7 +1,8 @@
 import { UserForRegisterSchema, UserLoginSchema } from '@contapp/shared';
 
-import { login, provider, register } from '../controllers/auth';
+import { login, provider, register, renewToken } from '../controllers/auth';
 import requestValidation from '../utils/requestValidation';
+import { checkRequestJwt } from '../middlewares/checkJwt';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
 
@@ -10,6 +11,13 @@ export default function auth(
 	_: RegisterOptions,
 	done: () => void,
 ) {
+	fastify.route({
+		method: 'POST',
+		url: '/register',
+		preValidation: requestValidation(UserForRegisterSchema),
+		handler: register,
+	});
+
 	fastify.route({
 		method: 'POST',
 		url: '/login',
@@ -26,10 +34,10 @@ export default function auth(
 	});
 
 	fastify.route({
-		method: 'POST',
-		url: '/register',
-		preValidation: requestValidation(UserForRegisterSchema),
-		handler: register,
+		method: 'GET',
+		url: '/renew',
+		preHandler: checkRequestJwt,
+		handler: renewToken,
 	});
 
 	done();

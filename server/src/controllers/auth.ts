@@ -7,6 +7,22 @@ import type {
 } from '@contapp/shared';
 import type { Reply, Request } from '../types';
 
+export async function register(request: Request, reply: Reply) {
+	const { first_name, last_name, email, password } =
+		request.body as IUserForRegister;
+
+	const user = await Services.auth.register({
+		first_name,
+		last_name,
+		email,
+		password,
+	});
+
+	return reply
+		.code(201)
+		.send({ success: true, message: 'User created', data: user });
+}
+
 export async function login(request: Request, reply: Reply) {
 	const { email, password } = request.body as IUserForLogin;
 
@@ -30,18 +46,12 @@ export async function provider(request: Request, reply: Reply) {
 		.send({ success: true, message: 'User logged', data: tokens });
 }
 
-export async function register(request: Request, reply: Reply) {
-	const { first_name, last_name, email, password } =
-		request.body as IUserForRegister;
+export async function renewToken(request: Request, reply: Reply) {
+	const user = request?.user;
 
-	const user = await Services.auth.register({
-		first_name,
-		last_name,
-		email,
-		password,
-	});
+	const tokens = await Services.auth.renewToken(user?.id as string);
 
 	return reply
 		.code(201)
-		.send({ success: true, message: 'User created', data: user });
+		.send({ success: true, message: 'Token renewed', data: tokens });
 }
