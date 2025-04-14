@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export const UserRoleSchema = z.enum(['USER', 'SUPER_ADMIN']).default('USER');
+
 export const UserForRegisterSchema = z.object({
 	first_name: z.string(),
 	last_name: z.string(),
@@ -13,6 +15,7 @@ export const UserSchema = z.object({
 	first_name: z.string(),
 	last_name: z.string(),
 	email: z.string().email().describe('unique'),
+	role: UserRoleSchema,
 	password: z.string().optional(),
 	terms_accepted_at: z.coerce.date(),
 	email_confirmed_at: z.coerce.date(),
