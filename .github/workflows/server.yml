@@ -30,6 +30,9 @@ jobs:
       - name: Server Build Check
         run: npm run server:lint
 
+      - name: Create firebase-service-account.json
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > ./server/firebase-service-account.json
+      
       - name: Shared Build
         run: npm run shared:build
 
