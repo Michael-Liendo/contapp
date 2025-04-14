@@ -14,9 +14,9 @@ import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import useSEO from '@/hooks/use-seo';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { type ISignInWithProvider, UserLoginSchema } from '@contapp/shared';
+import { useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
-import { useEffect } from 'react';
 
 export default function LoginPage() {
 	useSEO({
