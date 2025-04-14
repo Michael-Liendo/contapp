@@ -1,6 +1,6 @@
-import { getAuth as fbGetAuth, signInWithCustomToken } from 'firebase/auth';
-import { logEvent } from 'firebase/analytics';
 import { analytics } from '@/config/firebase';
+import { logEvent } from 'firebase/analytics';
+import { getAuth as fbGetAuth, signInWithCustomToken } from 'firebase/auth';
 
 import type { AnalyticsCallOptions } from 'firebase/analytics';
 export class FirebaseService {
