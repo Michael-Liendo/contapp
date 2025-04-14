@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.util.Log;
 import com.getcapacitor.BridgeActivity;
 
-public class MainActivity extends BridgeActivity {
+public class MainActivity extends BridgeActivity implements ModifiedMainActivityForSocialLoginPlugin {
    @Override
       public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -30,7 +30,7 @@ public class MainActivity extends BridgeActivity {
         }
       }
 
-      // This function will never be called, leave it empty
-      @Override
-      public void IHaveModifiedTheMainActivityForTheUseWithSocialLoginPlugin() {}
+    // This function will never be called, leave it empty
+    @Override
+    public void IHaveModifiedTheMainActivityForTheUseWithSocialLoginPlugin() {}
 }
