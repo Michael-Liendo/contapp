@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
+import { createContext, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import Services from '../services';
 
