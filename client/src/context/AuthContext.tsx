@@ -1,4 +1,5 @@
 import { onAuthStateChanged } from 'firebase/auth';
+import { Preferences } from '@capacitor/preferences';
 import { createContext, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import Services from '../services';
@@ -18,9 +19,15 @@ export const AuthContext = createContext<AuthContextProps | undefined>(
 );
 
 export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
-	const [token, setToken] = useState<string | undefined>(
-		localStorage.getItem('token') ?? undefined,
-	);
+	const [token, setToken] = useState<string | undefined>(undefined);
+
+	useEffect(() => {
+		async function getToken() {
+			const { value: token } = await Preferences.get({ key: 'token' });
+			setToken(token ?? undefined);
+		}
+		getToken();
+	}, []);
 
 	const {
 		data: user,
@@ -67,13 +74,13 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 	}, [token]);
 
 	const updateToken = async (token: string) => {
-		localStorage.setItem('token', token);
+		await Preferences.set({ key: 'token', value: token });
 		setToken(token);
 		refetch();
 	};
 
 	const logout = async () => {
-		localStorage.removeItem('token');
+		await Preferences.remove({ key: 'token' });
 
 		await Services.firebase.signOut();
 
