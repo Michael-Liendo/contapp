@@ -1,7 +1,9 @@
-import type { IUser } from '@contapp/shared';
 import { createContext, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import Services from '../services';
+
+import type { IUser } from '@contapp/shared';
+import { onAuthStateChanged } from 'firebase/auth';
 
 export interface AuthContextProps {
 	isLoading: boolean;
@@ -27,6 +29,37 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 	} = useQuery(['user'], async () => {
 		if (!token) return;
 		const user = await Services.users.me();
+
+		let isTokenRenewing = false;
+
+		onAuthStateChanged(Services.firebase.getAuth(), async (fbUser) => {
+			if (!fbUser && !isTokenRenewing) {
+				isTokenRenewing = true; // Lock the token renewal process
+				console.log('here 2', !isTokenRenewing);
+				try {
+					const response = await Services.auth.renewToken();
+
+					if (response?.token) {
+						const credentials = await Services.firebase.signInWithCustomToken(
+							response.token,
+						);
+						if (!credentials.user) {
+							console.warn('Failed to sign in with renewed token.');
+							await logout();
+						}
+					} else {
+						console.warn('Token renewal failed, no token returned.');
+						await logout();
+					}
+				} catch (err) {
+					console.error('Error during token renewal:', err);
+					await logout();
+				} finally {
+					isTokenRenewing = false;
+				}
+			}
+		});
+
 		return user;
 	});
 
@@ -42,6 +75,9 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 
 	const logout = async () => {
 		localStorage.removeItem('token');
+
+		await Services.firebase.signOut();
+
 		setToken(undefined);
 	};
 
