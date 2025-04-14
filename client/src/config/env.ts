@@ -8,6 +8,7 @@ export const EnvConfig = () => {
 	if (NODE_ENV === 'production') {
 		return {
 			apiUrl: VITE_API_URL,
+			googleWebClientId: VITE_GOOGLE_WEB_CLIENT_ID,
 		};
 	}
 
