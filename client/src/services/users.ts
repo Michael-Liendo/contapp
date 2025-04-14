@@ -1,6 +1,6 @@
+import { Preferences } from '@capacitor/preferences';
 import { type IUserForUpdate, UserSchema } from '@contapp/shared';
 import fetch from '../utils/fetch';
-import { Preferences } from '@capacitor/preferences';
 
 export default class Users {
 	static async me() {
