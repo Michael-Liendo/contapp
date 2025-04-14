@@ -79,7 +79,7 @@ export default function LoginPage() {
 
 		const res = await SocialLogin.login({
 			provider: 'google',
-			options: { scopes: ['email', 'profile'] },
+			options: { scopes: ['email', 'profile'], forceRefreshToken: true },
 		});
 
 		const results = await Services.auth.signInWithProvider(
