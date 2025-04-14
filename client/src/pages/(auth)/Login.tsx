@@ -4,6 +4,7 @@ import { Check, GalleryVerticalEnd, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Divider from '@/components/divider';
+import GoogleIcon from '@/components/icons/google';
 import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -158,10 +159,7 @@ export default function LoginPage() {
 						<Divider className='mt-4'>continua con</Divider>
 						<div className='flex items-center justify-center gap-4'>
 							<Button variant={'ghost'} size={'icon'} onClick={googleSignIn}>
-								G
-							</Button>
-							<Button variant={'ghost'} size={'icon'}>
-								A
+								<GoogleIcon />
 							</Button>
 						</div>
 					</CardContent>
