@@ -1,9 +1,9 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.contapp.app',
-  appName: '@contapp/client',
-  webDir: 'dist'
+	appId: 'com.contapp.app',
+	appName: 'Contapp',
+	webDir: 'dist',
 };
 
 export default config;

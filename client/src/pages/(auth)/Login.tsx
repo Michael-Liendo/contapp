@@ -14,6 +14,7 @@ import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import useSEO from '@/hooks/use-seo';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import { type ISignInWithProvider, UserLoginSchema } from '@contapp/shared';
+import { useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
 
@@ -70,13 +71,15 @@ export default function LoginPage() {
 			},
 		});
 
-	const googleSignIn = async () => {
-		await SocialLogin.initialize({
+	useEffect(() => {
+		SocialLogin.initialize({
 			google: {
 				webClientId: EnvConfig().googleWebClientId,
 			},
 		});
+	}, []);
 
+	const googleSignIn = async () => {
 		const res = await SocialLogin.login({
 			provider: 'google',
 			options: { scopes: ['email', 'profile'], forceRefreshToken: true },
