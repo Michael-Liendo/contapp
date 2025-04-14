@@ -7,7 +7,7 @@ export default class Users {
 		try {
 			const request = await fetch('/users/me');
 			if (request.status === 401) {
-				Preferences.remove({ key: 'token' });
+				await Preferences.remove({ key: 'token' });
 				throw new Error('Unauthorized');
 			}
 

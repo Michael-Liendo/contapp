@@ -4,7 +4,7 @@ import { Preferences } from '@capacitor/preferences';
 const Fetch = () => {
 	return async (url: string, options?: RequestInit) => {
 		const defaultOptions: { Authorization?: string } = {};
-		const token = await Preferences.get({ key: 'token' });
+		const { value: token } = await Preferences.get({ key: 'token' });
 		if (token) {
 			defaultOptions.Authorization = `Bearer ${token}`;
 		}
