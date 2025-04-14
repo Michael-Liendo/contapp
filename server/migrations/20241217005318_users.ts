@@ -16,7 +16,7 @@ export async function up(knex: Knex): Promise<void> {
 		table
 			.enum('role', UserRoleSchema.options)
 			.notNullable()
-			.defaultTo(UserRoleSchema.default);
+			.defaultTo(UserRoleSchema.Enum.USER);
 		table.string('password').notNullable();
 		table.timestamp('terms_accepted_at').nullable();
 		table.timestamp('email_confirmed_at').nullable();

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const UserRoleSchema = z.enum(['USER', 'SUPER_ADMIN']).default('USER');
+export const UserRoleSchema = z.enum(['USER', 'SUPER_ADMIN']);
 
 export const UserForRegisterSchema = z.object({
 	first_name: z.string(),
