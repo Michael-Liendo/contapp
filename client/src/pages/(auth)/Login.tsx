@@ -71,16 +71,12 @@ export default function LoginPage() {
 			},
 		});
 
-	const initializeSocialLogin = useCallback(async () => {
-		await SocialLogin.initialize({
+	useEffect(() => {
+		SocialLogin.initialize({
 			google: {
 				webClientId: EnvConfig().googleWebClientId,
 			},
 		});
-	}, []);
-
-	useEffect(() => {
-		initializeSocialLogin();
 	}, []);
 
 	const googleSignIn = async () => {
