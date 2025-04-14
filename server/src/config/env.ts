@@ -5,7 +5,7 @@ const {
 	NODE_ENV = 'development',
 	PORT = 3000,
 	SALT_ROUNDS = 10,
-	CORS_ORIGIN = 'http://localhost:3000,http://localhost:3001,http://localhost:5173',
+	CORS_ORIGIN = 'http://localhost:3000,http://localhost:3001,http://localhost:5173,http://localhost,capacitor://localhost',
 	JWT_PRIVATE_KEY = 'contapp',
 	POSTGRES_HOST = '0.0.0.0',
 	POSTGRES_PASSWORD = 'password',
