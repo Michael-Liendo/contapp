@@ -1,9 +1,10 @@
+import fetch from '../utils/fetch';
+
 import type {
 	ISignInWithProvider,
 	IUserForLogin,
 	IUserForRegister,
 } from '@contapp/shared';
-import fetch from '../utils/fetch';
 
 export default class Auth {
 	static async register(data: IUserForRegister) {
@@ -53,7 +54,7 @@ export default class Auth {
 	static async renewToken() {
 		try {
 			const request = await fetch('/auth/renew', {
-				method: 'POST',
+				method: 'GET',
 			});
 
 			const response = await request.json();
