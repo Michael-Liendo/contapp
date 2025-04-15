@@ -1,8 +1,8 @@
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { Capacitor } from '@capacitor/core';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { setupIonicReact } from '@ionic/react';
 import { useEffect } from 'react';
-import { SplashScreen } from '@capacitor/splash-screen';
-import { Capacitor } from '@capacitor/core';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { Routes } from './Routes';
 import { Toaster } from './components/ui/toaster';
