@@ -1,6 +1,6 @@
 import { type IUserDevice, UserDeviceSchema } from '@contapp/shared';
-import database from './database';
 import { InternalServerError } from '../utils/errorHandler';
+import database from './database';
 
 export class NotificationRepository {
 	static async createUserDevice(user_id: string, device_token: string) {

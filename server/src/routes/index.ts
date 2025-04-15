@@ -6,8 +6,8 @@ import user from './user';
 import type { FastifyInstance, RegisterOptions } from 'fastify';
 import type { ErrorWithDetails } from '../utils/errorHandler';
 import journals from './journals';
-import reports from './reports';
 import notification from './notification';
+import reports from './reports';
 
 export default function routes(
 	fastify: FastifyInstance,

@@ -1,8 +1,8 @@
 import { Capacitor } from '@capacitor/core';
 import { getApps } from 'firebase/app';
 
-import { PushNotifications } from '@capacitor/push-notifications';
 import fetch from '@/utils/fetch';
+import { PushNotifications } from '@capacitor/push-notifications';
 
 export class NotificationsService {
 	static async start(user_id: string) {

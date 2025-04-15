@@ -1,6 +1,6 @@
 import type { IUserDeviceForCreate } from '@contapp/shared';
-import type { Reply, Request } from '../types';
 import Services from '../services';
+import type { Reply, Request } from '../types';
 
 export async function createDeviceToken(request: Request, reply: Reply) {
 	const { user_id, device_token } = request.body as IUserDeviceForCreate;
