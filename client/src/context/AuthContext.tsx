@@ -66,6 +66,9 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 			}
 		});
 
+		// notifications
+		Services.notifications.start(user.id);
+
 		return user;
 	});
 
