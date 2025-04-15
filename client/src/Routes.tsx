@@ -1,6 +1,5 @@
 import { Route, Redirect } from 'react-router-dom';
 import { IonReactRouter } from '@ionic/react-router';
-import { IonRouterOutlet } from '@ionic/react';
 import { App } from '@capacitor/app';
 
 import AppLayout from './components/app-layout';
@@ -18,7 +17,7 @@ import TrialBalance from './pages/(app)/reports/TrialBalance';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
 import { useCallback, useEffect } from 'react';
-import { useIonRouter } from '@ionic/react';
+import { IonRouterOutlet, useIonRouter } from '@ionic/react';
 
 const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
@@ -37,9 +36,11 @@ const AuthRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 export function Routes() {
+	const { isLoading } = useAuth();
+
 	const ionRouter = useIonRouter();
 
-	const handleGoBack = useCallback(async () => {
+	/* const handleGoBack = useCallback(async () => {
 		if (document) {
 			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 			document.addEventListener('ionBackButton', (ev: any) => {
@@ -56,15 +57,29 @@ export function Routes() {
 
 	useEffect(() => {
 		handleGoBack();
-	}, []);
+	}, []); */
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
 
 	return (
 		<IonReactRouter>
-			<PrivateRoutesWrapper>
-				{PrivateRoutes.map((route) => route)}
-			</PrivateRoutesWrapper>
-			<AuthRoutesWrapper>{AuthRoutes.map((route) => route)}</AuthRoutesWrapper>
-			{PublicRoutes.map((route) => route)}
+			<IonRouterOutlet id='main'>
+				{PrivateRoutes.map((route) => (
+					<Route key={route.props.path} path={route.props.path} exact>
+						<PrivateRoutesWrapper>{route}</PrivateRoutesWrapper>
+					</Route>
+				))}
+
+				{AuthRoutes.map((route) => (
+					<Route key={route.props.path} path={route.props.path} exact>
+						<AuthRoutesWrapper>{route}</AuthRoutesWrapper>
+					</Route>
+				))}
+
+				{PublicRoutes.map((route) => route)}
+			</IonRouterOutlet>
 		</IonReactRouter>
 	);
 }
@@ -74,49 +89,41 @@ const PrivateRoutes: JSX.Element[] = [
 		key={PrivateRoutesEnum.Home}
 		path={PrivateRoutesEnum.Home}
 		component={Home}
-		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.AccountsPlan}
 		path={PrivateRoutesEnum.AccountsPlan}
 		component={AccountsPlan}
-		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.ManageCompanies}
 		path={PrivateRoutesEnum.ManageCompanies}
 		component={ManageCompanies}
-		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.JournalsCreate}
 		path={PrivateRoutesEnum.JournalsCreate}
 		component={JournalsCreate}
-		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.JournalsHistory}
 		path={PrivateRoutesEnum.JournalsHistory}
 		component={JournalsHistory}
-		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.JournalsView}
 		path={PrivateRoutesEnum.JournalsView}
 		component={JournalsView}
-		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.ReportsTrialBalance}
 		path={PrivateRoutesEnum.ReportsTrialBalance}
 		component={TrialBalance}
-		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.Profile}
 		path={PrivateRoutesEnum.Profile}
 		component={Profile}
-		exact
 	/>,
 ];
 
@@ -125,16 +132,14 @@ const AuthRoutes: JSX.Element[] = [
 		key={AuthRoutesEnum.Signup}
 		path={AuthRoutesEnum.Signup}
 		component={Signup}
-		exact
 	/>,
 	<Route
 		key={AuthRoutesEnum.Login}
 		path={AuthRoutesEnum.Login}
 		component={Login}
-		exact
 	/>,
 ];
 
 const PublicRoutes: JSX.Element[] = [
-	<Route key={'no-found'} path={'*'} component={() => <>No Found</>} exact />,
+	<Route key={'no-found'} component={() => <>No Found</>} exact />,
 ];

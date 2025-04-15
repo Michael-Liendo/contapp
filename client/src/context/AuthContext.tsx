@@ -21,14 +21,6 @@ export const AuthContext = createContext<AuthContextProps | undefined>(
 export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 	const [token, setToken] = useState<string | undefined>(undefined);
 
-	useEffect(() => {
-		async function getToken() {
-			const { value: token } = await Preferences.get({ key: 'token' });
-			setToken(token ?? undefined);
-		}
-		getToken();
-	}, []);
-
 	const {
 		data: user,
 		isLoading,
@@ -71,6 +63,18 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 
 		return user;
 	});
+
+	useEffect(() => {
+		console.log('useEffect', isLoading);
+	}, [isLoading]);
+
+	useEffect(() => {
+		async function getToken() {
+			const { value: token } = await Preferences.get({ key: 'token' });
+			setToken(token ?? undefined);
+		}
+		getToken();
+	}, []);
 
 	useEffect(() => {
 		refetch();
