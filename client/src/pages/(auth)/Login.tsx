@@ -1,7 +1,7 @@
 import { SocialLogin } from '@capgo/capacitor-social-login';
 import { useFormik } from 'formik';
 import { Check, GalleryVerticalEnd, X } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Divider from '@/components/divider';
 import GoogleIcon from '@/components/icons/google';
@@ -27,7 +27,7 @@ export default function LoginPage() {
 			'contapp, gestionar, operaciones, balances, plan de cuentas, login',
 	});
 	const { setToken } = useAuth();
-	const navigate = useNavigate();
+	const navigate = useHistory();
 
 	const { values, errors, handleChange, handleSubmit, isSubmitting } =
 		useFormik({
@@ -56,7 +56,7 @@ export default function LoginPage() {
 						),
 					});
 
-					navigate(PrivateRoutesEnum.Home);
+					navigate.push(PrivateRoutesEnum.Home);
 				} catch (e) {
 					toast({
 						description: (
@@ -106,7 +106,7 @@ export default function LoginPage() {
 			),
 		});
 
-		navigate(PrivateRoutesEnum.Home);
+		navigate.push(PrivateRoutesEnum.Home);
 	};
 
 	return (

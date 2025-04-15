@@ -16,7 +16,7 @@ import {
 import { cn } from '@/lib/utils';
 import type { IPaginationResponse } from '@contapp/shared';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
 	Table,
 	TableBody,
@@ -44,7 +44,7 @@ export function DataTable<TData, TValue>({
 	pagination,
 	onPageChange,
 }: DataTableProps<TData, TValue>) {
-	const navigate = useNavigate();
+	const navigate = useHistory();
 
 	const [rowSelection, setRowSelection] = useState({});
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -99,7 +99,7 @@ export function DataTable<TData, TValue>({
 			console.warn('Row data id or route is undefined');
 			return;
 		}
-		navigate(`${route}/${id}`);
+		navigate.push(`${route}/${id}`);
 	}
 
 	return (

@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 import { Check, GalleryVerticalEnd, X } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,7 +22,7 @@ export default function Signup() {
 			'contapp, gestionar, operaciones, balances, plan de cuentas, registro',
 	});
 	const { setToken } = useAuth();
-	const navigate = useNavigate();
+	const navigate = useHistory();
 
 	const { values, errors, handleChange, handleSubmit, isSubmitting } =
 		useFormik({
@@ -45,7 +45,7 @@ export default function Signup() {
 					await Services.firebase.logEvent('sign_up', {
 						id: results.data.user.id,
 					});
-					navigate(PrivateRoutesEnum.Home);
+					navigate.push(PrivateRoutesEnum.Home);
 
 					toast({
 						description: (

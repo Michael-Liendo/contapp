@@ -1,9 +1,7 @@
-import {
-	Routes as ReactRoutes,
-	Route,
-	BrowserRouter as Router,
-} from 'react-router-dom';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
+import { IonReactRouter } from '@ionic/react-router';
+import { IonRouterOutlet } from '@ionic/react';
+import { App } from '@capacitor/app';
 
 import AppLayout from './components/app-layout';
 import { CompanyProvider } from './context/CompanyContext';
@@ -19,38 +17,61 @@ import JournalsView from './pages/(app)/journals/View';
 import TrialBalance from './pages/(app)/reports/TrialBalance';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
+import { useCallback, useEffect } from 'react';
+import { useIonRouter } from '@ionic/react';
 
-const PrivateRoutesWrapper = () => {
+const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
 	return token ? (
 		<CompanyProvider>
-			<AppLayout>
-				<Outlet />
-			</AppLayout>
+			<AppLayout>{children}</AppLayout>
 		</CompanyProvider>
 	) : (
-		<Navigate to={AuthRoutesEnum.Login} />
+		<Redirect to={AuthRoutesEnum.Login} />
 	);
 };
 
-const AuthRoutesWrapper = () => {
+const AuthRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
-	return !token ? <Outlet /> : <Navigate to={PrivateRoutesEnum.Home} />;
+	return !token ? children : <Redirect to={PrivateRoutesEnum.Home} />;
 };
 
 export function Routes() {
+	const ionRouter = useIonRouter();
+
+	const handleGoBack = useCallback(async () => {
+		if (document) {
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			document.addEventListener('ionBackButton', (ev: any) => {
+				ev.detail.register(-1, () => {
+					if (!ionRouter.canGoBack()) {
+						App.exitApp();
+					} else {
+						ionRouter.goBack();
+					}
+				});
+			});
+		}
+	}, []);
+
+	useEffect(() => {
+		handleGoBack();
+	}, []);
+
 	return (
-		<Router>
-			<ReactRoutes>
-				<Route element={<PrivateRoutesWrapper />}>
+		<IonReactRouter>
+			<Route>
+				<PrivateRoutesWrapper>
 					{PrivateRoutes.map((route) => route)}
-				</Route>
-				<Route element={<AuthRoutesWrapper />}>
+				</PrivateRoutesWrapper>
+			</Route>
+			<Route>
+				<AuthRoutesWrapper>
 					{AuthRoutes.map((route) => route)}
-				</Route>
-				{PublicRoutes.map((route) => route)}
-			</ReactRoutes>
-		</Router>
+				</AuthRoutesWrapper>
+			</Route>
+			{PublicRoutes.map((route) => route)}
+		</IonReactRouter>
 	);
 }
 
@@ -58,42 +79,42 @@ const PrivateRoutes: JSX.Element[] = [
 	<Route
 		key={PrivateRoutesEnum.Home}
 		path={PrivateRoutesEnum.Home}
-		Component={Home}
+		component={Home}
 	/>,
 	<Route
 		key={PrivateRoutesEnum.AccountsPlan}
 		path={PrivateRoutesEnum.AccountsPlan}
-		Component={AccountsPlan}
+		component={AccountsPlan}
 	/>,
 	<Route
 		key={PrivateRoutesEnum.ManageCompanies}
 		path={PrivateRoutesEnum.ManageCompanies}
-		Component={ManageCompanies}
+		component={ManageCompanies}
 	/>,
 	<Route
 		key={PrivateRoutesEnum.JournalsCreate}
 		path={PrivateRoutesEnum.JournalsCreate}
-		Component={JournalsCreate}
+		component={JournalsCreate}
 	/>,
 	<Route
 		key={PrivateRoutesEnum.JournalsHistory}
 		path={PrivateRoutesEnum.JournalsHistory}
-		Component={JournalsHistory}
+		component={JournalsHistory}
 	/>,
 	<Route
 		key={PrivateRoutesEnum.JournalsView}
 		path={PrivateRoutesEnum.JournalsView}
-		Component={JournalsView}
+		component={JournalsView}
 	/>,
 	<Route
 		key={PrivateRoutesEnum.ReportsTrialBalance}
 		path={PrivateRoutesEnum.ReportsTrialBalance}
-		Component={TrialBalance}
+		component={TrialBalance}
 	/>,
 	<Route
 		key={PrivateRoutesEnum.Profile}
 		path={PrivateRoutesEnum.Profile}
-		Component={Profile}
+		component={Profile}
 	/>,
 ];
 
@@ -101,15 +122,15 @@ const AuthRoutes: JSX.Element[] = [
 	<Route
 		key={AuthRoutesEnum.Signup}
 		path={AuthRoutesEnum.Signup}
-		Component={Signup}
+		component={Signup}
 	/>,
 	<Route
 		key={AuthRoutesEnum.Login}
 		path={AuthRoutesEnum.Login}
-		Component={Login}
+		component={Login}
 	/>,
 ];
 
 const PublicRoutes: JSX.Element[] = [
-	<Route key={'no-found'} path={'*'} Component={() => <>No Found</>} />,
+	<Route key={'no-found'} path={'*'} component={() => <>No Found</>} />,
 ];
