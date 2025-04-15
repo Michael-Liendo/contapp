@@ -40,9 +40,9 @@ export class NotificationsService {
 			PushNotifications.addListener(
 				'pushNotificationActionPerformed',
 				(payload) => {
-					// example with something to do
-					if (payload.notification.data.something) {
-						window.location.href = '/profile';
+					// example with deeplink
+					if (payload.notification.data.deeplink) {
+						window.location.href = payload.notification.data.deeplink;
 					}
 				},
 			);
