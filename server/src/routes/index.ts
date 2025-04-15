@@ -7,6 +7,7 @@ import type { FastifyInstance, RegisterOptions } from 'fastify';
 import type { ErrorWithDetails } from '../utils/errorHandler';
 import journals from './journals';
 import reports from './reports';
+import notification from './notification';
 
 export default function routes(
 	fastify: FastifyInstance,
@@ -52,6 +53,7 @@ export default function routes(
 	fastify.register(accounts_plan, { prefix: '/accounts-plan' });
 	fastify.register(journals, { prefix: '/journals' });
 	fastify.register(reports, { prefix: '/reports' });
+	fastify.register(notification, { prefix: '/notification' });
 
 	done();
 }
