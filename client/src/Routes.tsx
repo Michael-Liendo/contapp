@@ -1,7 +1,7 @@
-import { Route, Redirect } from 'react-router-dom';
 import { IonReactRouter } from '@ionic/react-router';
-import { App } from '@capacitor/app';
+import { Redirect, Route } from 'react-router-dom';
 
+import { IonRouterOutlet } from '@ionic/react';
 import AppLayout from './components/app-layout';
 import { CompanyProvider } from './context/CompanyContext';
 import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
@@ -16,8 +16,6 @@ import JournalsView from './pages/(app)/journals/View';
 import TrialBalance from './pages/(app)/reports/TrialBalance';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
-import { useCallback, useEffect } from 'react';
-import { IonRouterOutlet, useIonRouter } from '@ionic/react';
 
 const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
