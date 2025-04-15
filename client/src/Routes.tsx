@@ -18,6 +18,7 @@ import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
 
 import type { JSX } from 'react';
+import AuthLayout from './components/auth-layout';
 
 const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
@@ -34,7 +35,11 @@ const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 const AuthRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
 
-	return !token ? children : <Redirect to={PrivateRoutesEnum.Home} />;
+	return !token ? (
+		<AuthLayout>{children}</AuthLayout>
+	) : (
+		<Redirect to={PrivateRoutesEnum.Home} />
+	);
 };
 
 export function Routes() {
