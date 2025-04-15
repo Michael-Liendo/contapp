@@ -75,12 +75,12 @@ export class NotificationsService {
 		await PushNotifications.register();
 	}
 
-	static async addDeviceToken(id: string, device_token: string) {
+	static async addDeviceToken(user_id: string, device_token: string) {
 		try {
 			const response = await fetch('/notification/device-token', {
 				// todo: define if create or update
 				method: 'POST',
-				body: JSON.stringify({ id, device_token }),
+				body: JSON.stringify({ user_id, device_token }),
 			});
 
 			const notification = await response.json();
