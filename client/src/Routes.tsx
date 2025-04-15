@@ -1,10 +1,7 @@
-import {
-	Routes as ReactRoutes,
-	Route,
-	BrowserRouter as Router,
-} from 'react-router-dom';
-import { Navigate, Outlet } from 'react-router-dom';
+import { IonReactRouter } from '@ionic/react-router';
+import { Redirect, Route } from 'react-router-dom';
 
+import { IonRouterOutlet } from '@ionic/react';
 import AppLayout from './components/app-layout';
 import { CompanyProvider } from './context/CompanyContext';
 import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
@@ -20,37 +17,49 @@ import TrialBalance from './pages/(app)/reports/TrialBalance';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
 
-const PrivateRoutesWrapper = () => {
+import type { JSX } from 'react';
+
+const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
 	return token ? (
 		<CompanyProvider>
-			<AppLayout>
-				<Outlet />
-			</AppLayout>
+			<AppLayout>{children}</AppLayout>
 		</CompanyProvider>
 	) : (
-		<Navigate to={AuthRoutesEnum.Login} />
+		<Redirect to={AuthRoutesEnum.Login} />
 	);
 };
 
-const AuthRoutesWrapper = () => {
+const AuthRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
-	return !token ? <Outlet /> : <Navigate to={PrivateRoutesEnum.Home} />;
+	return !token ? children : <Redirect to={PrivateRoutesEnum.Home} />;
 };
 
 export function Routes() {
+	const { isLoading } = useAuth();
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
+
 	return (
-		<Router>
-			<ReactRoutes>
-				<Route element={<PrivateRoutesWrapper />}>
-					{PrivateRoutes.map((route) => route)}
-				</Route>
-				<Route element={<AuthRoutesWrapper />}>
-					{AuthRoutes.map((route) => route)}
-				</Route>
+		<IonReactRouter>
+			<IonRouterOutlet id='main'>
+				{PrivateRoutes.map((route) => (
+					<Route key={route.props.path} path={route.props.path} exact>
+						<PrivateRoutesWrapper>{route}</PrivateRoutesWrapper>
+					</Route>
+				))}
+
+				{AuthRoutes.map((route) => (
+					<Route key={route.props.path} path={route.props.path} exact>
+						<AuthRoutesWrapper>{route}</AuthRoutesWrapper>
+					</Route>
+				))}
+
 				{PublicRoutes.map((route) => route)}
-			</ReactRoutes>
-		</Router>
+			</IonRouterOutlet>
+		</IonReactRouter>
 	);
 }
 
@@ -58,42 +67,50 @@ const PrivateRoutes: JSX.Element[] = [
 	<Route
 		key={PrivateRoutesEnum.Home}
 		path={PrivateRoutesEnum.Home}
-		Component={Home}
+		component={Home}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.AccountsPlan}
 		path={PrivateRoutesEnum.AccountsPlan}
-		Component={AccountsPlan}
+		component={AccountsPlan}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.ManageCompanies}
 		path={PrivateRoutesEnum.ManageCompanies}
-		Component={ManageCompanies}
+		component={ManageCompanies}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.JournalsCreate}
 		path={PrivateRoutesEnum.JournalsCreate}
-		Component={JournalsCreate}
+		component={JournalsCreate}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.JournalsHistory}
 		path={PrivateRoutesEnum.JournalsHistory}
-		Component={JournalsHistory}
+		component={JournalsHistory}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.JournalsView}
 		path={PrivateRoutesEnum.JournalsView}
-		Component={JournalsView}
+		component={JournalsView}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.ReportsTrialBalance}
 		path={PrivateRoutesEnum.ReportsTrialBalance}
-		Component={TrialBalance}
+		component={TrialBalance}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.Profile}
 		path={PrivateRoutesEnum.Profile}
-		Component={Profile}
+		component={Profile}
+		exact
 	/>,
 ];
 
@@ -101,15 +118,17 @@ const AuthRoutes: JSX.Element[] = [
 	<Route
 		key={AuthRoutesEnum.Signup}
 		path={AuthRoutesEnum.Signup}
-		Component={Signup}
+		component={Signup}
+		exact
 	/>,
 	<Route
 		key={AuthRoutesEnum.Login}
 		path={AuthRoutesEnum.Login}
-		Component={Login}
+		component={Login}
+		exact
 	/>,
 ];
 
 const PublicRoutes: JSX.Element[] = [
-	<Route key={'no-found'} path={'*'} Component={() => <>No Found</>} />,
+	<Route key={'no-found'} component={() => <>No Found</>} exact />,
 ];

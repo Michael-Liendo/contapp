@@ -1,5 +1,5 @@
 import { Capacitor } from '@capacitor/core';
-import { setupIonicReact } from '@ionic/react';
+import { IonApp, setupIonicReact } from '@ionic/react';
 import { useCallback, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -43,14 +43,16 @@ function App() {
 
 	return (
 		<>
-			<ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
-				<QueryClientProvider client={queryClient}>
-					<AuthProvider>
-						<Routes />
-					</AuthProvider>
-				</QueryClientProvider>
-			</ThemeProvider>
-			<Toaster />
+			<IonApp>
+				<ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
+					<QueryClientProvider client={queryClient}>
+						<AuthProvider>
+							<Routes />
+						</AuthProvider>
+					</QueryClientProvider>
+				</ThemeProvider>
+				<Toaster />
+			</IonApp>
 		</>
 	);
 }

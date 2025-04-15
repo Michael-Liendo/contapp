@@ -13,7 +13,7 @@ import {
 import Services from '@/services';
 import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 import type { Row } from '@tanstack/react-table';
-import { useState } from 'react';
+import { type JSX, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import {
 	Dialog,

@@ -19,21 +19,21 @@ import {
 } from '@/components/ui/sidebar';
 import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import useAuth from '@/hooks/useAuth';
-import { useNavigate } from 'react-router';
+import { useHistory } from 'react-router';
 
 export function NavUser() {
 	const { isMobile } = useSidebar();
 	const { user, logout } = useAuth();
-	const navigate = useNavigate();
+	const navigate = useHistory();
 
 	function handleLogout() {
 		logout();
 
-		navigate(AuthRoutesEnum.Login);
+		navigate.push(AuthRoutesEnum.Login);
 	}
 
 	function handleProfile() {
-		navigate(PrivateRoutesEnum.Profile);
+		navigate.push(PrivateRoutesEnum.Profile);
 	}
 
 	return (
