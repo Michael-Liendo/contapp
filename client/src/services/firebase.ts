@@ -21,7 +21,7 @@ export class FirebaseService {
 
 	static async logEvent(
 		eventName: string,
-		params: Record<string, string>,
+		params?: Record<string, string>,
 		options?: AnalyticsCallOptions,
 	) {
 		logEvent(analytics, eventName, params, options);
