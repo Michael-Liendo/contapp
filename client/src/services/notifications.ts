@@ -13,7 +13,6 @@ export class NotificationsService {
 			const apps = getApps();
 			if (apps.length === 0) {
 				restartApp();
-				// todo: restart app
 			}
 			if (Capacitor.getPlatform() === 'android') {
 				await NotificationsService.createChannel();
