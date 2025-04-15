@@ -19,10 +19,10 @@ export class NotificationsService {
 
 			PushNotifications.addListener('registration', async (token) => {
 				console.log(
-					'🚀 ~ NotificationService ~ PushNotifications.addListener ~ token:',
+					'NotificationsService ~ PushNotifications.addListener.registration ~ token:',
 					token,
 				);
-				await NotificationsService.deviceToken(user_id, token.value);
+				await NotificationsService.addDeviceToken(user_id, token.value);
 			});
 
 			PushNotifications.addListener('registrationError', (error) => {
@@ -46,9 +46,7 @@ export class NotificationsService {
 		const existingChannels = await PushNotifications.listChannels();
 		if (
 			existingChannels.channels.find(
-				(channel) =>
-					channel.id === 'contapp-channel' ||
-					channel.id === 'petch-emergency-channel',
+				(channel) => channel.id === 'contapp-channel',
 			)
 		) {
 			return;
@@ -77,7 +75,7 @@ export class NotificationsService {
 		await PushNotifications.register();
 	}
 
-	static async deviceToken(id: string, device_token: string) {
+	static async addDeviceToken(id: string, device_token: string) {
 		try {
 			const response = await fetch('/notification/device-token', {
 				// todo: define if create or update
