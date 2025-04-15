@@ -1,7 +1,6 @@
 import { Capacitor } from '@capacitor/core';
-import { SplashScreen } from '@capacitor/splash-screen';
 import { setupIonicReact } from '@ionic/react';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { Routes } from './Routes';
@@ -31,13 +30,12 @@ const queryClient = new QueryClient();
 setupIonicReact();
 
 function App() {
-	const createChannelNotifications = async () => {
+	const createChannelNotifications = useCallback(async () => {
 		await Services.notifications.createChannel();
 		await Services.notifications.register();
-	};
+	}, []);
 
 	useEffect(() => {
-		SplashScreen.hide();
 		if (Capacitor.getPlatform() === 'android') {
 			createChannelNotifications();
 		}
