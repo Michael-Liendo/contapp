@@ -111,11 +111,11 @@ export default class Auth {
 		const user = await Repository.users.createUser(registeredUser);
 		await Services.firebase.createUser(user);
 
-		const token = await Auth.login({
+		const tokens = await Auth.login({
 			email: data.email,
 			password: data.password,
 		});
 
-		return { user, token: token, fbToken: token.fbToken };
+		return { user, tokens: tokens };
 	}
 }
