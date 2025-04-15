@@ -38,27 +38,6 @@ const AuthRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 export function Routes() {
 	const { isLoading } = useAuth();
 
-	const ionRouter = useIonRouter();
-
-	/* const handleGoBack = useCallback(async () => {
-		if (document) {
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-			document.addEventListener('ionBackButton', (ev: any) => {
-				ev.detail.register(-1, () => {
-					if (!ionRouter.canGoBack()) {
-						App.exitApp();
-					} else {
-						ionRouter.goBack();
-					}
-				});
-			});
-		}
-	}, []);
-
-	useEffect(() => {
-		handleGoBack();
-	}, []); */
-
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
@@ -89,41 +68,49 @@ const PrivateRoutes: JSX.Element[] = [
 		key={PrivateRoutesEnum.Home}
 		path={PrivateRoutesEnum.Home}
 		component={Home}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.AccountsPlan}
 		path={PrivateRoutesEnum.AccountsPlan}
 		component={AccountsPlan}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.ManageCompanies}
 		path={PrivateRoutesEnum.ManageCompanies}
 		component={ManageCompanies}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.JournalsCreate}
 		path={PrivateRoutesEnum.JournalsCreate}
 		component={JournalsCreate}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.JournalsHistory}
 		path={PrivateRoutesEnum.JournalsHistory}
 		component={JournalsHistory}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.JournalsView}
 		path={PrivateRoutesEnum.JournalsView}
 		component={JournalsView}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.ReportsTrialBalance}
 		path={PrivateRoutesEnum.ReportsTrialBalance}
 		component={TrialBalance}
+		exact
 	/>,
 	<Route
 		key={PrivateRoutesEnum.Profile}
 		path={PrivateRoutesEnum.Profile}
 		component={Profile}
+		exact
 	/>,
 ];
 
@@ -132,11 +119,13 @@ const AuthRoutes: JSX.Element[] = [
 		key={AuthRoutesEnum.Signup}
 		path={AuthRoutesEnum.Signup}
 		component={Signup}
+		exact
 	/>,
 	<Route
 		key={AuthRoutesEnum.Login}
 		path={AuthRoutesEnum.Login}
 		component={Login}
+		exact
 	/>,
 ];
 
