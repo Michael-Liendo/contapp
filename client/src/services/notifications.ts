@@ -56,7 +56,7 @@ export class NotificationsService {
 			id: 'contapp-channel',
 			name: 'Contapp Channel',
 			description: 'Contapp Channel',
-			importance: 1,
+			importance: 3,
 			visibility: 0,
 		});
 	}
