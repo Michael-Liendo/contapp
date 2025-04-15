@@ -17,6 +17,8 @@ import TrialBalance from './pages/(app)/reports/TrialBalance';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
 
+import type { JSX } from 'react';
+
 const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
 	return token ? (
