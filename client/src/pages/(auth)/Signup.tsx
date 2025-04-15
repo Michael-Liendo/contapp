@@ -36,8 +36,17 @@ export default function Signup() {
 						...values,
 						email: values.email.toLowerCase(),
 					});
-					setToken(results.data.token);
+					setToken(results.data.tokens.token);
+
+					await Services.firebase.signInWithCustomToken(
+						results.data.tokens.fb_token,
+					);
+
+					await Services.firebase.logEvent('sign_up', {
+						id: results.data.user.id,
+					});
 					navigate(PrivateRoutesEnum.Home);
+
 					toast({
 						description: (
 							<div className='flex items-center justify-between w-full space-x-4'>

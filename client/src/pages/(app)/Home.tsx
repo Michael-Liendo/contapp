@@ -7,6 +7,8 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import useSEO from '@/hooks/use-seo';
+import Services from '@/services';
+import { useIonViewDidEnter } from '@ionic/react';
 
 export default function HomeApp() {
 	useSEO({
@@ -15,6 +17,10 @@ export default function HomeApp() {
 			'Bienvenido a Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords: 'contapp, gestionar, operaciones, balances, plan de cuentas',
 	});
+
+	useIonViewDidEnter(() => {
+		Services.firebase.logEvent('tutorial_begin');
+	}, []);
 
 	return (
 		<div className='container mx-auto px-4 py-8'>

@@ -4,9 +4,9 @@ import { getAuth as fbGetAuth, signInWithCustomToken } from 'firebase/auth';
 
 import type { AnalyticsCallOptions } from 'firebase/analytics';
 export class FirebaseService {
-	static async signInWithCustomToken(fbToken: string) {
+	static async signInWithCustomToken(fb_token: string) {
 		const auth = FirebaseService.getAuth();
-		const user = await signInWithCustomToken(auth, fbToken);
+		const user = await signInWithCustomToken(auth, fb_token);
 		return user;
 	}
 	static getAuth() {
@@ -21,7 +21,7 @@ export class FirebaseService {
 
 	static async logEvent(
 		eventName: string,
-		params: Record<string, string>,
+		params?: Record<string, string>,
 		options?: AnalyticsCallOptions,
 	) {
 		logEvent(analytics, eventName, params, options);
