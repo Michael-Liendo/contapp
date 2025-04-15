@@ -7,7 +7,8 @@ import { PushNotifications } from '@capacitor/push-notifications';
 export class NotificationsService {
 	static async start(user_id: string) {
 		try {
-			if (!Capacitor.isNativePlatform()) return;
+			if (!Capacitor.isNativePlatform())
+				return console.log('NotificationsService ~ isNativePlatform: false');
 			const apps = getApps();
 			if (apps.length === 0) {
 				// Services.firebase.restartApp();
