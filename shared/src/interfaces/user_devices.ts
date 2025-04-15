@@ -2,7 +2,7 @@ import type {
 	UserDeviceForCreateSchema,
 	UserDeviceForUpdateSchema,
 	UserDeviceSchema,
-} from 'schema/user_devices';
+} from '../schema';
 import type { z } from 'zod';
 
 export interface IUserDevice extends z.infer<typeof UserDeviceSchema> {}

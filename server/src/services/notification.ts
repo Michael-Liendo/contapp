@@ -8,9 +8,14 @@ export class NotificationsService {
 		if (!user) {
 			throw new Error('User not found');
 		}
-		await Repository.notifications.create(user_id, device_token);
+		const user_device = await Repository.notifications.create(
+			user_id,
+			device_token,
+		);
 
 		await Services.firebase.suscribeToTopic(device_token);
 		await Services.firebase.subscribeRoleTopic(device_token, user.role);
+
+		return user_device;
 	}
 }
