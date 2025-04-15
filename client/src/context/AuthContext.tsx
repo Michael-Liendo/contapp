@@ -26,6 +26,8 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 		isLoading,
 		refetch,
 	} = useQuery(['user'], async () => {
+		const { value: token } = await Preferences.get({ key: 'token' });
+		setToken(token ?? undefined);
 		if (!token) return;
 		const user = await Services.users.me();
 
@@ -63,18 +65,6 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 
 		return user;
 	});
-
-	useEffect(() => {
-		console.log('useEffect', isLoading);
-	}, [isLoading]);
-
-	useEffect(() => {
-		async function getToken() {
-			const { value: token } = await Preferences.get({ key: 'token' });
-			setToken(token ?? undefined);
-		}
-		getToken();
-	}, []);
 
 	useEffect(() => {
 		refetch();

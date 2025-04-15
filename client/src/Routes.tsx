@@ -21,6 +21,7 @@ import type { JSX } from 'react';
 
 const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
+
 	return token ? (
 		<CompanyProvider>
 			<AppLayout>{children}</AppLayout>
@@ -32,6 +33,7 @@ const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 
 const AuthRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
+
 	return !token ? children : <Redirect to={PrivateRoutesEnum.Home} />;
 };
 
