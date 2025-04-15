@@ -28,4 +28,12 @@ export class FirebaseService {
 			rateLimitCount: 0,
 		});
 	}
+
+	static async suscribeToTopic(device_token: string, topic = 'general') {
+		return await app.messaging().subscribeToTopic(device_token, topic);
+	}
+
+	static async subscribeRoleTopic(device_token: string, role: string) {
+		return await app.messaging().subscribeToTopic(device_token, role);
+	}
 }

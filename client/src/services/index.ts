@@ -4,6 +4,7 @@ import Companies from './companies';
 import Default from './default';
 import { FirebaseService } from './firebase';
 import Journals from './journals';
+import { NotificationsService } from './notifications';
 import Reports from './reports';
 import Users from './users';
 
@@ -16,4 +17,5 @@ export default class Services {
 	static journals = Journals;
 	static reports = Reports;
 	static firebase = FirebaseService;
+	static notifications = NotificationsService;
 }
