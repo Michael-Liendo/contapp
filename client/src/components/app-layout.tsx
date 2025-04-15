@@ -20,8 +20,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 								<Separator orientation='vertical' className='mr-2 h-4' />
 							</div>
 						</header>
-						<IonContent className='flex flex-col flex-1 overflow-auto gap-2 px-8 pt-0'>
-							{children}
+						<IonContent>
+							<main className='flex flex-col flex-1 overflow-auto gap-2 px-8 pt-0'>
+								{children}
+							</main>
 						</IonContent>
 					</div>
 				</SidebarInset>
