@@ -3,7 +3,7 @@ import database from './database';
 import { InternalServerError } from '../utils/errorHandler';
 
 export class NotificationRepository {
-	static async create(user_id: string, device_token: string) {
+	static async createUserDevice(user_id: string, device_token: string) {
 		const [user_device] = await database<IUserDevice>('user_devices')
 			.insert({
 				user_id,
@@ -14,5 +14,13 @@ export class NotificationRepository {
 		if (!user_device) throw new InternalServerError('Error creating journal');
 
 		return UserDeviceSchema.parse(user_device);
+	}
+
+	static async getUserDeviceByToken(device_token: string) {
+		const user_device = await database<IUserDevice>('user_devices')
+			.where({ device_token })
+			.first();
+
+		return user_device;
 	}
 }

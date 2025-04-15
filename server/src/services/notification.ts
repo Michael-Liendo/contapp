@@ -8,7 +8,14 @@ export class NotificationsService {
 		if (!user) {
 			throw new Error('User not found');
 		}
-		const user_device = await Repository.notifications.create(
+
+		let user_device =
+			await Repository.notifications.getUserDeviceByToken(device_token);
+		if (user_device) {
+			return user_device;
+		}
+
+		user_device = await Repository.notifications.createUserDevice(
 			user_id,
 			device_token,
 		);
