@@ -38,6 +38,16 @@ export class NotificationsService {
 				},
 			);
 
+			PushNotifications.addListener(
+				'pushNotificationActionPerformed',
+				(payload) => {
+					// example with something to do
+					if (payload.notification.data.something) {
+						window.location.href = '/profile';
+					}
+				},
+			);
+
 			await NotificationsService.register();
 		} catch (e) {
 			console.error(e);
