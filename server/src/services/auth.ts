@@ -29,10 +29,10 @@ export default class Auth {
 		}
 
 		const token = await Jwt.createToken({ id: userWithoutPassword.id });
-		const fbToken = await Services.firebase.createCustomToken(
+		const fb_token = await Services.firebase.createCustomToken(
 			userWithoutPassword.id,
 		);
-		return { token, fbToken };
+		return { token, fb_token };
 	}
 
 	static async loginProvider(data: Record<string, unknown>, provider: string) {
@@ -67,9 +67,9 @@ export default class Auth {
 			}
 
 			const token = await Jwt.createToken({ id: user.id });
-			const fbToken = await Services.firebase.createCustomToken(user.id);
+			const fb_token = await Services.firebase.createCustomToken(user.id);
 
-			return { token, fbToken };
+			return { token, fb_token };
 		}
 	}
 
@@ -81,9 +81,9 @@ export default class Auth {
 		}
 		const token = await Jwt.createToken({ id: user.id });
 
-		const fbToken = await Services.firebase.createCustomToken(user.id);
+		const fb_token = await Services.firebase.createCustomToken(user.id);
 
-		return { token, fbToken };
+		return { token, fb_token };
 	}
 
 	static async register(data: IUserForRegister) {

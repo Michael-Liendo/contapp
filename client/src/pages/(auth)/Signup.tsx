@@ -38,7 +38,9 @@ export default function Signup() {
 					});
 					setToken(results.data.tokens.token);
 
-					await Services.firebase.signInWithCustomToken(results.fbToken);
+					await Services.firebase.signInWithCustomToken(
+						results.data.tokens.fb_token,
+					);
 
 					await Services.firebase.logEvent('sign_up', {
 						id: results.data.user.id,

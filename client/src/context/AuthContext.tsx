@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 
 					if (response?.token) {
 						const credentials = await Services.firebase.signInWithCustomToken(
-							response.fbToken,
+							response.fb_token,
 						);
 						if (!credentials.user) {
 							console.warn('Failed to sign in with renewed token.');

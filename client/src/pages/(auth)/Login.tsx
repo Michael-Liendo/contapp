@@ -43,7 +43,7 @@ export default function LoginPage() {
 					});
 					setToken(results.token);
 
-					await Services.firebase.signInWithCustomToken(results.fbToken);
+					await Services.firebase.signInWithCustomToken(results.fb_token);
 
 					await Services.firebase.logEvent('login', { email: values.email });
 
@@ -91,7 +91,7 @@ export default function LoginPage() {
 
 		setToken(results.token);
 
-		await Services.firebase.signInWithCustomToken(results.fbToken);
+		await Services.firebase.signInWithCustomToken(results.fb_token);
 
 		await Services.firebase.logEvent('login_with_provider', {
 			provider: 'google',
