@@ -22,13 +22,13 @@ export class NotificationsService {
 			PushNotifications.addListener('registration', async (token) => {
 				console.log(
 					'NotificationsService ~ PushNotifications.addListener.registration ~ token:',
-					token,
+					token.value,
 				);
 				await NotificationsService.addDeviceToken(user_id, token.value);
 			});
 
 			PushNotifications.addListener('registrationError', (error) => {
-				console.error('Error on registration: ', error);
+				console.error('Error on registration: ', error.error);
 			});
 
 			PushNotifications.addListener(
