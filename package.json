@@ -1,7 +1,11 @@
 {
 	"name": "@contapp/root",
 	"version": "0.3.1",
-	"workspaces": ["shared/", "server/", "client/"],
+	"workspaces": [
+		"shared/",
+		"server/",
+		"client/"
+	],
 	"scripts": {
 		"client:start": "npm run start -w @contapp/client",
 		"server:start": "npm run start -w @contapp/server",
@@ -28,6 +32,7 @@
 		"@types/bcrypt": "^5.0.2"
 	},
 	"dependencies": {
+		"stripe": "^18.0.0",
 		"zod": "^3.24.1"
 	}
 }

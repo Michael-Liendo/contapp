@@ -7,7 +7,7 @@ export default function stripe(
 	done: () => void,
 ) {
 	fastify.route({
-		method: 'POST',
+		method: 'GET',
 		url: '/list-products',
 		handler: listProducts,
 	});
