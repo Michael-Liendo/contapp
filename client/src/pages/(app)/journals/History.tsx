@@ -37,7 +37,7 @@ export default function JournalsHistory() {
 			const data = await Services.journals.findAll(activeCompany?.id ?? '', {
 				page: pagination?.page ?? 0,
 			});
-			setPagination(data.pagination);
+			if (data.pagination) setPagination(data.pagination);
 			return data.data;
 		},
 		{

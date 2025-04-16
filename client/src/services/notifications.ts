@@ -87,17 +87,13 @@ export class NotificationsService {
 	}
 
 	static async addDeviceToken(user_id: string, device_token: string) {
-		try {
-			const response = await fetch('/notification/device-token', {
-				// todo: define if create or update
-				method: 'POST',
-				body: JSON.stringify({ user_id, device_token }),
-			});
+		const response = await fetch('/notification/device-token', {
+			// todo: define if create or update
+			method: 'POST',
+			body: JSON.stringify({ user_id, device_token }),
+		});
 
-			const notification = await response.json();
-			return notification;
-		} catch (error) {
-			console.log('error', error);
-		}
+		const notification = await response.json();
+		return notification;
 	}
 }

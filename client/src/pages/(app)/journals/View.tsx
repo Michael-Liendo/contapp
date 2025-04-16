@@ -25,7 +25,7 @@ export default function JournalsHistory() {
 		['journals-view', journal_id],
 		async () => {
 			const data = await Services.journals.findOne(journal_id);
-			return data;
+			return data.data;
 		},
 	);
 
