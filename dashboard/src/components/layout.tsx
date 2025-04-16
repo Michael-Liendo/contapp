@@ -2,7 +2,7 @@ import { MainNav } from './nav-bar/nav-main';
 import { Search } from './nav-bar/search';
 import { UserNav } from './nav-bar/nav-user';
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+export function LApp({ children }: { children: React.ReactNode }) {
 	return (
 		<div className='flex-col md:flex'>
 			<div className='border-b'>
@@ -17,4 +17,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 			<main className='flex-1 p-8 pt-6'>{children}</main>
 		</div>
 	);
+}
+
+export function LAuth({ children }: { children: React.ReactNode }) {
+	return <>{children}</>;
 }

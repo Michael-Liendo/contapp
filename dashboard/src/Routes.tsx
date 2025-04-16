@@ -5,8 +5,7 @@ import {
 	Switch,
 } from 'react-router-dom';
 
-import AppLayout from './components/app-layout';
-import AuthLayout from './components/auth-layout';
+import { LApp, LAuth } from './components/layout';
 import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 import useAuth from './hooks/useAuth';
 import AccountsPlan from './pages/(app)/AccountsPlan';
@@ -21,7 +20,7 @@ const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
 
 	return token ? (
-		<AppLayout>{children}</AppLayout>
+		<LApp>{children}</LApp>
 	) : (
 		<Redirect to={AuthRoutesEnum.Login} />
 	);
@@ -31,7 +30,7 @@ const AuthRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
 
 	return !token ? (
-		<AuthLayout>{children}</AuthLayout>
+		<LAuth>{children}</LAuth>
 	) : (
 		<Redirect to={PrivateRoutesEnum.Home} />
 	);

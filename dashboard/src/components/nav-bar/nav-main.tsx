@@ -1,5 +1,31 @@
+import { PrivateRoutesEnum } from '@/data/routesEnums';
 import { cn } from '@/lib/utils';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+
+const data = [
+	{
+		title: 'Inicio',
+		url: PrivateRoutesEnum.Home,
+	},
+];
+
+function NavLink({ children, to }: { children: React.ReactNode; to: string }) {
+	const { pathname } = useLocation();
+
+	return (
+		<Link
+			to={to}
+			className={cn(
+				'text-sm font-medium transition-colors hover:text-primary',
+				{
+					'text-muted-foreground': pathname === to,
+				},
+			)}
+		>
+			{children}
+		</Link>
+	);
+}
 
 export function MainNav({
 	className,
@@ -10,30 +36,11 @@ export function MainNav({
 			className={cn('flex items-center space-x-4 lg:space-x-6', className)}
 			{...props}
 		>
-			<Link
-				to='/examples/dashboard'
-				className='text-sm font-medium transition-colors hover:text-primary'
-			>
-				Overview
-			</Link>
-			<Link
-				to='/examples/dashboard'
-				className='text-sm font-medium text-muted-foreground transition-colors hover:text-primary'
-			>
-				Customers
-			</Link>
-			<Link
-				to='/examples/dashboard'
-				className='text-sm font-medium text-muted-foreground transition-colors hover:text-primary'
-			>
-				Products
-			</Link>
-			<Link
-				to='/examples/dashboard'
-				className='text-sm font-medium text-muted-foreground transition-colors hover:text-primary'
-			>
-				Settings
-			</Link>
+			{data.map((item) => (
+				<NavLink key={item.title} to={item.url}>
+					{item.title}
+				</NavLink>
+			))}
 		</nav>
 	);
 }
