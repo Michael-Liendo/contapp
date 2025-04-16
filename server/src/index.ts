@@ -5,7 +5,6 @@ import cors from '@fastify/cors';
 import Fastify from 'fastify';
 
 import { EnvConfig } from './config/env';
-import { stripe } from './config/stripe';
 import database from './repository/database';
 import routes from './routes';
 
