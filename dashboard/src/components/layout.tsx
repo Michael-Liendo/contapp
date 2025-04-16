@@ -1,6 +1,4 @@
-import { MainNav } from './nav-bar/nav-main';
-import { Search } from './nav-bar/search';
-import { UserNav } from './nav-bar/nav-user';
+import { MainNav, Search, UserNav } from './nav';
 
 export function LApp({ children }: { children: React.ReactNode }) {
 	return (
