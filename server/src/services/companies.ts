@@ -2,8 +2,8 @@ import type {
 	ICompany,
 	ICompanyForCreate,
 	ICompanyForUpdate,
-	ISReplyFindAll,
 	IPaginationRequest,
+	ISReplyFindAll,
 } from '@contapp/shared';
 import Repository from '../repository';
 import { InternalServerError } from '../utils/errorHandler';

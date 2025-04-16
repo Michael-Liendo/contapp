@@ -3,8 +3,8 @@ import Repository from '../repository';
 import type {
 	IAccountPlan,
 	IAccountPlanForCreate,
-	ISReplyFindAll,
 	IPaginationRequest,
+	ISReplyFindAll,
 } from '@contapp/shared';
 import { BadRequestError, InternalServerError } from '../utils/errorHandler';
 import getPagination from '../utils/getPagination';

@@ -1,9 +1,9 @@
 import type {
-	ISReplyFindAll,
 	IJournalEntry,
 	IJournalForCreate,
 	IJournalQuery,
 	IPaginationRequest,
+	ISReplyFindAll,
 } from '@contapp/shared';
 import Repository from '../repository';
 import { BadRequestError, NotFoundError } from '../utils/errorHandler';

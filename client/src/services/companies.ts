@@ -1,9 +1,9 @@
 import {
 	CompanySchema,
 	type ICompany,
-	type ISResponse,
 	type ICompanyForCreate,
 	type ICompanyForUpdate,
+	type ISResponse,
 } from '@contapp/shared';
 import fetch from '../utils/fetch';
 

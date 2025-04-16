@@ -5,8 +5,8 @@ import type {
 	IAccountPlan,
 	IAccountPlanForCreate,
 	IAccountPlanForUpdate,
-	ISResponse,
 	IPaginationRequest,
+	ISResponse,
 } from '@contapp/shared';
 
 export default class AccountsPlan {
