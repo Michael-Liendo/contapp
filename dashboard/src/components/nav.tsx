@@ -21,6 +21,10 @@ const data = [
 		title: 'Inicio',
 		url: PrivateRoutesEnum.Home,
 	},
+	{
+		title: 'Usuarios',
+		url: PrivateRoutesEnum.Users,
+	},
 ];
 
 function NavLink({ children, to }: { children: React.ReactNode; to: string }) {
@@ -32,7 +36,7 @@ function NavLink({ children, to }: { children: React.ReactNode; to: string }) {
 			className={cn(
 				'text-sm font-medium transition-colors hover:text-primary',
 				{
-					'text-muted-foreground': pathname === to,
+					'text-muted-foreground': pathname !== to,
 				},
 			)}
 		>
