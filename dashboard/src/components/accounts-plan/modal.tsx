@@ -53,14 +53,7 @@ export function AccountPlanModalMutate({
 		},
 	});
 
-	const {
-		values,
-		errors,
-		handleChange,
-		handleSubmit,
-		setFieldValue,
-		setValues,
-	} = useFormik({
+	const { values, errors, handleChange, handleSubmit, setValues } = useFormik({
 		initialValues: {
 			name: '',
 			nomenclature: '',
@@ -68,7 +61,7 @@ export function AccountPlanModalMutate({
 		validationSchema: toFormikValidationSchema(AccountPlanForCreateSchema),
 		validateOnChange: false,
 		validateOnBlur: false,
-		onSubmit: async (values, { resetForm, setFieldValue }) => {
+		onSubmit: async (values, { resetForm }) => {
 			if (isEdit) {
 				const dto = await AccountPlanForUpdateSchema.parse({
 					id: isEdit.id,
