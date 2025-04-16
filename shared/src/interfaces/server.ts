@@ -1,7 +1,7 @@
 export interface IReply {
-	200: IGetResponse<unknown>;
-	201: IGetResponse<unknown>;
-	204: IGetResponse<unknown>;
+	200: ISResponse<unknown>;
+	201: ISResponse<unknown>;
+	204: ISResponse<unknown>;
 	400: {
 		success: boolean;
 		message: string;
@@ -28,14 +28,14 @@ export interface IError {
 	message: string;
 }
 
-export interface IGetResponse<T> {
+export interface ISResponse<T> {
 	success: boolean;
 	message: string;
 	data: T;
 	pagination?: IPaginationResponse;
 }
 
-export interface IFindAllResponse<T> {
+export interface ISReplyFindAll<T> {
 	data: T[];
 	pagination: IPaginationResponse;
 }

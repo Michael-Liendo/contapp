@@ -1,5 +1,7 @@
 import {
 	CompanySchema,
+	type ICompany,
+	type ISResponse,
 	type ICompanyForCreate,
 	type ICompanyForUpdate,
 } from '@contapp/shared';
@@ -7,32 +9,32 @@ import fetch from '../utils/fetch';
 
 export default class Companies {
 	static async findAll() {
-		try {
-			const request = await fetch('/companies/findAll');
+		const request = await fetch('/companies/findAll');
 
-			const response = await request.json();
+		const response: ISResponse<ICompany[]> = await request.json();
 
-			return CompanySchema.array().parse(response?.data);
-		} catch (error) {
-			console.error('CompanyServices', error);
-			throw error;
-		}
+		if (response.success === false) throw new Error('Error getting companies');
+
+		return {
+			...response,
+			data: CompanySchema.array().parse(response?.data),
+		};
 	}
 
 	static async create(company: ICompanyForCreate) {
-		try {
-			const request = await fetch('/companies/create', {
-				method: 'POST',
-				body: JSON.stringify(company),
-			});
+		const request = await fetch('/companies/create', {
+			method: 'POST',
+			body: JSON.stringify(company),
+		});
 
-			const response = await request.json();
+		const response: ISResponse<ICompany> = await request.json();
 
-			return CompanySchema.parse(response?.data);
-		} catch (error) {
-			console.error('CompanyServices', error);
-			throw error;
-		}
+		if (response.success === false) throw new Error('Error creating company');
+
+		return {
+			...response,
+			data: CompanySchema.parse(response?.data),
+		};
 	}
 
 	static async remove(_id: string) {
@@ -45,18 +47,18 @@ export default class Companies {
 	}
 
 	static async update(company: ICompanyForUpdate) {
-		try {
-			const request = await fetch('/companies/update', {
-				method: 'PUT',
-				body: JSON.stringify(company),
-			});
+		const request = await fetch('/companies/update', {
+			method: 'PUT',
+			body: JSON.stringify(company),
+		});
 
-			const response = await request.json();
+		const response: ISResponse<ICompany> = await request.json();
 
-			return CompanySchema.parse(response?.data);
-		} catch (error) {
-			console.error('CompanyServices', error);
-			throw error;
-		}
+		if (response.success === false) throw new Error('Error updating company');
+
+		return {
+			...response,
+			data: CompanySchema.parse(response?.data),
+		};
 	}
 }

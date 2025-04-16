@@ -16,6 +16,11 @@ export interface ILoggedInUser {
 export interface IUserForRegister
 	extends z.infer<typeof UserForRegisterSchema> {}
 
+export interface ITokens {
+	token: string;
+	fb_token: string;
+}
+
 export interface IUser extends z.infer<typeof UserSchema> {}
 
 export interface IUserForUpdate extends z.infer<typeof UserForUpdateSchema> {}

@@ -61,7 +61,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 	const [activeCompany, setActiveCompany] = useState<ICompany | undefined>();
 
 	useEffect(() => {
-		setActiveCompany(data?.[0]);
+		setActiveCompany(data?.data?.[0]);
 	}, [data]);
 
 	async function createHandle(company: ICompanyForCreate) {
@@ -79,7 +79,7 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 	return (
 		<CompanyContext.Provider
 			value={{
-				companies: data || [],
+				companies: data?.data || [],
 				activeCompany,
 				setActiveCompany,
 				create: createHandle,

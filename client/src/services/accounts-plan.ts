@@ -2,70 +2,63 @@ import fetch from '@/utils/fetch';
 import { AccountPlanSchema } from '@contapp/shared';
 
 import type {
+	IAccountPlan,
 	IAccountPlanForCreate,
 	IAccountPlanForUpdate,
+	ISResponse,
 	IPaginationRequest,
-	IPaginationResponse,
 } from '@contapp/shared';
 
 export default class AccountsPlan {
 	static async findAll(companyId: string, pagination?: IPaginationRequest) {
-		try {
-			const queryParams = new URLSearchParams();
-			if (pagination?.page) {
-				queryParams.append('page', pagination.page.toString());
-			}
-			if (pagination?.limit) {
-				queryParams.append('limit', pagination.limit.toString());
-			}
-
-			const request = await fetch(
-				`/accounts-plan/findAll/${companyId}?${queryParams.toString()}`,
-			);
-
-			const response = await request.json();
-
-			const data = AccountPlanSchema.array().parse(response?.data);
-
-			return {
-				data,
-				pagination: response?.pagination as IPaginationResponse,
-			};
-		} catch (error) {
-			console.error('AccountPlanService.findAll', error);
-			throw error;
+		const queryParams = new URLSearchParams();
+		if (pagination?.page) {
+			queryParams.append('page', pagination.page.toString());
 		}
+		if (pagination?.limit) {
+			queryParams.append('limit', pagination.limit.toString());
+		}
+
+		const request = await fetch(
+			`/accounts-plan/findAll/${companyId}?${queryParams.toString()}`,
+		);
+
+		const response: ISResponse<IAccountPlan[]> = await request.json();
+
+		if (response.success === false)
+			throw new Error('Error getting accounts plan');
+
+		const data = AccountPlanSchema.array().parse(response?.data);
+
+		return {
+			...response,
+			data: data,
+		};
 	}
 
 	static async create(plan: IAccountPlanForCreate) {
-		try {
-			const request = await fetch('/accounts-plan/create', {
-				method: 'POST',
-				body: JSON.stringify(plan),
-			});
+		const request = await fetch('/accounts-plan/create', {
+			method: 'POST',
+			body: JSON.stringify(plan),
+		});
 
-			const response = await request.json();
+		const response: ISResponse<IAccountPlan> = await request.json();
 
-			return AccountPlanSchema.parse(response?.data);
-		} catch (error) {
-			console.error('AccountPlanService.create', error);
-			throw error;
-		}
+		if (response.success === false) throw new Error('Error creating plan');
+
+		return AccountPlanSchema.parse(response?.data);
 	}
 
 	static async update(id: string, plan: IAccountPlanForUpdate) {
-		try {
-			const request = await fetch(`/accounts-plan/update/${id}`, {
-				method: 'PUT',
-				body: JSON.stringify(plan),
-			});
+		const request = await fetch(`/accounts-plan/update/${id}`, {
+			method: 'PUT',
+			body: JSON.stringify(plan),
+		});
 
-			const response = await request.json();
+		const response: ISResponse<IAccountPlan> = await request.json();
 
-			return AccountPlanSchema.parse(response?.data);
-		} catch (error) {
-			console.error('AccountPlanService.update', error);
-			throw error;
-		}
+		if (response.success === false) throw new Error('Error updating plan');
+
+		return AccountPlanSchema.parse(response?.data);
 	}
 }

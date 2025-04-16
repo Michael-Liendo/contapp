@@ -1,5 +1,5 @@
 import type {
-	IFindAllResponse,
+	ISReplyFindAll,
 	IJournalEntry,
 	IJournalForCreate,
 	IJournalQuery,
@@ -110,7 +110,7 @@ export class Journal {
 		companyId: string,
 		r_pagination: Required<IPaginationRequest>,
 		includeEntries = false,
-	): Promise<IFindAllResponse<IJournalQuery>> {
+	): Promise<ISReplyFindAll<IJournalQuery>> {
 		const company = await Repository.companies.getCompanyByID(companyId);
 		if (!company) {
 			throw new NotFoundError('Company not found');

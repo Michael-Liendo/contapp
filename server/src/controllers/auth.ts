@@ -11,7 +11,7 @@ export async function register(request: Request, reply: Reply) {
 	const { first_name, last_name, email, password } =
 		request.body as IUserForRegister;
 
-	const user = await Services.auth.register({
+	const register_data = await Services.auth.register({
 		first_name,
 		last_name,
 		email,
@@ -20,7 +20,7 @@ export async function register(request: Request, reply: Reply) {
 
 	return reply
 		.code(201)
-		.send({ success: true, message: 'User created', data: user });
+		.send({ success: true, message: 'User created', data: register_data });
 }
 
 export async function login(request: Request, reply: Reply) {

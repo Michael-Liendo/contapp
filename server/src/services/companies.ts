@@ -2,7 +2,7 @@ import type {
 	ICompany,
 	ICompanyForCreate,
 	ICompanyForUpdate,
-	IFindAllResponse,
+	ISReplyFindAll,
 	IPaginationRequest,
 } from '@contapp/shared';
 import Repository from '../repository';
@@ -19,7 +19,7 @@ export default class Companies {
 	static async getAll(
 		user_id: string,
 		r_pagination: Required<IPaginationRequest>,
-	): Promise<IFindAllResponse<ICompany>> {
+	): Promise<ISReplyFindAll<ICompany>> {
 		const companies = await Repository.companies.getUserCompanies(
 			user_id,
 			r_pagination,
