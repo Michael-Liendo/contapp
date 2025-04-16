@@ -1,5 +1,5 @@
 import { trialBalance } from '../controllers/reports';
-import checkJwt from '../middlewares/checkJwt';
+import { checkUser } from '../middlewares/checkUser';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
 
@@ -8,7 +8,7 @@ export default function reports(
 	_: RegisterOptions,
 	done: () => void,
 ) {
-	fastify.register(checkJwt);
+	fastify.register(checkUser);
 
 	fastify.route({
 		method: 'GET',

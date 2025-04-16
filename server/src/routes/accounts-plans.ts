@@ -3,7 +3,7 @@ import {
 	AccountPlanForUpdateSchema,
 } from '@contapp/shared';
 import { create, findAll, remove, update } from '../controllers/accounts-plan';
-import checkJwt from '../middlewares/checkJwt';
+import { checkUser } from '../middlewares/checkUser';
 import requestValidation from '../utils/requestValidation';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
@@ -13,7 +13,7 @@ export default function accounts_plan(
 	_: RegisterOptions,
 	done: () => void,
 ) {
-	fastify.register(checkJwt);
+	fastify.register(checkUser);
 
 	fastify.route({
 		method: 'GET',

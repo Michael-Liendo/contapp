@@ -1,4 +1,4 @@
-import checkJwt from '../middlewares/checkJwt';
+import { checkUser } from '../middlewares/checkUser';
 
 import { UserDeviceForCreateSchema } from '@contapp/shared';
 import type { FastifyInstance, RegisterOptions } from 'fastify';
@@ -10,7 +10,7 @@ export default function notification(
 	_: RegisterOptions,
 	done: () => void,
 ) {
-	fastify.register(checkJwt);
+	fastify.register(checkUser);
 
 	fastify.route({
 		// todo: define if create or update
