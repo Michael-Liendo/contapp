@@ -223,14 +223,6 @@ export default function Profile() {
 						</Button>
 					</div>
 				</CardFooter>
-
-				<div className='flex flex-wrap gap-5'>
-					{products?.data.map((product) => (
-						<div key={product.id}>
-							<p>{product.name}</p>
-						</div>
-					))}
-				</div>
 			</form>
 		</Card>
 	);

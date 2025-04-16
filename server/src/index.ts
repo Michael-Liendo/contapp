@@ -35,14 +35,14 @@ database
 		process.exit(1);
 	});
 
-stripe.balance
+/* stripe.balance
 	.retrieve()
 	.then(() => {
 		console.log('[STRIPE] Balance retrieved successfully');
 	})
 	.catch((error) => {
 		console.error('[STRIPE] Unable to retrieve charge:', error);
-	});
+	}); */
 
 // Run the server!
 fastify.listen(

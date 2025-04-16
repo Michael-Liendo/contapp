@@ -7,6 +7,9 @@ export class StripeService {
 		const response = await fetch('/stripe/list-products');
 
 		const data = await response.json();
-		return data as IGetResponse<Stripe.Product[]>;
+		return data as IGetResponse<{
+			products: Stripe.Product[];
+			prices: Stripe.Price[];
+		}>;
 	}
 }
