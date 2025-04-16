@@ -6,8 +6,8 @@ import { FirebaseService } from './firebase';
 import Journals from './journals';
 import { NotificationsService } from './notifications';
 import Reports from './reports';
-import Users from './users';
 import { StripeService } from './stripe';
+import Users from './users';
 
 export default class Services {
 	static default = Default;
