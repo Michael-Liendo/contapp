@@ -5,9 +5,9 @@ import cors from '@fastify/cors';
 import Fastify from 'fastify';
 
 import { EnvConfig } from './config/env';
+import { stripe } from './config/stripe';
 import database from './repository/database';
 import routes from './routes';
-import { stripe } from './config/stripe';
 
 // Instantiate Fastify with some config
 const fastify = Fastify();
@@ -38,11 +38,10 @@ database
 stripe.balance
 	.retrieve()
 	.then(() => {
-		console.log('[STRIPE] Charge retrieved successfully');
+		console.log('[STRIPE] Balance retrieved successfully');
 	})
 	.catch((error) => {
 		console.error('[STRIPE] Unable to retrieve charge:', error);
-		process.exit(1);
 	});
 
 // Run the server!
