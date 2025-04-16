@@ -8,7 +8,6 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog';
-import { useCompanyContext } from '@/context/CompanyContext';
 import Services from '@/services';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import {
@@ -32,8 +31,6 @@ export function AccountPlanModalMutate({
 	setOpen: (open: boolean) => void;
 	isEdit?: IAccountPlan;
 }) {
-	const { activeCompany } = useCompanyContext();
-
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 
@@ -66,7 +63,6 @@ export function AccountPlanModalMutate({
 	} = useFormik({
 		initialValues: {
 			name: '',
-			company_id: activeCompany?.id ?? '',
 			nomenclature: '',
 		},
 		validationSchema: toFormikValidationSchema(AccountPlanForCreateSchema),
@@ -88,8 +84,6 @@ export function AccountPlanModalMutate({
 			setOpen(false);
 			resetForm();
 
-			setFieldValue('company_id', activeCompany?.id ?? '');
-
 			toast({
 				title: isEdit ? 'Plan de cuentas editado' : 'Plan de cuentas creado',
 			});
@@ -97,14 +91,9 @@ export function AccountPlanModalMutate({
 	});
 
 	useEffect(() => {
-		setFieldValue('company_id', activeCompany?.id ?? '');
-	}, [activeCompany?.id]);
-
-	useEffect(() => {
 		if (isEdit) {
 			setValues({
 				name: isEdit.name ?? '',
-				company_id: isEdit.company_id ?? '',
 				nomenclature: isEdit.nomenclature ?? '',
 			});
 		}

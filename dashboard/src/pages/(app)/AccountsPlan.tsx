@@ -1,14 +1,10 @@
 import { AccountPlanDatagrid } from '@/components/accounts-plan/datagrid';
 import { AccountPlanModalMutate } from '@/components/accounts-plan/modal';
-import { NeedCompany } from '@/components/need-company';
 import { DataTable } from '@/components/table/data-table';
 import { Button } from '@/components/ui/button';
-import { useCompanyContext } from '@/context/CompanyContext';
 import useSEO from '@/hooks/use-seo';
-import Services from '@/services';
 import type { IPaginationResponse } from '@contapp/shared';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 
 export default function AccountsPlan() {
 	useSEO({
@@ -18,7 +14,6 @@ export default function AccountsPlan() {
 		keywords:
 			'contapp, gestionar, operaciones, balances, plan de cuentas, cuentas',
 	});
-	const { activeCompany } = useCompanyContext();
 
 	const [creationOpen, setCreationOpen] = useState(false);
 
@@ -29,25 +24,6 @@ export default function AccountsPlan() {
 		hasPreviousPage: false,
 		total: 0,
 	});
-
-	const { data, isLoading } = useQuery(
-		['accounts-plan', activeCompany, pagination],
-		async () => {
-			const data = await Services.accountsPlan.findAll(
-				activeCompany?.id ?? '',
-				{
-					page: pagination?.page ?? 0,
-				},
-			);
-			if (data.pagination) setPagination(data.pagination);
-			return data.data;
-		},
-		{
-			enabled: !!activeCompany?.id,
-		},
-	);
-
-	if (!activeCompany?.id) return <NeedCompany />;
 
 	return (
 		<div>
@@ -62,8 +38,8 @@ export default function AccountsPlan() {
 			<DataTable
 				pagination={pagination}
 				columns={AccountPlanDatagrid}
-				data={data || []}
-				loading={isLoading}
+				data={[]}
+				loading={false}
 				onPageChange={(page) => {
 					setPagination((prevPagination) => {
 						return {

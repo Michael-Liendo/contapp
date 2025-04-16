@@ -1,14 +1,7 @@
 'use client';
 
-import {
-	BookUser,
-	ClipboardMinus,
-	History,
-	Home,
-	Notebook,
-} from 'lucide-react';
+import { BookUser, Home } from 'lucide-react';
 
-import { CompanySwitcher } from '@/components/nav-bar/company-switcher';
 import { NavUser } from '@/components/nav-bar/nav-user';
 import {
 	Sidebar,
@@ -38,31 +31,7 @@ const data = {
 				},
 			],
 		},
-		{
-			title: 'Operaciones Contables',
-			items: [
-				{
-					title: 'Registrar Asiento Contable',
-					url: PrivateRoutesEnum.JournalsCreate,
-					icon: Notebook,
-				},
-				{
-					title: 'Historial de Asientos',
-					url: PrivateRoutesEnum.JournalsHistory,
-					icon: History,
-				},
-			],
-		},
-		{
-			title: 'Reportes',
-			items: [
-				{
-					title: 'Balance de Comprobación',
-					url: PrivateRoutesEnum.ReportsTrialBalance,
-					icon: ClipboardMinus,
-				},
-			],
-		},
+
 		{
 			title: 'Configuración Contable',
 			items: [
@@ -80,9 +49,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const { pathname } = useLocation();
 	return (
 		<Sidebar collapsible='icon' {...props}>
-			<SidebarHeader>
-				<CompanySwitcher />
-			</SidebarHeader>
+			<SidebarHeader>{/* <CompanySwitcher /> */}</SidebarHeader>
 			<SidebarContent>
 				{data.navMain.map((item) => (
 					<SidebarGroup key={item.title}>

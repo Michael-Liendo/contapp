@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 
 import AppLayout from './components/app-layout';
-import { CompanyProvider } from './context/CompanyContext';
+import AuthLayout from './components/auth-layout';
 import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 import useAuth from './hooks/useAuth';
 import AccountsPlan from './pages/(app)/AccountsPlan';
@@ -11,15 +11,12 @@ import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
 
 import type { JSX } from 'react';
-import AuthLayout from './components/auth-layout';
 
 const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
 
 	return token ? (
-		<CompanyProvider>
-			<AppLayout>{children}</AppLayout>
-		</CompanyProvider>
+		<AppLayout>{children}</AppLayout>
 	) : (
 		<Redirect to={AuthRoutesEnum.Login} />
 	);
