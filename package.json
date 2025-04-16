@@ -1,19 +1,18 @@
 {
 	"name": "@contapp/root",
 	"version": "0.3.1",
-	"workspaces": [
-		"shared/",
-		"server/",
-		"client/"
-	],
+	"workspaces": ["shared/", "server/", "client/", "dashboard/"],
 	"scripts": {
 		"client:start": "npm run start -w @contapp/client",
+		"dashboard:start": "npm run start -w @contapp/dashboard",
 		"server:start": "npm run start -w @contapp/server",
 		"build": "npm run build --ws",
 		"client:build": "npm run build -w @contapp/client",
+		"dashboard:build": "npm run build -w @contapp/dashboard",
 		"shared:build": "npm run build -w @contapp/shared",
 		"server:build": "npm run build -w @contapp/server",
 		"client:dev": "npm run dev -w @contapp/client",
+		"dashboard:dev": "npm run dev -w @contapp/dashboard",
 		"server:dev": "npm run dev -w @contapp/server",
 		"lint": "npm run lint --ws",
 		"format": "npm run format --ws",
@@ -21,6 +20,9 @@
 		"client:lint": "npm run lint -w @contapp/client",
 		"client:format": "npm run format -w @contapp/client",
 		"client:format:unsafe": "npm run format:unsafe -w @contapp/client",
+		"dashboard:lint": "npm run lint -w @contapp/dashboard",
+		"dashboard:format": "npm run format -w @contapp/dashboard",
+		"dashboard:format:unsafe": "npm run format:unsafe -w @contapp/dashboard",
 		"server:lint": "npm run lint -w @contapp/server",
 		"server:format": "npm run format -w @contapp/server",
 		"server:format:unsafe": "npm run format:unsafe -w @contapp/server",
