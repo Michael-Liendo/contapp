@@ -1,13 +1,14 @@
 import accounts_plan from './accounts-plans';
 import auth from './auth';
 import company from './company';
+import journals from './journals';
+import notification from './notification';
+import reports from './reports';
+import stripe from './stripe';
 import user from './user';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
 import type { ErrorWithDetails } from '../utils/errorHandler';
-import journals from './journals';
-import notification from './notification';
-import reports from './reports';
 
 export default function routes(
 	fastify: FastifyInstance,
@@ -35,11 +36,12 @@ export default function routes(
 		}
 		fastify.log.error(error);
 		console.error(error);
-		return reply.code(error.statusCode || 500).send({
+		return reply.code(500).send({
 			error: 'INTERNAL_SERVER_ERROR',
 			message: error.message,
 			// todo: check if this is the right send the stack
 			details: error.stack,
+			success: false,
 		});
 	});
 
@@ -54,6 +56,7 @@ export default function routes(
 	fastify.register(journals, { prefix: '/journals' });
 	fastify.register(reports, { prefix: '/reports' });
 	fastify.register(notification, { prefix: '/notification' });
+	fastify.register(stripe, { prefix: '/stripe' });
 
 	done();
 }

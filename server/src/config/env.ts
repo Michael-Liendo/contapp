@@ -15,6 +15,7 @@ const {
 	GOOGLE_WEB_CLIENT_ID = '236430944478-v1nsr5mai4ertrhfcmbuemofndg8i5j9.apps.googleusercontent.com',
 	FIREBASE_PRIVATE_KEY,
 	FIREBASE_CLIENT_EMAIL,
+	STRIPE_SECRET_KEY = '',
 } = process.env;
 
 export const EnvConfig = () => {
@@ -33,6 +34,7 @@ export const EnvConfig = () => {
 			GOOGLE_WEB_CLIENT_ID,
 			FIREBASE_PRIVATE_KEY,
 			FIREBASE_CLIENT_EMAIL,
+			STRIPE_SECRET_KEY,
 		};
 	}
 
@@ -50,5 +52,6 @@ export const EnvConfig = () => {
 		GOOGLE_WEB_CLIENT_ID,
 		FIREBASE_PRIVATE_KEY,
 		FIREBASE_CLIENT_EMAIL,
+		STRIPE_SECRET_KEY,
 	};
 };
