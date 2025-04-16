@@ -38,7 +38,7 @@ database
 /* stripe.balance
 	.retrieve()
 	.then(() => {
-		console.log('[STRIPE] Balance retrieved successfully');
+		console.log('[STRIPE] Balance retrieved successfully');	
 	})
 	.catch((error) => {
 		console.error('[STRIPE] Unable to retrieve charge:', error);
