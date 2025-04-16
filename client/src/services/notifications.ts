@@ -4,6 +4,7 @@ import { getApps } from 'firebase/app';
 import { restartApp } from '@/config/firebase';
 import fetch from '@/utils/fetch';
 import { PushNotifications } from '@capacitor/push-notifications';
+import type { ISResponse, IUserDevice } from '@contapp/shared';
 
 export class NotificationsService {
 	static async start(user_id: string) {
@@ -93,7 +94,7 @@ export class NotificationsService {
 			body: JSON.stringify({ user_id, device_token }),
 		});
 
-		const notification = await response.json();
+		const notification: ISResponse<IUserDevice> = await response.json();
 		return notification;
 	}
 }
