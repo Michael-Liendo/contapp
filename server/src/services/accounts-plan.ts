@@ -3,8 +3,8 @@ import Repository from '../repository';
 import type {
 	IAccountPlan,
 	IAccountPlanForCreate,
-	IFindAllResponse,
 	IPaginationRequest,
+	ISReplyFindAll,
 } from '@contapp/shared';
 import { BadRequestError, InternalServerError } from '../utils/errorHandler';
 import getPagination from '../utils/getPagination';
@@ -22,7 +22,7 @@ export default class AccountsPlan {
 	static async getAll(
 		company_id: string,
 		r_pagination: Required<IPaginationRequest>,
-	): Promise<IFindAllResponse<IAccountPlan>> {
+	): Promise<ISReplyFindAll<IAccountPlan>> {
 		const account_plans = await Repository.accountsPlan.getAll(
 			company_id,
 			r_pagination,

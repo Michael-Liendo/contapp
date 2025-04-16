@@ -39,7 +39,7 @@ export default function AccountsPlan() {
 					page: pagination?.page ?? 0,
 				},
 			);
-			setPagination(data.pagination);
+			if (data.pagination) setPagination(data.pagination);
 			return data.data;
 		},
 		{

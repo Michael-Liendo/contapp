@@ -37,11 +37,11 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 			if (!fbUser && !isTokenRenewing) {
 				isTokenRenewing = true; // Lock the token renewal process
 				try {
-					const response = await Services.auth.renewToken();
+					const { data } = await Services.auth.renewToken();
 
-					if (response?.token) {
+					if (data?.token) {
 						const credentials = await Services.firebase.signInWithCustomToken(
-							response.fb_token,
+							data.fb_token,
 						);
 						if (!credentials.user) {
 							console.warn('Failed to sign in with renewed token.');
