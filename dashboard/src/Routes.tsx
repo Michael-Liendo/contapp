@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Redirect,
+	Route,
+	Switch,
+} from 'react-router-dom';
 
 import AppLayout from './components/app-layout';
 import AuthLayout from './components/auth-layout';
@@ -41,19 +46,21 @@ export function Routes() {
 
 	return (
 		<Router>
-			{PrivateRoutes.map((route) => (
-				<Route key={route.props.path} path={route.props.path} exact>
-					<PrivateRoutesWrapper>{route}</PrivateRoutesWrapper>
-				</Route>
-			))}
+			<Switch>
+				{PrivateRoutes.map((route) => (
+					<Route key={route.props.path} path={route.props.path} exact>
+						<PrivateRoutesWrapper>{route}</PrivateRoutesWrapper>
+					</Route>
+				))}
 
-			{AuthRoutes.map((route) => (
-				<Route key={route.props.path} path={route.props.path} exact>
-					<AuthRoutesWrapper>{route}</AuthRoutesWrapper>
-				</Route>
-			))}
+				{AuthRoutes.map((route) => (
+					<Route key={route.props.path} path={route.props.path} exact>
+						<AuthRoutesWrapper>{route}</AuthRoutesWrapper>
+					</Route>
+				))}
 
-			{PublicRoutes.map((route) => route)}
+				{PublicRoutes.map((route) => route)}
+			</Switch>
 		</Router>
 	);
 }
@@ -95,5 +102,5 @@ const AuthRoutes: JSX.Element[] = [
 ];
 
 const PublicRoutes: JSX.Element[] = [
-	<Route key={'no-found'} component={() => <>No Found</>} exact />,
+	<Route key={'no-found'} path={'*'} component={() => <>No Found</>} exact />,
 ];

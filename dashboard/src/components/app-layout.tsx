@@ -1,33 +1,20 @@
-import { AppSidebar } from '@/components/nav-bar/app-sidebar';
-import { Separator } from '@/components/ui/separator';
-import {
-	SidebarInset,
-	SidebarProvider,
-	SidebarTrigger,
-} from '@/components/ui/sidebar';
-import { IonContent, IonPage } from '@ionic/react';
+import { MainNav } from './nav-bar/nav-main';
+import { Search } from './nav-bar/search';
+import { UserNav } from './nav-bar/nav-user';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<IonPage>
-			<SidebarProvider>
-				<AppSidebar />
-				<SidebarInset>
-					<div className='flex flex-col h-screen'>
-						<header className='flex h-16 items-center justify-between px-4'>
-							<div className='flex items-center gap-2 px-4'>
-								<SidebarTrigger className='-ml-1' />
-								<Separator orientation='vertical' className='mr-2 h-4' />
-							</div>
-						</header>
-						<IonContent>
-							<main className='flex flex-col flex-1 overflow-auto gap-2 px-8 pt-0'>
-								{children}
-							</main>
-						</IonContent>
+		<div className='flex-col md:flex'>
+			<div className='border-b'>
+				<div className='flex h-16 items-center px-8'>
+					<MainNav />
+					<div className='ml-auto flex items-center space-x-4'>
+						<Search />
+						<UserNav />
 					</div>
-				</SidebarInset>
-			</SidebarProvider>
-		</IonPage>
+				</div>
+			</div>
+			<main className='flex-1 p-8 pt-6'>{children}</main>
+		</div>
 	);
 }
