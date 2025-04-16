@@ -10,9 +10,7 @@ import {
 	DropdownMenuTrigger,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
-	DropdownMenuGroup,
 	DropdownMenuItem,
-	DropdownMenuShortcut,
 } from './ui/dropdown-menu';
 import { Input } from './ui/input';
 import useAuth from '@/hooks/useAuth';
