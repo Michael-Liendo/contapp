@@ -2,19 +2,19 @@ import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import { cn } from '@/lib/utils';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
+import useAuth from '@/hooks/useAuth';
+import { LogOut, UserPen } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuTrigger,
+	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
-	DropdownMenuItem,
+	DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 import { Input } from './ui/input';
-import useAuth from '@/hooks/useAuth';
-import { LogOut, UserPen } from 'lucide-react';
 
 const data = [
 	{

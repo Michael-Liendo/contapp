@@ -1,7 +1,7 @@
 import {
-	BrowserRouter as Router,
 	Redirect,
 	Route,
+	BrowserRouter as Router,
 	Switch,
 } from 'react-router-dom';
 
