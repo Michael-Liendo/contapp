@@ -1,5 +1,5 @@
 import { validateMasterName } from '@contapp/shared';
-import { create, edit, findAll, findOne, remove } from '../controllers/admin';
+import { create, findAll, findOne, remove, update } from '../controllers/admin';
 import { checkAdmin } from '../middlewares/checkAdmin';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
@@ -44,7 +44,7 @@ export default function admin(
 	fastify.route({
 		method: 'PUT',
 		url: '/update/:master_name',
-		handler: edit,
+		handler: update,
 	});
 
 	fastify.route({
