@@ -14,7 +14,7 @@ export function DatePicker({
 	date,
 	setDate,
 }: {
-	date: Date;
+	date?: Date | null;
 	setDate: (date: Date) => void;
 }) {
 	return (
@@ -23,7 +23,7 @@ export function DatePicker({
 				<Button
 					variant={'outline'}
 					className={cn(
-						'w-[240px] justify-start text-left font-normal',
+						'w-full justify-start text-left font-normal',
 						!date && 'text-muted-foreground',
 					)}
 				>
@@ -34,7 +34,7 @@ export function DatePicker({
 			<PopoverContent className='w-auto p-0' align='start'>
 				<Calendar
 					mode='single'
-					selected={date}
+					selected={date ?? undefined}
 					onSelect={(day) => day && setDate(day)}
 					initialFocus
 				/>

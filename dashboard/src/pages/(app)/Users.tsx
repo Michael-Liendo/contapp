@@ -37,7 +37,6 @@ export default function Users() {
 				page: pagination?.page ?? 0,
 			});
 			if (data.pagination) setPagination(data.pagination);
-			console.log(data);
 			return UserSchema.array().parse(data.data);
 		},
 	);

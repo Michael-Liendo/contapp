@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const UserRoleSchema = z.enum(['USER', 'SUPER_ADMIN']);
+export const UserRoleEnum = z.enum(['USER', 'SUPER_ADMIN']);
 
 export const UserNotificationSchema = z
 	.object({
@@ -25,11 +25,11 @@ export const UserSchema = z.object({
 	first_name: z.string(),
 	last_name: z.string(),
 	email: z.string().email().describe('unique'),
-	role: UserRoleSchema,
+	role: UserRoleEnum,
 	password: z.string().optional(),
 	notifications: UserNotificationSchema,
-	terms_accepted_at: z.coerce.date(),
-	email_confirmed_at: z.coerce.date(),
+	terms_accepted_at: z.coerce.date().nullable(),
+	email_confirmed_at: z.coerce.date().nullable(),
 	created_at: z.coerce.date(),
 	updated_at: z.coerce.date(),
 });

@@ -3,8 +3,11 @@ import type {
 	UserForRegisterSchema,
 	UserForUpdateSchema,
 	UserLoginSchema,
+	UserRoleEnum,
 	UserSchema,
 } from '../schema';
+
+export type TUserRole = z.infer<typeof UserRoleEnum>;
 
 export interface IUserForLogin extends z.infer<typeof UserLoginSchema> {}
 
