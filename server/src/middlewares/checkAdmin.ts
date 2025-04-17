@@ -41,4 +41,4 @@ export async function checkRequestJwt(request: Request) {
 	}
 }
 
-export const checkUser = fastifyPlugin(getUser);
+export const checkAdmin = fastifyPlugin(getUser);
