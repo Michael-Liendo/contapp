@@ -39,10 +39,9 @@ export async function findOne(request: Request, reply: Reply) {
 
 export async function create(request: Request, reply: Reply) {
 	const { master_name } = request.params as { master_name: string };
-	const { id: user_id } = request.user as { id: string };
 	const body = request.body as Record<string, unknown>;
 
-	const created = await Services.admin.create(master_name, body, user_id);
+	const created = await Services.admin.create(master_name, body);
 
 	return reply.code(201).send({
 		success: true,
@@ -52,14 +51,13 @@ export async function create(request: Request, reply: Reply) {
 }
 
 export async function update(request: Request, reply: Reply) {
-	const { master_name, id } = request.params as {
+	const { master_name, master_id } = request.params as {
 		master_name: string;
-		id: string;
+		master_id: string;
 	};
-	const { id: user_id } = request.user as { id: string };
 	const body = request.body as Record<string, unknown>;
 
-	const updated = await Services.admin.update(master_name, id, body, user_id);
+	const updated = await Services.admin.update(master_name, master_id, body);
 
 	return reply.code(200).send({
 		success: true,
@@ -69,13 +67,12 @@ export async function update(request: Request, reply: Reply) {
 }
 
 export async function remove(request: Request, reply: Reply) {
-	const { master_name, id } = request.params as {
+	const { master_name, master_id } = request.params as {
 		master_name: string;
-		id: string;
+		master_id: string;
 	};
-	const { id: user_id } = request.user as { id: string };
 
-	await Services.admin.delete(master_name, id, user_id);
+	await Services.admin.delete(master_name, master_id);
 
 	return reply.code(204).send();
 }

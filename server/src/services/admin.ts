@@ -1,6 +1,5 @@
 import { BadRequestError } from '../utils/errorHandler';
 import getPagination from '../utils/getPagination';
-import { isCompanyOwner } from '../utils/isCompanyOwner';
 
 import type { IPaginationRequest, ISReplyFindAll } from '@contapp/shared';
 import Repository from '../repository';
@@ -43,14 +42,7 @@ export default class AdminService {
 	static async create(
 		master_name: string,
 		data: Record<string, unknown>,
-		user_id: string,
 	): Promise<Record<string, unknown>> {
-		if (!data.company_id || typeof data.company_id !== 'string') {
-			throw new BadRequestError('Missing or invalid company_id');
-		}
-
-		await isCompanyOwner(data.company_id, user_id);
-
 		const created = await Repository.admin.create(master_name, data);
 
 		return created;
@@ -60,7 +52,6 @@ export default class AdminService {
 		master_name: string,
 		id: string,
 		data: Record<string, unknown>,
-		user_id: string,
 	): Promise<Record<string, unknown>> {
 		const current = await Repository.admin.findOne(master_name, id);
 
@@ -70,27 +61,15 @@ export default class AdminService {
 			throw new BadRequestError('Invalid company_id in record');
 		}
 
-		await isCompanyOwner(current.company_id, user_id);
-
 		const updated = await Repository.admin.update(master_name, id, data);
 
 		return updated;
 	}
 
-	static async delete(
-		master_name: string,
-		id: string,
-		user_id: string,
-	): Promise<void> {
+	static async delete(master_name: string, id: string): Promise<void> {
 		const current = await Repository.admin.findOne(master_name, id);
 
 		if (!current) throw new BadRequestError(`${master_name} not found`);
-
-		if (!current.company_id || typeof current.company_id !== 'string') {
-			throw new BadRequestError('Invalid company_id in record');
-		}
-
-		await isCompanyOwner(current.company_id, user_id);
 
 		await Repository.admin.remove(master_name, id);
 	}
