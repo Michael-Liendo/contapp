@@ -1,4 +1,4 @@
-import { UserNotificationSchema, UserRoleSchema } from '@contapp/shared';
+import { UserNotificationSchema, UserRoleEnum } from '@contapp/shared';
 import type { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
@@ -14,9 +14,9 @@ export async function up(knex: Knex): Promise<void> {
 		table.string('last_name').notNullable();
 		table.string('email').notNullable().unique();
 		table
-			.enum('role', UserRoleSchema.options)
+			.enum('role', UserRoleEnum.options)
 			.notNullable()
-			.defaultTo(UserRoleSchema.Enum.USER);
+			.defaultTo(UserRoleEnum.Enum.USER);
 		table
 			.json('notifications')
 			.notNullable()
