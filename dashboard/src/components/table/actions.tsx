@@ -52,7 +52,7 @@ export function DataTableRowActions<TData>({
 	const queryClient = useQueryClient();
 
 	async function handleDelete() {
-		await Services.default.delete(masterName, row.original?.id);
+		await Services.admin.delete(masterName, row.original?.id);
 		toast({
 			title: 'Elemento eliminado',
 		});
