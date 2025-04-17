@@ -17,7 +17,7 @@ import { UserForUpdateSchema } from '@contapp/shared';
 import { useFormik } from 'formik';
 import { Check, PencilLine } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 
 export default function Profile() {
 	useSEO({
@@ -87,17 +87,6 @@ export default function Profile() {
 			},
 		});
 	}, [user]);
-
-	const { data: products } = useQuery(
-		['stripe-list-products'],
-		async () => {
-			const data = await Services.stripe.listProducts();
-			return data;
-		},
-		{
-			enabled: !!user?.id,
-		},
-	);
 
 	return (
 		<Card>
