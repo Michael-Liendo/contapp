@@ -43,13 +43,13 @@ export default function admin(
 
 	fastify.route({
 		method: 'PUT',
-		url: '/update/:master_name',
+		url: '/update/:master_name/:master_id',
 		handler: update,
 	});
 
 	fastify.route({
 		method: 'DELETE',
-		url: '/delete/:master_name',
+		url: '/delete/:master_name/:master_id',
 		handler: remove,
 	});
 

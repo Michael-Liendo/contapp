@@ -14,7 +14,7 @@ import { useQuery } from 'react-query';
 
 export default function Users() {
 	useSEO({
-		title: 'Usuarios | Contapp',
+		title: 'Usuarios | Dashboard Contapp',
 		description:
 			'Vea y gestiona tu plan de cuentas en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords:
