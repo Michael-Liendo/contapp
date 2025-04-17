@@ -7,15 +7,69 @@ import { UsersModalMutate } from './modal';
 
 export const UsersDatagrid: ColumnDef<IUser>[] = [
 	{
+		accessorKey: 'id',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title='ID' />
+		),
+	},
+	{
+		accessorKey: 'active',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title='Active' />
+		),
+	},
+	{
 		accessorKey: 'first_name',
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title='nombre' />
+			<DataTableColumnHeader column={column} title='First Name' />
+		),
+	},
+	{
+		accessorKey: 'last_name',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title='Last Name' />
 		),
 	},
 	{
 		accessorKey: 'email',
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title='email' />
+			<DataTableColumnHeader column={column} title='Email' />
+		),
+	},
+	{
+		accessorKey: 'role',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title='Role' />
+		),
+	},
+	{
+		accessorKey: 'password',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title='Password' />
+		),
+	},
+	{
+		accessorKey: 'notifications.information',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title='Notifications Info' />
+		),
+	},
+	{
+		accessorKey: 'notifications.general',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title='Notifications general' />
+		),
+	},
+	{
+		accessorKey: 'terms_accepted_at',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title='Terms Accepted At' />
+		),
+	},
+	{
+		accessorKey: 'email_confirmed_at',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title='Email Confirmed At' />
 		),
 	},
 	{
@@ -36,6 +90,12 @@ export const UsersDatagrid: ColumnDef<IUser>[] = [
 				</div>
 			);
 		},
+	},
+	{
+		accessorKey: 'updated_at',
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title='Updated At' />
+		),
 	},
 	{
 		id: 'actions',
