@@ -4,9 +4,8 @@ import type { Reply, Request } from '../types';
 
 export async function findAll(request: Request, reply: Reply) {
 	const { page = 0, limit = 100 } = request.query as IPaginationRequest;
-	const { master_name, company_id } = request.params as {
+	const { master_name } = request.params as {
 		master_name: string;
-		company_id: string;
 	};
 
 	const result = await Services.admin.getAll(master_name, {
