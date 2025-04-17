@@ -1,7 +1,7 @@
 import { JournalForCreateSchema } from '@contapp/shared';
 
 import { create, findOne, listByCompany } from '../controllers/journals';
-import checkJwt from '../middlewares/checkJwt';
+import { checkUser } from '../middlewares/checkUser';
 import requestValidation from '../utils/requestValidation';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
@@ -11,7 +11,7 @@ export default function journals(
 	_: RegisterOptions,
 	done: () => void,
 ) {
-	fastify.register(checkJwt);
+	fastify.register(checkUser);
 
 	fastify.route({
 		method: 'POST',

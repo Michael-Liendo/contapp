@@ -1,4 +1,5 @@
 import AccountsPlan from './accounts-plan';
+import AdminService from './admin';
 import Auth from './auth';
 import Companies from './companies';
 import { FirebaseService } from './firebase';
@@ -16,4 +17,5 @@ export default class Services {
 	static trialBalance = TrialBalanceService;
 	static firebase = FirebaseService;
 	static notifications = NotificationsService;
+	static admin = AdminService;
 }

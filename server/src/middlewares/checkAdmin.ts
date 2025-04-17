@@ -31,10 +31,14 @@ export async function checkRequestJwt(request: Request) {
 			throw new UnauthorizedError('Access denied');
 		}
 
+		if (user.role === 'SUPER_ADMIN') {
+			throw new UnauthorizedError('Access denied');
+		}
+
 		request.user = user;
 	} catch (error) {
 		throw new UnauthorizedError(error as string);
 	}
 }
 
-export default fastifyPlugin(getUser);
+export const checkAdmin = fastifyPlugin(getUser);

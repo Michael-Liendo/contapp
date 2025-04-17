@@ -1,7 +1,7 @@
 import { UserForRegisterSchema, UserLoginSchema } from '@contapp/shared';
 
 import { login, provider, register, renewToken } from '../controllers/auth';
-import { checkRequestJwt } from '../middlewares/checkJwt';
+import { checkRequestJwt } from '../middlewares/checkUser';
 import requestValidation from '../utils/requestValidation';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';

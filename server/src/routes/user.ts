@@ -1,5 +1,5 @@
 import { deleteUser, me, update } from '../controllers/users';
-import checkJwt from '../middlewares/checkJwt';
+import { checkUser } from '../middlewares/checkUser';
 
 import { UserForUpdateSchema } from '@contapp/shared';
 import type { FastifyInstance, RegisterOptions } from 'fastify';
@@ -10,7 +10,7 @@ export default function user(
 	_: RegisterOptions,
 	done: () => void,
 ) {
-	fastify.register(checkJwt);
+	fastify.register(checkUser);
 
 	fastify.route({
 		method: 'GET',

@@ -1,3 +1,6 @@
+import type { z } from 'zod';
+import type { MasterNameEnum } from '../schema';
+
 export interface IReply {
 	200: ISResponse<unknown>;
 	201: ISResponse<unknown>;
@@ -21,6 +24,8 @@ export interface IReply {
 		details?: string;
 	};
 }
+
+export type TMasterName = z.infer<typeof MasterNameEnum>;
 
 export interface IError {
 	code: string;
