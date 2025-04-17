@@ -8,13 +8,13 @@ import {
 import { LApp, LAuth } from './components/layout';
 import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 import useAuth from './hooks/useAuth';
-import AccountsPlan from './pages/(app)/AccountsPlan';
 import Home from './pages/(app)/Home';
 import Profile from './pages/(app)/Profile';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
 
 import type { JSX } from 'react';
+import Users from './pages/(app)/Users';
 
 const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
@@ -72,15 +72,15 @@ const PrivateRoutes: JSX.Element[] = [
 		exact
 	/>,
 	<Route
-		key={PrivateRoutesEnum.AccountsPlan}
-		path={PrivateRoutesEnum.AccountsPlan}
-		component={AccountsPlan}
-		exact
-	/>,
-	<Route
 		key={PrivateRoutesEnum.Profile}
 		path={PrivateRoutesEnum.Profile}
 		component={Profile}
+		exact
+	/>,
+	<Route
+		key={PrivateRoutesEnum.Users}
+		path={PrivateRoutesEnum.Users}
+		component={Users}
 		exact
 	/>,
 ];

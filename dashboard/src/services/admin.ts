@@ -1,8 +1,8 @@
 import fetch from '@/utils/fetch';
-import type { IPaginationRequest } from '@contapp/shared';
+import type { IPaginationRequest, ISResponse } from '@contapp/shared';
 
 export default class AdminService {
-	static async getAll(master_name: string, pagination?: IPaginationRequest) {
+	static async findAll(master_name: string, pagination?: IPaginationRequest) {
 		const queryParams = new URLSearchParams();
 		if (pagination?.page) {
 			queryParams.append('page', pagination.page.toString());
@@ -19,10 +19,12 @@ export default class AdminService {
 			throw new Error(`Error fetching ${master_name}`);
 		}
 
-		return request.json();
+		const response: ISResponse<Record<string, unknown>> = await request.json();
+
+		return response;
 	}
 
-	static async getOne(master_name: string, master_id: string) {
+	static async findOne(master_name: string, master_id: string) {
 		const request = await fetch(`/admin/findOne/${master_name}/${master_id}`);
 
 		if (!request.ok) {
@@ -47,10 +49,10 @@ export default class AdminService {
 
 	static async update(
 		master_name: string,
-		id: string,
+		master_id: string,
 		payload: Record<string, unknown>,
 	) {
-		const request = await fetch(`/admin/update/${master_name}/${id}`, {
+		const request = await fetch(`/admin/update/${master_name}/${master_id}`, {
 			method: 'PUT',
 			body: JSON.stringify(payload),
 		});

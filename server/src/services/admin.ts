@@ -7,14 +7,9 @@ import Repository from '../repository';
 export default class AdminService {
 	static async getAll(
 		master_name: string,
-		company_id: string,
 		r_pagination: Required<IPaginationRequest>,
 	): Promise<ISReplyFindAll<Record<string, unknown>>> {
-		const result = await Repository.admin.findAll(
-			master_name,
-			company_id,
-			r_pagination,
-		);
+		const result = await Repository.admin.findAll(master_name, r_pagination);
 
 		const pagination = getPagination(
 			r_pagination.page,

@@ -1,7 +1,7 @@
 import AccountsPlan from './accounts-plan';
+import Admin from './admin';
 import Auth from './auth';
 import Companies from './companies';
-import Default from './default';
 import { FirebaseService } from './firebase';
 import Journals from './journals';
 import { NotificationsService } from './notifications';
@@ -10,7 +10,7 @@ import { StripeService } from './stripe';
 import Users from './users';
 
 export default class Services {
-	static default = Default;
+	static admin = Admin;
 	static auth = Auth;
 	static users = Users;
 	static companies = Companies;

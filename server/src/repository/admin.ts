@@ -6,21 +6,16 @@ import type { IFindAllDatabase, IPaginationRequest } from '@contapp/shared';
 export class AdminRepository {
 	static async findAll(
 		master_name: string,
-		master_id: string,
 		pagination: IPaginationRequest,
 	): Promise<IFindAllDatabase<Record<string, unknown>>> {
 		const limit = pagination.limit ?? 100;
 		const offset = (pagination.page ?? 0) * limit;
 
-		const totalResult = await database(master_name)
-			.where({ id: master_id })
-			.count('id')
-			.first();
+		const totalResult = await database(master_name).count('id').first();
 
 		const total = totalResult?.count ? Number(totalResult.count) : 0;
 
 		const data = await database(master_name)
-			.where({ id: master_id })
 			.orderBy('created_at', 'desc')
 			.limit(limit)
 			.offset(offset);

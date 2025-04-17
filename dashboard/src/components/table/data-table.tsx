@@ -29,7 +29,7 @@ import { DataTablePagination } from './pagination';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
-	data: TData[];
+	data: TData[] | undefined;
 	loading?: boolean;
 	pagination?: IPaginationResponse;
 	route?: string;
@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({
 	const [sorting, setSorting] = useState<SortingState>([]);
 
 	const table = useReactTable({
-		data,
+		data: data ?? [],
 		columns,
 		pageCount: pagination
 			? Math.ceil(pagination?.total / pagination?.limit)

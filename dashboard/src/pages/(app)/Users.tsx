@@ -1,14 +1,20 @@
-import { AccountPlanDatagrid } from '@/components/accounts-plan/datagrid';
-import { AccountPlanModalMutate } from '@/components/accounts-plan/modal';
 import { DataTable } from '@/components/table/data-table';
 import { Button } from '@/components/ui/button';
+import { UsersDatagrid } from '@/components/users/datagrid';
+import { UsersModalMutate } from '@/components/users/modal';
 import useSEO from '@/hooks/use-seo';
-import type { IPaginationResponse } from '@contapp/shared';
+import Services from '@/services';
+import {
+	type IPaginationResponse,
+	MasterNameEnum,
+	UserSchema,
+} from '@contapp/shared';
 import { useState } from 'react';
+import { useQuery } from 'react-query';
 
-export default function AccountsPlan() {
+export default function Users() {
 	useSEO({
-		title: 'Plan de cuentas | Contapp',
+		title: 'Usuarios | Contapp',
 		description:
 			'Vea y gestiona tu plan de cuentas en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords:
@@ -16,7 +22,6 @@ export default function AccountsPlan() {
 	});
 
 	const [creationOpen, setCreationOpen] = useState(false);
-
 	const [pagination, setPagination] = useState<IPaginationResponse>({
 		page: 0,
 		limit: 100,
@@ -25,10 +30,22 @@ export default function AccountsPlan() {
 		total: 0,
 	});
 
+	const { data: users, isLoading } = useQuery(
+		[MasterNameEnum.Values.users, pagination],
+		async () => {
+			const data = await Services.admin.findAll(MasterNameEnum.Values.users, {
+				page: pagination?.page ?? 0,
+			});
+			if (data.pagination) setPagination(data.pagination);
+			console.log(data);
+			return UserSchema.array().parse(data.data);
+		},
+	);
+
 	return (
 		<div>
 			<div className='flex justify-between items-center mb-5'>
-				<h1 className='text-xl'>Plan de cuentas</h1>
+				<h1 className='text-xl'>Usuarios</h1>
 
 				<Button variant='default' onClick={() => setCreationOpen(true)}>
 					Crear
@@ -37,9 +54,9 @@ export default function AccountsPlan() {
 
 			<DataTable
 				pagination={pagination}
-				columns={AccountPlanDatagrid}
-				data={[]}
-				loading={false}
+				columns={UsersDatagrid}
+				data={users}
+				loading={isLoading}
 				onPageChange={(page) => {
 					setPagination((prevPagination) => {
 						return {
@@ -49,7 +66,7 @@ export default function AccountsPlan() {
 					});
 				}}
 			/>
-			<AccountPlanModalMutate open={creationOpen} setOpen={setCreationOpen} />
+			<UsersModalMutate open={creationOpen} setOpen={setCreationOpen} />
 		</div>
 	);
 }

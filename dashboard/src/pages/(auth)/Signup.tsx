@@ -42,7 +42,7 @@ export default function Signup() {
 						results.data.tokens.fb_token,
 					);
 
-					await Services.firebase.logEvent('sign_up', {
+					await Services.firebase.logEvent('dashboard_sign_up', {
 						id: results.data.user.id,
 					});
 					navigate.push(PrivateRoutesEnum.Home);

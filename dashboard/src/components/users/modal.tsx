@@ -1,4 +1,3 @@
-import { TextField } from '@/components/text-field';
 import { Button } from '@/components/ui/button';
 import {
 	Dialog,
@@ -12,64 +11,66 @@ import Services from '@/services';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import {
 	AccountPlanForCreateSchema,
-	AccountPlanForUpdateSchema,
-	type IAccountPlan,
-	type IAccountPlanForCreate,
-	type IAccountPlanForUpdate,
+	type IUser,
+	MasterNameEnum,
+	UserSchema,
 } from '@contapp/shared';
 import { useFormik } from 'formik';
 import { useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '../ui/use-toast';
 
-export function AccountPlanModalMutate({
+export function UsersModalMutate({
 	open,
 	setOpen,
 	isEdit,
 }: {
 	open: boolean;
 	setOpen: (open: boolean) => void;
-	isEdit?: IAccountPlan;
+	isEdit?: IUser;
 }) {
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 
 	const update = useMutation({
-		mutationFn: (accountPlan: IAccountPlanForUpdate) => {
+		mutationFn: (accountPlan: IUser) => {
 			if (!isEdit?.id) throw new Error('Account plan id is required');
-			return Services.accountsPlan.update(isEdit?.id, accountPlan);
+			return Services.admin.update(
+				MasterNameEnum.Values.users,
+				isEdit?.id,
+				accountPlan,
+			);
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries('accounts-plan');
+			queryClient.invalidateQueries('users');
 		},
 	});
 
 	const create = useMutation({
-		mutationFn: (accountPlan: IAccountPlanForCreate) => {
-			return Services.accountsPlan.create(accountPlan);
+		mutationFn: (user: IUser) => {
+			return Services.admin.create(MasterNameEnum.Values.users, user);
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries('accounts-plan');
+			queryClient.invalidateQueries('users');
 		},
 	});
 
 	const { values, errors, handleChange, handleSubmit, setValues } = useFormik({
 		initialValues: {
-			name: '',
-			nomenclature: '',
+			// ...UserSchema.omit({ id: true }).parse({}),
 		},
 		validationSchema: toFormikValidationSchema(AccountPlanForCreateSchema),
 		validateOnChange: false,
 		validateOnBlur: false,
 		onSubmit: async (values, { resetForm }) => {
 			if (isEdit) {
-				const dto = await AccountPlanForUpdateSchema.parse({
+				const dto = await UserSchema.parse({
 					id: isEdit.id,
 					...values,
 				});
 				update.mutate(dto);
 			} else {
-				const dto = await AccountPlanForCreateSchema.parse(values);
+				const dto = await UserSchema.parse(values);
 
 				create.mutate(dto);
 			}
@@ -85,10 +86,8 @@ export function AccountPlanModalMutate({
 
 	useEffect(() => {
 		if (isEdit) {
-			setValues({
-				name: isEdit.name ?? '',
-				nomenclature: isEdit.nomenclature ?? '',
-			});
+			// todo: check this
+			// setValues({ ...UserSchema.omit({ id: true }).parse({}) });
 		}
 	}, [isEdit]);
 
@@ -101,50 +100,35 @@ export function AccountPlanModalMutate({
 		>
 			<DialogContent className='sm:max-w-[425px]'>
 				<form
-					id='mutate-accounts-plan'
+					id='mutate-users'
 					className='space-y-4'
 					onSubmit={handleSubmit}
 					noValidate
 				>
 					<DialogHeader>
-						<DialogTitle>
-							{isEdit ? 'Editar plan de cuentas' : 'Crear plan de cuentas'}
-						</DialogTitle>
+						<DialogTitle>{isEdit ? 'Editar users' : 'Crear user'}</DialogTitle>
 						<DialogDescription>
-							Escribe los datos del plan de cuentas que deseas{' '}
+							Escribe los datos del users que deseas{' '}
 							{isEdit ? 'editar' : 'crear'}.
 						</DialogDescription>
 					</DialogHeader>
 					<div>
-						<TextField
+						{/* 		<TextField
 							label='Código de cuenta contable'
 							type='text'
 							id='nomenclature'
 							name='nomenclature'
-							placeholder='Nomenclatura del plan de cuentas'
+							placeholder='Nomenclatura del users'
 							autoComplete='off'
-							value={values.nomenclature}
-							error={errors.nomenclature}
+							value={values.email}
+							error={errors.email}
 							onChange={handleChange}
 							required
-						/>
-
-						<TextField
-							label='Nombre de cuenta contable'
-							type='text'
-							id='name'
-							name='name'
-							placeholder='Activo'
-							autoComplete='off'
-							value={values.name}
-							error={errors.name}
-							onChange={handleChange}
-							required
-						/>
+						/> */}
 					</div>
 					<DialogFooter>
-						<Button form='mutate-accounts-plan' type='submit'>
-							{isEdit ? 'Editar plan de cuentas' : 'Crear plan de cuentas'}
+						<Button form='mutate-users' type='submit'>
+							{isEdit ? 'Editar users' : 'Crear users'}
 						</Button>
 					</DialogFooter>
 				</form>

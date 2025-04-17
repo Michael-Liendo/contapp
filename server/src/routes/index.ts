@@ -9,6 +9,7 @@ import user from './user';
 
 import type { FastifyInstance, RegisterOptions } from 'fastify';
 import type { ErrorWithDetails } from '../utils/errorHandler';
+import admin from './admin';
 
 export default function routes(
 	fastify: FastifyInstance,
@@ -57,6 +58,7 @@ export default function routes(
 	fastify.register(reports, { prefix: '/reports' });
 	fastify.register(notification, { prefix: '/notification' });
 	fastify.register(stripe, { prefix: '/stripe' });
+	fastify.register(admin, { prefix: '/admin' });
 
 	done();
 }

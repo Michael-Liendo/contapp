@@ -9,7 +9,7 @@ export async function findAll(request: Request, reply: Reply) {
 		company_id: string;
 	};
 
-	const result = await Services.admin.getAll(master_name, company_id, {
+	const result = await Services.admin.getAll(master_name, {
 		page,
 		limit,
 	});

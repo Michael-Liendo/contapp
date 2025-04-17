@@ -1,29 +1,21 @@
 import { DataTableRowActions } from '../table/actions';
 import { DataTableColumnHeader } from '../table/header';
 
-import type { IAccountPlan } from '@contapp/shared';
+import { type IUser, MasterNameEnum } from '@contapp/shared';
 import type { ColumnDef } from '@tanstack/react-table';
-import { AccountPlanModalMutate } from './modal';
+import { UsersModalMutate } from './modal';
 
-const masterName = 'accounts-plan';
-
-export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
+export const UsersDatagrid: ColumnDef<IUser>[] = [
 	{
-		accessorKey: 'nomenclature',
+		accessorKey: 'first_name',
 		header: ({ column }) => (
-			<DataTableColumnHeader
-				column={column}
-				title='Código de cuenta contable'
-			/>
+			<DataTableColumnHeader column={column} title='nombre' />
 		),
 	},
 	{
-		accessorKey: 'name',
+		accessorKey: 'email',
 		header: ({ column }) => (
-			<DataTableColumnHeader
-				column={column}
-				title='Nombre de cuenta contable'
-			/>
+			<DataTableColumnHeader column={column} title='email' />
 		),
 	},
 	{
@@ -49,9 +41,9 @@ export const AccountPlanDatagrid: ColumnDef<IAccountPlan>[] = [
 		id: 'actions',
 		cell: ({ row }) => (
 			<DataTableRowActions
-				masterName={masterName}
+				masterName={MasterNameEnum.Values.users}
 				row={row}
-				EditModal={AccountPlanModalMutate}
+				EditModal={UsersModalMutate}
 			/>
 		),
 	},
