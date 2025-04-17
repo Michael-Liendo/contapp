@@ -31,7 +31,7 @@ export async function checkRequestJwt(request: Request) {
 			throw new UnauthorizedError('Access denied');
 		}
 
-		if (user.role === 'SUPER_ADMIN') {
+		if (user.role !== 'SUPER_ADMIN') {
 			throw new UnauthorizedError('Access denied');
 		}
 
