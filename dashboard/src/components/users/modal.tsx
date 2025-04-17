@@ -55,10 +55,8 @@ export function UsersModalMutate({
 		},
 	});
 
-	const { values, errors, handleChange, handleSubmit, setValues } = useFormik({
-		initialValues: {
-			// ...UserSchema.omit({ id: true }).parse({}),
-		},
+	const { handleSubmit } = useFormik({
+		initialValues: {},
 		validationSchema: toFormikValidationSchema(AccountPlanForCreateSchema),
 		validateOnChange: false,
 		validateOnBlur: false,
