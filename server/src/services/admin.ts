@@ -45,18 +45,14 @@ export default class AdminService {
 
 	static async update(
 		master_name: string,
-		id: string,
+		master_id: string,
 		data: Record<string, unknown>,
 	): Promise<Record<string, unknown>> {
-		const current = await Repository.admin.findOne(master_name, id);
+		const current = await Repository.admin.findOne(master_name, master_id);
 
 		if (!current) throw new BadRequestError(`${master_name} not found`);
 
-		if (!current.company_id || typeof current.company_id !== 'string') {
-			throw new BadRequestError('Invalid company_id in record');
-		}
-
-		const updated = await Repository.admin.update(master_name, id, data);
+		const updated = await Repository.admin.update(master_name, master_id, data);
 
 		return updated;
 	}
