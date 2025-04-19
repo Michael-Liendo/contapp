@@ -46,6 +46,25 @@ export default class AccountsPlan {
 	): Promise<IAccountPlan> {
 		await isCompanyOwner(account_plan_dto.company_id, userId);
 
+		const codeParts = account_plan_dto.nomenclature.split('.');
+		let currentCode = '';
+
+		// Verificamos que existan todas las cuentas anteriores
+		for (let i = 0; i < codeParts.length - 1; i++) {
+			currentCode += (i === 0 ? '' : '.') + codeParts[i];
+
+			const parentExists = await Repository.accountsPlan.findByCodeAndCompany(
+				currentCode,
+				account_plan_dto.company_id,
+			);
+
+			if (!parentExists) {
+				throw new BadRequestError(
+					`La cuenta superior '${currentCode}' no existe. Debes crearla antes.`,
+				);
+			}
+		}
+
 		const account_plan = await Repository.accountsPlan.create(account_plan_dto);
 
 		return account_plan;
@@ -56,13 +75,32 @@ export default class AccountsPlan {
 		account_plan: IAccountPlanForCreate,
 		userId: string,
 	): Promise<IAccountPlan> {
-		const accountPlan = await Repository.accountsPlan.getByID(account_plan_id);
+		const existingAccountPlan =
+			await Repository.accountsPlan.getByID(account_plan_id);
 
-		if (!accountPlan) {
+		if (!existingAccountPlan) {
 			throw new BadRequestError('Account plan not found');
 		}
 
-		await isCompanyOwner(accountPlan.company_id, userId);
+		await isCompanyOwner(existingAccountPlan.company_id, userId);
+
+		const parts = account_plan.nomenclature.split('.');
+		let currentNomenclature = '';
+
+		for (let i = 0; i < parts.length - 1; i++) {
+			currentNomenclature += (i === 0 ? '' : '.') + parts[i];
+
+			const parentExists = await Repository.accountsPlan.findByCodeAndCompany(
+				currentNomenclature,
+				existingAccountPlan.company_id,
+			);
+
+			if (!parentExists) {
+				throw new BadRequestError(
+					`La cuenta superior '${currentNomenclature}' no existe. Debes crearla antes.`,
+				);
+			}
+		}
 
 		const updatedAccountPlan = await Repository.accountsPlan.update(
 			account_plan_id,
