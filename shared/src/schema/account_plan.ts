@@ -9,6 +9,9 @@ export const AccountPlanSchema = z.object({
 	updated_at: z.coerce.date(),
 });
 
+// todo: for letter
+// .regex(/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*$/, 'Formato inválido. Usa puntos para separar niveles'),/
+
 export const AccountPlanForCreateSchema = z.object({
 	company_id: z.string(),
 	nomenclature: z
