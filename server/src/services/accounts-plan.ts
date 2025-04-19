@@ -65,6 +65,17 @@ export default class AccountsPlan {
 			}
 		}
 
+		if (
+			await Repository.accountsPlan.findByCodeAndCompany(
+				account_plan_dto.nomenclature,
+				account_plan_dto.company_id,
+			)
+		) {
+			throw new BadRequestError(
+				`La cuenta '${account_plan_dto.nomenclature}' ya existe.`,
+			);
+		}
+
 		const account_plan = await Repository.accountsPlan.create(account_plan_dto);
 
 		return account_plan;
