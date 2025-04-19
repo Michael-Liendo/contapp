@@ -62,7 +62,12 @@ export default class AccountsPlan {
 
 		const response: ISResponse<IAccountPlan> = await request.json();
 
-		if (response.success === false) throw new Error('Error updating plan');
+		if (request.status === 400) {
+			const error = response as unknown as { errors: { message: string }[] };
+			throw new Error(error.errors[0].message);
+		}
+
+		if (response.success === false) throw new Error('Error creating plan');
 
 		return AccountPlanSchema.parse(response?.data);
 	}

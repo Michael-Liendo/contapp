@@ -38,9 +38,9 @@ export function AccountPlanModalMutate({
 	const queryClient = useQueryClient();
 
 	const update = useMutation({
-		mutationFn: (accountPlan: IAccountPlanForUpdate) => {
+		mutationFn: async (accountPlan: IAccountPlanForUpdate) => {
 			if (!isEdit?.id) throw new Error('Account plan id is required');
-			return Services.accountsPlan.update(isEdit?.id, accountPlan);
+			return await Services.accountsPlan.update(isEdit?.id, accountPlan);
 		},
 		onError: (error) => {
 			toast({
@@ -58,8 +58,7 @@ export function AccountPlanModalMutate({
 
 	const create = useMutation({
 		mutationFn: async (accountPlan: IAccountPlanForCreate) => {
-			const response = await Services.accountsPlan.create(accountPlan);
-			return response;
+			return await Services.accountsPlan.create(accountPlan);
 		},
 		onError: (error) => {
 			toast({
