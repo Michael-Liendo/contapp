@@ -113,6 +113,17 @@ export default class AccountsPlan {
 			}
 		}
 
+		if (
+			await Repository.accountsPlan.findByCodeAndCompany(
+				account_plan.nomenclature,
+				account_plan.company_id,
+			)
+		) {
+			throw new BadRequestError(
+				`La cuenta '${account_plan.nomenclature}' ya existe.`,
+			);
+		}
+
 		const updatedAccountPlan = await Repository.accountsPlan.update(
 			account_plan_id,
 			account_plan,
