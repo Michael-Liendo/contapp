@@ -42,14 +42,33 @@ export function AccountPlanModalMutate({
 			if (!isEdit?.id) throw new Error('Account plan id is required');
 			return Services.accountsPlan.update(isEdit?.id, accountPlan);
 		},
+		onError: (error) => {
+			toast({
+				title: 'Error al crear plan de cuentas',
+				description:
+					error instanceof Error
+						? error.message
+						: 'Un error desconocido ha ocurrido',
+			});
+		},
 		onSuccess: () => {
 			queryClient.invalidateQueries('accounts-plan');
 		},
 	});
 
 	const create = useMutation({
-		mutationFn: (accountPlan: IAccountPlanForCreate) => {
-			return Services.accountsPlan.create(accountPlan);
+		mutationFn: async (accountPlan: IAccountPlanForCreate) => {
+			const response = await Services.accountsPlan.create(accountPlan);
+			return response;
+		},
+		onError: (error) => {
+			toast({
+				title: 'Error al crear plan de cuentas',
+				description:
+					error instanceof Error
+						? error.message
+						: 'Un error desconocido ha ocurrido',
+			});
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries('accounts-plan');
@@ -78,11 +97,11 @@ export function AccountPlanModalMutate({
 					id: isEdit.id,
 					...values,
 				});
-				update.mutate(dto);
+				await update.mutate(dto);
 			} else {
 				const dto = await AccountPlanForCreateSchema.parse(values);
 
-				create.mutate(dto);
+				await create.mutate(dto);
 			}
 
 			setOpen(false);

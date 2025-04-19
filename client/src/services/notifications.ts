@@ -10,8 +10,7 @@ import Services from '.';
 export class NotificationsService {
 	static async start(user_id: string) {
 		try {
-			if (!Capacitor.isNativePlatform())
-				return console.log('NotificationsService ~ isNativePlatform: false');
+			if (!Capacitor.isNativePlatform()) return;
 			const apps = getApps();
 			if (apps.length === 0) {
 				restartApp();
