@@ -5,6 +5,7 @@ import { restartApp } from '@/config/firebase';
 import fetch from '@/utils/fetch';
 import { PushNotifications } from '@capacitor/push-notifications';
 import type { ISResponse, IUserDevice } from '@contapp/shared';
+import Services from '.';
 
 export class NotificationsService {
 	static async start(user_id: string) {
@@ -20,10 +21,6 @@ export class NotificationsService {
 			}
 
 			PushNotifications.addListener('registration', async (token) => {
-				console.log(
-					'NotificationsService ~ PushNotifications.addListener.registration ~ token:',
-					token.value,
-				);
 				await NotificationsService.addDeviceToken(user_id, token.value);
 			});
 
@@ -41,6 +38,10 @@ export class NotificationsService {
 			PushNotifications.addListener(
 				'pushNotificationActionPerformed',
 				(payload) => {
+					Services.firebase.logEvent('campaign_opened', {
+						campaign_id: payload.notification.id,
+					});
+
 					// example with deeplink
 					if (payload.notification.data.deeplink) {
 						window.location.href = payload.notification.data.deeplink;
