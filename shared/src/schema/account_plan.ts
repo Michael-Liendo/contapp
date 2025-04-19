@@ -11,7 +11,12 @@ export const AccountPlanSchema = z.object({
 
 export const AccountPlanForCreateSchema = z.object({
 	company_id: z.string(),
-	nomenclature: z.string(),
+	nomenclature: z
+		.string()
+		.regex(
+			/^\d+(\.\d+)*$/,
+			'Formato inválido. Usa números separados por puntos',
+		),
 	name: z.string(),
 });
 
