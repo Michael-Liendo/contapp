@@ -20,7 +20,7 @@ import {
 } from '@contapp/shared';
 import { useFormik } from 'formik';
 import { Check } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
 /**
