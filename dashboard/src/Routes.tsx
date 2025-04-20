@@ -14,6 +14,7 @@ import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
 
 import type { JSX } from 'react';
+import UserDevices from './pages/(app)/UserDevices';
 import Users from './pages/(app)/Users';
 
 const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -81,6 +82,12 @@ const PrivateRoutes: JSX.Element[] = [
 		key={PrivateRoutesEnum.Users}
 		path={PrivateRoutesEnum.Users}
 		component={Users}
+		exact
+	/>,
+	<Route
+		key={PrivateRoutesEnum.UserDevices}
+		path={PrivateRoutesEnum.UserDevices}
+		component={UserDevices}
 		exact
 	/>,
 ];

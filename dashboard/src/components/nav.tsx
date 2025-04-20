@@ -25,6 +25,10 @@ const data = [
 		title: 'Usuarios',
 		url: PrivateRoutesEnum.Users,
 	},
+	{
+		title: 'User Devices',
+		url: PrivateRoutesEnum.UserDevices,
+	},
 ];
 
 function NavLink({ children, to }: { children: React.ReactNode; to: string }) {
