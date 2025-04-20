@@ -62,7 +62,7 @@
 		"react-router-dom": "^5.3.4",
 		"tailwind-merge": "^2.5.5",
 		"tailwindcss-animate": "^1.0.7",
-		"xlsx": "npm:@e965/xlsx@0.20.3"
+		"xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
 	},
 	"devDependencies": {
 		"@capacitor/cli": "^7.2.0",
