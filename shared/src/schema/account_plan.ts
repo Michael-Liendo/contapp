@@ -15,12 +15,14 @@ export const AccountPlanSchema = z.object({
 export const AccountPlanForCreateSchema = z.object({
 	company_id: z.string(),
 	nomenclature: z
-		.string()
+		.string({ required_error: 'El código de cuenta es requerido' })
 		.regex(
 			/^\d+(\.\d+)*$/,
 			'Formato inválido. Usa números separados por puntos',
 		),
-	name: z.string(),
+	name: z.string({
+		required_error: 'El nombre es requerido',
+	}),
 });
 
 export const AccountPlanForUpdateSchema = AccountPlanForCreateSchema.partial();
