@@ -6,6 +6,7 @@ import { useParams } from 'react-router';
 
 import { JournalsEntriesDatagrid } from '@/components/journals/entries-datagrid';
 import { TotalizingHeader } from '@/components/journals/totalization-header';
+import { LoadingFullScreen } from '@/components/loading';
 import { TextField } from '@/components/text-field';
 import useSEO from '@/hooks/use-seo';
 
@@ -28,6 +29,8 @@ export default function JournalsHistory() {
 			return data.data;
 		},
 	);
+
+	if (isLoading) return <LoadingFullScreen className='h-[calc(100dvh-65px)]' />;
 
 	return (
 		<div>

@@ -8,7 +8,7 @@ export const LoadingFullScreen: React.FC<LoadingSpinnerProps> = ({
 	className = '',
 }) => {
 	return (
-		<div className={`flex items-center justify-center ${className} h-screen`}>
+		<div className={`flex items-center justify-center  h-dvh ${className}`}>
 			<svg
 				className='animate-spin'
 				width='50'
