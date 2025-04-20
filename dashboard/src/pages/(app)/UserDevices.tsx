@@ -6,7 +6,7 @@ import Services from '@/services';
 import {
 	type IPaginationResponse,
 	MasterNameEnum,
-	UserSchema,
+	UserDeviceSchema,
 } from '@contapp/shared';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
@@ -39,7 +39,7 @@ export default function UserDevices() {
 				},
 			);
 			if (data.pagination) setPagination(data.pagination);
-			return UserSchema.array().parse(data.data);
+			return UserDeviceSchema.array().parse(data.data);
 		},
 	);
 
