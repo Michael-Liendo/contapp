@@ -118,13 +118,18 @@ export default function CreatePage() {
 
 	useEffect(() => {
 		if (servicesData) {
+			const detailAccountRegex = /^\d\.\d\.\d{2}\.\d{2}\.\d{3}$/;
+
 			const updatedConfig = { ...tableConfig };
-			updatedConfig.columns[0].options = servicesData.map(
-				(account: IAccountPlan) => ({
+			updatedConfig.columns[0].options = servicesData
+				.filter((account: IAccountPlan) =>
+					detailAccountRegex.test(account.nomenclature),
+				)
+				.map((account: IAccountPlan) => ({
 					id: account.id,
 					value: `${account.nomenclature} - ${account.name}`,
-				}),
-			);
+				}));
+
 			setTableConfig(updatedConfig);
 		}
 	}, [servicesData]);
@@ -220,6 +225,20 @@ export default function CreatePage() {
 				handleSave={handleSave}
 				handleDelete={handleDelete}
 			/>
+			<div className='text-slate-400 text-sm'>
+				<p className='mb-2'>
+					<b>Nota:</b>
+				</p>
+				<ul className='list-disc pl-4 space-y-1'>
+					<li>
+						Si no ves planes de cuentas disponibles, asegúrate de que tu plan de
+						cuentas tenga cuentas de detalle con el formato adecuado (
+						<code>x.x.xx.xx.xxx</code>), ya que solo esas pueden usarse en los
+						asientos.
+					</li>
+					<li>La sumatoria de los debes y haberes debe ser igual.</li>
+				</ul>
+			</div>
 
 			{errors.entries && (
 				<div className='text-red-600 text-sm'>
