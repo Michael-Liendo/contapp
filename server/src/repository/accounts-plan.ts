@@ -19,6 +19,17 @@ export class AccountsPlan {
 		return account_plan;
 	}
 
+	static async findByCodeAndCompany(
+		code: string,
+		company_id: string,
+	): Promise<IAccountPlan | undefined> {
+		const account_plan = await database<IAccountPlan>('accounts_plan')
+			.where({ nomenclature: code, company_id })
+			.first();
+
+		return account_plan;
+	}
+
 	static async getAll(
 		company_id: string,
 		pagination: IPaginationRequest,
