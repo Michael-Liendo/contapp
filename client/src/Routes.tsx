@@ -19,6 +19,7 @@ import Signup from './pages/(auth)/Signup';
 
 import type { JSX } from 'react';
 import AuthLayout from './components/auth-layout';
+import { LoadingFullScreen } from './components/loading';
 
 const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
@@ -46,7 +47,7 @@ export function Routes() {
 	const { isLoading } = useAuth();
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <LoadingFullScreen />;
 	}
 
 	return (
