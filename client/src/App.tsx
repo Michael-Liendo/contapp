@@ -24,6 +24,7 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+import { CompanyProvider } from './context/CompanyContext';
 
 const queryClient = new QueryClient();
 
@@ -47,7 +48,9 @@ function App() {
 				<ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
 					<QueryClientProvider client={queryClient}>
 						<AuthProvider>
-							<Routes />
+							<CompanyProvider>
+								<Routes />
+							</CompanyProvider>
 						</AuthProvider>
 					</QueryClientProvider>
 				</ThemeProvider>

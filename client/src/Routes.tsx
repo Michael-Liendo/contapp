@@ -3,7 +3,6 @@ import { Redirect, Route } from 'react-router-dom';
 
 import { IonRouterOutlet } from '@ionic/react';
 import AppLayout from './components/app-layout';
-import { CompanyProvider } from './context/CompanyContext';
 import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 import useAuth from './hooks/useAuth';
 import AccountsPlan from './pages/(app)/AccountsPlan';
@@ -25,9 +24,7 @@ const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
 
 	return token ? (
-		<CompanyProvider>
-			<AppLayout>{children}</AppLayout>
-		</CompanyProvider>
+		<AppLayout>{children}</AppLayout>
 	) : (
 		<Redirect to={AuthRoutesEnum.Login} />
 	);
