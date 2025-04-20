@@ -1,3 +1,4 @@
+import useAuth from '@/hooks/useAuth';
 import Services from '@/services';
 import type {
 	ICompany,
@@ -19,12 +20,14 @@ interface CompanyContextType {
 const CompanyContext = createContext<CompanyContextType | undefined>(undefined);
 
 const CompanyProvider = ({ children }: { children: ReactNode }) => {
+	const { user } = useAuth();
 	const [activeCompany, setActiveCompany] = useState<ICompany | undefined>();
 
 	const queryClient = useQueryClient();
 	const { data } = useQuery(
 		['company'],
 		async () => {
+			if (!user) return;
 			const data = await Services.companies.findAll();
 			return data;
 		},
