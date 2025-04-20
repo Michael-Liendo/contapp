@@ -142,14 +142,12 @@ export default function CreatePage() {
 		setFieldValue('company_id', activeCompany?.id ?? '');
 	}, [activeCompany?.id]);
 
-	if (!activeCompany?.id) return <NeedCompany />;
-
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			const isCtrlEnter = (e.ctrlKey || e.metaKey) && e.key === 'Enter';
 			if (isCtrlEnter) {
 				e.preventDefault();
-				handleSubmit(); // llama al submit del formulario
+				handleSubmit();
 			}
 		};
 
@@ -158,6 +156,8 @@ export default function CreatePage() {
 			window.removeEventListener('keydown', handleKeyDown);
 		};
 	}, [handleSubmit]);
+
+	if (!activeCompany?.id) return <NeedCompany />;
 
 	return (
 		<div>
