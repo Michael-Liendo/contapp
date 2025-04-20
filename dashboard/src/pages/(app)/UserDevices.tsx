@@ -1,7 +1,6 @@
 import { DataTableRowActions } from '@/components/table/actions';
 import { DataTable } from '@/components/table/data-table';
 import { Button } from '@/components/ui/button';
-import { UsersModalMutate } from '@/components/users/modal';
 import useSEO from '@/hooks/use-seo';
 import Services from '@/services';
 import {
@@ -21,7 +20,7 @@ export default function UserDevices() {
 			'contapp, gestionar, operaciones, balances, plan de cuentas, cuentas',
 	});
 
-	const [creationOpen, setCreationOpen] = useState(false);
+	const [_creationOpen, setCreationOpen] = useState(false);
 	const [pagination, setPagination] = useState<IPaginationResponse>({
 		page: 0,
 		limit: 100,
@@ -93,7 +92,6 @@ export default function UserDevices() {
 					});
 				}}
 			/>
-			<UsersModalMutate open={creationOpen} setOpen={setCreationOpen} />
 		</div>
 	);
 }
