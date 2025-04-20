@@ -20,37 +20,36 @@ export async function up(knex: Knex): Promise<void> {
 	});
 
 	await knex.raw(`
-		DO $$
-		BEGIN
-			IF NOT EXISTS (SELECT 1 FROM pg_class WHERE relname = 'journal_number_seq') THEN
-				CREATE SEQUENCE journal_number_seq;
-			END IF;
-		END
-		$$;
-  `);
-
-	await knex.raw(`
-    CREATE OR REPLACE FUNCTION generate_journal_number()
+    CREATE OR REPLACE FUNCTION generate_company_journal_number()
     RETURNS TRIGGER AS $$
     DECLARE
-      next_number INTEGER;
+      last_number INTEGER;
     BEGIN
-      SELECT nextval('journal_number_seq') INTO next_number;
-      NEW.journal_number = next_number;
+      SELECT COALESCE(MAX(journal_number), 0)
+      INTO last_number
+      FROM journals
+      WHERE company_id = NEW.company_id;
+
+      NEW.journal_number = last_number + 1;
       RETURN NEW;
     END;
     $$ LANGUAGE plpgsql;
   `);
 
 	await knex.raw(`
-    CREATE TRIGGER set_journal_number
+    CREATE TRIGGER set_company_journal_number
     BEFORE INSERT ON journals
     FOR EACH ROW
-    EXECUTE FUNCTION generate_journal_number();
+    EXECUTE FUNCTION generate_company_journal_number();
   `);
 }
 
 export async function down(knex: Knex): Promise<void> {
+	await knex.raw(
+		'DROP TRIGGER IF EXISTS set_company_journal_number ON journals;',
+	);
+	await knex.raw('DROP FUNCTION IF EXISTS generate_company_journal_number();');
+
 	await knex.raw('DROP TRIGGER IF EXISTS set_journal_number ON journals');
 
 	await knex.raw('DROP FUNCTION IF EXISTS generate_journal_number');
