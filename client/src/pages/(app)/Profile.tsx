@@ -116,8 +116,7 @@ export default function Profile() {
 								value: values.email,
 								placeholder: user?.email,
 								error: errors.email,
-								isEditable: fieldEditMode.email,
-								onEdit: () => toggleEditField('email'),
+								isEditable: false,
 							},
 							{
 								label: 'Nombres',
