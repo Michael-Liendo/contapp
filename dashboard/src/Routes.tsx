@@ -9,7 +9,6 @@ import { LApp, LAuth } from './components/layout';
 import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 import useAuth from './hooks/useAuth';
 import Home from './pages/(app)/Home';
-import Profile from './pages/(app)/Profile';
 import Login from './pages/(auth)/Login';
 import Signup from './pages/(auth)/Signup';
 
@@ -72,12 +71,7 @@ const PrivateRoutes: JSX.Element[] = [
 		component={Home}
 		exact
 	/>,
-	<Route
-		key={PrivateRoutesEnum.Profile}
-		path={PrivateRoutesEnum.Profile}
-		component={Profile}
-		exact
-	/>,
+
 	<Route
 		key={PrivateRoutesEnum.Users}
 		path={PrivateRoutesEnum.Users}
