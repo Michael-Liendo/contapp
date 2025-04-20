@@ -50,11 +50,5 @@ export async function down(knex: Knex): Promise<void> {
 	);
 	await knex.raw('DROP FUNCTION IF EXISTS generate_company_journal_number();');
 
-	await knex.raw('DROP TRIGGER IF EXISTS set_journal_number ON journals');
-
-	await knex.raw('DROP FUNCTION IF EXISTS generate_journal_number');
-
-	await knex.raw('DROP SEQUENCE IF EXISTS journal_number_seq');
-
 	await knex.schema.dropTableIfExists('journals');
 }
