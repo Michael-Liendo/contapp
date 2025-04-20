@@ -20,14 +20,14 @@ interface CompanyContextType {
 const CompanyContext = createContext<CompanyContextType | undefined>(undefined);
 
 const CompanyProvider = ({ children }: { children: ReactNode }) => {
-	const { user } = useAuth();
+	const { token } = useAuth();
 	const [activeCompany, setActiveCompany] = useState<ICompany | undefined>();
 
 	const queryClient = useQueryClient();
 	const { data } = useQuery(
-		['company'],
+		['company', token],
 		async () => {
-			if (!user) return;
+			if (!token) return;
 			const data = await Services.companies.findAll();
 			return data;
 		},
