@@ -4,13 +4,7 @@ import type {
 	ICompanyForCreate,
 	ICompanyForUpdate,
 } from '@contapp/shared';
-import {
-	type ReactNode,
-	createContext,
-	useContext,
-	useEffect,
-	useState,
-} from 'react';
+import { type ReactNode, createContext, useContext, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 interface CompanyContextType {
@@ -25,11 +19,21 @@ interface CompanyContextType {
 const CompanyContext = createContext<CompanyContextType | undefined>(undefined);
 
 const CompanyProvider = ({ children }: { children: ReactNode }) => {
+	const [activeCompany, setActiveCompany] = useState<ICompany | undefined>();
+
 	const queryClient = useQueryClient();
-	const { data } = useQuery(['company'], async () => {
-		const data = await Services.companies.findAll();
-		return data;
-	});
+	const { data } = useQuery(
+		['company'],
+		async () => {
+			const data = await Services.companies.findAll();
+			return data;
+		},
+		{
+			onSuccess: (data) => {
+				setActiveCompany(data?.data?.[0]);
+			},
+		},
+	);
 
 	const create = useMutation({
 		mutationFn: (company: ICompanyForCreate) => {
@@ -57,12 +61,6 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 			queryClient.invalidateQueries('company');
 		},
 	});
-
-	const [activeCompany, setActiveCompany] = useState<ICompany | undefined>();
-
-	useEffect(() => {
-		setActiveCompany(data?.data?.[0]);
-	}, [data]);
 
 	async function createHandle(company: ICompanyForCreate) {
 		create.mutate(company);

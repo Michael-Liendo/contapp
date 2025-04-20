@@ -110,8 +110,7 @@ export function EditableRow<T>({
 								type={column.type}
 								value={
 									column.type === 'number'
-										? Number(editedData[column.key] as string | number) ||
-											column.defaultValue
+										? String(editedData[column.key]) || column.defaultValue
 										: (editedData[column.key] as string | number) ||
 											column.defaultValue
 								}
