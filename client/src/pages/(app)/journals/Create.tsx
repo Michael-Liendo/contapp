@@ -1,5 +1,3 @@
-'use client';
-
 import { DynamicDataTable } from '@/components/datatable/DynamicDatatable';
 import { useDataTable } from '@/components/datatable/hooks/useDatatable';
 import type {
@@ -145,6 +143,21 @@ export default function CreatePage() {
 	}, [activeCompany?.id]);
 
 	if (!activeCompany?.id) return <NeedCompany />;
+
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			const isCtrlEnter = (e.ctrlKey || e.metaKey) && e.key === 'Enter';
+			if (isCtrlEnter) {
+				e.preventDefault();
+				handleSubmit(); // llama al submit del formulario
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [handleSubmit]);
 
 	return (
 		<div>
