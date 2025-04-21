@@ -3,7 +3,7 @@ import useSEO from '@/hooks/use-seo';
 
 export default function HomeApp() {
 	useSEO({
-		title: 'Overview | Dashboard Contapp',
+		title: 'Overview',
 		description:
 			'Bienvenido a Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords: 'contapp, gestionar, operaciones, balances, plan de cuentas',

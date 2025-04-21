@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button';
 import { useCompanyContext } from '@/context/CompanyContext';
 import useSEO from '@/hooks/use-seo';
 import Services from '@/services';
-import type { IPaginationResponse } from '@contapp/shared';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import type { IPaginationResponse } from '@contapp/shared';
 
 export default function AccountsPlan() {
 	useSEO({
