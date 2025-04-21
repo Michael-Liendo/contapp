@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/sidebar';
 import { useCompanyContext } from '@/context/CompanyContext';
 import { PrivateRoutesEnum } from '@/data/routesEnums';
+import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback } from '@radix-ui/react-avatar';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -67,7 +68,10 @@ export function CompanySwitcher() {
 								<DropdownMenuItem
 									key={company.id}
 									onClick={() => setActiveCompany(company)}
-									className='gap-2 p-2'
+									className={cn('gap-2 p-2', {
+										'bg-sidebar-accent text-sidebar-accent-foreground':
+											company.id === activeCompany?.id,
+									})}
 								>
 									<Avatar className='size-6 border flex items-center justify-center rounded-sm'>
 										<AvatarFallback>
