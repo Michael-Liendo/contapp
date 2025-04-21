@@ -28,7 +28,7 @@ import { useQuery } from 'react-query';
  */
 export default function CreatePage() {
 	useSEO({
-		title: 'Crear asiento contable | Contapp',
+		title: 'Crear asiento contable',
 		description:
 			'Crea un nuevo asiento contable en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords:

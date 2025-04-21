@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 export default function ManageCompanies() {
 	useSEO({
-		title: 'Compañías | Contapp',
+		title: 'Compañías',
 		description:
 			'Gestiona tus compañías en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords:

@@ -15,7 +15,7 @@ import Services from '../../services';
 
 export default function Signup() {
 	useSEO({
-		title: 'Registro | Contapp',
+		title: 'Registro',
 		description:
 			'Regístrate en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords:

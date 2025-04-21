@@ -12,7 +12,7 @@ import { useIonViewDidEnter } from '@ionic/react';
 
 export default function HomeApp() {
 	useSEO({
-		title: 'Inicio | Contapp',
+		title: 'Inicio',
 		description:
 			'Bienvenido a Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords: 'contapp, gestionar, operaciones, balances, plan de cuentas',
