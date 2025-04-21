@@ -63,7 +63,7 @@ export class NotificationsService {
 		const existingChannels = await PushNotifications.listChannels();
 		if (
 			existingChannels.channels.find(
-				(channel) => channel.id === 'contapp-channel',
+				(channel) => channel.id === `${APP_NAME_LOWER}-channel`,
 			)
 		) {
 			return;
