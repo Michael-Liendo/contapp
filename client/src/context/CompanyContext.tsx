@@ -21,9 +21,15 @@ const CompanyContext = createContext<CompanyContextType | undefined>(undefined);
 
 const CompanyProvider = ({ children }: { children: ReactNode }) => {
 	const { token } = useAuth();
-	const [activeCompany, setActiveCompany] = useState<ICompany | undefined>();
+	const [activeCompany, _setActiveCompany] = useState<ICompany | undefined>();
 
 	const queryClient = useQueryClient();
+
+	const setActiveCompany = (company: ICompany) => {
+		_setActiveCompany(company);
+		localStorage.setItem('lastUsedCompanyId', company.id);
+	};
+
 	const { data } = useQuery(
 		['company', token],
 		async () => {
@@ -33,7 +39,16 @@ const CompanyProvider = ({ children }: { children: ReactNode }) => {
 		},
 		{
 			onSuccess: (data) => {
-				setActiveCompany(data?.data?.[0]);
+				const companies = data?.data || [];
+				const storedId = localStorage.getItem('lastUsedCompanyId');
+				const found =
+					storedId && companies.find((company) => company.id === storedId);
+
+				if (found) {
+					setActiveCompany(found);
+				} else if (companies.length > 0) {
+					setActiveCompany(companies[0]);
+				}
 			},
 		},
 	);
