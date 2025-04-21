@@ -13,14 +13,18 @@ import { EnvConfig } from '@/config/env';
 import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import useSEO from '@/hooks/use-seo';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
-import { type ISignInWithProvider, UserLoginSchema } from '@contapp/shared';
+import {
+	APP_NAME_CAPITALIZED,
+	type ISignInWithProvider,
+	UserLoginSchema,
+} from '@contapp/shared';
 import { useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
 
 export default function LoginPage() {
 	useSEO({
-		title: 'Inicio de sesión | Contapp',
+		title: 'Inicio de sesión',
 		description:
 			'Inicie sesión en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords:
@@ -118,7 +122,7 @@ export default function LoginPage() {
 					<div className='flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground'>
 						<GalleryVerticalEnd className='size-4' />
 					</div>
-					<h1 className='text-xl font-bold'>ContApp</h1>
+					<h1 className='text-xl font-bold'>{APP_NAME_CAPITALIZED}</h1>
 				</div>
 				<br />
 				<p className='text-lg mb-10 text-center'>

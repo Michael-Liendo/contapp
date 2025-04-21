@@ -12,7 +12,7 @@ import { useQuery } from 'react-query';
 
 export default function AccountsPlan() {
 	useSEO({
-		title: 'Plan de cuentas | Contapp',
+		title: 'Plan de cuentas',
 		description:
 			'Vea y gestiona tu plan de cuentas en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords:

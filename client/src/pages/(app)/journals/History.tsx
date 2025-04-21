@@ -14,7 +14,7 @@ import type { IPaginationResponse } from '@contapp/shared';
 
 export default function JournalsHistory() {
 	useSEO({
-		title: 'Historial de asientos | Contapp',
+		title: 'Historial de asientos',
 		description:
 			'Vea y gestiona tu historial de asientos contables en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords:

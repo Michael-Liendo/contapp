@@ -1,3 +1,4 @@
+import { APP_NAME_CAPITALIZED } from '@contapp/shared';
 import { useEffect } from 'react';
 
 interface SEOProps {
@@ -10,7 +11,7 @@ interface SEOProps {
 
 const useSEO = ({ title, description, keywords, author, robots }: SEOProps) => {
 	useEffect(() => {
-		document.title = title;
+		document.title = `${title} | Dashboard ${APP_NAME_CAPITALIZED}`;
 
 		const setMetaTag = (name: string, content: string | undefined) => {
 			if (!content) return;

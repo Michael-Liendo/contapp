@@ -11,7 +11,7 @@ import { useQuery } from 'react-query';
 
 export default function TrialBalance() {
 	useSEO({
-		title: 'Balances de comprobación | Contapp',
+		title: 'Balances de comprobación',
 		description:
 			'Consulta y gestiona tu balance de comprobación en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords:

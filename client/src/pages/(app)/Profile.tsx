@@ -21,7 +21,7 @@ import { useQueryClient } from 'react-query';
 
 export default function Profile() {
 	useSEO({
-		title: 'Perfil | Contapp',
+		title: 'Perfil',
 		description:
 			'Edite su perfil en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords:

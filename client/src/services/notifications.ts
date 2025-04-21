@@ -4,7 +4,12 @@ import { getApps } from 'firebase/app';
 import { restartApp } from '@/config/firebase';
 import fetch from '@/utils/fetch';
 import { PushNotifications } from '@capacitor/push-notifications';
-import type { ISResponse, IUserDevice } from '@contapp/shared';
+import {
+	APP_NAME_CAPITALIZED,
+	APP_NAME_LOWER,
+	type ISResponse,
+	type IUserDevice,
+} from '@contapp/shared';
 import Services from '.';
 
 export class NotificationsService {
@@ -58,16 +63,16 @@ export class NotificationsService {
 		const existingChannels = await PushNotifications.listChannels();
 		if (
 			existingChannels.channels.find(
-				(channel) => channel.id === 'contapp-channel',
+				(channel) => channel.id === `${APP_NAME_LOWER}-channel`,
 			)
 		) {
 			return;
 		}
 
 		await PushNotifications.createChannel({
-			id: 'contapp-channel',
-			name: 'Contapp Channel',
-			description: 'Contapp Channel',
+			id: `${APP_NAME_LOWER}-channel`,
+			name: `${APP_NAME_CAPITALIZED} Channel`,
+			description: `${APP_NAME_CAPITALIZED} Channel`,
 			importance: 3,
 			visibility: 0,
 		});

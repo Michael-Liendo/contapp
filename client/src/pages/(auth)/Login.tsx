@@ -20,7 +20,7 @@ import Services from '../../services';
 
 export default function LoginPage() {
 	useSEO({
-		title: 'Inicio de sesión | Contapp',
+		title: 'Inicio de sesión',
 		description:
 			'Inicie sesión en Contapp, la solución para gestionar operaciones contables, balances y plan de cuentas.',
 		keywords:
