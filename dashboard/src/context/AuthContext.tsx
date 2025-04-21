@@ -60,9 +60,6 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 			}
 		});
 
-		// notifications
-		Services.notifications.start(user.id);
-
 		if (user.role !== 'SUPER_ADMIN') {
 			logout();
 		}
