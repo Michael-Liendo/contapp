@@ -4,13 +4,13 @@ import { initializeApp } from 'firebase/app';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-	apiKey: 'AIzaSyBCPxesieFu7EYfiYPMtCIWe6Fm8X6SgXA',
-	authDomain: 'project-for-create-app.firebaseapp.com',
-	projectId: 'project-for-create-app',
-	storageBucket: 'project-for-create-app.firebasestorage.app',
-	messagingSenderId: '236430944478',
-	appId: '1:236430944478:web:4de932ed1acdcfeaa7ba4f',
-	measurementId: 'G-J9KZ9YZG8T',
+	apiKey: 'AIzaSyBn-UAlFMo50dBTN_g2AP6kNEtKCjJPCcw',
+	authDomain: 'contiapp-production-ve.firebaseapp.com',
+	projectId: 'contiapp-production-ve',
+	storageBucket: 'contiapp-production-ve.firebasestorage.app',
+	messagingSenderId: '439889122332',
+	appId: '1:439889122332:web:e891a3375b67b64f4f7bd9',
+	measurementId: 'G-GTPM2M82LE',
 };
 
 // Initialize Firebase
