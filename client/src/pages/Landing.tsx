@@ -3,7 +3,6 @@ import {
 	Card,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
@@ -11,7 +10,6 @@ import { AuthRoutesEnum } from '@/data/routesEnums';
 import { APP_NAME_CAPITALIZED } from '@contapp/shared';
 import { IonContent, IonPage } from '@ionic/react';
 import {
-	Check,
 	ChevronRight,
 	Clock,
 	Code,
@@ -60,10 +58,10 @@ export default function LandingPage() {
 									to={AuthRoutesEnum.Login}
 									className='text-sm font-medium hover:underline underline-offset-4 hidden sm:block'
 								>
-									Sign In
+									Inicia sesión
 								</Link>
 								<Link to={AuthRoutesEnum.Signup}>
-									<Button>Get Started</Button>
+									<Button>Empieza gratis</Button>
 								</Link>
 							</div>
 						</div>
@@ -90,7 +88,7 @@ export default function LandingPage() {
 										<div className='flex flex-col gap-2 min-[400px]:flex-row'>
 											<Link to={AuthRoutesEnum.Signup}>
 												<Button>
-													Comenzar prueba gratis
+													Empieza gratis
 													<ChevronRight className='ml-2 h-4 w-4' />
 												</Button>
 											</Link>
@@ -303,6 +301,8 @@ export default function LandingPage() {
 								</div>
 							</div>
 						</section>
+
+						{/* 
 						<section
 							id='pricing'
 							className='w-full py-12 md:py-24 lg:py-32 bg-muted'
@@ -407,7 +407,7 @@ export default function LandingPage() {
 								</div>
 							</div>
 						</section>
-
+ */}
 						{/* Final CTA Section */}
 						<section className='w-full py-12 md:py-24 lg:py-32'>
 							<div className='container px-4 md:px-6'>
@@ -425,7 +425,7 @@ export default function LandingPage() {
 									<div className='flex flex-col gap-2 min-[400px]:flex-row'>
 										<Link to={AuthRoutesEnum.Signup}>
 											<Button>
-												Comenzar prueba gratis
+												Empieza gratis
 												<ChevronRight className='ml-2 h-4 w-4' />
 											</Button>
 										</Link>
