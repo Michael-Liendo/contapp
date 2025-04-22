@@ -8,7 +8,13 @@ export interface ColumnConfig {
 	label: string;
 	defaultValue?: string | number;
 	editable: boolean;
-	type: 'text' | 'number' | 'email' | 'select' | 'autocomplete-select';
+	type:
+		| 'text'
+		| 'number'
+		| 'email'
+		| 'select'
+		| 'autocomplete-select'
+		| 'price';
 	options?: IOption[]; // Para los tipos 'select' y 'autocomplete-select'
 }
 

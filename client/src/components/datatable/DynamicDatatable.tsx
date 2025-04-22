@@ -9,6 +9,7 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
+import { formatCurrencyValue } from '@/utils/formatCurrencyValue';
 import { Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { EditableRow } from './EditableRow';
@@ -109,7 +110,9 @@ export function DynamicDataTable<T>({
 											? column.options?.find(
 													(option) => option.id === row[column.key],
 												)?.value
-											: String(row[column.key]) || column.defaultValue}
+											: column.type === 'price'
+												? formatCurrencyValue(row[column.key] as number)
+												: String(row[column.key]) || column.defaultValue}
 									</TableCell>
 								))}
 								<TableCell>

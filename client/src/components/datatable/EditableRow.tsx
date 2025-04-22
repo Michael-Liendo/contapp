@@ -8,6 +8,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Check, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import PriceInput from '../price-field';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import {
 	Select,
@@ -105,6 +106,11 @@ export function EditableRow<T>({
 									</Command>
 								</PopoverContent>
 							</Popover>
+						) : column.type === 'price' ? (
+							<PriceInput
+								value={editedData[column.key] as number}
+								onChange={(val) => handleInputChange(column.key, val)}
+							/>
 						) : (
 							<Input
 								type={column.type}

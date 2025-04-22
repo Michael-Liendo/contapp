@@ -1,3 +1,4 @@
+import { formatCurrencyValue } from '@/utils/formatCurrencyValue';
 import type { ITrialBalance } from '@contapp/shared';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -104,16 +105,16 @@ export default function TrialBalanceTable({ data }: { data: ITrialBalance[] }) {
 										{trial.account_plan.name}
 									</td>
 									<td className='border border-gray-300 px-4 py-2 text-right'>
-										{trial.initial_balance}
+										{formatCurrencyValue(trial.initial_balance)}
 									</td>
 									<td className='border border-gray-300 px-4 py-2 text-right'>
-										{trial.debits}
+										{formatCurrencyValue(trial.debits)}
 									</td>
 									<td className='border border-gray-300 px-4 py-2 text-right'>
-										{trial.credits}
+										{formatCurrencyValue(trial.credits)}
 									</td>
 									<td className='border border-gray-300 px-4 py-2 text-right'>
-										{trial.final_balance}
+										{formatCurrencyValue(trial.final_balance)}
 									</td>
 								</tr>
 							);
@@ -127,16 +128,16 @@ export default function TrialBalanceTable({ data }: { data: ITrialBalance[] }) {
 								<span>Totales:</span>
 							</td>
 							<td className='border border-gray-300 px-4 py-2 text-right'>
-								{totalInitial}
+								{formatCurrencyValue(totalInitial)}
 							</td>
 							<td className='border border-gray-300 px-4 py-2 text-right'>
-								{totalDebits}
+								{formatCurrencyValue(totalDebits)}
 							</td>
 							<td className='border border-gray-300 px-4 py-2 text-right'>
-								{totalCredits}
+								{formatCurrencyValue(totalCredits)}
 							</td>
 							<td className='border border-gray-300 px-4 py-2 text-right'>
-								{totalFinal}
+								{formatCurrencyValue(totalFinal)}
 							</td>
 						</tr>
 					</tbody>

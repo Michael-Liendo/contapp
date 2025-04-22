@@ -58,14 +58,14 @@ export default function CreatePage() {
 				key: 'debit',
 				label: 'Debe Total',
 				editable: true,
-				type: 'number',
+				type: 'price',
 				defaultValue: 0,
 			},
 			{
 				key: 'credit',
 				label: 'Haber Total',
 				editable: true,
-				type: 'number',
+				type: 'price',
 				defaultValue: 0,
 			},
 		],
@@ -171,12 +171,7 @@ export default function CreatePage() {
 				<div className='flex flex-row justify-between'>
 					<h4 className='text-xl mb-6'>Nuevo Asiento Contable</h4>
 					<div>
-						<Button
-							type='submit'
-							className='w-full'
-							variant='default'
-							color='#000'
-						>
+						<Button type='submit' className='w-full' variant='default'>
 							Crear
 						</Button>
 					</div>
