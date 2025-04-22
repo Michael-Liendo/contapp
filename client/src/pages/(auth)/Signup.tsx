@@ -8,7 +8,7 @@ import { toast } from '@/components/ui/use-toast';
 import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
 import useSEO from '@/hooks/use-seo';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
-import { APP_NAME_CAPITALIZED, UserLoginSchema } from '@contapp/shared';
+import { APP_NAME_CAPITALIZED, UserForRegisterSchema } from '@contapp/shared';
 import { TextField } from '../../components/text-field';
 import useAuth from '../../hooks/useAuth';
 import Services from '../../services';
@@ -27,7 +27,7 @@ export default function Signup() {
 	const { values, errors, handleChange, handleSubmit, isSubmitting } =
 		useFormik({
 			initialValues: { first_name: '', last_name: '', email: '', password: '' },
-			validationSchema: toFormikValidationSchema(UserLoginSchema),
+			validationSchema: toFormikValidationSchema(UserForRegisterSchema),
 			validateOnChange: false,
 			validateOnBlur: false,
 			onSubmit: async (values) => {
@@ -97,7 +97,6 @@ export default function Signup() {
 									value={values.first_name}
 									error={errors.first_name}
 									onChange={handleChange}
-									required
 								/>
 								<TextField
 									name='last_name'
@@ -106,7 +105,6 @@ export default function Signup() {
 									value={values.last_name}
 									error={errors.last_name}
 									onChange={handleChange}
-									required
 								/>
 							</div>
 
@@ -118,7 +116,6 @@ export default function Signup() {
 								value={values.email}
 								error={errors.email}
 								onChange={handleChange}
-								required
 							/>
 
 							<TextField
@@ -129,7 +126,6 @@ export default function Signup() {
 								value={values.password}
 								error={errors.password}
 								onChange={handleChange}
-								required
 							/>
 
 							<Button

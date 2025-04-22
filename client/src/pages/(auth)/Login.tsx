@@ -142,7 +142,6 @@ export default function LoginPage() {
 								value={values.email}
 								error={errors.email}
 								onChange={handleChange}
-								required
 							/>
 
 							<TextField
@@ -154,7 +153,6 @@ export default function LoginPage() {
 								value={values.password}
 								error={errors.password}
 								onChange={handleChange}
-								required
 							/>
 
 							<Button
