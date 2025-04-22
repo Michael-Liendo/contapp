@@ -48,6 +48,17 @@ export default function HomeApp() {
 						</Card>
 					))}
 				</div>
+				<p className='mt-7'>
+					Cualquier pregunta, comentario o sugerencia contáctenos en:
+				</p>
+				<div className='flex gap-4'>
+					<a
+						href='mailto:contapp@michaelliendo.com'
+						className='flex items-center gap-2 text-sm text-primary'
+					>
+						<span>contapp@michaelliendo.com</span>
+					</a>
+				</div>
 			</section>
 		</div>
 	);
