@@ -125,9 +125,6 @@ export default function LoginPage() {
 					<h1 className='text-xl font-bold'>{APP_NAME_CAPITALIZED}</h1>
 				</div>
 				<br />
-				<p className='text-lg mb-10 text-center'>
-					Inicie sesión y simplifique su gestión financiera
-				</p>
 
 				<Card className='w-full max-w-md'>
 					<CardHeader>
