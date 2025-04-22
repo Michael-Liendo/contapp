@@ -12,7 +12,7 @@ const {
 	POSTGRES_USER = 'user',
 	POSTGRES_DB = 'server-app',
 	HOST = '127.0.0.1',
-	GOOGLE_WEB_CLIENT_ID = '236430944478-v1nsr5mai4ertrhfcmbuemofndg8i5j9.apps.googleusercontent.com',
+	GOOGLE_WEB_CLIENT_ID = '439889122332-7vreo40ns2b0d6g34sti11ogsatp1v57.apps.googleusercontent.com',
 	STRIPE_SECRET_KEY = '',
 } = process.env;
 
