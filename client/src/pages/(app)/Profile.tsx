@@ -164,14 +164,16 @@ export default function Profile() {
 										readOnly={!isEditable}
 										onChange={handleChange}
 									/>
-									<Button
-										variant='outline'
-										size='icon'
-										type='button'
-										onClick={onEdit}
-									>
-										<PencilLine />
-									</Button>
+									{name !== 'email' && (
+										<Button
+											variant='outline'
+											size='icon'
+											type='button'
+											onClick={onEdit}
+										>
+											<PencilLine />
+										</Button>
+									)}
 								</div>
 							),
 						)}
