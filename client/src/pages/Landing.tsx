@@ -423,11 +423,13 @@ export default function LandingPage() {
 										</p>
 									</div>
 									<div className='flex flex-col gap-2 min-[400px]:flex-row'>
-										<Button>
-											Comenzar prueba gratis
-											<ChevronRight className='ml-2 h-4 w-4' />
-										</Button>
-										<Button variant='outline'>Ver demostración</Button>
+										<Link to={AuthRoutesEnum.Signup}>
+											<Button>
+												Comenzar prueba gratis
+												<ChevronRight className='ml-2 h-4 w-4' />
+											</Button>
+										</Link>
+										{/* <Button variant='outline'>Ver demostración</Button> */}
 									</div>
 									<p className='text-sm text-muted-foreground'>
 										No es necesario tener una tarjeta de crédito. Puedes
