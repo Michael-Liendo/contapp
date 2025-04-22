@@ -1,7 +1,8 @@
+import { MasterNameEnum } from '@contapp/shared';
 import type { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
-	await knex.schema.createTable('companies', (table) => {
+	await knex.schema.createTable(MasterNameEnum.Values.companies, (table) => {
 		table
 			.uuid('id')
 			.unique()
@@ -18,5 +19,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-	await knex.schema.dropTableIfExists('companies');
+	await knex.schema.dropTableIfExists(MasterNameEnum.Values.companies);
 }

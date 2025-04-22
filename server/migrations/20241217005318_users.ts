@@ -1,9 +1,13 @@
-import { UserNotificationSchema, UserRoleEnum } from '@contapp/shared';
+import {
+	MasterNameEnum,
+	UserNotificationSchema,
+	UserRoleEnum,
+} from '@contapp/shared';
 import type { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
 	await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
-	await knex.schema.createTable('users', (table) => {
+	await knex.schema.createTable(MasterNameEnum.Values.users, (table) => {
 		table
 			.uuid('id')
 			.unique()
@@ -30,5 +34,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-	await knex.schema.dropTableIfExists('users');
+	await knex.schema.dropTableIfExists(MasterNameEnum.Values.users);
 }
