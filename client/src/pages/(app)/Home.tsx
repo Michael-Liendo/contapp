@@ -56,7 +56,7 @@ export default function HomeApp() {
 						href='mailto:contapp@michaelliendo.com'
 						className='flex items-center gap-2 text-sm text-primary'
 					>
-						<span>contapp@michaelliendo.com</span>
+						<span>contiapp@michaelliendo.com</span>
 					</a>
 				</div>
 			</section>
