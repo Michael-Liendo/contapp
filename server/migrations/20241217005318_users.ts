@@ -1,8 +1,4 @@
-import {
-	MasterNameEnum,
-	UserNotificationSchema,
-	UserRoleEnum,
-} from '@contapp/shared';
+import { MasterNameEnum, UserRoleEnum } from '@contapp/shared';
 import type { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
@@ -24,7 +20,7 @@ export async function up(knex: Knex): Promise<void> {
 		table
 			.json('notifications')
 			.notNullable()
-			.defaultTo(UserNotificationSchema.default);
+			.defaultTo({ information: true, general: true });
 
 		table.string('password').notNullable();
 		table.timestamp('terms_accepted_at').nullable();
