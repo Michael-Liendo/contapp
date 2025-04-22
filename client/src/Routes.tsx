@@ -3,7 +3,11 @@ import { Redirect, Route } from 'react-router-dom';
 
 import { IonRouterOutlet } from '@ionic/react';
 import AppLayout from './components/app-layout';
-import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
+import {
+	AuthRoutesEnum,
+	PrivateRoutesEnum,
+	PublicRoutesEnum,
+} from './data/routesEnums';
 import useAuth from './hooks/useAuth';
 import AccountsPlan from './pages/(app)/AccountsPlan';
 import Home from './pages/(app)/Home';
@@ -19,6 +23,7 @@ import Signup from './pages/(auth)/Signup';
 import type { JSX } from 'react';
 import AuthLayout from './components/auth-layout';
 import { LoadingFullScreen } from './components/loading';
+import LandingPage from './pages/Landing';
 
 const PrivateRoutesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { token } = useAuth();
@@ -135,5 +140,11 @@ const AuthRoutes: JSX.Element[] = [
 ];
 
 const PublicRoutes: JSX.Element[] = [
+	<Route
+		key={PublicRoutesEnum.Home}
+		path={PublicRoutesEnum.Home}
+		exact
+		component={LandingPage}
+	/>,
 	<Route key={'no-found'} component={() => <>No Found</>} exact />,
 ];

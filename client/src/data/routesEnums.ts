@@ -1,13 +1,14 @@
-export enum PublicRoutesEnum {}
+export enum PublicRoutesEnum {
+	Home = '/',
+}
 
 export enum AuthRoutesEnum {
 	Login = '/login',
 	Signup = '/signup',
-	Welcome = '/',
 }
 
 export enum PrivateRoutesEnum {
-	Home = '/',
+	Home = '/home',
 	AccountsPlan = '/accounts-plan',
 	ManageCompanies = '/manage-companies',
 	JournalsCreate = '/journals/create',
