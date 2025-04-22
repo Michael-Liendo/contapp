@@ -136,6 +136,7 @@ export default function LoginPage() {
 							<TextField
 								type='email'
 								name='email'
+								autoComplete='email'
 								placeholder='example@email.com'
 								label='Correo'
 								value={values.email}
@@ -147,6 +148,7 @@ export default function LoginPage() {
 							<TextField
 								type='password'
 								name='password'
+								autoComplete='current-password'
 								placeholder='* * * * * * *'
 								label='Contraseña'
 								value={values.password}
