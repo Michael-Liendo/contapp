@@ -116,75 +116,65 @@ export default function LoginPage() {
 	};
 
 	return (
-		<div className='min-h-screen grid grid-cols-1 lg:grid-cols-2'>
-			<div className='flex flex-col justify-center items-center p-8'>
-				<div className='flex items-center gap-2 font-medium'>
-					<div className='flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground'>
-						<GalleryVerticalEnd className='size-4' />
-					</div>
-					<h1 className='text-xl font-bold'>{APP_NAME_CAPITALIZED}</h1>
+		<div className='flex flex-col justify-center items-center p-8 h-dvh'>
+			<div className='flex items-center gap-2 font-medium'>
+				<div className='flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground'>
+					<GalleryVerticalEnd className='size-4' />
 				</div>
-				<br />
-
-				<Card className='w-full max-w-md'>
-					<CardHeader>
-						<CardTitle>Inicio de sesión</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<form className='space-y-6' onSubmit={handleSubmit}>
-							<TextField
-								type='email'
-								name='email'
-								placeholder='example@email.com'
-								label='Correo'
-								value={values.email}
-								error={errors.email}
-								onChange={handleChange}
-								required
-							/>
-
-							<TextField
-								type='password'
-								name='password'
-								placeholder='* * * * * * *'
-								label='Contraseña'
-								value={values.password}
-								error={errors.password}
-								onChange={handleChange}
-								required
-							/>
-
-							<Button
-								type='submit'
-								className='w-full mt-4'
-								disabled={isSubmitting}
-							>
-								{isSubmitting ? 'Cargando...' : 'Entrar'}
-							</Button>
-						</form>
-						<Divider className='mt-4'>continua con</Divider>
-						<div className='flex items-center justify-center gap-4'>
-							<Button variant={'ghost'} size={'icon'} onClick={googleSignIn}>
-								<GoogleIcon />
-							</Button>
-						</div>
-					</CardContent>
-				</Card>
-
-				<div className='text-center w-full mt-4'>
-					{'No tienes una cuenta? '}
-					<Link className='underline' to={AuthRoutesEnum.Signup}>
-						Regístrate
-					</Link>
-				</div>
+				<h1 className='text-xl font-bold'>{APP_NAME_CAPITALIZED} Dashboard</h1>
 			</div>
+			<br />
 
-			<div className='relative hidden bg-muted lg:block'>
-				<img
-					src='https://images.unsplash.com/photo-1720712738661-9c0dcb92f06d?q=80&w=2070&auto=format&fit=crop'
-					alt='Background'
-					className='absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale'
-				/>
+			<Card className='w-full max-w-md'>
+				<CardHeader>
+					<CardTitle>Inicio de sesión</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<form className='space-y-6' onSubmit={handleSubmit}>
+						<TextField
+							type='email'
+							name='email'
+							placeholder='example@email.com'
+							label='Correo'
+							value={values.email}
+							error={errors.email}
+							onChange={handleChange}
+							required
+						/>
+
+						<TextField
+							type='password'
+							name='password'
+							placeholder='* * * * * * *'
+							label='Contraseña'
+							value={values.password}
+							error={errors.password}
+							onChange={handleChange}
+							required
+						/>
+
+						<Button
+							type='submit'
+							className='w-full mt-4'
+							disabled={isSubmitting}
+						>
+							{isSubmitting ? 'Cargando...' : 'Entrar'}
+						</Button>
+					</form>
+					<Divider className='mt-4'>continua con</Divider>
+					<div className='flex items-center justify-center gap-4'>
+						<Button variant={'ghost'} size={'icon'} onClick={googleSignIn}>
+							<GoogleIcon />
+						</Button>
+					</div>
+				</CardContent>
+			</Card>
+
+			<div className='text-center w-full mt-4'>
+				{'No tienes una cuenta? '}
+				<Link className='underline' to={AuthRoutesEnum.Signup}>
+					Regístrate
+				</Link>
 			</div>
 		</div>
 	);

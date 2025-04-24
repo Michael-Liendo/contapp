@@ -10,7 +10,6 @@ import { AuthRoutesEnum, PrivateRoutesEnum } from './data/routesEnums';
 import useAuth from './hooks/useAuth';
 import Home from './pages/(app)/Home';
 import Login from './pages/(auth)/Login';
-import Signup from './pages/(auth)/Signup';
 
 import type { JSX } from 'react';
 import { LoadingFullScreen } from './components/loading';
@@ -88,12 +87,6 @@ const PrivateRoutes: JSX.Element[] = [
 ];
 
 const AuthRoutes: JSX.Element[] = [
-	<Route
-		key={AuthRoutesEnum.Signup}
-		path={AuthRoutesEnum.Signup}
-		component={Signup}
-		exact
-	/>,
 	<Route
 		key={AuthRoutesEnum.Login}
 		path={AuthRoutesEnum.Login}
