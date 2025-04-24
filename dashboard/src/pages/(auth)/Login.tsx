@@ -1,7 +1,7 @@
 import { SocialLogin } from '@capgo/capacitor-social-login';
 import { useFormik } from 'formik';
 import { Check, GalleryVerticalEnd, X } from 'lucide-react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Divider from '@/components/divider';
 import GoogleIcon from '@/components/icons/google';
@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
 import { EnvConfig } from '@/config/env';
-import { AuthRoutesEnum, PrivateRoutesEnum } from '@/data/routesEnums';
+import { PrivateRoutesEnum } from '@/data/routesEnums';
 import useSEO from '@/hooks/use-seo';
 import { toFormikValidationSchema } from '@/utils/toFormikValidationSchema';
 import {
