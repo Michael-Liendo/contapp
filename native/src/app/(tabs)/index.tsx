@@ -1,78 +1,94 @@
-import { Image, Platform, StyleSheet } from 'react-native';
+import { Link } from 'expo-router';
+import { Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-
-export default function HomeScreen() {
+export default function Page() {
 	return (
-		<ParallaxScrollView
-			headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-			headerImage={
-				<Image
-					source={require('@/assets/images/partial-react-logo.png')}
-					style={styles.reactLogo}
-				/>
-			}
-		>
-			<ThemedView style={styles.titleContainer}>
-				<ThemedText type='title'>Welcome!</ThemedText>
-				<HelloWave />
-			</ThemedView>
-			<ThemedView style={styles.stepContainer}>
-				<ThemedText type='subtitle'>Step 1: Try it</ThemedText>
-				<ThemedText>
-					Edit{' '}
-					<ThemedText type='defaultSemiBold'>app/(tabs)/index.tsx</ThemedText>{' '}
-					to see changes. Press{' '}
-					<ThemedText type='defaultSemiBold'>
-						{Platform.select({
-							ios: 'cmd + d',
-							android: 'cmd + m',
-							web: 'F12',
-						})}
-					</ThemedText>{' '}
-					to open developer tools.
-				</ThemedText>
-			</ThemedView>
-			<ThemedView style={styles.stepContainer}>
-				<ThemedText type='subtitle'>Step 2: Explore</ThemedText>
-				<ThemedText>
-					Tap the Explore tab to learn more about what's included in this
-					starter app.
-				</ThemedText>
-			</ThemedView>
-			<ThemedView style={styles.stepContainer}>
-				<ThemedText type='subtitle'>Step 3: Get a fresh start</ThemedText>
-				<ThemedText>
-					When you're ready, run{' '}
-					<ThemedText type='defaultSemiBold'>npm run reset-project</ThemedText>{' '}
-					to get a fresh <ThemedText type='defaultSemiBold'>app</ThemedText>{' '}
-					directory. This will move the current{' '}
-					<ThemedText type='defaultSemiBold'>app</ThemedText> to{' '}
-					<ThemedText type='defaultSemiBold'>app-example</ThemedText>.
-				</ThemedText>
-			</ThemedView>
-		</ParallaxScrollView>
+		<View className='flex flex-1'>
+			<Header />
+			<Content />
+			<Footer />
+		</View>
 	);
 }
 
-const styles = StyleSheet.create({
-	titleContainer: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		gap: 8,
-	},
-	stepContainer: {
-		gap: 8,
-		marginBottom: 8,
-	},
-	reactLogo: {
-		height: 178,
-		width: 290,
-		bottom: 0,
-		left: 0,
-		position: 'absolute',
-	},
-});
+function Content() {
+	return (
+		<View className='flex-1'>
+			<View className='py-12 md:py-24 lg:py-32 xl:py-48'>
+				<View className='px-4 md:px-6'>
+					<View className='flex flex-col items-center gap-4 text-center'>
+						<Text
+							role='heading'
+							className='text-3xl text-center native:text-5xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl'
+						>
+							Welcome to Project ACME
+						</Text>
+						<Text className='mx-auto max-w-[700px] text-lg text-center text-gray-500 md:text-xl dark:text-gray-400'>
+							Discover and collaborate on acme. Explore our services now.
+						</Text>
+
+						<View className='gap-4'>
+							<Link
+								suppressHighlighting
+								className='flex h-9 items-center justify-center overflow-hidden rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 web:shadow ios:shadow transition-colors hover:bg-gray-900/90 active:bg-gray-400/90 web:focus-visible:outline-none web:focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300'
+								href='/'
+							>
+								Explore
+							</Link>
+						</View>
+					</View>
+				</View>
+			</View>
+		</View>
+	);
+}
+
+function Header() {
+	const { top } = useSafeAreaInsets();
+	return (
+		<View style={{ paddingTop: top }}>
+			<View className='px-4 lg:px-6 h-14 flex items-center flex-row justify-between '>
+				<Link className='font-bold flex-1 items-center justify-center' href='/'>
+					ACME
+				</Link>
+				<View className='flex flex-row gap-4 sm:gap-6'>
+					<Link
+						className='text-md font-medium hover:underline web:underline-offset-4'
+						href='/'
+					>
+						About
+					</Link>
+					<Link
+						className='text-md font-medium hover:underline web:underline-offset-4'
+						href='/'
+					>
+						Product
+					</Link>
+					<Link
+						className='text-md font-medium hover:underline web:underline-offset-4'
+						href='/'
+					>
+						Pricing
+					</Link>
+				</View>
+			</View>
+		</View>
+	);
+}
+
+function Footer() {
+	const { bottom } = useSafeAreaInsets();
+	return (
+		<View
+			className='flex shrink-0 bg-gray-100 native:hidden'
+			style={{ paddingBottom: bottom }}
+		>
+			<View className='py-6 flex-1 items-start px-4 md:px-6 '>
+				<Text className={'text-center text-gray-700'}>
+					© {new Date().getFullYear()} Me
+				</Text>
+			</View>
+		</View>
+	);
+}
