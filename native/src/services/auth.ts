@@ -1,31 +1,19 @@
 import fetch from '../utils/fetch';
 
-import type {
-	ISResponse,
-	ISignInWithProvider,
-	ITokens,
-	IUser,
-	IUserForLogin,
-	IUserForRegister,
-} from '@contapp/shared';
-
 export default class Auth {
-	static async register(data: IUserForRegister) {
+	static async register(data: unknown) {
 		const request = await fetch('/auth/register', {
 			method: 'POST',
 			body: JSON.stringify(data),
 		});
 
-		const response: ISResponse<{
-			user: IUser;
-			tokens: ITokens;
-		}> = await request.json();
+		const response = await request.json();
 
 		if (response.success === false) throw new Error('Error registering');
 
 		return response;
 	}
-	static async login(data: IUserForLogin) {
+	static async login(data: unknown) {
 		const request = await fetch('/auth/login', {
 			method: 'POST',
 			body: JSON.stringify(data),
@@ -35,10 +23,10 @@ export default class Auth {
 
 		if (response.success === false) throw new Error('Error logging in');
 
-		return response as ISResponse<ITokens>;
+		return response;
 	}
 
-	static async signInWithProvider(data: ISignInWithProvider) {
+	static async signany(data: unknown) {
 		const request = await fetch('/auth/provider', {
 			method: 'POST',
 			body: JSON.stringify(data),
@@ -48,7 +36,7 @@ export default class Auth {
 
 		if (response.success === false) throw new Error('Error logging in');
 
-		return response as ISResponse<ITokens>;
+		return response;
 	}
 
 	static async renewToken() {
@@ -58,6 +46,6 @@ export default class Auth {
 
 		const response = await request.json();
 
-		return response as ISResponse<ITokens>;
+		return response;
 	}
 }

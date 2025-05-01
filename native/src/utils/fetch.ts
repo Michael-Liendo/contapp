@@ -1,10 +1,9 @@
 import { EnvConfig } from '@/config/env';
-import storage from '@/config/storage';
 
 const Fetch = () => {
 	return async (url: string, options?: RequestInit) => {
 		const defaultOptions: { Authorization?: string } = {};
-		const { value: token } = await storage.load({ key: 'token' });
+		const token = '';
 		if (token) {
 			defaultOptions.Authorization = `Bearer ${token}`;
 		}
