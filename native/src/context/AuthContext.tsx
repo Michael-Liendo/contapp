@@ -21,9 +21,8 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 		data: user,
 		isLoading,
 		refetch,
-	} = useQuery(['user'], async () => {
+	} = useQuery(['user', token], async () => {
 		const { value: token } = { value: '' };
-		setToken(token ?? undefined);
 		if (!token) return;
 		const user = await Services.users.me();
 

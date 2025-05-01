@@ -31,7 +31,7 @@ export default function LoginPage() {
 					setToken(results?.data?.token);
 
 					Alert.alert('Éxito', 'Inicio de sesión exitoso!');
-					router.navigate('/+not-found');
+					router.navigate('/(app)');
 				} catch (e) {
 					Alert.alert('Error', 'Credenciales inválidas');
 					console.error(e);

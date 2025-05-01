@@ -4,7 +4,7 @@ import {
 	ThemeProvider,
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Slot, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
@@ -15,7 +15,6 @@ import { AuthProvider } from '@/context/AuthContext';
 import '../global.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
@@ -38,15 +37,16 @@ export default function RootLayout() {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-				<AuthProvider>
-					<Stack>
-						<Stack.Screen name='(auth)' options={{ headerShown: false }} />
-						<Stack.Screen name='+not-found' />
+			<AuthProvider>
+				<ThemeProvider
+					value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+				>
+					<Stack screenOptions={{ headerShown: false }}>
+						<Slot />
 					</Stack>
 					<StatusBar style='auto' />
-				</AuthProvider>
-			</ThemeProvider>
+				</ThemeProvider>
+			</AuthProvider>
 		</QueryClientProvider>
 	);
 }
