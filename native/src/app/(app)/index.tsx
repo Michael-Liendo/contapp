@@ -2,9 +2,11 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 
 import useAuth from '../../hooks/useAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
 
 export default function LoginPage() {
-	const { user } = useAuth();
+	const router = useRouter();
+	const { user, logout } = useAuth();
 
 	return (
 		<ScrollView className='flex-1 bg-white'>
@@ -20,7 +22,10 @@ export default function LoginPage() {
 					</Text>
 
 					<TouchableOpacity
-						onPress={async () => AsyncStorage.removeItem('token')}
+						onPress={async () => {
+							await logout();
+							router.navigate('/(app)');
+						}}
 						className='bg-blue-600 rounded-md py-3 px-4 mt-4'
 					>
 						<Text className='text-white text-center font-semibold'>
