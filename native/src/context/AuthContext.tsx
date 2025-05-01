@@ -8,7 +8,7 @@ export interface AuthContextProps {
 	isLoading: boolean;
 	setToken: (token: string) => void;
 	logout: () => void;
-	user: unknown | undefined;
+	user: any | undefined;
 	token: string | undefined;
 }
 
