@@ -2,6 +2,8 @@ import { createContext, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import Services from '../services';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export interface AuthContextProps {
 	isLoading: boolean;
 	setToken: (token: string) => void;
@@ -22,7 +24,8 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 		isLoading,
 		refetch,
 	} = useQuery(['user', token], async () => {
-		const { value: token } = { value: '' };
+		const token = await AsyncStorage.getItem('token');
+		setToken(token ?? undefined);
 		if (!token) return;
 		const user = await Services.users.me();
 
@@ -35,10 +38,12 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
 
 	const updateToken = async (token: string) => {
 		setToken(token);
+		await AsyncStorage.setItem('token', token);
 		refetch();
 	};
 
 	const logout = async () => {
+		await AsyncStorage.removeItem('token');
 		setToken(undefined);
 	};
 

@@ -1,9 +1,10 @@
 import { EnvConfig } from '@/config/env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Fetch = () => {
 	return async (url: string, options?: RequestInit) => {
 		const defaultOptions: { Authorization?: string } = {};
-		const token = '';
+		const token = await AsyncStorage.getItem('token');
 		if (token) {
 			defaultOptions.Authorization = `Bearer ${token}`;
 		}
