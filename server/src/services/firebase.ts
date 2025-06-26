@@ -1,10 +1,19 @@
 import type { IUser } from '@contapp/shared';
 import { app } from '../config/firebase';
 
+type CustomUser = Partial<
+	Omit<IUser, 'email' | 'password' | 'first_name' | 'last_name'>
+> &
+	Pick<IUser, 'email' | 'password' | 'first_name' | 'last_name'>;
+
 export class FirebaseService {
-	static async createUser(user: IUser) {
+	/**
+	 *
+	 * @param user { email: string, password: string, first_name: string, last_name:string }
+	 * @returns Promise<UserRecord>
+	 */
+	static async createUser(user: CustomUser) {
 		return await app.auth().createUser({
-			uid: user.id,
 			email: user.email,
 			password: user.password,
 			displayName: `${user.first_name} ${user.last_name}`,

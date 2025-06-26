@@ -9,6 +9,8 @@ export async function up(knex: Knex): Promise<void> {
 			.unique()
 			.defaultTo(knex.raw('uuid_generate_v4()'))
 			.primary();
+		table.string('uid').notNullable();
+		table.string('google_id').nullable();
 		table.boolean('active').notNullable().defaultTo(true);
 		table.string('first_name').notNullable();
 		table.string('last_name').notNullable();
