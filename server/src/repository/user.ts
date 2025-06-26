@@ -14,6 +14,18 @@ export class Users {
 	}
 
 	/**
+	 *  getUserByGoogleId - get a user with the google id
+	 * @param id string
+	 * @returns string IUser
+	 */
+	static async getUserByGoogleId(
+		google_id: string,
+	): Promise<IUser | undefined> {
+		const [user] = await database<IUser>('users').where({ google_id });
+		return user;
+	}
+
+	/**
 	 *  getUserByID - get a user with the ID
 	 * @param id string
 	 * @returns string IUser

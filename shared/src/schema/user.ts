@@ -13,6 +13,8 @@ export const UserNotificationSchema = z
 	});
 
 export const UserForRegisterSchema = z.object({
+	uid: z.string().optional(),
+	google_id: z.string().optional(),
 	first_name: z.string(),
 	last_name: z.string(),
 	email: z.string().email().describe('unique'),
@@ -21,6 +23,8 @@ export const UserForRegisterSchema = z.object({
 
 export const UserSchema = z.object({
 	id: z.string(),
+	uid: z.string().describe('firebase id'),
+	google_id: z.string().nullable(),
 	active: z.boolean(),
 	first_name: z.string(),
 	last_name: z.string(),
