@@ -22,11 +22,12 @@ const knexConfig: { [key: string]: Knex.Config } = {
 			user: EnvConfig().POSTGRES_USER,
 			password: EnvConfig().POSTGRES_PASSWORD,
 			database: EnvConfig().POSTGRES_DB,
-			ssl: {
-				rejectUnauthorized: false,
-			},
+			ssl: true,
 		},
-		pool: { min: 0, max: 10 },
+		pool: {
+			min: 2,
+			max: 10,
+		},
 	},
 };
 

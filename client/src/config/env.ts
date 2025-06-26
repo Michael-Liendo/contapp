@@ -1,7 +1,7 @@
 const {
 	VITE_API_URL = 'http://127.0.0.1:3000',
 	NODE_ENV = 'development',
-	VITE_GOOGLE_WEB_CLIENT_ID = '439889122332-7vreo40ns2b0d6g34sti11ogsatp1v57.apps.googleusercontent.com',
+	VITE_GOOGLE_WEB_CLIENT_ID = '949333678429-oe1rf6vjba58iukt1g2ckcipdjas0nd8.apps.googleusercontent.com',
 } = import.meta.env;
 
 export const EnvConfig = () => {

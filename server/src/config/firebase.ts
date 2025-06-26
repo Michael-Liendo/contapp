@@ -8,8 +8,8 @@ const credentials = credential.cert(json as firebaseAdmin.ServiceAccount);
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig: AppOptions = {
-	projectId: 'contiapp-production-ve',
-	storageBucket: 'contiapp-production-ve.firebasestorage.app',
+	projectId: 'surveymind-ai-development',
+	storageBucket: 'surveymind-ai-development.firebasestorage.app',
 	credential: credentials,
 };
 
